@@ -1,0 +1,10 @@
+booking_links:
+  version: 0
+  js:
+    js/booking_links.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once

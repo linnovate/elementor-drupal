@@ -1,0 +1,13 @@
+elementor.update:
+  path: 'elementor/update'
+  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::post' }
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'
+elementor.editor:
+  path: 'elementor/editor'
+  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::editor' }
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+    _format: 'html'

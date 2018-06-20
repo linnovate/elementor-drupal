@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Simple Google Maps module
+ *
+ * Provides a Google Maps link/map formatter for simple Text fields. Note that
+ * this is just a field formatter for Text fields, not a field. See README.txt
+ * for more information.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function elementor_theme($existing, $type, $theme, $path) {
+  return array(
+    'elementor_field' => array(
+      'variables' => array('elementor_data' => NULL),
+    ),
+    'elementor_editor' => array(
+      'variables' => array('elementor_data' => NULL),
+    ),
+  );
+}
+
