@@ -1,0 +1,6 @@
+elementor.editor:
+  title: Elementor editor
+  description: 'Find and manage content.'
+  route_name: elementor.editor
+  parent: system
+  weight: -10

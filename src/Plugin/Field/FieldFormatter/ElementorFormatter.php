@@ -10,6 +10,10 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+
+// require(drupal_get_path('module', 'elementor') .'/elementor/includes/frontend.php' );
+
+
 /**
  * Plugin implementation of the 'live_weather_token' formatter.
  *
@@ -76,7 +80,7 @@ public static function create(ContainerInterface $container, array $configuratio
 
 //     $settings = $this->configFactory->get('live_weather.settings')->get('settings');
 
-	$html = array();
+	// $html = array();
 
 // 	$feed = $this->liveWeather->locationCheck($items[0]->value, ' * ', strtolower($settings['unit']));
 
@@ -84,12 +88,21 @@ public static function create(ContainerInterface $container, array $configuratio
 
 // 	$html[0]['weather'] = $result['item']['condition'];
 // 	$html[0]['unit'] = $settings['unit'];
+
     $elementorData = \Drupal::state()->get('elementor_data');
     $elements[] = array(
 	  '#theme' => 'elementor_field',
-      '#elementor_data' => $elementorData,
-// 	  '#cache' => array('max-age' => $settings['cache']),
+      '#elementor_data' => [
+			'elements' => isset($elementorData['elements']) ? $elementorData['elements'] : [],
+			'settings' => isset($elementorData['settings']) ? $elementorData['settings'] : [],
+		],
+      '#elementor_tmp' => isset($elementorData['tmp']) ? $elementorData['tmp'] : '',
+	  '#cache' => array('max-age' => 0),
 	);
+
+
+
+    
 
     return $elements;
   }

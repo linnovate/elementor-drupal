@@ -12,10 +12,11 @@
 /**
  * Implements hook_theme().
  */
+ 
 function elementor_theme($existing, $type, $theme, $path) {
   return array(
     'elementor_field' => array(
-      'variables' => array('elementor_data' => NULL),
+      'variables' => array('elementor_data' => NULL, 'elementor_tmp' => NULL),
     ),
     'elementor_editor' => array(
       'variables' => array('elementor_data' => NULL),

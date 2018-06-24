@@ -11,54 +11,82 @@ use Drupal;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Response;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Template\TwigEnvironment;
 
-class ElementorController extends ControllerBase {
+class ElementorController extends ControllerBase implements ContainerInjectionInterface {
+ 
+   /**
+  * @var Drupal\Core\Template\TwigEnvironment
+  */
+  protected $twig;
+
+  public function __construct(TwigEnvironment $twig)
+  {
+    $this->twig = $twig;
+  }
+
+  public static function create(ContainerInterface $container)
+  {
+    return new static(
+      $container->get('twig')
+    );
+  }
 
   public function post(Request $request) {
     // \Drupal::config('elementor.data')
     //   ->set('data',$request->getContent())
     //   ->save();
     // $data = $_POST["actions"];//urldecode($request->getContent());
+
+
+// 		$document = $this->get( $request['editor_post_id'] );
+
+// 		$data = [
+// 			'elements' => $request['elements'],
+// 			'settings' => $request['settings'],
+// 		];
+
+
+
+
     $data = json_decode($_POST["actions"]);
-  
-    if ($_POST['action'] == 'elementor_ajax') {
-     \Drupal::state()->set('elementor_data', $data->save_builder->data); 
+    $action = $_POST['action'];
+    $save_data = [
+			'elements' => isset($data->save_builder->data->elements) ? $data->save_builder->data->elements : [],
+			'settings' => isset($data->save_builder->data->settings) ? $data->save_builder->data->settings : [],
+			'tmp' => isset($data->save_builder->data->tmp) ? $data->save_builder->data->tmp : [],
+		];
+
+    if ($action == 'elementor_ajax') {
+     \Drupal::state()->set('elementor_data', $save_data); 
     }
-    // $body_field = $entity->get('elementor');
-//     $field_value = $body_field->getValue();
-//     $field_value[0]['value'] = 'aafdfd';
-//     $body_field->setValue($field_value, TRUE);
-//     $entity.save();
-    return new JsonResponse($request->getContent());
+   
+	$return_data['statusText'] = TRUE;
+	$return_data['config'] = [
+		'last_edited' => '',
+		'wp_preview' => [
+			'url' => '',
+		],
+	];
+
+    return new JsonResponse($return_data);
  
   }
- 
+
   public function editor(Request $request) {
-    $path = $_GET["path"];
-    
-    $tmp = file_get_contents('file:///home/stein/devel/drupal/modules/elementor/q-elementor/index.html');
-  //   \Drupal::state()->set('elementor_data', $data->save_builder->data); 
-    // $body_field = $entity->get('elementor');
-//     $field_value = $body_field->getValue();
-//     $field_value[0]['value'] = 'aafdfd';
-//     $body_field->setValue($field_value, TRUE);
-//     $entity.save();
-
-// $build = [
-//   // '#theme' => 'elementor_editor',
-//   '#markup' => '',
-// ];
-
-    // $build['view'] = [
-    //   '#type' => 'view',
-    //   '#name' => 'my_view',
-    //   '#display_id' => 'block_1',
-    //   '#arguments' => $view_arguments,
-    // ];
-
-    // $rendered = \Drupal::service('renderer')->renderRoot($build);
+//     $path = $_GET["path"];
+//     \Drupal::state()->set('elementor_data', []); 
+    // $template = $this->twig->loadTemplate(
+    //   drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig'
+    // );
+    // $tmp = $template->render([data => []]);
+    $path = \Drupal::service('file_system')->realpath((drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig'));
+    $tmp = file_get_contents($path);
 
     $response = new Response();
     $response->setContent($tmp);
