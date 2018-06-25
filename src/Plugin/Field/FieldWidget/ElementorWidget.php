@@ -12,6 +12,8 @@ use Drupal\Core\Form\FormStateInterface;
  *   label = @Translation("Elementor"),
  *   field_types = {
  *     "elementor_field",
+ *     "text_long",
+ *     "text_with_summary"
  *   }
  * )
  */

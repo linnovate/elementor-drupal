@@ -5418,12 +5418,12 @@ App = Marionette.Application.extend( {
 
 // 			this.$previewResponsiveWrapper.append( this.$preview );
 // 		}
-		let url = new URLSearchParams(location.search).get('path');
+// 		let url = new URLSearchParams(location.search).get('path');
 
 		if ( ! this.$preview ) {
 			this.$preview = $( '<iframe>', {
 				id: previewIframeId,
-				src: url,//this.config.document.urls.preview,
+				src: location.href.replace('elementor', ''),//this.config.document.urls.preview,
 				allowfullscreen: 1
 			} );
 
@@ -5731,7 +5731,8 @@ App = Marionette.Application.extend( {
 		}
 
 		Object.assign(window.ElementorConfig.data[0], previewWindow.ElementorConfigData);
-
+		previewWindow.document.body.classList.add('elementor-preview-window')
+		
 		this.$previewContents = this.$preview.contents();
 		this.$previewElementorEl = this.$previewContents.find( '#elementor' );
 
@@ -9398,14 +9399,14 @@ PanelMenuPageView = Marionette.CompositeView.extend( {
 					name: 'settings',
 					title: elementor.translate( 'settings' ),
 					items: [
-						{
-							name: 'elementor-settings',
-							icon: 'fa fa-external-link',
-							title: elementor.translate( 'elementor_settings' ),
-							type: 'link',
-							link: elementor.config.settings_page_link,
-							newTab: true
-						},
+// 						{
+// 							name: 'elementor-settings',
+// 							icon: 'fa fa-external-link',
+// 							title: elementor.translate( 'elementor_settings' ),
+// 							type: 'link',
+// 							link: elementor.config.settings_page_link,
+// 							newTab: true
+// 						},
 						{
 							name: 'about-elementor',
 							icon: 'fa fa-info-circle',

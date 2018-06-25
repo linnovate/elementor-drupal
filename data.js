@@ -1,8 +1,8 @@
 
 var ElementorConfig = {
   "version": "2.0.16",
-  "ajaxurl": "http://localhost/drupal/elementor/update",
-  "home_url": "http://localhost/drupal/elementor/",
+  "ajaxurl": "elementor/update",
+  "home_url": "",
   "nonce": "0bd5cacd71",
   "data": [
     {
@@ -773,7 +773,7 @@ var ElementorConfig = {
                 "elType": "widget",
                 "isInner": false,
                 "image": {
-                  "url": "http://localhost/drupal/modules/elementor/assets/images/placeholder.png",
+                  "url": "http://localhost/drupal/modules/elementor/elementor/assets/images/placeholder.png",
                   "id": ""
                 },
                 "thumbnail_size": "full",
@@ -1740,7 +1740,7 @@ var ElementorConfig = {
                         "elType": "widget",
                         "isInner": false,
                         "image": {
-                          "url": "http://localhost/drupal/modules/elementor/assets/images/placeholder.png",
+                          "url": "http://localhost/drupal/modules/elementor/elementor/assets/images/placeholder.png",
                           "id": ""
                         },
                         "image_custom_dimension": {
@@ -3758,10 +3758,10 @@ var ElementorConfig = {
       "title": "Pojo Themes",
       "icon": "eicon-pojome"
     },
-    "wordpress": {
-      "title": "WordPress",
-      "icon": "eicon-wordpress"
-    }
+//     "wordpress": {
+//       "title": "WordPress",
+//       "icon": "eicon-wordpress"
+//     }
   },
   "controls": {
     "text": {
@@ -14916,7 +14916,7 @@ var ElementorConfig = {
             "active": true
           },
           "default": {
-            "url": "http://localhost/drupal/modules/elementor/assets/images/placeholder.png",
+            "url": "http://localhost/drupal/modules/elementor/elementor/assets/images/placeholder.png",
             "id": ""
           },
           "name": "image"
@@ -20381,7 +20381,7 @@ var ElementorConfig = {
           "section": "section_image_overlay",
           "label": "Image",
           "default": {
-            "url": "http://localhost/drupal/modules/elementor/assets/images/placeholder.png",
+            "url": "http://localhost/drupal/modules/elementor/elementor/assets/images/placeholder.png",
             "id": ""
           },
           "condition": {
@@ -28116,7 +28116,7 @@ var ElementorConfig = {
             "active": true
           },
           "default": {
-            "url": "http://localhost/drupal/modules/elementor/assets/images/placeholder.png",
+            "url": "http://localhost/drupal/modules/elementor/elementor/assets/images/placeholder.png",
             "id": ""
           },
           "name": "image"
@@ -49378,7 +49378,7 @@ var ElementorConfig = {
           "section": "section_testimonial",
           "label": "Choose Image",
           "default": {
-            "url": "http://localhost/drupal/modules/elementor/assets/images/placeholder.png",
+            "url": "http://localhost/drupal/modules/elementor/elementor/assets/images/placeholder.png",
             "id": ""
           },
           "name": "testimonial_image"
@@ -100086,11 +100086,11 @@ var ElementorConfig = {
     "general": {
       "name": "general",
       "panelPage": {
-        "title": "Global Settings",
-        "menu": {
-          "icon": "fa fa-cogs",
-          "beforeItem": "elementor-settings"
-        }
+//         "title": "Global Settings",
+//         "menu": {
+//           "icon": "fa fa-cogs",
+//           "beforeItem": "elementor-settings"
+//         }
       },
       "cssWrapperSelector": "",
       "controls": {
@@ -100554,7 +100554,7 @@ var ElementorConfig = {
   "docs_elementor_site": "https://go.elementor.com/docs/",
   "help_the_content_url": "https://go.elementor.com/the-content-missing/",
   "help_preview_error_url": "https://go.elementor.com/preview-not-loaded/",
-  "assets_url": "http://localhost/drupal/modules/elementor/assets/",
+  "assets_url": "http://localhost/drupal/modules/elementor/elementor/assets/",
   "locked_user": false,
   "user": {
     "restrictions": [],

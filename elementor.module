@@ -16,7 +16,7 @@
 function elementor_theme($existing, $type, $theme, $path) {
   return array(
     'elementor_field' => array(
-      'variables' => array('elementor_data' => NULL, 'elementor_tmp' => NULL),
+      'variables' => array('elementor_data' => NULL, 'elementor_tmp' => NULL, 'base_path' => base_path()),
     ),
     'elementor_editor' => array(
       'variables' => array('elementor_data' => NULL),

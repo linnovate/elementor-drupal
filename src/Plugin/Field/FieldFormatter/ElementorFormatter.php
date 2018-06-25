@@ -21,7 +21,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "elementor_field",
  *   label = @Translation("show elementor"),
  *   field_types = {
- *     "elementor_field"
+ *     "elementor_field",
+ *     "text_long",
+ *     "text_with_summary"
  *   }
  * )
  */
@@ -96,6 +98,7 @@ public static function create(ContainerInterface $container, array $configuratio
 			'elements' => isset($elementorData['elements']) ? $elementorData['elements'] : [],
 			'settings' => isset($elementorData['settings']) ? $elementorData['settings'] : [],
 		],
+		'#base_path' => base_path(),
       '#elementor_tmp' => isset($elementorData['tmp']) ? $elementorData['tmp'] : '',
 	  '#cache' => array('max-age' => 0),
 	);

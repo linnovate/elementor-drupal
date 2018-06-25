@@ -37,7 +37,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     );
   }
 
-  public function post(Request $request) {
+  public function update(Request $request) {
     // \Drupal::config('elementor.data')
     //   ->set('data',$request->getContent())
     //   ->save();
@@ -81,12 +81,14 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
   public function editor(Request $request) {
 //     $path = $_GET["path"];
 //     \Drupal::state()->set('elementor_data', []); 
-    // $template = $this->twig->loadTemplate(
-    //   drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig'
-    // );
-    // $tmp = $template->render([data => []]);
-    $path = \Drupal::service('file_system')->realpath((drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig'));
+
+    $path = \Drupal::service('file_system')->realpath((drupal_get_path('module', 'elementor') . '/templates/tmps-elementor.html.twig'));
     $tmp = file_get_contents($path);
+
+    $template = $this->twig->loadTemplate(
+      drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig'
+    );
+    $tmp = $template->render([tmps => $tmp, base_path => base_path()]);
 
     $response = new Response();
     $response->setContent($tmp);
