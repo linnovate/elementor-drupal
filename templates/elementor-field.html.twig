@@ -96,10 +96,9 @@
 
 <script type="text/javascript">
   /* <![CDATA[ */
-  window.ElementorConfigData = "{{ elementor_data|json_encode() }}";
+  window.ElementorConfigData = "{{ elementor_data.elements|json_encode() }}";
   window.ElementorConfigData = JSON.parse(ElementorConfigData.replace(/&quot;/g,'"'));
-  //Object.assign(ElementorConfig.data, ElementorConfigData);
-      /* ]]> */
+  /* ]]> */
 </script>
 
 <script src="{{base_path}}modules/elementor/wp-includes/js/jquery/jquery.js"></script>

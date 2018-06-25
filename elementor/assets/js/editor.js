@@ -5730,7 +5730,8 @@ App = Marionette.Application.extend( {
 			return;
 		}
 
-		Object.assign(window.ElementorConfig.data[0], previewWindow.ElementorConfigData);
+		window.ElementorConfig.data = previewWindow.ElementorConfigData;
+		
 		previewWindow.document.body.classList.add('elementor-preview-window')
 		
 		this.$previewContents = this.$preview.contents();

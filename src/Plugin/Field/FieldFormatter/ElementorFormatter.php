@@ -90,7 +90,7 @@ public static function create(ContainerInterface $container, array $configuratio
 
 // 	$html[0]['weather'] = $result['item']['condition'];
 // 	$html[0]['unit'] = $settings['unit'];
-
+// \Drupal::state()->set('elementor_data',NULL);
     $elementorData = \Drupal::state()->get('elementor_data');
     $elements[] = array(
 	  '#theme' => 'elementor_field',
