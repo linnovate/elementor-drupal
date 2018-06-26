@@ -1,18 +1,26 @@
 
-##### step 1
+##### step 1 download
 1. download this project
-2. rename from elementor-drupal to elementor
-3. add to the drupal modules folder like - [drupal]/modules/elementor
+2. rename project-dir name from elementor-drupal to elementor
+3. add to the drupal modules folder - [drupal]/modules/elementor
 
-##### step 2
+------------
 
-add elementor field to content type
-or
-set body_field formattor 'show elementor'  
 
-##### step 3
+##### step 2 enable
+- enable elementor module
 
-go to: tab task elementor in the node
+------------
 
-to exit from the editor:
-  elementor-editor > menu > EXIT TO DASHBOARD 
+##### step 3 setup
+1. go to [drupal]/admin/structure/types/manage/article/display
+2. change  the format of body_field to "show elementor"
+3. save
+
+------------
+##### Open editor:
+click on the tab task "elementor" in the node
+
+------------
+##### Exit editor:
+elementor-editor > menu > EXIT TO DASHBOARD 
