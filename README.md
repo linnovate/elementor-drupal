@@ -1,15 +1,16 @@
 
-step 1
+##### step 1
+1. download this project
+2. rename from elementor-drupal to elementor
+3. add to the drupal modules folder like - [drupal]/modules/elementor
 
-enable elementor module
-
-step 2
+##### step 2
 
 add elementor field to content type
 or
 set body_field formattor 'show elementor'  
 
-step 3
+##### step 3
 
 go to: tab task elementor in the node
 
