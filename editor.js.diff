@@ -1,0 +1,79 @@
+@@ -990,18 +990,11 @@ module.exports = Module.extend( {
+ 
+                settings.post_status = options.status;
+ 
++              const styles = elementor.$previewContents[0].querySelectorAll("style[id*=elementor-style-]");
++              var styleTmp = '';
++              styles && styles.forEach(item => {
++                      item.innerHTML && (styleTmp += item.innerHTML);
++              })
++              
+                elementor.ajax.addRequest( 'save_builder', {
+                        data: {
+                                status: options.status,
+                                elements: elements,
+                                settings: settings,
++                              tmp: `<style>${styleTmp}</style>${elementor.$previewElementorEl[0].innerHTML}`,
+                        },
+ 
+                        success: function( data ) {
+@@ -5409,28 +5402,16 @@ App = Marionette.Application.extend( {
+                var previewIframeId = 'elementor-preview-iframe';
+ 
+                // Make sure the iFrame does not exist.
+
+                if ( ! this.$preview ) {
+                        this.$preview = $( '<iframe>', {
+                                id: previewIframeId,
++                               src: location.href.replace('elementor', ''),//this.config.document.urls.preview,
+-                               src: this.config.document.urls.preview,
+                                allowfullscreen: 1
+                        } );
+ 
+                        this.$previewResponsiveWrapper.append( this.$preview );
+                }
+
+                this.$preview.on( 'load', this.onPreviewLoaded.bind( this ) );
+        },
+ 
+@@ -5723,17 +5704,13 @@ App = Marionette.Application.extend( {
+                NProgress.done();
+ 
+                var previewWindow = this.$preview[0].contentWindow;
+          
+                if ( ! previewWindow.elementorFrontend ) {
+                        this.onPreviewLoadingError();
+ 
+                        return;
+                }
+ 
++               window.ElementorConfig.data = previewWindow.ElementorConfigData;
++               
++               previewWindow.document.body.classList.add('elementor-preview-window')
++              
+                this.$previewContents = this.$preview.contents();
+                this.$previewElementorEl = this.$previewContents.find( '#elementor' );
+ 
+@@ -9400,14 +9377,14 @@ PanelMenuPageView = Marionette.CompositeView.extend( {
+                                        name: 'settings',
+                                        title: elementor.translate( 'settings' ),
+                                        items: [
++ //                                            {
++ //                                                    name: 'elementor-settings',
++ //                                                    icon: 'fa fa-external-link',
++ //                                                    title: elementor.translate( 'elementor_settings' ),
++ //                                                    type: 'link',
++ //                                                    link: elementor.config.settings_page_link,
++ //                                                    newTab: true
++ //                                            },
+-                                               {
+-                                                       name: 'elementor-settings',
+-                                                       icon: 'fa fa-external-link',
+-                                                       title: elementor.translate( 'elementor_settings' ),
+-                                                       type: 'link',
+-                                                       link: elementor.config.settings_page_link,
+-                                                       newTab: true
+-                                               },
+                                                {
+                                                        name: 'about-elementor',
+                                                        icon: 'fa fa-info-circle',
