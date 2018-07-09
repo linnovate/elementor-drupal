@@ -1,12 +1,9 @@
 name: Elementor
 type: module
-# core: 8.x
-description: 'A simple modulle of a elementor widget.'
+description: 'Implement the "Elementor" page builder into drupal.'
 
 dependencies:
 
-# Information added by Drupal.org packaging script on 2016-03-08
 version: '8.x-1.0'
 core: '8.x'
 project: 'elementor'
-

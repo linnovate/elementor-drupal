@@ -77,72 +77,101 @@ class Editor {
 	 * @param bool $die Optional. Whether to die at the end. Default is `true`.
 	 */
 	public function init( $die = true ) {
-		if ( empty( $_REQUEST['post'] ) ) { // WPCS: CSRF ok.
-			return;
-		}
+		// if ( empty( $_REQUEST['post'] ) ) { // WPCS: CSRF ok.
+		// 	return;
+		// }
 
-		$this->_post_id = absint( $_REQUEST['post'] );
+		// $this->_post_id = absint( $_REQUEST['post'] );
 
-		if ( ! $this->is_edit_mode( $this->_post_id ) ) {
-			return;
-		}
+		// if ( ! $this->is_edit_mode( $this->_post_id ) ) {
+		// 	return;
+		// }
 
 		// Send MIME Type header like WP admin-header.
-		@header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
+		// @header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
 
 		// Use requested id and not the global in order to avoid conflicts with plugins that changes the global post.
-		query_posts( [
-			'p' => $this->_post_id,
-			'post_type' => get_post_type( $this->_post_id ),
-		] );
+		// query_posts( [
+		// 	'p' => $this->_post_id,
+		// 	'post_type' => get_post_type( $this->_post_id ),
+		// ] );
 
-		Plugin::$instance->db->switch_to_post( $this->_post_id );
+		// Plugin::$instance->db->switch_to_post( $this->_post_id );
 
-		add_filter( 'show_admin_bar', '__return_false' );
+		// add_filter( 'show_admin_bar', '__return_false' );
 
-		// Remove all WordPress actions
-		remove_all_actions( 'wp_head' );
-		remove_all_actions( 'wp_print_styles' );
-		remove_all_actions( 'wp_print_head_scripts' );
-		remove_all_actions( 'wp_footer' );
+		// // Remove all WordPress actions
+		// remove_all_actions( 'wp_head' );
+		// remove_all_actions( 'wp_print_styles' );
+		// remove_all_actions( 'wp_print_head_scripts' );
+		// remove_all_actions( 'wp_footer' );
 
-		// Handle `wp_head`
-		add_action( 'wp_head', 'wp_enqueue_scripts', 1 );
-		add_action( 'wp_head', 'wp_print_styles', 8 );
-		add_action( 'wp_head', 'wp_print_head_scripts', 9 );
-		add_action( 'wp_head', 'wp_site_icon' );
-		add_action( 'wp_head', [ $this, 'editor_head_trigger' ], 30 );
+		// // Handle `wp_head`
+		// add_action( 'wp_head', 'wp_enqueue_scripts', 1 );
+		// add_action( 'wp_head', 'wp_print_styles', 8 );
+		// add_action( 'wp_head', 'wp_print_head_scripts', 9 );
+		// add_action( 'wp_head', 'wp_site_icon' );
+		// add_action( 'wp_head', [ $this, 'editor_head_trigger' ], 30 );
 
-		// Handle `wp_footer`
-		add_action( 'wp_footer', 'wp_print_footer_scripts', 20 );
-		add_action( 'wp_footer', 'wp_auth_check_html', 30 );
-		add_action( 'wp_footer', [ $this, 'wp_footer' ] );
+		// // Handle `wp_footer`
+		// add_action( 'wp_footer', 'wp_print_footer_scripts', 20 );
+		// add_action( 'wp_footer', 'wp_auth_check_html', 30 );
+		// add_action( 'wp_footer', [ $this, 'wp_footer' ] );
 
-		// Handle `wp_enqueue_scripts`
-		remove_all_actions( 'wp_enqueue_scripts' );
+		// // Handle `wp_enqueue_scripts`
+		// remove_all_actions( 'wp_enqueue_scripts' );
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 999999 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ], 999999 );
+		// add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 999999 );
+		// add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ], 999999 );
 
 		// Change mode to Builder
-		Plugin::$instance->db->set_is_elementor_page( $this->_post_id );
+		// Plugin::$instance->db->set_is_elementor_page( $this->_post_id );
 
 		// Post Lock
-		if ( ! $this->get_locked_user( $this->_post_id ) ) {
-			$this->lock_post( $this->_post_id );
-		}
+		// if ( ! $this->get_locked_user( $this->_post_id ) ) {
+		// 	$this->lock_post( $this->_post_id );
+		// }
 
 		// Setup default heartbeat options
-		add_filter( 'heartbeat_settings', function( $settings ) {
-			$settings['interval'] = 15;
-			return $settings;
-		} );
+		// add_filter( 'heartbeat_settings', function( $settings ) {
+		// 	$settings['interval'] = 15;
+		// 	return $settings;
+		// } );
 
 		// Tell to WP Cache plugins do not cache this request.
-		Utils::do_not_cache();
+		// Utils::do_not_cache();
 
 		// Print the panel
-		$this->print_panel_html();
+		$plugin = Plugin::$instance;
+		$config = [
+			'version' => ELEMENTOR_VERSION,
+			// 'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			// 'home_url' => home_url(),
+			// 'nonce' => $this->create_nonce( get_post_type() ),
+			// 'data' => $editor_data,
+			// @TODO: `post_id` is bc since 2.0.0
+			// 'post_id' => $this->_post_id,
+			// 'document' => $document->get_config(),
+			// 'autosave_interval' => AUTOSAVE_INTERVAL,
+			// 'current_user_can_publish' => $current_user_can_publish,
+			'elements' => $plugin->elements_manager->get_element_types_config(),
+			'elements_categories' => $plugin->elements_manager->get_categories(),
+			'controls' => $plugin->controls_manager->get_controls_data(),
+			
+			'widgets' => $plugin->widgets_manager->get_widget_types_config(),
+			'schemes' => [
+				'items' => $plugin->schemes_manager->get_registered_schemes_data(),
+				'enabled_schemes' => Schemes_Manager::get_enabled_schemes(),
+			],
+			'default_schemes' => $plugin->schemes_manager->get_schemes_defaults(),
+			// 'settings' => SettingsManager::get_settings_managers_config(),
+			'system_schemes' => $plugin->schemes_manager->get_system_schemes()
+			// 'wp_editor' => $this->get_wp_editor_config(),
+			];
+
+		//$_enqueue_scripts = $this->enqueue_scripts(); 
+		//$this->print_panel_html();
+return $config;
 
 		// From the action it's an empty string, from tests its `false`
 		if ( false !== $die ) {
@@ -300,20 +329,20 @@ class Editor {
 	 * @access public
 	 */
 	public function enqueue_scripts() {
-		remove_action( 'wp_enqueue_scripts', [ $this, __FUNCTION__ ], 999999 );
+		// remove_action( 'wp_enqueue_scripts', [ $this, __FUNCTION__ ], 999999 );
 
 		// Set the global data like $post, $authordata and etc
-		setup_postdata( $this->_post_id );
+		// setup_postdata( $this->_post_id );
 
 		global $wp_styles, $wp_scripts;
 
 		$plugin = Plugin::$instance;
 
 		// Reset global variable
-		$wp_styles = new \WP_Styles(); // WPCS: override ok.
-		$wp_scripts = new \WP_Scripts(); // WPCS: override ok.
+		// $wp_styles = new \WP_Styles(); // WPCS: override ok.
+		// $wp_scripts = new \WP_Scripts(); // WPCS: override ok.
 
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || defined( 'ELEMENTOR_TESTS' ) && ELEMENTOR_TESTS ) ? '' : '.min';
+		// $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || defined( 'ELEMENTOR_TESTS' ) && ELEMENTOR_TESTS ) ? '' : '.min';
 
 		// Hack for waypoint with editor mode.
 		wp_register_script(
@@ -472,75 +501,76 @@ class Editor {
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'elementor/editor/before_enqueue_scripts' );
+		// do_action( 'elementor/editor/before_enqueue_scripts' );
 
-		$document = Plugin::$instance->documents->get_doc_or_auto_save( $this->_post_id );
+		// $document = Plugin::$instance->documents->get_doc_or_auto_save( $this->_post_id );
 
 		// Get document data *after* the scripts hook - so plugins can run compatibility before get data, but *before* enqueue the editor script - so elements can enqueue their own scripts that depended in editor script.
-		$editor_data = $document->get_elements_raw_data( null, true );
+		// $editor_data = $document->get_elements_raw_data( null, true );
 
-		wp_enqueue_script( 'elementor-editor' );
+		// wp_enqueue_script( 'elementor-editor' );
 
 		// Tweak for WP Admin menu icons
-		wp_print_styles( 'editor-buttons' );
+		// wp_print_styles( 'editor-buttons' );
 
-		$locked_user = $this->get_locked_user( $this->_post_id );
+		// $locked_user = $this->get_locked_user( $this->_post_id );
 
-		if ( $locked_user ) {
-			$locked_user = $locked_user->display_name;
-		}
+		// if ( $locked_user ) {
+		// 	$locked_user = $locked_user->display_name;
+		// }
 
-		$page_title_selector = get_option( 'elementor_page_title_selector' );
+		// $page_title_selector = get_option( 'elementor_page_title_selector' );
 
-		if ( empty( $page_title_selector ) ) {
-			$page_title_selector = 'h1.entry-title';
-		}
+		// if ( empty( $page_title_selector ) ) {
+		// 	$page_title_selector = 'h1.entry-title';
+		// }
 
-		$post_type_object = get_post_type_object( $document->get_main_post()->post_type );
-		$current_user_can_publish = current_user_can( $post_type_object->cap->publish_posts );
-
+		// $post_type_object = get_post_type_object( $document->get_main_post()->post_type );
+		// $current_user_can_publish = current_user_can( $post_type_object->cap->publish_posts );
+$editor_data= '';
 		$config = [
-			'version' => ELEMENTOR_VERSION,
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'home_url' => home_url(),
-			'nonce' => $this->create_nonce( get_post_type() ),
-			'data' => $editor_data,
+			// 'version' => ELEMENTOR_VERSION,
+			// 'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			// 'home_url' => home_url(),
+			// 'nonce' => $this->create_nonce( get_post_type() ),
+			// 'data' => $editor_data,
 			// @TODO: `post_id` is bc since 2.0.0
-			'post_id' => $this->_post_id,
-			'document' => $document->get_config(),
-			'autosave_interval' => AUTOSAVE_INTERVAL,
-			'current_user_can_publish' => $current_user_can_publish,
+			// 'post_id' => $this->_post_id,
+			// 'document' => $document->get_config(),
+			// 'autosave_interval' => AUTOSAVE_INTERVAL,
+			// 'current_user_can_publish' => $current_user_can_publish,
+			'elements' => $plugin->elements_manager->get_element_types_config(),
 			'elements_categories' => $plugin->elements_manager->get_categories(),
 			'controls' => $plugin->controls_manager->get_controls_data(),
-			'elements' => $plugin->elements_manager->get_element_types_config(),
-			'widgets' => $plugin->widgets_manager->get_widget_types_config(),
-			'schemes' => [
+			
+			// 'widgets' => $plugin->widgets_manager->get_widget_types_config(),
+			// 'schemes' => [
 				'items' => $plugin->schemes_manager->get_registered_schemes_data(),
 				'enabled_schemes' => Schemes_Manager::get_enabled_schemes(),
-			],
+			// ],
 			'default_schemes' => $plugin->schemes_manager->get_schemes_defaults(),
-			'settings' => SettingsManager::get_settings_managers_config(),
+			// 'settings' => SettingsManager::get_settings_managers_config(),
 			'system_schemes' => $plugin->schemes_manager->get_system_schemes(),
-			'wp_editor' => $this->get_wp_editor_config(),
-			'settings_page_link' => Settings::get_url(),
+			// 'wp_editor' => $this->get_wp_editor_config(),
+			// 'settings_page_link' => Settings::get_url(),
 			'elementor_site' => 'https://go.elementor.com/about-elementor/',
 			'docs_elementor_site' => 'https://go.elementor.com/docs/',
 			'help_the_content_url' => 'https://go.elementor.com/the-content-missing/',
 			'help_preview_error_url' => 'https://go.elementor.com/preview-not-loaded/',
-			'assets_url' => ELEMENTOR_ASSETS_URL,
-			'locked_user' => $locked_user,
+			// 'assets_url' => ELEMENTOR_ASSETS_URL,
+			// 'locked_user' => $locked_user,
 			'user' => [
-				'restrictions' => $plugin->role_manager->get_user_restrictions_array(),
-				'is_administrator' => current_user_can( 'manage_options' ),
+				// 'restrictions' => $plugin->role_manager->get_user_restrictions_array(),
+				// 'is_administrator' => current_user_can( 'manage_options' ),
 			],
 			'is_rtl' => is_rtl(),
-			'locale' => get_locale(),
-			'viewportBreakpoints' => Responsive::get_breakpoints(),
-			'rich_editing_enabled' => filter_var( get_user_meta( get_current_user_id(), 'rich_editing', true ), FILTER_VALIDATE_BOOLEAN ),
-			'page_title_selector' => $page_title_selector,
-			'tinymceHasCustomConfig' => class_exists( 'Tinymce_Advanced' ),
-			'inlineEditing' => Plugin::$instance->widgets_manager->get_inline_editing_config(),
-			'dynamicTags' => Plugin::$instance->dynamic_tags->get_config(),
+			// 'locale' => get_locale(),
+			// 'viewportBreakpoints' => Responsive::get_breakpoints(),
+			// 'rich_editing_enabled' => filter_var( get_user_meta( get_current_user_id(), 'rich_editing', true ), FILTER_VALIDATE_BOOLEAN ),
+			// 'page_title_selector' => $page_title_selector,
+			// 'tinymceHasCustomConfig' => class_exists( 'Tinymce_Advanced' ),
+			// 'inlineEditing' => Plugin::$instance->widgets_manager->get_inline_editing_config(),
+			// 'dynamicTags' => Plugin::$instance->dynamic_tags->get_config(),
 			'i18n' => [
 				'elementor' => __( 'Elementor', 'elementor' ),
 				'delete' => __( 'Delete', 'elementor' ),

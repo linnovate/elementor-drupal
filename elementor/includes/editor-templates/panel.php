@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @var Editor $this
  */
-$document = Plugin::$instance->documents->get( $this->get_post_id() );
+// $document = Plugin::$instance->documents->get( 1 );
 
 ?>
 <script type="text/template" id="tmpl-elementor-panel">
@@ -24,7 +24,7 @@ $document = Plugin::$instance->documents->get( $this->get_post_id() );
 <script type="text/template" id="tmpl-elementor-panel-menu">
 	<div id="elementor-panel-page-menu-content"></div>
 	<div id="elementor-panel-page-menu-footer">
-		<a href="<?php echo esc_url( $document->get_exit_to_dashboard_url() ); ?>" id="elementor-panel-exit-to-dashboard" class="elementor-button elementor-button-default">
+		<a href="" id="elementor-panel-exit-to-dashboard" class="elementor-button elementor-button-default">
 			<i class="fa fa-wordpress"></i>
 			<?php echo __( 'Exit To Dashboard', 'elementor' ); ?>
 		</a>
@@ -58,7 +58,7 @@ $document = Plugin::$instance->documents->get( $this->get_post_id() );
 <script type="text/template" id="tmpl-elementor-panel-footer-content">
 	<div id="elementor-panel-footer-settings" class="elementor-panel-footer-tool elementor-leave-open tooltip-target" data-tooltip="<?php esc_attr_e( 'Settings', 'elementor' ); ?>">
 		<i class="fa fa-cog" aria-hidden="true"></i>
-		<span class="elementor-screen-only"><?php printf( esc_html__( '%s Settings', 'elementor' ), $document::get_title() ); ?></span>
+		<span class="elementor-screen-only"><?php printf( esc_html__( '%s Settings', 'elementor' ), "sss" ); ?></span>
 	</div>
 	<div id="elementor-panel-footer-responsive" class="elementor-panel-footer-tool">
 		<i class="eicon-device-desktop tooltip-target" aria-hidden="true" data-tooltip="<?php esc_attr_e( 'Responsive Mode', 'elementor' ); ?>"></i>

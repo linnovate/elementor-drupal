@@ -1,13 +1,110 @@
 <?php
 
-/**
- * @file
- * Simple Google Maps module
- *
- * Provides a Google Maps link/map formatter for simple Text fields. Note that
- * this is just a field formatter for Text fields, not a field. See README.txt
- * for more information.
- */
+define( 'ABSPATH' , FALSE);
+define( 'ELEMENTOR_VERSION', '2.0.16' );
+define( 'ELEMENTOR_PREVIOUS_STABLE_VERSION', '1.9.8' );
+define( 'ELEMENTOR__FILE__', __FILE__ );
+define( 'ELEMENTOR_PLUGIN_BASE', '');
+define( 'ELEMENTOR_PATH', drupal_get_path('module', 'elementor').'/elementor/' );
+if ( defined( 'ELEMENTOR_TESTS' ) && ELEMENTOR_TESTS ) {
+	define( 'ELEMENTOR_URL', 'file://' . ELEMENTOR_PATH );
+} else {
+	define( 'ELEMENTOR_URL', '');
+}
+define( 'ELEMENTOR_MODULES_PATH', '' );
+define( 'ELEMENTOR_ASSETS_URL', ELEMENTOR_URL . 'assets/' );
+
+
+function wp_register_script(){}
+function wp_enqueue_media() {}
+function wp_enqueue_script() {}
+function wp_enqueue_style() {}
+function wp_get_theme(){}
+function wp_upload_dir() {}
+function wp_mkdir_p() {}
+function wp_get_current_user() {}
+function wp_redirect(){}
+function wp_send_json_successt() {}
+function wp_send_json_errort() {}
+function wp_image_editor_supports(){}
+
+function is_rtl(){}
+function is_wp_error() {}
+function admin_url() {}
+function check_admin_referer(){}
+function add_menu_page(){}
+function add_submenu_page(){}
+function register_activation_hook() {}
+function add_post_type_support() {}
+
+function did_actiont() {}
+function get_bloginfo(){}
+function  _x() {}
+function register_taxonomy(){}
+function register_post_type(){}
+function register_uninstall_hook() {}
+function _doing_it_wrong() {}
+function apply_filters_ref_array() {}
+function add_query_arg() {}
+function is_singular() {}
+function did_action($tag) {}
+function get_the_ID() {}
+function post_type_supports(){}
+function get_post_type() {}
+
+function do_action() {}
+function update_option() {}
+function get_option() {}
+function remove_action(){}
+
+
+function wp_json_encode($data) {
+      return  json_encode($data);
+}
+function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+    return add_filter($tag, $function_to_add, $priority, $accepted_args);
+}
+function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
+    global $wp_filter;
+    if ( ! isset( $wp_filter[ $tag ] ) ) {
+    //    $wp_filter[ $tag ] = new WP_Hook();
+    }
+    // $wp_filter[ $tag ]->add_filter( $tag, $function_to_add, $priority, $accepted_args );
+    return true;
+}
+function esc_url($value){
+  return $value;
+}
+function absint( $maybeint ) {
+    return abs( intval( $maybeint ) );
+}
+function is_admin() {
+  return TRUE;
+}
+function  __($text, $context) {
+  return $text;
+}
+function apply_filters( $tag, $value ) {
+    return $value;
+}
+function esc_html($text) {
+  return $text;
+}
+function esc_html__($text) {
+  return $text;
+}
+function esc_attr( $text ) {
+  return $text;
+}
+function esc_attr__( $text ) {
+  return $text;
+}
+function esc_attr_e( $text, $domain = 'default' ) {
+    echo $text;
+}
+
+require(ELEMENTOR_PATH.'includes/plugin.php' );
+require( drupal_get_path('module', 'elementor') .'/ElementorDrupal.php' );
 
 /**
  * Implements hook_theme().

@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+
+
+
 /**
  * Elementor plugin.
  *
@@ -475,7 +479,7 @@ class Plugin {
 		$this->templates_manager = new TemplateLibrary\Manager();
 		$this->maintenance_mode = new Maintenance_Mode();
 		$this->dynamic_tags = new Dynamic_Tags_Manager();
-		$this->modules_manager = new Modules_Manager();
+		// $this->modules_manager = new Modules_Manager();
 		$this->role_manager = new Core\RoleManager\Role_Manager();
 
 		Upgrades::add_actions();
@@ -544,7 +548,7 @@ class Plugin {
 		$this->register_autoloader();
 
 		Compatibility::register_actions();
-
+		$this->init();
 		add_action( 'init', [ $this, 'init' ], 0 );
 	}
 }
