@@ -12,7 +12,7 @@ if ( defined( 'ELEMENTOR_TESTS' ) && ELEMENTOR_TESTS ) {
 	define( 'ELEMENTOR_URL', '');
 }
 define( 'ELEMENTOR_MODULES_PATH', '' );
-define( 'ELEMENTOR_ASSETS_URL', ELEMENTOR_URL . 'assets/' );
+define( 'ELEMENTOR_ASSETS_URL', '/'. ELEMENTOR_PATH . 'assets/' );
 
 
 function wp_register_script(){}
@@ -44,7 +44,6 @@ function wp_redirect(){}
 function wp_send_json_successt() {}
 function wp_send_json_errort() {}
 function wp_image_editor_supports(){}
-function wptexturize(){}
 function wp_embed_defaults(){}
 
 function wp_oembed_get(){}
@@ -57,8 +56,7 @@ function add_menu_page(){}
 function add_submenu_page(){}
 function register_activation_hook() {}
 function add_post_type_support() {}
-function shortcode_unautop(){}
-function do_shortcode(){}
+
 
 function did_actiont() {}
 function get_bloginfo(){}
@@ -118,6 +116,16 @@ function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 
     return true;
 }
 function apply_filters( $tag, $value ) {
+    return $value;
+}
+
+function shortcode_unautop( $value ) {
+    return $value;
+}
+function do_shortcode( $value ) {
+    return $value;
+}
+function wptexturize( $value ) {
     return $value;
 }
 function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {

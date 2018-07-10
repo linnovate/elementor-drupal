@@ -16,7 +16,7 @@ class ElementorDrupal
     {
         $plugin = Plugin::$instance;
         $plugin->init();
-        $plugin->elements_manager->get_element_types_config();
+        
         $config = [
             'version' => ELEMENTOR_VERSION,
             'ajaxurl' => base_path() . 'elementor/update',
@@ -231,10 +231,13 @@ class ElementorDrupal
 
     public static function frontend_data_render($elements_data)
     {
+        $plugin = Plugin::$instance;
+        $plugin->init();
+
         ob_start();
 
         foreach ($elements_data['elements'] as $element_data) {
-            $element = Plugin::$instance->elements_manager->create_element_instance($element_data);
+            $element = $plugin->elements_manager->create_element_instance($element_data);
 
             if (!$element) {
                 continue;

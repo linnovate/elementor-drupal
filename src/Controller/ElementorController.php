@@ -20,8 +20,8 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 {
 
     /**
-    * @var Drupal\Core\Template\TwigEnvironment
-    */
+     * @var Drupal\Core\Template\TwigEnvironment
+     */
     protected $twig;
 
     public function __construct(TwigEnvironment $twig)
@@ -76,10 +76,14 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
         unset($preview_data);
         echo 'var _ElementorData = ' . $preview_data_json . ';' . PHP_EOL;
 
-        echo 'window._ElementorConfig.data =  _ElementorData.elements;' . PHP_EOL;
-        echo 'window._ElementorConfig.document = { urls: { preview: "/node/1" } };' . PHP_EOL;
         echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
-        
+
+        echo 'ElementorConfig.data =  _ElementorData.elements;' . PHP_EOL;
+        echo 'ElementorConfig.document.urls = {
+            preview: "/node/1",
+            exit_to_dashboard: "/node/1",
+        };' . PHP_EOL;
+
         echo '/* ]]> */' . PHP_EOL;
         echo '</script>';
 

@@ -1,21 +1,53 @@
 
 var ElementorConfig = {
-  "nonce": "0bd5cacd71",
-  "post_id": 1,
+  "nonce": "9164397c0c",
+  "post_id": 81,
   "document": {
-    "id": 1,
+    "id": 81,
     "type": "post",
     "remote_type": "post",
-    "last_edited": "Draft saved on <time>Jun 17, 09:49</time> by admin",
-    "messages": {
-      "publish_notification": "Hurray! Your Page is live."
+    "last_edited": "Last edited on <time>Jul 10, 11:24</time> by admin",
+    "panel": {
+      "elements_categories": {
+        "basic": {
+          "title": "Basic",
+          "icon": "eicon-font",
+          "active": true
+        },
+        "pro-elements": {
+          "title": "Pro"
+        },
+        "general": {
+          "title": "General",
+          "icon": "eicon-font",
+          "active": true
+        },
+        "theme-elements": {
+          "title": "Site",
+          "active": false
+        },
+        "theme-elements-single": {
+          "title": "Single",
+          "active": false
+        },
+        "woocommerce-elements": {
+          "title": "WooCommerce",
+          "active": false
+        },
+        "pojo": {
+          "title": "Pojo Themes",
+          "icon": "eicon-pojome"
+        },
+        "wordpress": {
+          "title": "WordPress",
+          "icon": "eicon-wordpress",
+          "active": false
+        }
+      },
+      "messages": {
+        "publish_notification": "Hurray! Your Document is live."
+      }
     },
-    "urls": {
-      "exit_to_dashboard": "http://localhost/wordpress/wp-admin/post.php?post=1&action=edit",
-      "preview": "http://localhost/wordpress/index.php/2018/06/14/hello-world/?elementor-preview=1&ver=1529231135",
-      "wp_preview": "http://localhost/wordpress/index.php/2018/06/14/hello-world/?preview_nonce=131e903652&preview=true",
-      "permalink": "http://localhost/wordpress/index.php/2018/06/14/hello-world/"
-    }
   },
   "autosave_interval": 60,
   "current_user_can_publish": true,
@@ -25,7 +57,7 @@ var ElementorConfig = {
       "panelPage": {
         "title": "Page Settings"
       },
-      "cssWrapperSelector": "body.elementor-page-1",
+      "cssWrapperSelector": "body.elementor-page-81",
       "controls": {
         "document_settings": {
           "label": "General Settings",
@@ -55,11 +87,10 @@ var ElementorConfig = {
             ]
           },
           "features": [],
-          "default_value": "",
           "type": "text",
           "tab": "settings",
           "section": "document_settings",
-          "default": "Hello world!",
+          "default": "Elementor #81",
           "name": "post_title"
         },
         "post_status": {
@@ -75,12 +106,54 @@ var ElementorConfig = {
             "publish": "Published"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "settings",
           "section": "document_settings",
-          "default": "publish",
+          "default": "draft",
           "name": "post_status"
+        },
+        "post_excerpt": {
+          "label": "Excerpt",
+          "description": "",
+          "show_label": true,
+          "label_block": true,
+          "separator": "default",
+          "rows": 5,
+          "placeholder": "",
+          "dynamic": {
+            "categories": [
+              "text"
+            ]
+          },
+          "features": [],
+          "type": "textarea",
+          "tab": "settings",
+          "section": "document_settings",
+          "default": "",
+          "name": "post_excerpt"
+        },
+        "post_featured_image": {
+          "label": "Featured Image",
+          "description": "",
+          "show_label": true,
+          "label_block": true,
+          "separator": "default",
+          "media_type": "image",
+          "dynamic": {
+            "categories": [
+              "image"
+            ],
+            "returnType": "object"
+          },
+          "features": [],
+          "type": "media",
+          "tab": "settings",
+          "section": "document_settings",
+          "default": {
+            "url": false,
+            "id": ""
+          },
+          "name": "post_featured_image"
         },
         "hide_title": {
           "label": "Hide Title",
@@ -92,7 +165,6 @@ var ElementorConfig = {
           "label_on": "Yes",
           "return_value": "yes",
           "features": [],
-          "default_value": "",
           "type": "switcher",
           "tab": "settings",
           "section": "document_settings",
@@ -114,7 +186,6 @@ var ElementorConfig = {
             "elementor_header_footer": "Elementor Full Width"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "settings",
           "section": "document_settings",
@@ -209,7 +280,6 @@ var ElementorConfig = {
           },
           "toggle": true,
           "features": [],
-          "default_value": "",
           "type": "choose",
           "tab": "style",
           "section": "section_page_style",
@@ -227,7 +297,6 @@ var ElementorConfig = {
           "alpha": true,
           "scheme": "",
           "features": [],
-          "default_value": "",
           "type": "color",
           "tab": "style",
           "section": "section_page_style",
@@ -287,10 +356,6 @@ var ElementorConfig = {
             }
           },
           "features": [],
-          "default_value": {
-            "unit": "px",
-            "size": ""
-          },
           "type": "slider",
           "tab": "style",
           "section": "section_page_style",
@@ -317,7 +382,6 @@ var ElementorConfig = {
           "alpha": true,
           "scheme": "",
           "features": [],
-          "default_value": "",
           "type": "color",
           "tab": "style",
           "section": "section_page_style",
@@ -374,10 +438,6 @@ var ElementorConfig = {
             }
           },
           "features": [],
-          "default_value": {
-            "unit": "px",
-            "size": ""
-          },
           "type": "slider",
           "tab": "style",
           "section": "section_page_style",
@@ -406,7 +466,6 @@ var ElementorConfig = {
             "radial": "Radial"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "style",
           "section": "section_page_style",
@@ -463,10 +522,6 @@ var ElementorConfig = {
             }
           },
           "features": [],
-          "default_value": {
-            "unit": "px",
-            "size": ""
-          },
           "type": "slider",
           "tab": "style",
           "section": "section_page_style",
@@ -505,7 +560,6 @@ var ElementorConfig = {
             "bottom right": "Bottom Right"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "style",
           "section": "section_page_style",
@@ -529,6 +583,7 @@ var ElementorConfig = {
           "show_label": true,
           "label_block": true,
           "separator": "default",
+          "media_type": "image",
           "dynamic": {
             "categories": [
               "image"
@@ -537,10 +592,6 @@ var ElementorConfig = {
             "active": false
           },
           "features": [],
-          "default_value": {
-            "url": "",
-            "id": ""
-          },
           "type": "media",
           "tab": "style",
           "section": "section_page_style",
@@ -579,7 +630,6 @@ var ElementorConfig = {
             "bottom right": "Bottom Right"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "style",
           "section": "section_page_style",
@@ -608,7 +658,6 @@ var ElementorConfig = {
             "fixed": "Fixed"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "style",
           "section": "section_page_style",
@@ -663,7 +712,6 @@ var ElementorConfig = {
             "repeat-y": "Repeat-y"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "style",
           "section": "section_page_style",
@@ -693,7 +741,6 @@ var ElementorConfig = {
             "contain": "Contain"
           },
           "features": [],
-          "default_value": "",
           "type": "select",
           "tab": "style",
           "section": "section_page_style",
@@ -725,7 +772,6 @@ var ElementorConfig = {
             ]
           },
           "features": [],
-          "default_value": "",
           "type": "text",
           "tab": "style",
           "section": "section_page_style",
@@ -739,12 +785,63 @@ var ElementorConfig = {
           "classes": "elementor-group-control-background elementor-group-control elementor-group-control-video_link",
           "name": "background_video_link"
         },
+        "background_video_start": {
+          "label": "Start Time",
+          "description": "Specify a start time (in seconds)",
+          "show_label": true,
+          "label_block": false,
+          "separator": "default",
+          "min": "",
+          "max": "",
+          "step": "",
+          "placeholder": 10,
+          "title": "",
+          "features": [],
+          "type": "number",
+          "tab": "style",
+          "section": "section_page_style",
+          "condition": {
+            "background_background": [
+              "video"
+            ]
+          },
+          "of_type": "video",
+          "classes": "elementor-group-control-background elementor-group-control elementor-group-control-video_start",
+          "name": "background_video_start",
+          "default": ""
+        },
+        "background_video_end": {
+          "label": "End Time",
+          "description": "Specify an end time (in seconds)",
+          "show_label": true,
+          "label_block": false,
+          "separator": "default",
+          "min": "",
+          "max": "",
+          "step": "",
+          "placeholder": 70,
+          "title": "",
+          "features": [],
+          "type": "number",
+          "tab": "style",
+          "section": "section_page_style",
+          "condition": {
+            "background_background": [
+              "video"
+            ]
+          },
+          "of_type": "video",
+          "classes": "elementor-group-control-background elementor-group-control elementor-group-control-video_end",
+          "name": "background_video_end",
+          "default": ""
+        },
         "background_video_fallback": {
           "label": "Background Fallback",
           "description": "This cover image will replace the background video on mobile and tablet devices.",
           "show_label": true,
           "label_block": true,
           "separator": "default",
+          "media_type": "image",
           "dynamic": {
             "categories": [
               "image"
@@ -752,10 +849,6 @@ var ElementorConfig = {
             "returnType": "object"
           },
           "features": [],
-          "default_value": {
-            "url": "",
-            "id": ""
-          },
           "type": "media",
           "tab": "style",
           "section": "section_page_style",
@@ -821,14 +914,6 @@ var ElementorConfig = {
           "allowed_dimensions": "all",
           "placeholder": "",
           "features": [],
-          "default_value": {
-            "unit": "px",
-            "top": "",
-            "right": "",
-            "bottom": "",
-            "left": "",
-            "isLinked": true
-          },
           "type": "dimensions",
           "tab": "style",
           "section": "section_page_style",
@@ -894,14 +979,6 @@ var ElementorConfig = {
           "allowed_dimensions": "all",
           "placeholder": "",
           "features": [],
-          "default_value": {
-            "unit": "px",
-            "top": "",
-            "right": "",
-            "bottom": "",
-            "left": "",
-            "isLinked": true
-          },
           "type": "dimensions",
           "tab": "style",
           "section": "section_page_style",
@@ -967,14 +1044,6 @@ var ElementorConfig = {
           "allowed_dimensions": "all",
           "placeholder": "",
           "features": [],
-          "default_value": {
-            "unit": "px",
-            "top": "",
-            "right": "",
-            "bottom": "",
-            "left": "",
-            "isLinked": true
-          },
           "type": "dimensions",
           "tab": "style",
           "section": "section_page_style",
@@ -1022,36 +1091,6 @@ var ElementorConfig = {
           "tab": "style",
           "section": "section_custom_css_pro",
           "name": "custom_css_pro"
-        },
-        "advanced_settings": {
-          "label": "Advanced",
-          "description": "",
-          "show_label": true,
-          "label_block": false,
-          "separator": "none",
-          "features": [
-            "ui"
-          ],
-          "type": "section",
-          "tab": "settings",
-          "name": "advanced_settings"
-        },
-        "clear_page": {
-          "label": "Delete All Content",
-          "description": "",
-          "show_label": true,
-          "label_block": false,
-          "separator": "before",
-          "text": "Delete",
-          "event": "elementor:clearPage",
-          "button_type": "default",
-          "features": [
-            "ui"
-          ],
-          "type": "button",
-          "tab": "settings",
-          "section": "advanced_settings",
-          "name": "clear_page"
         }
       },
       "tabs": {
@@ -1059,12 +1098,17 @@ var ElementorConfig = {
         "style": "Style"
       },
       "settings": {
-        "background_background": "classic",
-        "background_color": "#b2b2b2",
         "template": "default",
-        "post_title": "Hello world!",
-        "post_status": "publish",
+        "post_title": "Elementor #81",
+        "post_status": "draft",
+        "post_excerpt": "",
+        "post_featured_image": {
+          "url": false,
+          "id": ""
+        },
         "hide_title": "",
+        "background_background": "",
+        "background_color": "",
         "background_color_stop": {
           "unit": "%",
           "size": 0
@@ -1089,6 +1133,8 @@ var ElementorConfig = {
         "background_repeat": "",
         "background_size": "",
         "background_video_link": "",
+        "background_video_start": "",
+        "background_video_end": "",
         "background_video_fallback": {
           "url": "",
           "id": ""
@@ -1122,11 +1168,11 @@ var ElementorConfig = {
     "general": {
       "name": "general",
       "panelPage": {
-//         "title": "Global Settings",
-//         "menu": {
-//           "icon": "fa fa-cogs",
-//           "beforeItem": "elementor-settings"
-//         }
+        "title": "Global Settings",
+        "menu": {
+          "icon": "fa fa-cogs",
+          "beforeItem": "elementor-settings"
+        }
       },
       "cssWrapperSelector": "",
       "controls": {
@@ -1158,7 +1204,6 @@ var ElementorConfig = {
             ]
           },
           "features": [],
-          "default_value": "",
           "type": "text",
           "tab": "style",
           "section": "style",
@@ -1177,7 +1222,6 @@ var ElementorConfig = {
           "placeholder": "",
           "title": "",
           "features": [],
-          "default_value": "",
           "type": "number",
           "tab": "style",
           "section": "style",
@@ -1199,7 +1243,6 @@ var ElementorConfig = {
           "placeholder": "20",
           "title": "",
           "features": [],
-          "default_value": "",
           "type": "number",
           "tab": "style",
           "section": "style",
@@ -1224,7 +1267,6 @@ var ElementorConfig = {
             ]
           },
           "features": [],
-          "default_value": "",
           "type": "text",
           "tab": "style",
           "section": "style",
@@ -1247,7 +1289,6 @@ var ElementorConfig = {
             ]
           },
           "features": [],
-          "default_value": "",
           "type": "text",
           "tab": "style",
           "section": "style",
@@ -1277,7 +1318,6 @@ var ElementorConfig = {
           "label_on": "Yes",
           "return_value": "yes",
           "features": [],
-          "default_value": "",
           "type": "switcher",
           "tab": "lightbox",
           "section": "lightbox",
@@ -1295,7 +1335,6 @@ var ElementorConfig = {
           "label_on": "Yes",
           "return_value": "yes",
           "features": [],
-          "default_value": "",
           "type": "switcher",
           "tab": "lightbox",
           "section": "lightbox",
@@ -1312,7 +1351,6 @@ var ElementorConfig = {
           "alpha": true,
           "scheme": "",
           "features": [],
-          "default_value": "",
           "type": "color",
           "tab": "lightbox",
           "section": "lightbox",
@@ -1331,7 +1369,6 @@ var ElementorConfig = {
           "alpha": true,
           "scheme": "",
           "features": [],
-          "default_value": "",
           "type": "color",
           "tab": "lightbox",
           "section": "lightbox",
@@ -1350,7 +1387,6 @@ var ElementorConfig = {
           "alpha": true,
           "scheme": "",
           "features": [],
-          "default_value": "",
           "type": "color",
           "tab": "lightbox",
           "section": "lightbox",
@@ -1379,25 +1415,226 @@ var ElementorConfig = {
       }
     }
   },
+  "system_schemes": {
+    "color": {
+      "joker": {
+        "title": "Joker",
+        "items": {
+          "1": "#202020",
+          "2": "#b7b4b4",
+          "3": "#707070",
+          "4": "#f6121c"
+        }
+      },
+      "ocean": {
+        "title": "Ocean",
+        "items": {
+          "1": "#1569ae",
+          "2": "#b6c9db",
+          "3": "#545454",
+          "4": "#fdd247"
+        }
+      },
+      "royal": {
+        "title": "Royal",
+        "items": {
+          "1": "#d5ba7f",
+          "2": "#902729",
+          "3": "#ae4848",
+          "4": "#302a8c"
+        }
+      },
+      "violet": {
+        "title": "Violet",
+        "items": {
+          "1": "#747476",
+          "2": "#ebca41",
+          "3": "#6f1683",
+          "4": "#a43cbd"
+        }
+      },
+      "sweet": {
+        "title": "Sweet",
+        "items": {
+          "1": "#6ccdd9",
+          "2": "#763572",
+          "3": "#919ca7",
+          "4": "#f12184"
+        }
+      },
+      "urban": {
+        "title": "Urban",
+        "items": {
+          "1": "#db6159",
+          "2": "#3b3b3b",
+          "3": "#7a7979",
+          "4": "#2abf64"
+        }
+      },
+      "earth": {
+        "title": "Earth",
+        "items": {
+          "1": "#882021",
+          "2": "#c48e4c",
+          "3": "#825e24",
+          "4": "#e8c12f"
+        }
+      },
+      "river": {
+        "title": "River",
+        "items": {
+          "1": "#8dcfc8",
+          "2": "#565656",
+          "3": "#50656e",
+          "4": "#dc5049"
+        }
+      },
+      "pastel": {
+        "title": "Pastel",
+        "items": {
+          "1": "#f27f6f",
+          "2": "#f4cd78",
+          "3": "#a5b3c1",
+          "4": "#aac9c3"
+        }
+      }
+    },
+    "typography": [],
+    "color-picker": {
+      "joker": {
+        "title": "Joker",
+        "items": {
+          "1": "#202020",
+          "2": "#b7b4b4",
+          "3": "#707070",
+          "4": "#f6121c",
+          "5": "#4b4646",
+          "6": "#e2e2e2",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "ocean": {
+        "title": "Ocean",
+        "items": {
+          "1": "#1569ae",
+          "2": "#b6c9db",
+          "3": "#545454",
+          "4": "#fdd247",
+          "5": "#154d80",
+          "6": "#8c8c8c",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "royal": {
+        "title": "Royal",
+        "items": {
+          "1": "#d5ba7f",
+          "2": "#902729",
+          "3": "#ae4848",
+          "4": "#302a8c",
+          "5": "#ac8e4d",
+          "6": "#e2cea1",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "violet": {
+        "title": "Violet",
+        "items": {
+          "1": "#747476",
+          "2": "#ebca41",
+          "3": "#6f1683",
+          "4": "#a43cbd",
+          "5": "#9c9ea6",
+          "6": "#c184d0",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "sweet": {
+        "title": "Sweet",
+        "items": {
+          "1": "#6ccdd9",
+          "2": "#763572",
+          "3": "#919ca7",
+          "4": "#f12184",
+          "5": "#41aab9",
+          "6": "#ffc72f",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "urban": {
+        "title": "Urban",
+        "items": {
+          "1": "#db6159",
+          "2": "#3b3b3b",
+          "3": "#7a7979",
+          "4": "#2abf64",
+          "5": "#aa4039",
+          "6": "#94dbaf",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "earth": {
+        "title": "Earth",
+        "items": {
+          "1": "#882021",
+          "2": "#c48e4c",
+          "3": "#825e24",
+          "4": "#e8c12f",
+          "5": "#aa6666",
+          "6": "#efe5d9",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "river": {
+        "title": "River",
+        "items": {
+          "1": "#8dcfc8",
+          "2": "#565656",
+          "3": "#50656e",
+          "4": "#dc5049",
+          "5": "#7b8c93",
+          "6": "#eb6d65",
+          "7": "#000",
+          "8": "#fff"
+        }
+      },
+      "pastel": {
+        "title": "Pastel",
+        "items": {
+          "1": "#f27f6f",
+          "2": "#f4cd78",
+          "3": "#a5b3c1",
+          "4": "#aac9c3",
+          "5": "#f5a46c",
+          "6": "#6e6f71",
+          "7": "#000",
+          "8": "#fff"
+        }
+      }
+    }
+  },
   "wp_editor": "<div id=\"wp-elementorwpeditor-wrap\" class=\"wp-core-ui wp-editor-wrap tmce-active\"><div id=\"wp-elementorwpeditor-editor-tools\" class=\"wp-editor-tools hide-if-no-js\"><div id=\"wp-elementorwpeditor-media-buttons\" class=\"wp-media-buttons\"><button type=\"button\" id=\"insert-media-button\" class=\"button insert-media add_media\" data-editor=\"elementorwpeditor\"><span class=\"wp-media-buttons-icon\"></span> Add Media</button></div>\n<div class=\"wp-editor-tabs\"><button type=\"button\" id=\"elementorwpeditor-tmce\" class=\"wp-switch-editor switch-tmce\" data-wp-editor-id=\"elementorwpeditor\">Visual</button>\n<button type=\"button\" id=\"elementorwpeditor-html\" class=\"wp-switch-editor switch-html\" data-wp-editor-id=\"elementorwpeditor\">Text</button>\n</div>\n</div>\n<div id=\"wp-elementorwpeditor-editor-container\" class=\"wp-editor-container\"><div id=\"qt_elementorwpeditor_toolbar\" class=\"quicktags-toolbar\"></div><textarea class=\"elementor-wp-editor wp-editor-area\" style=\"height: 250px\" autocomplete=\"off\" cols=\"40\" name=\"elementorwpeditor\" id=\"elementorwpeditor\">%%EDITORCONTENT%%</textarea></div>\n</div>\n\n",
   "settings_page_link": "http://localhost/wordpress/wp-admin/admin.php?page=elementor",
   "elementor_site": "https://go.elementor.com/about-elementor/",
   "docs_elementor_site": "https://go.elementor.com/docs/",
   "help_the_content_url": "https://go.elementor.com/the-content-missing/",
   "help_preview_error_url": "https://go.elementor.com/preview-not-loaded/",
+  "help_right_click_url": "https://go.elementor.com/meet-right-click/",
   "locked_user": false,
   "user": {
     "restrictions": [],
-    "is_administrator": true
+    "is_administrator": true,
+    "introduction": true
   },
   "is_rtl": false,
   "locale": "en_US",
-  "viewportBreakpoints": {
-    "xs": 0,
-    "sm": 480,
-    "md": 768,
-    "lg": 1025
-  },
   "rich_editing_enabled": true,
   "page_title_selector": "h1.entry-title",
   "tinymceHasCustomConfig": false,
@@ -1440,7 +1677,16 @@ var ElementorConfig = {
       }
     }
   },
-  "revisions": [],
+  "revisions": [
+    {
+      "id": 81,
+      "author": "admin",
+      "timestamp": 1531221853,
+      "date": "7 mins ago (Jul 10 @ 11:24)",
+      "type": "current",
+      "gravatar": "<img alt='' src='http://0.gravatar.com/avatar/614ae9974bd7f1de13322d66b887d994?s=22&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/614ae9974bd7f1de13322d66b887d994?s=44&#038;d=mm&#038;r=g 2x' class='avatar avatar-22 photo' height='22' width='22' />"
+    }
+  ],
   "revisions_enabled": true,
-  "current_revision_id": "26"
+  "current_revision_id": 81
 }
