@@ -45,8 +45,13 @@ function wp_send_json_successt() {}
 function wp_send_json_errort() {}
 function wp_image_editor_supports(){}
 function wp_embed_defaults(){}
-
+function update_post_meta() {}
+function delete_post_meta() {}
 function wp_oembed_get(){}
+
+function get_post_meta(){
+    return TRUE;
+}
 function get_intermediate_image_sizes(){}
 function is_rtl(){}
 function is_wp_error() {}
