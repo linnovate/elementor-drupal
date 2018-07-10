@@ -65,8 +65,30 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
         $config_scripts = ElementorDrupal::editor_config_script_tags();
 
+        $dataSaved = \Drupal::state()->get('elementor_data');
+        $preview_data = ElementorDrupal::preview_data($dataSaved);
+
+        ob_start();
+
+        echo '<script>' . PHP_EOL;
+        echo '/* <![CDATA[ */' . PHP_EOL;
+        $preview_data_json = json_encode($preview_data);
+        unset($preview_data);
+        echo 'var _ElementorData = ' . $preview_data_json . ';' . PHP_EOL;
+
+        echo 'window._ElementorConfig.data =  _ElementorData.elements;' . PHP_EOL;
+        echo 'window._ElementorConfig.document = { urls: { preview: "/node/1" } };' . PHP_EOL;
+        echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
+        
+        echo '/* ]]> */' . PHP_EOL;
+        echo '</script>';
+
+        $preview_data = ob_get_clean();
+
+        ob_start();
+
         $html = $template->render([
-            elementor_data => $config_scripts,
+            elementor_data => $config_scripts . $preview_data,
             base_path => base_path(),
         ]);
 

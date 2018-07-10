@@ -1,4 +1,4 @@
-/*! elementor - v2.0.16 - 12-06-2018 */
+/*! elementor - v2.1.2 - 08-07-2018 */
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var ElementsHandler;
 
@@ -269,12 +269,28 @@ module.exports = ElementsHandler;
 				return;
 			}
 
+			this.removeListeners( listenerID, event, to );
+
 			if ( to instanceof jQuery ) {
 				var eventNS = event + '.' + listenerID;
 
-				to.off( eventNS ).on( eventNS, callback );
+				to.on( eventNS, callback );
 			} else {
-				to.off( event, null, listenerID ).on( event, callback, listenerID );
+				to.on( event, callback, listenerID );
+			}
+		};
+
+		this.removeListeners = function( listenerID, event, callback, from ) {
+			if ( ! from ) {
+				from = self.getElements( '$window' );
+			}
+
+			if ( from instanceof jQuery ) {
+				var eventNS = event + '.' + listenerID;
+
+				from.off( eventNS, callback );
+			} else {
+				from.off( event, callback, listenerID );
 			}
 		};
 
@@ -320,6 +336,8 @@ var ViewModule = require( '../utils/view-module' ),
 HandlerModule = ViewModule.extend( {
 	$element: null,
 
+	editorListeners: null,
+
 	onElementChange: null,
 
 	onEditSettingsChange: null,
@@ -336,7 +354,7 @@ HandlerModule = ViewModule.extend( {
 		this.isEdit = this.$element.hasClass( 'elementor-element-edit-mode' );
 
 		if ( this.isEdit ) {
-			this.addEditorListener();
+			this.addEditorListeners();
 		}
 	},
 
@@ -360,9 +378,22 @@ HandlerModule = ViewModule.extend( {
 		return cid + $element.attr( 'data-element_type' ) + this.getConstructorID();
 	},
 
-	addEditorListener: function() {
-		var self = this,
-			uniqueHandlerID = self.getUniqueHandlerID();
+	initEditorListeners: function() {
+		var self = this;
+
+		self.editorListeners = [
+			{
+				event: 'element:destroy',
+				to: elementor.channels.data,
+				callback: function( removedModel ) {
+					if ( removedModel.cid !== self.getModelCID() ) {
+						return;
+					}
+
+					self.onDestroy();
+				}
+			}
+		];
 
 		if ( self.onElementChange ) {
 			var elementName = self.getElementName(),
@@ -372,35 +403,71 @@ HandlerModule = ViewModule.extend( {
 				eventName += ':' + elementName;
 			}
 
-			elementorFrontend.addListenerOnce( uniqueHandlerID, eventName, function( controlView, elementView ) {
-				var elementViewHandlerID = self.getUniqueHandlerID( elementView.model.cid, elementView.$el );
+			self.editorListeners.push( {
+				event: eventName,
+				to: elementor.channels.editor,
+				callback: function( controlView, elementView ) {
+					var elementViewHandlerID = self.getUniqueHandlerID( elementView.model.cid, elementView.$el );
 
-				if ( elementViewHandlerID !== uniqueHandlerID ) {
-					return;
+					if ( elementViewHandlerID !== self.getUniqueHandlerID() ) {
+						return;
+					}
+
+					self.onElementChange( controlView.model.get( 'name' ),  controlView, elementView );
 				}
-
-				self.onElementChange( controlView.model.get( 'name' ),  controlView, elementView );
-			}, elementor.channels.editor );
+			} );
 		}
 
 		if ( self.onEditSettingsChange ) {
-			elementorFrontend.addListenerOnce( uniqueHandlerID, 'change:editSettings', function( changedModel, view ) {
-				if ( view.model.cid !== self.getModelCID() ) {
-					return;
-				}
+			self.editorListeners.push( {
+				event: 'change:editSettings',
+				to: elementor.channels.editor,
+				callback: function( changedModel, view ) {
+					if ( view.model.cid !== self.getModelCID() ) {
+						return;
+					}
 
-				self.onEditSettingsChange( Object.keys( changedModel.changed )[0] );
-			}, elementor.channels.editor );
+					self.onEditSettingsChange( Object.keys( changedModel.changed )[0] );
+				}
+			} );
 		}
 
 		[ 'page', 'general' ].forEach( function( settingsType ) {
-			var listenerMethodName = 'on' + settingsType.charAt( 0 ).toUpperCase() + settingsType.slice( 1 ) + 'SettingsChange';
+			var listenerMethodName = 'on' + elementor.helpers.firstLetterUppercase( settingsType ) + 'SettingsChange';
 
 			if ( self[ listenerMethodName ] ) {
-				elementorFrontend.addListenerOnce( uniqueHandlerID, 'change', function( model ) {
-					self[ listenerMethodName ]( model.changed );
-				}, elementor.settings[ settingsType ].model );
+				self.editorListeners.push( {
+					event: 'change',
+					to: elementor.settings[ settingsType ].model,
+					callback: function( model ) {
+						self[ listenerMethodName ]( model.changed );
+					}
+				} );
 			}
+		} );
+	},
+
+	getEditorListeners: function() {
+		if ( ! this.editorListeners ) {
+			this.initEditorListeners();
+		}
+
+		return this.editorListeners;
+	},
+
+	addEditorListeners: function() {
+		var uniqueHandlerID = this.getUniqueHandlerID();
+
+		this.getEditorListeners().forEach( function( listener ) {
+			elementorFrontend.addListenerOnce( uniqueHandlerID, listener.event, listener.callback, listener.to );
+		} );
+	},
+
+	removeEditorListeners: function() {
+		var uniqueHandlerID = this.getUniqueHandlerID();
+
+		this.getEditorListeners().forEach( function( listener ) {
+			elementorFrontend.removeListeners( uniqueHandlerID, listener.event, null, listener.to );
 		} );
 	},
 
@@ -444,6 +511,14 @@ HandlerModule = ViewModule.extend( {
 		}
 
 		return this.getItems( attributes, setting );
+	},
+
+	onDestroy: function() {
+		this.removeEditorListeners();
+
+		if ( this.unbindEvents ) {
+			this.unbindEvents();
+		}
 	}
 } );
 
@@ -688,7 +763,8 @@ ImageCarouselHandler = HandlerModule.extend( {
 
 		var elementSettings = this.getElementSettings(),
 			slidesToShow = +elementSettings.slides_to_show || 3,
-			isSingleSlide = 1 === slidesToShow;
+			isSingleSlide = 1 === slidesToShow,
+			breakpoints = elementorFrontend.config.breakpoints;
 
 		var slickOptions = {
 			slidesToShow: slidesToShow,
@@ -702,14 +778,14 @@ ImageCarouselHandler = HandlerModule.extend( {
 			rtl: 'rtl' === elementSettings.direction,
 			responsive: [
 				{
-					breakpoint: 1025,
+					breakpoint: breakpoints.lg,
 					settings: {
 						slidesToShow: +elementSettings.slides_to_show_tablet || ( isSingleSlide ? 1 : 2 ),
 						slidesToScroll: 1
 					}
 				},
 				{
-					breakpoint: 768,
+					breakpoint: breakpoints.md,
 					settings: {
 						slidesToShow: +elementSettings.slides_to_show_mobile || 1,
 						slidesToScroll: 1
@@ -795,9 +871,33 @@ var BackgroundVideo = HandlerModule.extend( {
 		$video.width( size.width ).height( size.height );
 	},
 
+	startVideoLoop: function() {
+		var self = this;
+
+		// If the section has been removed
+		if ( ! self.player.getIframe().contentWindow ) {
+			return;
+		}
+
+		var elementSettings = self.getElementSettings(),
+			startPoint = elementSettings.background_video_start || 0,
+			endPoint = elementSettings.background_video_end;
+
+		self.player.seekTo( startPoint );
+
+		if ( endPoint ) {
+			var durationToEnd = endPoint - startPoint + 1;
+
+			setTimeout( function() {
+				self.startVideoLoop();
+			}, durationToEnd * 1000 );
+		}
+	},
+
 	prepareYTVideo: function( YT, videoID ) {
 		var self = this,
 			$backgroundVideoContainer = self.elements.$backgroundVideoContainer,
+			elementSettings = self.getElementSettings(),
 			startStateCode = YT.PlayerState.PLAYING;
 
 		// Since version 67, Chrome doesn't fire the `PLAYING` state at start time
@@ -815,6 +915,8 @@ var BackgroundVideo = HandlerModule.extend( {
 
 					self.changeVideoSize();
 
+					self.startVideoLoop();
+
 					self.player.playVideo();
 				},
 				onStateChange: function( event ) {
@@ -824,7 +926,7 @@ var BackgroundVideo = HandlerModule.extend( {
 
 							break;
 						case YT.PlayerState.ENDED:
-							self.player.seekTo( 0 );
+							self.player.seekTo( elementSettings.background_video_start || 0 );
 					}
 				}
 			},
@@ -892,21 +994,36 @@ var StretchedSection = HandlerModule.extend( {
 	stretchElement: null,
 
 	bindEvents: function() {
-		elementorFrontend.addListenerOnce( this.$element.data( 'model-cid' ), 'resize', this.stretch );
+		var handlerID = this.getUniqueHandlerID();
+
+		elementorFrontend.addListenerOnce( handlerID, 'resize', this.stretch );
+
+		elementorFrontend.addListenerOnce( handlerID, 'sticky:stick', this.stretch, this.$element );
+
+		elementorFrontend.addListenerOnce( handlerID, 'sticky:unstick', this.stretch, this.$element );
+	},
+
+	unbindEvents: function() {
+		elementorFrontend.removeListeners( this.getUniqueHandlerID(), 'resize', this.stretch );
 	},
 
 	initStretch: function() {
-		this.stretchElement = new elementorFrontend.modules.StretchElement( { element: this.$element } );
+		this.stretchElement = new elementorFrontend.modules.StretchElement( {
+			element: this.$element,
+			selectors: {
+				container: this.getStretchContainer()
+			}
+		} );
+	},
+
+	getStretchContainer: function() {
+		return elementorFrontend.getGeneralSettings( 'elementor_stretched_section_container' ) || window;
 	},
 
 	stretch: function() {
-		var isStretched = this.$element.hasClass( 'elementor-section-stretched' );
-
-		if ( ! isStretched ) {
+		if ( ! this.getElementSettings( 'stretch_section' ) ) {
 			return;
 		}
-
-		this.stretchElement.setSettings( 'selectors.container', elementorFrontend.getGeneralSettings( 'elementor_stretched_section_container' ) || window );
 
 		this.stretchElement.stretch();
 	},
@@ -916,17 +1033,23 @@ var StretchedSection = HandlerModule.extend( {
 
 		this.initStretch();
 
-		var isStretched = this.$element.hasClass( 'elementor-section-stretched' );
-
-		if ( elementorFrontend.isEditMode() || isStretched ) {
-			this.stretchElement.reset();
-		}
-
 		this.stretch();
+	},
+
+	onElementChange: function( propertyName ) {
+		if ( 'stretch_section' === propertyName ) {
+			if ( this.getElementSettings( 'stretch_section' ) ) {
+				this.stretch();
+			} else {
+				this.stretchElement.reset();
+			}
+		}
 	},
 
 	onGeneralSettingsChange: function( changed ) {
 		if ( 'elementor_stretched_section_container' in changed ) {
+			this.stretchElement.setSettings( 'selectors.container', this.getStretchContainer() );
+
 			this.stretch();
 		}
 	}
@@ -1016,6 +1139,44 @@ var Shapes = HandlerModule.extend( {
 	}
 } );
 
+var HandlesPosition = HandlerModule.extend( {
+
+    isFirst: function() {
+        return this.$element.is( '.elementor-edit-mode .elementor-top-section:first' );
+    },
+
+    getOffset: function() {
+        return this.$element.offset().top;
+    },
+
+    setHandlesPosition: function() {
+        var self = this;
+
+        if ( self.isFirst() ) {
+            var offset = self.getOffset(),
+                $handlesElement = self.$element.find( '> .elementor-element-overlay > .elementor-editor-section-settings' ),
+                insideHandleClass = 'elementor-section--handles-inside';
+
+            if ( offset < 25 ) {
+                self.$element.addClass( insideHandleClass );
+
+                if ( offset < -5 ) {
+                    $handlesElement.css( 'top', -offset );
+                } else {
+                    $handlesElement.css( 'top', '' );
+                }
+            } else {
+                self.$element.removeClass( insideHandleClass );
+            }
+        }
+    },
+
+    onInit: function() {
+        this.setHandlesPosition();
+        this.$element.on( 'mouseenter', this.setHandlesPosition );
+    }
+} );
+
 module.exports = function( $scope ) {
 	if ( elementorFrontend.isEditMode() || $scope.hasClass( 'elementor-section-stretched' ) ) {
 		new StretchedSection( { $element: $scope } );
@@ -1023,6 +1184,7 @@ module.exports = function( $scope ) {
 
 	if ( elementorFrontend.isEditMode() ) {
 		new Shapes( { $element: $scope } );
+		new HandlesPosition( { $element: $scope } );
 	}
 
 	new BackgroundVideo( { $element: $scope } );
@@ -1163,8 +1325,8 @@ VideoModule = HandlerModule.extend( {
 		return {
 			selectors: {
 				imageOverlay: '.elementor-custom-embed-image-overlay',
-				videoWrapper: '.elementor-wrapper',
-				videoFrame: 'iframe'
+				video: '.elementor-video',
+				videoIframe: '.elementor-video-iframe'
 			}
 		};
 	},
@@ -1172,14 +1334,11 @@ VideoModule = HandlerModule.extend( {
 	getDefaultElements: function() {
 		var selectors = this.getSettings( 'selectors' );
 
-		var elements = {
+		return {
 			$imageOverlay: this.$element.find( selectors.imageOverlay ),
-			$videoWrapper: this.$element.find( selectors.videoWrapper )
+			$video: this.$element.find( selectors.video ),
+			$videoIframe: this.$element.find( selectors.videoIframe )
 		};
-
-		elements.$videoFrame = elements.$videoWrapper.find( selectors.videoFrame );
-
-		return elements;
 	},
 
 	getLightBox: function() {
@@ -1195,10 +1354,16 @@ VideoModule = HandlerModule.extend( {
 	},
 
 	playVideo: function() {
-		var $videoFrame = this.elements.$videoFrame,
-			newSourceUrl = $videoFrame[0].src.replace( '&autoplay=0', '' );
+		if ( this.elements.$video.length ) {
+			this.elements.$video[0].play();
 
-		$videoFrame[0].src = newSourceUrl + '&autoplay=1';
+			return;
+		}
+
+		var $videoIframe = this.elements.$videoIframe,
+			newSourceUrl = $videoIframe[0].src.replace( '&autoplay=0', '' );
+
+		$videoIframe[0].src = newSourceUrl + '&autoplay=1';
 	},
 
 	animateVideo: function() {
@@ -1270,35 +1435,39 @@ module.exports = ViewModule.extend( {
 			$container = jQuery( this.getDefaultSettings().selectors.container );
 		}
 
-		var $element = this.elements.$element,
-			isSpecialContainer = window !== $container[0];
-
 		this.reset();
 
-		var containerWidth = $container.outerWidth(),
-			elementWidth = $element.outerWidth(),
+		var $element = this.elements.$element,
+			containerWidth = $container.outerWidth(),
 			elementOffset = $element.offset().left,
-			correctOffset = elementOffset;
+			isFixed = 'fixed' === $element.css( 'position' ),
+			correctOffset = isFixed ? 0 : elementOffset;
 
-		if ( isSpecialContainer ) {
+		if ( window !== $container[0] ) {
 			var containerOffset = $container.offset().left;
 
-			if ( elementOffset > containerOffset ) {
-				correctOffset = elementOffset - containerOffset;
+			if ( isFixed ) {
+				correctOffset = containerOffset;
 			} else {
-				correctOffset = 0;
+				if ( elementOffset > containerOffset ) {
+					correctOffset = elementOffset - containerOffset;
+				}
 			}
 		}
 
-		if ( elementorFrontend.config.is_rtl ) {
-			correctOffset = containerWidth - ( elementWidth + correctOffset );
+		if ( ! isFixed ) {
+			if ( elementorFrontend.config.is_rtl ) {
+				correctOffset = containerWidth - ( $element.outerWidth() + correctOffset );
+			}
+
+			correctOffset = -correctOffset;
 		}
 
 		var css = {};
 
 		css.width = containerWidth + 'px';
 
-		css[ this.getSettings( 'direction' ) ] = -correctOffset + 'px';
+		css[ this.getSettings( 'direction' ) ] = correctOffset + 'px';
 
 		$element.css( css );
 	},
@@ -1319,7 +1488,6 @@ var ViewModule = require( '../../utils/view-module' );
 
 module.exports = ViewModule.extend( {
 	getDefaultSettings: function() {
-
 		return {
 			scrollDuration: 500,
 			selectors: {
@@ -1360,7 +1528,7 @@ module.exports = ViewModule.extend( {
 
 		var scrollTop = $anchor.offset().top,
 			$wpAdminBar = elementorFrontend.getElements( '$wpAdminBar' ),
-			$activeStickys = jQuery( '.elementor-sticky--active' ),
+			$activeStickies = jQuery( '.elementor-sticky--active' ),
 			maxStickyHeight = 0;
 
 		if ( $wpAdminBar.length > 0 ) {
@@ -1368,9 +1536,9 @@ module.exports = ViewModule.extend( {
 		}
 
 		// Offset height of tallest sticky
-		if ( $activeStickys.length > 0 ) {
-			 maxStickyHeight = Math.max.apply( null, $activeStickys.map( function() {
-				return jQuery( this ).height();
+		if ( $activeStickies.length > 0 ) {
+			 maxStickyHeight = Math.max.apply( null, $activeStickies.map( function() {
+				return jQuery( this ).outerHeight();
 			} ).get() );
 
 			scrollTop -= maxStickyHeight;
@@ -1502,7 +1670,7 @@ LightboxModule = ViewModule.extend( {
 
 				break;
 			case 'video':
-				self.setVideoContent( options.url );
+				self.setVideoContent( options );
 
 				break;
 			case 'slideshow':
@@ -1531,18 +1699,30 @@ LightboxModule = ViewModule.extend( {
 		self.getModal().setMessage( $item );
 	},
 
-	setVideoContent: function( videoEmbedURL ) {
-		videoEmbedURL = videoEmbedURL.replace( '&autoplay=0', '' ) + '&autoplay=1';
-
+	setVideoContent: function( options ) {
 		var classes = this.getSettings( 'classes' ),
 			$videoContainer = jQuery( '<div>', { 'class': classes.videoContainer } ),
 			$videoWrapper = jQuery( '<div>', { 'class': classes.videoWrapper } ),
-			$videoFrame = jQuery( '<iframe>', { src: videoEmbedURL, allowfullscreen: 1 } ),
+			$videoElement,
 			modal = this.getModal();
+
+		if ( 'hosted' === options.videoType ) {
+			var videoParams = { src: options.url, autoplay: '' };
+
+			options.videoParams.forEach( function( param ) {
+				videoParams[ param ] = '';
+			} );
+
+			$videoElement = jQuery( '<video>', videoParams );
+		} else {
+			var videoURL = options.url.replace( '&autoplay=0', '' ) + '&autoplay=1';
+
+			$videoElement = jQuery( '<iframe>', { src: videoURL, allowfullscreen: 1 } );
+		}
 
 		$videoContainer.append( $videoWrapper );
 
-		$videoWrapper.append( $videoFrame );
+		$videoWrapper.append( $videoElement );
 
 		modal.setMessage( $videoContainer );
 
@@ -1610,14 +1790,20 @@ LightboxModule = ViewModule.extend( {
 			onShowMethod();
 
 			var swiperOptions = {
-				prevButton: $prevButton,
-				nextButton: $nextButton,
-				paginationClickable: true,
+				navigation: {
+					prevEl: $prevButton,
+					nextEl: $nextButton
+				},
+				pagination: {
+					clickable: true
+				},
+				on: {
+					slideChangeTransitionEnd: self.onSlideChange
+				},
 				grabCursor: true,
-				onSlideChangeEnd: self.onSlideChange,
 				runCallbacksOnInit: false,
 				loop: true,
-				keyboardControl: true
+				keyboard: true
 			};
 
 			if ( options.swiper ) {
@@ -1651,7 +1837,7 @@ LightboxModule = ViewModule.extend( {
 	},
 
 	getSlide: function( slideState ) {
-		return this.swiper.slides.filter( this.getSettings( 'selectors.slideshow.' + slideState + 'Slide' ) );
+		return jQuery( this.swiper.slides ).filter( this.getSettings( 'selectors.slideshow.' + slideState + 'Slide' ) );
 	},
 
 	playSlideVideo: function() {
@@ -1662,9 +1848,8 @@ LightboxModule = ViewModule.extend( {
 			return;
 		}
 
-		var classes = this.getSettings( 'classes' );
-
-		var $videoContainer = jQuery( '<div>', { 'class': classes.videoContainer + ' ' + classes.invisible } ),
+		var classes = this.getSettings( 'classes' ),
+			$videoContainer = jQuery( '<div>', { 'class': classes.videoContainer + ' ' + classes.invisible } ),
 			$videoWrapper = jQuery( '<div>', { 'class': classes.videoWrapper } ),
 			$videoFrame = jQuery( '<iframe>', { src: videoURL } ),
 			$playIcon = $activeSlide.children( '.' + classes.playButton );
@@ -2158,10 +2343,6 @@ module.exports = EventManager;
 var HotKeys = function() {
 	var hotKeysHandlers = {};
 
-	var isMac = function() {
-		return -1 !== navigator.userAgent.indexOf( 'Mac OS X' );
-	};
-
 	var applyHotKey = function( event ) {
 		var handlers = hotKeysHandlers[ event.which ];
 
@@ -2188,7 +2369,7 @@ var HotKeys = function() {
 	};
 
 	this.isControlEvent = function( event ) {
-		return event[ isMac() ? 'metaKey' : 'ctrlKey' ];
+		return event[ elementor.envData.mac ? 'metaKey' : 'ctrlKey' ];
 	};
 
 	this.addHotKeyHandler = function( keyCode, handlerName, handler ) {

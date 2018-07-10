@@ -2,9 +2,9 @@
 namespace Elementor\Modules\History;
 
 use Elementor\Core\Base\Document;
+use Elementor\Core\Files\CSS\Post as Post_CSS;
 use Elementor\Core\Settings\Manager;
 use Elementor\Plugin;
-use Elementor\Post_CSS_File;
 use Elementor\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -59,16 +59,19 @@ class Revisions_Manager {
 	}
 
 	/**
-	 * @since 2.0.0
+	 * @since  2.0.0
 	 * @access public
 	 * @static
+	 *
+	 * @param $post_content
+	 * @param $post_id
+	 *
+	 * @return string
 	 */
-	public static function avoid_delete_auto_save( $post_content ) {
-		global $post;
-
+	public static function avoid_delete_auto_save( $post_content, $post_id ) {
 		// Add a temporary string in order the $post will not be equal to the $autosave
 		// in edit-form-advanced.php:210
-		if ( Plugin::$instance->db->is_built_with_elementor( $post->ID ) ) {
+		if ( $post_id && Plugin::$instance->db->is_built_with_elementor( $post_id ) ) {
 			$post_content .= '<!-- Created with Elementor -->';
 		}
 
@@ -216,7 +219,7 @@ class Revisions_Manager {
 
 		Plugin::$instance->db->copy_elementor_meta( $revision_id, $parent_id );
 
-		$post_css = new Post_CSS_File( $parent_id );
+		$post_css = new Post_CSS( $parent_id );
 
 		$post_css->update();
 	}
@@ -398,7 +401,7 @@ class Revisions_Manager {
 		add_action( 'wp_creating_autosave', [ __CLASS__, 'update_autosave' ] );
 
 		// Hack to avoid delete the auto-save revision in WP editor.
-		add_filter( 'edit_post_content', [ __CLASS__, 'avoid_delete_auto_save' ] );
+		add_filter( 'edit_post_content', [ __CLASS__, 'avoid_delete_auto_save' ], 10, 2 );
 		add_action( 'edit_form_after_title', [ __CLASS__, 'remove_temp_post_content' ] );
 
 		if ( Utils::is_ajax() ) {

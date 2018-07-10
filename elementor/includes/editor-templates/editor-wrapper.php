@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $wp_version;
 
-// $document = Plugin::$instance->documents->get( $this->_post_id );
+$document = Plugin::$instance->documents->get( $this->_post_id );
 
 $body_classes = [
 	'elementor-editor-active',
@@ -17,18 +17,19 @@ $body_classes = [
 if ( is_rtl() ) {
 	$body_classes[] = 'rtl';
 }
-// if ( ! Plugin::$instance->role_manager->user_can( 'design' ) ) {
-// 	$body_classes[] = 'elementor-editor-content-only';
-// }
+if ( ! Plugin::$instance->role_manager->user_can( 'design' ) ) {
+	$body_classes[] = 'elementor-editor-content-only';
+}
 ?>
 <!DOCTYPE html>
-<html >
+<html <?php language_attributes(); ?>>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title></title>
+	<title><?php echo __( 'Elementor', 'elementor' ) . ' | ' . get_the_title(); ?></title>
+	<?php wp_head(); ?>
 	<script>
-		var ajaxurl = '';
+		var ajaxurl = '<?php echo admin_url( 'admin-ajax.php', 'relative' ); ?>';
 	</script>
 </head>
 <body class="<?php echo implode( ' ', $body_classes ); ?>">
@@ -56,5 +57,10 @@ if ( is_rtl() ) {
 	</div>
 	<div id="elementor-panel" class="elementor-panel"></div>
 </div>
+<?php
+	wp_footer();
+	/** This action is documented in wp-admin/admin-footer.php */
+	do_action( 'admin_print_footer_scripts' );
+?>
 </body>
 </html>

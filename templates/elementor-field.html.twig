@@ -203,8 +203,9 @@
 
 <script type="text/javascript">
   /* <![CDATA[ */
-  window.ElementorConfigData = "{{ elementor_data.elements|json_encode() }}";
-  window.ElementorConfigData = JSON.parse(ElementorConfigData.replace(/&quot;/g, '"'));
+  if ((document.querySelector('.elementor-edit-mode '))
+  document.body.classList.add('elementor-preview-window');
+		
   /* ]]> */
 </script>
 

@@ -1,7 +1,7 @@
 <?php
 
 define( 'ABSPATH' , FALSE);
-define( 'ELEMENTOR_VERSION', '2.0.16' );
+define( 'ELEMENTOR_VERSION', '2.1.2' );
 define( 'ELEMENTOR_PREVIOUS_STABLE_VERSION', '1.9.8' );
 define( 'ELEMENTOR__FILE__', __FILE__ );
 define( 'ELEMENTOR_PLUGIN_BASE', '');
@@ -19,7 +19,24 @@ function wp_register_script(){}
 function wp_enqueue_media() {}
 function wp_enqueue_script() {}
 function wp_enqueue_style() {}
-function wp_get_theme(){}
+
+class fun_parent {
+	public function parent() {
+    return FALSE;
+  }
+  public function get(  ) {
+    return '';
+  }
+}
+function wp_get_theme(){
+  return new fun_parent; 
+}
+function sanitize_key( $key ) {
+    $raw_key = $key;
+    $key = strtolower( $key );
+    $key = preg_replace( '/[^a-z0-9_\-]/', '', $key );
+    return $key;
+}
 function wp_upload_dir() {}
 function wp_mkdir_p() {}
 function wp_get_current_user() {}
@@ -27,7 +44,11 @@ function wp_redirect(){}
 function wp_send_json_successt() {}
 function wp_send_json_errort() {}
 function wp_image_editor_supports(){}
+function wptexturize(){}
+function wp_embed_defaults(){}
 
+function wp_oembed_get(){}
+function get_intermediate_image_sizes(){}
 function is_rtl(){}
 function is_wp_error() {}
 function admin_url() {}
@@ -36,44 +57,75 @@ function add_menu_page(){}
 function add_submenu_page(){}
 function register_activation_hook() {}
 function add_post_type_support() {}
+function shortcode_unautop(){}
+function do_shortcode(){}
 
 function did_actiont() {}
 function get_bloginfo(){}
-function  _x() {}
+
 function register_taxonomy(){}
 function register_post_type(){}
 function register_uninstall_hook() {}
 function _doing_it_wrong() {}
-function apply_filters_ref_array() {}
 function add_query_arg() {}
 function is_singular() {}
-function did_action($tag) {}
 function get_the_ID() {}
 function post_type_supports(){}
 function get_post_type() {}
+function remove_filter(){}
 
+function did_action($tag) {}
 function do_action() {}
 function update_option() {}
 function get_option() {}
 function remove_action(){}
 
+function apply_filters_ref_array($tag, $args) {
+ /*   global $wp_filter, $wp_current_filter;
+ 
+    // Do 'all' actions first
+    if ( isset($wp_filter['all']) ) {
+        $wp_current_filter[] = $tag;
+        $all_args = func_get_args();
+        _wp_call_all_hook($all_args);
+    }
+ 
+    if ( !isset($wp_filter[$tag]) ) {
+        if ( isset($wp_filter['all']) )
+            array_pop($wp_current_filter);
+        return $args[0];
+    }
+ 
+    if ( !isset($wp_filter['all']) )
+        $wp_current_filter[] = $tag;
+ 
+    $filtered = $wp_filter[ $tag ]->apply_filters( $args[0], $args );
+ 
+    array_pop( $wp_current_filter );
 
-function wp_json_encode($data) {
-      return  json_encode($data);
+    return $filtered;
+  */
+   return $tag;
+}
+function apply_filters_deprecated( $tag, $args, $version, $replacement = false, $message = null ) {
+ //   if ( ! has_filter( $tag ) ) {
+ //       return $args[0];
+ //   }
+ //   _deprecated_hook( $tag, $version, $replacement, $message );
+    return apply_filters_ref_array( $tag, $args );
+}
+function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
+    return true;
+}
+function apply_filters( $tag, $value ) {
+    return $value;
 }
 function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
     return add_filter($tag, $function_to_add, $priority, $accepted_args);
 }
-function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
-    global $wp_filter;
-    if ( ! isset( $wp_filter[ $tag ] ) ) {
-    //    $wp_filter[ $tag ] = new WP_Hook();
-    }
-    // $wp_filter[ $tag ]->add_filter( $tag, $function_to_add, $priority, $accepted_args );
-    return true;
-}
-function esc_url($value){
-  return $value;
+
+function wp_json_encode($data) {
+      return  json_encode($data);
 }
 function absint( $maybeint ) {
     return abs( intval( $maybeint ) );
@@ -84,8 +136,12 @@ function is_admin() {
 function  __($text, $context) {
   return $text;
 }
-function apply_filters( $tag, $value ) {
-    return $value;
+function _x( $text, $context, $domain = 'default' ) {
+    return $text;
+}
+
+function esc_url($value){
+  return $value;
 }
 function esc_html($text) {
   return $text;
