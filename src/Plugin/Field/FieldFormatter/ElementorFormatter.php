@@ -70,9 +70,11 @@ class ElementorFormatter extends FormatterBase implements ContainerFactoryPlugin
     {
         $dataSaved = \Drupal::state()->get('elementor_data');
 
-        $frontend_data = ElementorDrupal::frontend_data_render($dataSaved);
+        $ElementorDrupal = new ElementorDrupal;
+        
+        $frontend_data = $ElementorDrupal->frontend_data_render($dataSaved);
 
-        $preview_data = ElementorDrupal::preview_data($dataSaved);
+        $preview_data = $ElementorDrupal->preview_data($dataSaved);
 
         $elements = array();
 

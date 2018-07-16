@@ -1,4 +1,4 @@
-/*! elementor - v2.1.2 - 08-07-2018 */
+/*! elementor - v2.1.3 - 16-07-2018 */
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var TagPanelView = require( 'elementor-dynamic-tags/tag-panel-view' );
 
@@ -4731,6 +4731,12 @@ var ControlBaseDataView = require( 'elementor-controls/base-data' ),
 ControlSelectItemView = ControlBaseDataView.extend( {}, {
 
 	onPasteStyle: function( control, clipboardValue ) {
+		if ( control.groups ) {
+			return control.groups.some( function( group ) {
+				return ControlSelectItemView.onPasteStyle( group, clipboardValue );
+			} );
+		}
+
 		return undefined !== control.options[ clipboardValue ];
 	}
 } );
@@ -5698,6 +5704,10 @@ App = Marionette.Application.extend( {
 	},
 
 	preventClicksInsideEditor: function() {
+		this.$previewContents.on( 'submit', function( event ) {
+			event.preventDefault();
+		} );
+
 		this.$previewContents.on( 'click', function( event ) {
 			var $target = jQuery( event.target ),
 				editMode = elementor.channels.dataEditMode.request( 'activeMode' ),
@@ -15383,7 +15393,10 @@ RevisionsManager = function() {
 	this.setEditorData = function( data ) {
 		var collection = elementor.getRegion( 'sections' ).currentView.collection;
 
+		// Don't track in history.
+		elementor.history.history.setActive( false );
 		collection.reset( data );
+		elementor.history.history.setActive( true );
 	};
 
 	this.getRevisionDataAsync = function( id, options ) {
@@ -15589,6 +15602,8 @@ module.exports = Marionette.CompositeView.extend( {
 		this.isRevisionApplied = true;
 
 		this.currentPreviewId = null;
+
+		elementor.history.history.getItems().reset();
 	},
 
 	onDiscardClick: function() {

@@ -11,3 +11,9 @@ elementor.editor:
   requirements:
     _permission: 'administer content types'
     _format: 'html'
+elementor.autosave:
+  path: '/elementor/autosave'
+  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::autosave' }
+  methods:  [POST]
+  requirements:
+    _permission: 'administer content types'

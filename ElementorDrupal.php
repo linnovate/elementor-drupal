@@ -6,12 +6,16 @@
 
 namespace Drupal\elementor;
 
+use Elementor\Core\Base\Document;
 use Elementor\Core\Files\CSS\Post as Post_CSS;
 use Elementor\Element_Base;
 use Elementor\Plugin;
 use Elementor\Schemes_Manager;
 
-class DrupalPost extends Post_CSS
+use Drupal\elementor\DocumentDrupal;
+use Drupal\elementor\Drupal_Ajax_Manager;
+
+class DrupalPost_CSS extends Post_CSS
 {
     public function render_styles(Element_Base $element)
     {
@@ -22,28 +26,45 @@ class DrupalPost extends Post_CSS
 class ElementorDrupal
 {
 
-    public static function editor_config_script_tags()
+    private $_post_id;
+
+    private $plugin;
+
+    public function __construct( array $data = [] ) {
+        $this->plugin = Plugin::$instance;
+        $this->plugin->init();
+        $this->plugin->ajax = new Drupal_Ajax_Manager();
+
+        $this->plugin->documents->register_document_type( 
+            'DocumentDrupal', 
+            DocumentDrupal::get_class_full_name()
+        );
+    }
+    
+	public function get_post_id() {
+		return $this->_post_id;
+	}
+    
+    public function editor_config_script_tags()
     {
-        $plugin = Plugin::$instance;
-        $plugin->init();
+		$this->_post_id = 12;
 
         $config = [
             'version' => ELEMENTOR_VERSION,
             'ajaxurl' => base_path() . 'elementor/update',
-            'home_url' => base_path(),
+            'home_url' => base_path() . 'elementor/update',//base_path(),
             'assets_url' => base_path() . 'modules/elementor/elementor/assets/',
             // 'data' => $editor_data,
-            'elements' => $plugin->elements_manager->get_element_types_config(),
-            'elements_categories' => $plugin->elements_manager->get_categories(),
-            'controls' => $plugin->controls_manager->get_controls_data(),
-            'elements' => $plugin->elements_manager->get_element_types_config(),
-            'widgets' => $plugin->widgets_manager->get_widget_types_config(),
+            'elements_categories' => $this->plugin->elements_manager->get_categories(),
+            'controls' => $this->plugin->controls_manager->get_controls_data(),
+            'elements' => $this->plugin->elements_manager->get_element_types_config(),
+            'widgets' => $this->plugin->widgets_manager->get_widget_types_config(),
             'schemes' => [
-                'items' => $plugin->schemes_manager->get_registered_schemes_data(),
+                'items' => $this->plugin->schemes_manager->get_registered_schemes_data(),
                 'enabled_schemes' => Schemes_Manager::get_enabled_schemes(),
             ],
-            'default_schemes' => $plugin->schemes_manager->get_schemes_defaults(),
-            'system_schemes' => $plugin->schemes_manager->get_system_schemes(),
+            'default_schemes' => $this->plugin->schemes_manager->get_schemes_defaults(),
+            'system_schemes' => $this->plugin->schemes_manager->get_system_schemes(),
             // 'settings' => SettingsManager::get_settings_managers_config(),
             // 'inlineEditing' => Plugin::$instance->widgets_manager->get_inline_editing_config(),
             // 'dynamicTags' => Plugin::$instance->dynamic_tags->get_config(),
@@ -199,6 +220,7 @@ class ElementorDrupal
         }
 
         echo 'var _ElementorConfig = ' . $config_json . ';' . PHP_EOL;
+        echo 'var ajaxurl = "/elementor/autosave";'. PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
         echo '/* ]]> */' . PHP_EOL;
         echo '</script>';
 
@@ -206,11 +228,11 @@ class ElementorDrupal
 
         ob_start();
 
-        $plugin->controls_manager->render_controls();
-        $plugin->widgets_manager->render_widgets_content();
-        $plugin->elements_manager->render_elements_content();
-        $plugin->schemes_manager->print_schemes_templates();
-        $plugin->dynamic_tags->print_templates();
+         $this->plugin->controls_manager->render_controls();
+         $this->plugin->widgets_manager->render_widgets_content();
+         $this->plugin->elements_manager->render_elements_content();
+         $this->plugin->schemes_manager->print_schemes_templates();
+         $this->plugin->dynamic_tags->print_templates();
 
         $template_names = [
             'global',
@@ -229,28 +251,38 @@ class ElementorDrupal
         return $tmp_scripts . $config_script;
     }
 
-    public static function preview_data($elements_data)
+    public function preview_data($elements_data)
     {
         $data = [
             'elements' => isset($elements_data['elements']) ? $elements_data['elements'] : [],
             'settings' => isset($elements_data['settings']) ? $elements_data['settings'] : [],
         ];
 
+        $with_html_content = TRUE;
+        $editor_data = [];
+
+		foreach ( $data['elements'] as $element_data ) {
+			$element = Plugin::$instance->elements_manager->create_element_instance( $element_data );
+
+			if ( ! $element ) {
+				continue;
+			}
+
+			$editor_data[] = $element->get_raw_data( $with_html_content );
+		}
+
+        $data['elements'] = $editor_data;
         return $data;
     }
 
-    public static function frontend_data_render($elements_data)
+    public function frontend_data_render($elements_data)
     {
-        $plugin = Plugin::$instance;
-        $plugin->init();
-
-        $css_file = new DrupalPost();
-        $css_file->enqueue();
+        $css_file = new DrupalPost_CSS();
 
         ob_start();
 
         foreach ($elements_data['elements'] as $element_data) {
-            $element = $plugin->elements_manager->create_element_instance($element_data);
+            $element =  $this->plugin->elements_manager->create_element_instance($element_data);
 
             if (!$element) {
                 continue;
@@ -267,5 +299,10 @@ class ElementorDrupal
         $css = ob_get_clean();
 
         return $css . $html;
+    }
+
+    public function update_response()
+    {
+        return do_ajax($_POST['action']);
     }
 }

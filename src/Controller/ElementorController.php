@@ -23,9 +23,11 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
      * @var Drupal\Core\Template\TwigEnvironment
      */
     protected $twig;
+    protected $ElementorDrupa;
 
     public function __construct(TwigEnvironment $twig)
     {
+        $this->ElementorDrupal = new ElementorDrupal;
         $this->twig = $twig;
     }
 
@@ -36,8 +38,15 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
         );
     }
 
+    
+    public function autosave(Request $request)
+    {
+        return new Response('', Response::HTTP_NOT_FOUND);
+    }
+    
     public function update(Request $request)
     {
+        
         $action = $_POST['action'];
 
         $data = json_decode($_REQUEST['actions'], true);
@@ -46,15 +55,54 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
             \Drupal::state()->set('elementor_data', $data['save_builder']['data']);
         }
 
-        $return_data['statusText'] = true;
-        $return_data['config'] = [
-            'last_edited' => '',
-            'wp_preview' => [
-                'url' => '',
-            ],
-        ];
-
+        $return_data = $this->ElementorDrupal->update_response($data);
+      
         return new JsonResponse($return_data);
+        //     $render_html = 
+
+        //     $return_data['success'] = TRUE;
+        //     $return_data['data'] = [
+        //         'responses' => [
+        //             'c20' => [
+        //                 'code' => 200,
+        //                 'success' => TRUE,
+        //                 'data' => [
+        //                     'render' => $render_html
+        //                 ]
+        //             ],
+        //         ],
+        //     ];
+
+        //     return new JsonResponse($return_data);
+        // } else if ($action == 'elementor_ajax') {
+        //         \Drupal::state()->set('elementor_data', $data['save_builder']['data']);
+        //         $render_html = $this->ElementorDrupal->update_response($data);
+    
+        //         $return_data['success'] = TRUE;
+        //         $return_data['data'] = [
+        //             'responses' => [
+        //                 'c20' => [
+        //                     'code' => 200,
+        //                     'success' => TRUE,
+        //                     'data' => [
+        //                         'render' => $render_html
+        //                     ]
+        //                 ],
+        //             ],
+        //         ];
+                
+
+        //     }
+
+        // $return_data['statusText'] = true;
+        // $return_data['config'] = [
+        //     'last_edited' => '',
+        //     'wp_preview' => [
+        //         'url' => '',
+        //     ],
+        // ];
+
+        
     }
 
     public function editor(Request $request)
@@ -63,10 +111,10 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
 
-        $config_scripts = ElementorDrupal::editor_config_script_tags();
+        $config_scripts = $this->ElementorDrupal->editor_config_script_tags();
 
         $dataSaved = \Drupal::state()->get('elementor_data');
-        $preview_data = ElementorDrupal::preview_data($dataSaved);
+        $preview_data = $this->ElementorDrupal->preview_data($dataSaved);
 
         ob_start();
 
