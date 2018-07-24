@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class ElementorController extends ControllerBase implements ContainerInjectionInterface
 {
 
@@ -27,7 +28,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
     public function __construct(TwigEnvironment $twig)
     {
-        $this->ElementorDrupal = new ElementorDrupal;
+        $this->ElementorDrupal = ElementorDrupal::$instance;
         $this->twig = $twig;
     }
 
@@ -37,8 +38,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
             $container->get('twig')
         );
     }
-
-    
+ 
     public function autosave(Request $request)
     {
         return new Response('', Response::HTTP_NOT_FOUND);
@@ -46,101 +46,20 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     
     public function update(Request $request)
     {
-        
-        $action = $_POST['action'];
-
-        $data = json_decode($_REQUEST['actions'], true);
-
-        if ($action == 'elementor_ajax') {
-            \Drupal::state()->set('elementor_data', $data['save_builder']['data']);
-        }
-
-        $return_data = $this->ElementorDrupal->update_response($data);
-      
+        $return_data = $this->ElementorDrupal->update($request);
         return new JsonResponse($return_data);
-        //     $render_html = 
-
-        //     $return_data['success'] = TRUE;
-        //     $return_data['data'] = [
-        //         'responses' => [
-        //             'c20' => [
-        //                 'code' => 200,
-        //                 'success' => TRUE,
-        //                 'data' => [
-        //                     'render' => $render_html
-        //                 ]
-        //             ],
-        //         ],
-        //     ];
-
-        //     return new JsonResponse($return_data);
-        // } else if ($action == 'elementor_ajax') {
-        //         \Drupal::state()->set('elementor_data', $data['save_builder']['data']);
-        //         $render_html = $this->ElementorDrupal->update_response($data);
-    
-        //         $return_data['success'] = TRUE;
-        //         $return_data['data'] = [
-        //             'responses' => [
-        //                 'c20' => [
-        //                     'code' => 200,
-        //                     'success' => TRUE,
-        //                     'data' => [
-        //                         'render' => $render_html
-        //                     ]
-        //                 ],
-        //             ],
-        //         ];
-                
-
-        //     }
-
-        // $return_data['statusText'] = true;
-        // $return_data['config'] = [
-        //     'last_edited' => '',
-        //     'wp_preview' => [
-        //         'url' => '',
-        //     ],
-        // ];
-
-        
     }
 
     public function editor(Request $request)
     {
-        // \Drupal::state()->set('elementor_data', NULL);
+        $uid = \Drupal::routeMatch()->getParameter('node');
+
+        $editor = $this->ElementorDrupal->editor($uid);
 
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
-
-        $config_scripts = $this->ElementorDrupal->editor_config_script_tags();
-
-        $dataSaved = \Drupal::state()->get('elementor_data');
-        $preview_data = $this->ElementorDrupal->preview_data($dataSaved);
-
-        ob_start();
-
-        echo '<script>' . PHP_EOL;
-        echo '/* <![CDATA[ */' . PHP_EOL;
-        $preview_data_json = json_encode($preview_data);
-        unset($preview_data);
-        echo 'var _ElementorData = ' . $preview_data_json . ';' . PHP_EOL;
-
-        echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
-
-        echo 'ElementorConfig.data =  _ElementorData.elements;' . PHP_EOL;
-        echo 'ElementorConfig.document.urls = {
-            preview: "/node/1",
-            exit_to_dashboard: "/node/1",
-        };' . PHP_EOL;
-
-        echo '/* ]]> */' . PHP_EOL;
-        echo '</script>';
-
-        $preview_data = ob_get_clean();
-
-        ob_start();
-
+      
         $html = $template->render([
-            elementor_data => $config_scripts . $preview_data,
+            elementor_data => $editor,
             base_path => base_path(),
         ]);
 

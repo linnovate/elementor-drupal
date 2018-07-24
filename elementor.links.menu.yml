@@ -1,0 +1,5 @@
+elementor.settings:
+  title: 'Elementor'
+  description: 'Configure the Elementor Editor.'
+  parent: system.admin_config_content
+  route_name: elementor.settings

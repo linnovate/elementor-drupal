@@ -1,9 +1,9 @@
 
 var ElementorConfig = {
   "nonce": "9164397c0c",
-  "post_id": 81,
+  "post_id": 1,
   "document": {
-    "id": 81,
+    "id": 1,
     "type": "post",
     "remote_type": "post",
     "last_edited": "Last edited on <time>Jul 10, 11:24</time> by admin",
@@ -57,7 +57,7 @@ var ElementorConfig = {
       "panelPage": {
         "title": "Page Settings"
       },
-      "cssWrapperSelector": "body.elementor-page-81",
+      "cssWrapperSelector": "body.elementor-page-1",
       "controls": {
         "document_settings": {
           "label": "General Settings",
@@ -90,7 +90,7 @@ var ElementorConfig = {
           "type": "text",
           "tab": "settings",
           "section": "document_settings",
-          "default": "Elementor #81",
+          "default": "Elementor #1",
           "name": "post_title"
         },
         "post_status": {
@@ -1099,7 +1099,7 @@ var ElementorConfig = {
       },
       "settings": {
         "template": "default",
-        "post_title": "Elementor #81",
+        "post_title": "Elementor #1",
         "post_status": "draft",
         "post_excerpt": "",
         "post_featured_image": {
@@ -1679,7 +1679,7 @@ var ElementorConfig = {
   },
   "revisions": [
     {
-      "id": 81,
+      "id": 1,
       "author": "admin",
       "timestamp": 1531221853,
       "date": "7 mins ago (Jul 10 @ 11:24)",
@@ -1688,5 +1688,5 @@ var ElementorConfig = {
     }
   ],
   "revisions_enabled": true,
-  "current_revision_id": 81
+  "current_revision_id": 1
 }

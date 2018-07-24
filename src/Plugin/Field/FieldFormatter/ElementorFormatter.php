@@ -68,21 +68,19 @@ class ElementorFormatter extends FormatterBase implements ContainerFactoryPlugin
  */
     public function viewElements(FieldItemListInterface $items, $langcode)
     {
-        $dataSaved = \Drupal::state()->get('elementor_data');
 
-        $ElementorDrupal = new ElementorDrupal;
-        
-        $frontend_data = $ElementorDrupal->frontend_data_render($dataSaved);
-
-        $preview_data = $ElementorDrupal->preview_data($dataSaved);
+        // $dataSaved = json_decode($items[0]->value, TRUE);
+        $uid = 1;
+        // $ElementorDrupal = new ElementorDrupal;
+        // $frontend_data = $ElementorDrupal->frontend($uid);
 
         $elements = array();
 
         $elements[] = array(
             '#theme' => 'elementor_field',
-            '#elementor_data' => $preview_data,
             '#base_path' => base_path(),
-            '#elementor_tmp' => $frontend_data,
+            '#uid' => $uid,
+            '#elementor_tmp' => [],//$frontend_data,
             '#cache' => array('max-age' => 0),
         );
 

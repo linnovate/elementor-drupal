@@ -1,4 +1,4 @@
-/*! elementor - v2.1.3 - 16-07-2018 */
+/*! elementor - v2.1.4 - 18-07-2018 */
 .dialog-widget-content {
   background-color: #fff;
   position: absolute;
@@ -1009,6 +1009,13 @@ ul.elementor-icon-list-items.elementor-inline-items {
     min-height: 59px; }
   .elementor-form .elementor-button.elementor-size-xl {
     min-height: 72px; }
+
+.elementor-element .elementor-widget-container {
+  -webkit-transition: background 0.3s, border 0.3s, -webkit-border-radius 0.3s, -webkit-box-shadow 0.3s;
+  transition: background 0.3s, border 0.3s, -webkit-border-radius 0.3s, -webkit-box-shadow 0.3s;
+  -o-transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s, -webkit-border-radius 0.3s, -webkit-box-shadow 0.3s; }
 
 .elementor-accordion {
   text-align: left; }

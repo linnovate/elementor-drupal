@@ -17,3 +17,10 @@ elementor.autosave:
   methods:  [POST]
   requirements:
     _permission: 'administer content types'
+elementor.settings:
+  path: '/admin/config/services/elementor/settings'
+  defaults: 
+    _form: 'Drupal\elementor\Form\ElementorSettingsForm'
+    _title: 'Elementor Settings'
+  requirements:
+    _permission: 'administer content types'

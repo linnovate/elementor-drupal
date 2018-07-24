@@ -1,4 +1,0 @@
-elementor.editor.tasks:
-  route_name: elementor.editor
-  base_route: entity.node.canonical
-  title: Elementor
