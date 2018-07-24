@@ -1,0 +1,53 @@
+<?php
+
+/**
+* Implementation of hook_install().
+*/
+
+function elementor_install() {
+    // Use schema API to create database table.
+}
+
+/**
+* Implementation of hook_uninstall().
+*/
+
+function elementor_uninstall(){
+	// Use schema API to delete database table.
+	drupal_uninstall_schema('elementor');
+}
+
+
+/**
+* Implements hook_schema().
+*/
+
+function elementor_schema() {
+  $schema['elementor_data'] = array(
+    'description' => 'Elementor data.',
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => "The ID of the Elementor data.",
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "The ID of the target entity.",
+      ),
+      'data' => array(
+        'type' => 'blob',
+        'not null' => TRUE,
+        'description' => 'The json of the Elementor editor get.',
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'uid' => array('uid'),
+    ),
+  );
+
+  return $schema;
+}
