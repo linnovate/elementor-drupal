@@ -8,8 +8,9 @@ namespace Drupal\elementor;
 
 use Drupal\elementor\DocumentDrupal;
 use Drupal\elementor\Drupal_Ajax_Manager;
-use Drupal\elementor\Drupal_api;
+use Drupal\elementor\Drupal_TemplateLibrary_Manager;
 use Drupal\elementor\Drupal_Revisions_Manager;
+
 use Elementor\Core\Files\CSS\Post as Post_CSS;
 use Elementor\Editor;
 use Elementor\Element_Base;
@@ -37,8 +38,7 @@ class ElementorDrupal
 
         $this->plugin->ajax = new Drupal_Ajax_Manager();
         $this->plugin->revisions_manager = new Drupal_Revisions_Manager();
-
-        Drupal_api::init();
+        $this->plugin->templates_manager = new Drupal_TemplateLibrary_Manager();
 
         $this->plugin->documents->register_document_type(
             'DocumentDrupal',
@@ -313,6 +313,7 @@ class ElementorDrupal
         echo 'var _ElementorConfig = ' . $config . ';' . PHP_EOL;
         echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
         echo 'var ajaxurl = "/elementor/autosave";' . PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
+        echo 'ElementorConfig.document.id = ' . $uid . ';' . PHP_EOL;
         echo 'ElementorConfig.document.urls = {
             preview: "/node/1",
             exit_to_dashboard: "/node/1",

@@ -6,6 +6,7 @@
 
 namespace Drupal\elementor;
 
+use Elementor\Core\Ajax_Manager;
 use Elementor\Core\Utils\Exceptions;
 use Elementor\Plugin;
 
@@ -21,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 2.0.0
  */
-class Drupal_Ajax_Manager {
+class Drupal_Ajax_Manager extends Ajax_Manager {
 
 	/**
 	 * Ajax actions.

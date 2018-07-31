@@ -17,15 +17,19 @@ if (defined('ELEMENTOR_TESTS') && ELEMENTOR_TESTS) {
 define('ELEMENTOR_MODULES_PATH', '');
 define('ELEMENTOR_ASSETS_URL', '/' . ELEMENTOR_PATH . 'assets/');
 
-require drupal_get_path('module', 'elementor') . '/wordpress_functions.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/wordpress_functions.php';
 
 require drupal_get_path('module', 'elementor') . '/elementor/includes/plugin.php';
 
-require drupal_get_path('module', 'elementor') . '/Drupal_api.php';
-require drupal_get_path('module', 'elementor') . '/Drupal_Revisions_Manager.php';
-require drupal_get_path('module', 'elementor') . '/Drupal_Ajax_Manager.php';
-require drupal_get_path('module', 'elementor') . '/DocumentDrupal.php';
-require drupal_get_path('module', 'elementor') . '/ElementorDrupal.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/template-library/classes/class-import-images.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/template-library/sources/remote.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/template-library/sources/local.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/template-library/manager.php';
+
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/Drupal_Revisions_Manager.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/Drupal_Ajax_Manager.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/DocumentDrupal.php';
+require drupal_get_path('module', 'elementor') . '/drupal_elementor/ElementorDrupal.php';
 
 use Drupal\elementor\ElementorDrupal;
 

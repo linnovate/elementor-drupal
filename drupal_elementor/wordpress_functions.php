@@ -1,5 +1,17 @@
 <?php
 
+class WP_Query
+{
+    public function __construct()
+    {
+        return [];
+    }
+    public function have_posts()
+    {
+        return false;
+    }
+}
+
 $enqueued_actions = array();
 
 $wpdb = [];
@@ -290,60 +302,72 @@ function wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = fa
     return $html;
 }
 
-define( 'MINUTE_IN_SECONDS', 60);
-define( 'HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
-define( 'DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
-define( 'WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
-define( 'MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
-define( 'YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
+define('MINUTE_IN_SECONDS', 60);
+define('HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
+define('DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
+define('WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
+define('MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
+define('YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
 
-
-function human_time_diff( $from, $to = '' ) {
-    if ( empty( $to ) ) {
+function human_time_diff($from, $to = '')
+{
+    if (empty($to)) {
         $to = time();
     }
- 
-    $diff = (int) abs( $to - $from );
- 
-    if ( $diff < HOUR_IN_SECONDS ) {
-        $mins = round( $diff / MINUTE_IN_SECONDS );
-        if ( $mins <= 1 )
+
+    $diff = (int) abs($to - $from);
+
+    if ($diff < HOUR_IN_SECONDS) {
+        $mins = round($diff / MINUTE_IN_SECONDS);
+        if ($mins <= 1) {
             $mins = 1;
+        }
+
         /* translators: Time difference between two dates, in minutes (min=minute). 1: Number of minutes */
-        $since = sprintf( _n( '%s min', '%s mins', $mins ), $mins );
-    } elseif ( $diff < DAY_IN_SECONDS && $diff >= HOUR_IN_SECONDS ) {
-        $hours = round( $diff / HOUR_IN_SECONDS );
-        if ( $hours <= 1 )
+        $since = sprintf(_n('%s min', '%s mins', $mins), $mins);
+    } elseif ($diff < DAY_IN_SECONDS && $diff >= HOUR_IN_SECONDS) {
+        $hours = round($diff / HOUR_IN_SECONDS);
+        if ($hours <= 1) {
             $hours = 1;
+        }
+
         /* translators: Time difference between two dates, in hours. 1: Number of hours */
-        $since = sprintf( _n( '%s hour', '%s hours', $hours ), $hours );
-    } elseif ( $diff < WEEK_IN_SECONDS && $diff >= DAY_IN_SECONDS ) {
-        $days = round( $diff / DAY_IN_SECONDS );
-        if ( $days <= 1 )
+        $since = sprintf(_n('%s hour', '%s hours', $hours), $hours);
+    } elseif ($diff < WEEK_IN_SECONDS && $diff >= DAY_IN_SECONDS) {
+        $days = round($diff / DAY_IN_SECONDS);
+        if ($days <= 1) {
             $days = 1;
+        }
+
         /* translators: Time difference between two dates, in days. 1: Number of days */
-        $since = sprintf( _n( '%s day', '%s days', $days ), $days );
-    } elseif ( $diff < MONTH_IN_SECONDS && $diff >= WEEK_IN_SECONDS ) {
-        $weeks = round( $diff / WEEK_IN_SECONDS );
-        if ( $weeks <= 1 )
+        $since = sprintf(_n('%s day', '%s days', $days), $days);
+    } elseif ($diff < MONTH_IN_SECONDS && $diff >= WEEK_IN_SECONDS) {
+        $weeks = round($diff / WEEK_IN_SECONDS);
+        if ($weeks <= 1) {
             $weeks = 1;
+        }
+
         /* translators: Time difference between two dates, in weeks. 1: Number of weeks */
-        $since = sprintf( _n( '%s week', '%s weeks', $weeks ), $weeks );
-    } elseif ( $diff < YEAR_IN_SECONDS && $diff >= MONTH_IN_SECONDS ) {
-        $months = round( $diff / MONTH_IN_SECONDS );
-        if ( $months <= 1 )
+        $since = sprintf(_n('%s week', '%s weeks', $weeks), $weeks);
+    } elseif ($diff < YEAR_IN_SECONDS && $diff >= MONTH_IN_SECONDS) {
+        $months = round($diff / MONTH_IN_SECONDS);
+        if ($months <= 1) {
             $months = 1;
+        }
+
         /* translators: Time difference between two dates, in months. 1: Number of months */
-        $since = sprintf( _n( '%s month', '%s months', $months ), $months );
-    } elseif ( $diff >= YEAR_IN_SECONDS ) {
-        $years = round( $diff / YEAR_IN_SECONDS );
-        if ( $years <= 1 )
+        $since = sprintf(_n('%s month', '%s months', $months), $months);
+    } elseif ($diff >= YEAR_IN_SECONDS) {
+        $years = round($diff / YEAR_IN_SECONDS);
+        if ($years <= 1) {
             $years = 1;
+        }
+
         /* translators: Time difference between two dates, in years. 1: Number of years */
-        $since = sprintf( _n( '%s year', '%s years', $years ), $years );
+        $since = sprintf(_n('%s year', '%s years', $years), $years);
     }
 
-    return apply_filters( 'human_time_diff', $since, $diff, $from, $to );
+    return apply_filters('human_time_diff', $since, $diff, $from, $to);
 }
 
 function wp_image_editor_supports()
@@ -413,13 +437,23 @@ function add_query_arg()
 function is_singular()
 {}
 function get_the_ID()
-{}
+{
+    $uid = \Drupal::routeMatch()->getParameter('node');
+
+    return $uid;
+}
 function post_type_supports()
 {}
 function get_post_type()
 {}
 function delete_option()
 {}
+function get_the_title()
+{}
+function wp_get_attachment_image_src()
+{
+    return [];
+}
 function set_transient($transient, $value, $expiration = 0)
 {
 
@@ -521,7 +555,8 @@ function _x($text, $context, $domain = 'default')
     return $text;
 }
 
-function _n($text) {
+function _n($text)
+{
     return $text;
 }
 
