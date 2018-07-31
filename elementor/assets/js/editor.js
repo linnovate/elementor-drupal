@@ -1,4 +1,4 @@
-/*! elementor - v2.1.5 - 26-07-2018 */
+/*! elementor - v2.1.6 - 31-07-2018 */
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var TagPanelView = require( 'elementor-dynamic-tags/tag-panel-view' );
 
@@ -5923,7 +5923,7 @@ App = Marionette.Application.extend( {
 		this.addBackgroundClickArea( elementorFrontend.getElements( '$document' )[0] );
 
 		if ( this.previewLoadedOnce ) {
-			this.getPanelView().setPage( 'elements' );
+			this.getPanelView().setPage( 'elements', null, { autoFocusSearch: false } );
 		} else {
 			this.onFirstPreviewLoaded();
 		}
@@ -6948,6 +6948,7 @@ BaseElementView = BaseContainer.extend( {
 
 	events: function() {
 		return {
+			'mousedown': 'onMouseDown',
 			'click @ui.editButton': 'onEditButtonClick'
 		};
 	},
@@ -7589,6 +7590,17 @@ BaseElementView = BaseContainer.extend( {
 
 	onEditButtonClick: function() {
 		this.edit();
+	},
+
+	/* jQuery ui sortable preventing any `mousedown` event above any element, and as a result is preventing the `blur`
+	 * event on the currently active element. Therefor, we need to blur the active element manually.
+	 */
+	onMouseDown: function( event ) {
+		if ( jQuery( event.target ).closest( '.elementor-inline-editing' ).length ) {
+			return;
+		}
+
+		elementorFrontend.getElements( '$document' )[0].activeElement.blur();
 	},
 
 	onDestroy: function() {
@@ -9506,6 +9518,10 @@ var PanelElementsCategoriesCollection = require( './collections/categories' ),
 PanelElementsLayoutView = Marionette.LayoutView.extend( {
 	template: '#tmpl-elementor-panel-elements',
 
+	options: {
+		autoFocusSearch: true
+	},
+
 	regions: {
 		elements: '#elementor-panel-elements-wrapper',
 		search: '#elementor-panel-elements-search-area'
@@ -9663,6 +9679,10 @@ PanelElementsLayoutView = Marionette.LayoutView.extend( {
 		this.clearSearchInput();
 	},
 
+	focusSearch: function() {
+		this.search.currentView.ui.input.focus();
+	},
+
 	onChildviewChildrenRender: function() {
 		elementor.getPanelView().updateScrollbar();
 	},
@@ -9679,6 +9699,11 @@ PanelElementsLayoutView = Marionette.LayoutView.extend( {
 		this.showView( 'categories' );
 
 		this.showView( 'search' );
+
+		if ( this.options.autoFocusSearch ) {
+			console.log( this.options );
+			setTimeout( this.focusSearch.bind( this ) );
+		}
 	},
 
 	onTabClick: function( event ) {
@@ -9925,14 +9950,6 @@ PanelElementsSearchView = Marionette.ItemView.extend( {
 		}
 
 		this.triggerMethod( 'search:change:input' );
-	},
-
-	onRender: function() {
-		var input = this.ui.input;
-
-		setTimeout( function() {
-			input.focus();
-		} );
 	}
 } );
 
@@ -10499,7 +10516,7 @@ PanelLayoutView = Marionette.LayoutView.extend( {
 			this.setPage( 'elements' );
 		},
 		'editor:destroy': function() {
-			this.setPage( 'elements' );
+			this.setPage( 'elements', null, { autoFocusSearch: false } );
 		}
 	},
 
