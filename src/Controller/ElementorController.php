@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class ElementorController extends ControllerBase implements ContainerInjectionInterface
 {
 
@@ -38,12 +37,15 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
             $container->get('twig')
         );
     }
- 
+
     public function autosave(Request $request)
     {
+        // $return_data = do_action($_POST['action']);
+        // return new JsonResponse($return_data);
+
         return new Response('', Response::HTTP_NOT_FOUND);
     }
-    
+
     public function update(Request $request)
     {
         $return_data = $this->ElementorDrupal->update($request);
@@ -52,14 +54,12 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
     public function editor(Request $request)
     {
-        $uid = \Drupal::routeMatch()->getParameter('node');
-
-        $editor = $this->ElementorDrupal->editor($uid);
+        $editor_data = $this->ElementorDrupal->editor();
 
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
-      
+
         $html = $template->render([
-            elementor_data => $editor,
+            elementor_data => $editor_data,
             base_path => base_path(),
         ]);
 

@@ -9,7 +9,9 @@ namespace Drupal\elementor;
 use Drupal\elementor\DocumentDrupal;
 use Drupal\elementor\Drupal_Ajax_Manager;
 use Drupal\elementor\Drupal_api;
+use Drupal\elementor\Drupal_Revisions_Manager;
 use Elementor\Core\Files\CSS\Post as Post_CSS;
+use Elementor\Editor;
 use Elementor\Element_Base;
 use Elementor\Plugin;
 use Elementor\Schemes_Manager;
@@ -24,17 +26,18 @@ class DrupalPost_CSS extends Post_CSS
 
 class ElementorDrupal
 {
-    private $_post_id;
-
     private $plugin;
-    
-	public static $instance = null;
+
+    public static $instance = null;
 
     public function __construct(array $data = [])
     {
         $this->plugin = Plugin::$instance;
         do_action('init');
+
         $this->plugin->ajax = new Drupal_Ajax_Manager();
+        $this->plugin->revisions_manager = new Drupal_Revisions_Manager();
+
         Drupal_api::init();
 
         $this->plugin->documents->register_document_type(
@@ -42,25 +45,27 @@ class ElementorDrupal
             DocumentDrupal::get_class_full_name()
         );
     }
-    
-    public static function instance() {
-        if ( is_null( self::$instance ) ) {
+
+    public static function instance()
+    {
+        if (is_null(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    private function editor_config_script_tags($uid)
+    private function editor_config($uid)
     {
-        $this->_post_id = $uid;
+        $data = $this->preview_data($uid);
 
         $config = [
             'version' => ELEMENTOR_VERSION,
             'ajaxurl' => base_path() . 'elementor/update',
-            'home_url' => base_path() . 'elementor/update', //base_path(),
+            'home_url' => base_path(),
             'assets_url' => base_path() . 'modules/elementor/elementor/assets/',
             "post_id" => $uid,
-            // 'data' => $editor_data,
+            'data' => $data['elements'],
+            // 'settings' => $data['settings'],
             'elements_categories' => $this->plugin->elements_manager->get_categories(),
             'controls' => $this->plugin->controls_manager->get_controls_data(),
             'elements' => $this->plugin->elements_manager->get_element_types_config(),
@@ -213,45 +218,19 @@ class ElementorDrupal
             ],
         ];
 
-        $config = json_encode($config);
+        $localized_settings = [];
 
-        ob_start();
+        $localized_settings = apply_filters('elementor/editor/localize_settings', $localized_settings, $this->_post_id);
 
-        echo '<script>' . PHP_EOL;
-        echo '/* <![CDATA[ */' . PHP_EOL;
-        if (get_option('elementor_editor_break_lines')) {
-            $config = str_replace('}},"', '}},' . PHP_EOL . '"', $config);
-        }
-        echo 'var _ElementorConfig = ' . $config . ';' . PHP_EOL;
-        echo 'var ajaxurl = "/elementor/autosave";' . PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
-        echo '/* ]]> */' . PHP_EOL;
-        echo '</script>';
-
-        $config_script = ob_get_clean();
-
-        ob_start();
-
-        $this->plugin->controls_manager->render_controls();
-        $this->plugin->widgets_manager->render_widgets_content();
-        $this->plugin->elements_manager->render_elements_content();
-        $this->plugin->schemes_manager->print_schemes_templates();
-        $this->plugin->dynamic_tags->print_templates();
-
-        $template_names = [
-            'global',
-            'panel',
-            'panel-elements',
-            'repeater',
-            'templates',
-        ];
-
-        foreach ($template_names as $template_name) {
-            include ELEMENTOR_PATH . "includes/editor-templates/$template_name.php";
+        if (!empty($localized_settings)) {
+            $config = array_replace_recursive($config, $localized_settings);
         }
 
+        ob_start();
+        $this->plugin->editor->wp_footer();
         $tmp_scripts = ob_get_clean();
 
-        return $tmp_scripts . $config_script;
+        return ['config' => $config, 'tmp_scripts' => $tmp_scripts];
     }
 
     private function preview_data($uid)
@@ -278,7 +257,7 @@ class ElementorDrupal
 
         $data['elements'] = $editor_data;
 
-        return json_encode($data);
+        return $data;
     }
 
     private function setData($uid, $data)
@@ -287,21 +266,16 @@ class ElementorDrupal
         $item = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $uid)
             ->fetch();
 
-        if ($item) {
-            $connection->update('elementor_data')
-                ->fields([
-                    'data' => json_encode($data),
-                ])
-                ->condition('id', $item->id, '=')
-                ->execute();
-        } else {
-            $connection->insert('elementor_data')
-                ->fields([
-                    'uid' => $uid,
-                    'data' => json_encode($data),
-                ])
-                ->execute();
-        }
+        date_default_timezone_set("UTC");
+
+        $connection->insert('elementor_data')
+            ->fields([
+                'uid' => $uid,
+                'author' => 'admin',
+                'timestamp' => time(),
+                'data' => json_encode($data),
+            ])
+            ->execute();
     }
 
     private function getData($uid)
@@ -310,11 +284,6 @@ class ElementorDrupal
         $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $uid)
             ->fetch();
         return json_decode($result->data, true);
-    }
-
-    public function get_post_id()
-    {
-        return $this->_post_id;
     }
 
     public function update($request)
@@ -327,28 +296,39 @@ class ElementorDrupal
         return do_ajax($_POST['action']);
     }
 
-    public function editor($uid)
+    public function editor()
     {
-        $config_scripts = $this->editor_config_script_tags($uid);
-        $preview_data = $this->preview_data($uid);
+        $uid = \Drupal::routeMatch()->getParameter('node');
+
+        $editor = $this->editor_config($uid);
+        $elementor_settings = \Drupal::config('elementor.settings');
+
+        $config = json_encode($editor['config']);
 
         ob_start();
 
         echo '<script>' . PHP_EOL;
         echo '/* <![CDATA[ */' . PHP_EOL;
-        echo 'var _ElementorData = ' . $preview_data . ';' . PHP_EOL;
+
+        echo 'var _ElementorConfig = ' . $config . ';' . PHP_EOL;
         echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
-        echo 'ElementorConfig.data =  _ElementorData.elements;' . PHP_EOL;
+        echo 'var ajaxurl = "/elementor/autosave";' . PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
         echo 'ElementorConfig.document.urls = {
             preview: "/node/1",
             exit_to_dashboard: "/node/1",
         };' . PHP_EOL;
+
+        echo 'ElementorConfig.settings.general.settings.elementor_default_generic_fonts =  "' . $elementor_settings->get('default_generic_fonts') . '";' . PHP_EOL;
+        echo 'ElementorConfig.settings.general.settings.elementor_container_width = "' . $elementor_settings->get('container_width') . '";' . PHP_EOL;
+        echo 'ElementorConfig.settings.general.settings.elementor_space_between_widgets = "' . $elementor_settings->get('space_between_widgets') . '";' . PHP_EOL;
+        echo 'ElementorConfig.settings.general.settings.elementor_stretched_section_container = "' . $elementor_settings->get('stretched_section_container') . '";' . PHP_EOL;
+
         echo '/* ]]> */' . PHP_EOL;
         echo '</script>';
 
-        $preview_data = ob_get_clean();
+        $config_data = ob_get_clean();
 
-        return $config_scripts . $preview_data;
+        return $editor['tmp_scripts'] . $config_data;
     }
 
     public function preview($uid)

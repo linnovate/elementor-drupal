@@ -1,8 +1,10 @@
 <?php
 
+define('DOING_AJAX', true);
+
 define('ABSPATH', false);
-define( 'ELEMENTOR_VERSION', '2.1.4' );
-define( 'ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16' );
+define('ELEMENTOR_VERSION', '2.1.5');
+define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16');
 
 define('ELEMENTOR__FILE__', __FILE__);
 define('ELEMENTOR_PLUGIN_BASE', '');
@@ -20,6 +22,7 @@ require drupal_get_path('module', 'elementor') . '/wordpress_functions.php';
 require drupal_get_path('module', 'elementor') . '/elementor/includes/plugin.php';
 
 require drupal_get_path('module', 'elementor') . '/Drupal_api.php';
+require drupal_get_path('module', 'elementor') . '/Drupal_Revisions_Manager.php';
 require drupal_get_path('module', 'elementor') . '/Drupal_Ajax_Manager.php';
 require drupal_get_path('module', 'elementor') . '/DocumentDrupal.php';
 require drupal_get_path('module', 'elementor') . '/ElementorDrupal.php';
@@ -27,40 +30,35 @@ require drupal_get_path('module', 'elementor') . '/ElementorDrupal.php';
 use Drupal\elementor\ElementorDrupal;
 
 /**
- * Implements hook_preprocess_field().
+ * Implements hook_theme_suggestions_HOOK().
  */
-
-function elementor_preprocess_field(&$variables, $hook)
+function elementor_theme_suggestions_node(array $variables)
 {
-    $element = $variables['element'];
-
+    $suggestions = [];
+    $node = $variables['elements']['#node'];
     $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
 
-    if ($variables['field_name'] == 'body' && in_array($element['#bundle'], $allow_content_types, true)) {
-        $delta = 0;
-
-        $node = \Drupal::routeMatch()->getParameter('node');
-        if ($node) {
-            $uid = $node->id();
-        } else {
-            $uid = 1;
-        }
-
-        $ElementorDrupal = ElementorDrupal::$instance;
-        $frontend_data = $ElementorDrupal->frontend($uid);
-
-        while (!empty($element[$delta])) {
-            $variables['items'][$delta]['content'] = [
-                '#theme' => 'elementor_field',
-                '#base_path' => base_path(),
-                '#uid' => $uid,
-                '#elementor_tmp' => $frontend_data,
-                '#cache' => array('max-age' => 0),
-            ];
-            $delta++;
-        }
+    if (in_array($node->getType(), $allow_content_types, true)) {
+        $suggestions[] = 'elementor_field';
     }
 
+    return $suggestions;
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+
+function elementor_preprocess_elementor_field(&$variables, $hook)
+{
+    $uid = $variables['elements']['#node']->id();
+    $ElementorDrupal = ElementorDrupal::$instance;
+    $frontend_data = $ElementorDrupal->frontend($uid);
+
+    $variables['base_path'] = base_path();
+    $variables['elementor_tmp'] = $frontend_data;
+    $variables['uid'] = $uid;
+    $variables['#cache'] = ['max-age' => 0];
 }
 
 /**
@@ -76,12 +74,12 @@ function elementor_menu_local_tasks_alter(&$data, $route_name)
     } else {
         $nid = 1;
     }
-    if ($route_name == 'entity.node.canonical' &&  in_array($node->getType(), $allow_content_types, true)) {
+    if ($route_name == 'entity.node.canonical' && in_array($node->getType(), $allow_content_types, true)) {
         $data['tabs'][0]['entity.node.canonical'] = [
             '#theme' => 'menu_local_task',
             '#link' => [
                 'title' => t('Elementor'),
-                'url' => \Drupal\Core\Url::fromRoute('elementor.editor' , ['node' => $nid]),
+                'url' => \Drupal\Core\Url::fromRoute('elementor.editor', ['node' => $nid]),
                 'localized_options' => [
                     'attributes' => [
                         'title' => t('Edit with Elementor'),

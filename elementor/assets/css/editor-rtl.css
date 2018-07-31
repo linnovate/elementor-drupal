@@ -1,4 +1,4 @@
-/*! elementor - v2.1.4 - 18-07-2018 */
+/*! elementor - v2.1.5 - 26-07-2018 */
 @charset "UTF-8";
 .dialog-widget-content {
   background-color: #fff;
@@ -243,9 +243,11 @@ body {
   -webkit-transform: translateX(-50%) translateY(-50%);
       -ms-transform: translateX(-50%) translateY(-50%);
           transform: translateX(-50%) translateY(-50%);
-  width: 100px; }
+  width: 200px; }
   .elementor-loader-wrapper .elementor-loader {
     height: 100px;
+    width: 100px;
+    margin: auto;
     position: relative; }
   .elementor-loader-wrapper .elementor-loader-box {
     background-color: #495157; }
@@ -1064,18 +1066,16 @@ select {
     @media (min-width: 1440px) {
       .elementor-panel .elementor-panel-scheme-color .elementor-panel-scheme-item:not(:nth-child(4n)) {
         margin-left: 19px; } }
-    @media (max-width: 1439px) {
-      [class*="wp-version-4-9"] .elementor-panel .elementor-panel-scheme-color .elementor-panel-scheme-item:not(:nth-child(4n)), [class*="wp-version-5"] .elementor-panel .elementor-panel-scheme-color .elementor-panel-scheme-item:not(:nth-child(4n)) {
-        margin-left: 5px; } }
-    @media (min-width: 1440px) {
-      [class*="wp-version-4-9"] .elementor-panel .elementor-panel-scheme-color .elementor-panel-scheme-item:not(:nth-child(4n)), [class*="wp-version-5"] .elementor-panel .elementor-panel-scheme-color .elementor-panel-scheme-item:not(:nth-child(4n)) {
-        margin-left: 12px; } }
   .elementor-panel .elementor-panel-scheme-color .wp-picker-container:not(.wp-picker-active) {
     float: none; }
   .elementor-panel .elementor-panel-scheme-color .wp-picker-container.wp-picker-active {
-    -webkit-transform: translateY(10px);
-        -ms-transform: translateY(10px);
-            transform: translateY(10px); }
+    top: 10px; }
+    @media (max-width: 1439px) {
+      .elementor-panel .elementor-panel-scheme-color .wp-picker-container.wp-picker-active {
+        border-width: 0 4px 0 5px; } }
+    @media (min-width: 1440px) {
+      .elementor-panel .elementor-panel-scheme-color .wp-picker-container.wp-picker-active {
+        border-width: 0 7px 0 5px; } }
     @media (max-width: 1439px) {
       .elementor-panel .elementor-panel-scheme-color .wp-picker-container.wp-picker-active .wp-color-result {
         margin-right: 4px; } }
@@ -1104,7 +1104,7 @@ select {
       vertical-align: middle; }
   .elementor-panel .elementor-panel-scheme-typography-item-value select, .elementor-panel .elementor-panel-scheme-typography-item-value input {
     width: 100%; }
-  .elementor-panel .elementor-panel-scheme-item .elementor-panel-heading:not(.elementor-open) + .elementor-panel-scheme-typography-items {
+  .elementor-panel .elementor-panel-scheme-item:not(.elementor-open) .elementor-panel-scheme-typography-items {
     display: none; }
   .elementor-panel .elementor-panel-scheme-color-system-scheme {
     margin-bottom: 10px; }
@@ -1541,6 +1541,14 @@ select {
     height: 27px;
     top: 0; }
 
+.elementor-control.elementor-open .elementor-panel-heading-toggle .fa:before,
+.elementor-panel-scheme-item.elementor-open .elementor-panel-heading-toggle .fa:before {
+  content: '\f0d7'; }
+
+.elementor-control:not(.elementor-open) .elementor-panel-heading-toggle .fa:before,
+.elementor-panel-scheme-item:not(.elementor-open) .elementor-panel-heading-toggle .fa:before {
+  content: ""; }
+
 .elementor-panel-heading {
   display: table;
   table-layout: fixed;
@@ -1549,10 +1557,6 @@ select {
   width: 100%;
   border-bottom: 1px solid #e6e9ec;
   cursor: pointer; }
-  .elementor-panel-heading:not(.elementor-open) .elementor-panel-heading-toggle .fa:before {
-    content: ""; }
-  .elementor-panel-heading.elementor-open .elementor-panel-heading-toggle .fa:before {
-    content: '\f0d7'; }
   .elementor-panel-heading > * {
     display: table-cell;
     vertical-align: middle; }
@@ -1624,11 +1628,11 @@ select {
       background-color: #fff;
       color: #a4afb7; }
       .elementor-choices input:not(:checked) + .elementor-choices-label:nth-child(2) {
-        -webkit-border-radius: 3px 0 0 3px;
-                border-radius: 3px 0 0 3px; }
-      .elementor-choices input:not(:checked) + .elementor-choices-label:last-child {
         -webkit-border-radius: 0 3px 3px 0;
                 border-radius: 0 3px 3px 0; }
+      .elementor-choices input:not(:checked) + .elementor-choices-label:last-child {
+        -webkit-border-radius: 3px 0 0 3px;
+                border-radius: 3px 0 0 3px; }
   .elementor-choices .elementor-choices-label {
     display: table-cell;
     vertical-align: middle;
@@ -1970,10 +1974,10 @@ select {
 .elementor-control-type-section {
   margin-top: 10px;
   padding: 0; }
-  .elementor-control-type-section + .elementor-control:not(.elementor-control-type-section) {
-    padding-top: 15px; }
-    .elementor-control-type-section + .elementor-control:not(.elementor-control-type-section):before {
-      display: none; }
+  .elementor-control-type-section.elementor-open {
+    padding-bottom: 15px; }
+  .elementor-control-type-section + .elementor-control:not(.elementor-control-type-section):before {
+    display: none; }
 
 .elementor-control-type-color > .elementor-control-content > .elementor-control-field > .elementor-control-title {
   width: 70%; }
@@ -2522,7 +2526,7 @@ select {
 .wp-picker-container.wp-picker-active {
   position: absolute;
   z-index: 10000;
-  top: 0;
+  top: -9px;
   left: 7px;
   background-color: #fff;
   border: solid #fff;
@@ -2562,15 +2566,12 @@ select {
   .wp-picker-container:not(.wp-picker-active) .wp-color-result {
     margin: 0; }
 
-.wp-picker-container.wp-picker-active {
-  -webkit-transform: translateY(6px);
-      -ms-transform: translateY(6px);
-          transform: translateY(6px); }
-  [class*="wp-version-4-9"] #elementor-controls .wp-picker-container.wp-picker-active,
-  [class*="wp-version-5"] #elementor-controls .wp-picker-container.wp-picker-active {
-    padding-top: 9px; }
-  .wp-picker-container.wp-picker-active .wp-color-result {
-    margin-right: 3px; }
+[class*="wp-version-4-9"] #elementor-controls .wp-picker-container.wp-picker-active,
+[class*="wp-version-5"] #elementor-controls .wp-picker-container.wp-picker-active {
+  padding-top: 9px; }
+
+.wp-picker-container.wp-picker-active .wp-color-result {
+  margin-right: 3px; }
 
 .wp-picker-container input[type="text"].wp-color-picker {
   float: left;

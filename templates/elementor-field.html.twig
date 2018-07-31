@@ -1083,14 +1083,6 @@
 <link rel="stylesheet" href="{{base_path}}modules/elementor/elementor/assets/css/editor-preview.min.css?ver=2.0.16" type="text/css">
 <link rel="stylesheet" href="{{base_path}}modules/elementor/elementor/assets/css/frontend.min.css?ver=2.0.16" type="text/css">
 
-<script type="text/javascript">
-/* <![CDATA[ */
-if (document.querySelector('.elementor-edit-mode ')) {
-    document.body.classList.add('elementor-preview-window');
-}
-/* ]]> */
-</script>
-
 <script src="{{base_path}}modules/elementor/wp-includes/js/jquery/jquery.js"></script>
 <script src="{{base_path}}modules/elementor/wp-includes/js/jquery/jquery-migrate.min.js"></script>
 <script src="{{base_path}}modules/elementor/wp-includes/js/jquery/ui/position.min.js"></script>
@@ -1102,22 +1094,6 @@ if (document.querySelector('.elementor-edit-mode ')) {
 <script type="text/javascript" src="{{base_path}}modules/elementor/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2"></script>
 <script type="text/javascript" src="{{base_path}}modules/elementor/elementor/assets/lib/swiper/swiper.jquery.min.js?ver=3.4.2"></script>
 <script type="text/javascript" src="{{base_path}}modules/elementor/elementor/assets/js/frontend.min.js?ver=2.0.16"></script>
-
-<style>
-body.elementor-preview-window {
-    padding: 0 !important;
-}
-
-body.elementor-preview-window {
-    margin: 0 !important;
-}
-
-body.elementor-preview-window #toolbar-administration,
-body.elementor-preview-window .contextual,
-body.elementor-preview-window ul.tabs.primary {
-    display: none !important;
-}
-</style>
 
 <div id="elementor" class="elementor-{{uid}} elementor-edit-mode elementor elementor-1 elementor-edit-area-active">
 {{elementor_tmp | raw}}

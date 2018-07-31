@@ -2,13 +2,6 @@
 
 $enqueued_actions = array();
 
-/**
- * Enqueue an action to run at a later time.
- * @param string  $hook The hook name.
- * @param obj  $func The function object.
- * @param integer $imp  The level of importance from 0-9
- */
-
 $wpdb = [];
 
 function get_option($option, $default = false)
@@ -20,12 +13,6 @@ function get_option($option, $default = false)
 function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1)
 {
     global $enqueued_actions;
-    // if ( ! isset( $enqueued_actions[ $tag ] ) ) {
-    //     $enqueued_actions[ $tag ] = new WP_Hook();
-    // }
-    // $enqueued_actions[ $tag ]->add_filter( $tag, $function_to_add, $priority, $accepted_args );
-
-    //      global $enqueued_actions;
 
     $enqueued_actions[$tag][] = array(
         'func' => $function_to_add,
@@ -40,12 +27,6 @@ function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1)
     return add_filter($tag, $function_to_add, $priority, $accepted_args);
 }
 
-//  function add_action($hook, $func, $imp = 0) {
-
-//      global $enqueued_actions;
-
-//      $enqueued_actions[$hook][] = array('func' => $func, 'imp' => $imp);
-//  }
 function have_posts()
 {
     return false;
@@ -57,50 +38,49 @@ function update_option($option, $value, $autoload = null)
     $wpdb[$option] = $value;
 }
 
-/**
- * Run the enqueued actions with the correct hook.
- * @param  string $hook Hook name.
- */
-
 function do_action($tag, $args = [])
 {
     global $enqueued_actions;
 
-    // $actions = $enqueued_actions[$hook];
+    $all_args = array();
+    for ($a = 1, $num = func_num_args(); $a < $num; $a++) {
+        $all_args[] = func_get_arg($a);
+    }
 
-    // for($i = 0; $i < 10; $i++) {
     foreach ($enqueued_actions[$tag] as $the_) {
-        $num_args = count($args);
+        $num_args = count($all_args);
 
-        //  if($the_['imp'] == $i) {
-        // Avoid the array_slice if possible.
         if ($tag != "elementor/css-file/post/parse") {
             if ($the_['accepted_args'] == 0) {
                 $value = call_user_func_array($the_['func'], array());
             } elseif ($the_['accepted_args'] >= $num_args) {
-                $value = call_user_func_array($the_['func'], [$args]);
+                $value = call_user_func_array($the_['func'], $all_args);
             } else {
-                $value = call_user_func_array($the_['func'], array_slice($args, 0, (int) $the_['accepted_args']));
+                $value = call_user_func_array($the_['func'], array_slice($all_args, 0, (int) $the_['accepted_args']));
             }
         }
-        // }
     }
-    //}
 
-    return $value;
+    return $value ? $value : $all_args[0];
 }
 
 function do_ajax($tag, $args = [])
 {
     global $enqueued_actions;
+
+    $all_args = array();
+    for ($a = 1, $num = func_num_args(); $a < $num; $a++) {
+        $all_args[] = func_get_arg($a);
+    }
+
     foreach ($enqueued_actions['wp_ajax_' . $tag] as $the_) {
-        $num_args = count($args);
+        $num_args = count($all_args);
         if ($the_['accepted_args'] == 0) {
             $value = call_user_func_array($the_['func'], array());
         } elseif ($the_['accepted_args'] >= $num_args) {
-            $value = call_user_func_array($the_['func'], $args);
+            $value = call_user_func_array($the_['func'], $all_args);
         } else {
-            $value = call_user_func_array($the_['func'], array_slice($args, 0, (int) $the_['accepted_args']));
+            $value = call_user_func_array($the_['func'], array_slice($all_args, 0, (int) $the_['accepted_args']));
         }
     }
     return $value;
@@ -309,6 +289,63 @@ function wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = fa
 
     return $html;
 }
+
+define( 'MINUTE_IN_SECONDS', 60);
+define( 'HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
+define( 'DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
+define( 'WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
+define( 'MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
+define( 'YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
+
+
+function human_time_diff( $from, $to = '' ) {
+    if ( empty( $to ) ) {
+        $to = time();
+    }
+ 
+    $diff = (int) abs( $to - $from );
+ 
+    if ( $diff < HOUR_IN_SECONDS ) {
+        $mins = round( $diff / MINUTE_IN_SECONDS );
+        if ( $mins <= 1 )
+            $mins = 1;
+        /* translators: Time difference between two dates, in minutes (min=minute). 1: Number of minutes */
+        $since = sprintf( _n( '%s min', '%s mins', $mins ), $mins );
+    } elseif ( $diff < DAY_IN_SECONDS && $diff >= HOUR_IN_SECONDS ) {
+        $hours = round( $diff / HOUR_IN_SECONDS );
+        if ( $hours <= 1 )
+            $hours = 1;
+        /* translators: Time difference between two dates, in hours. 1: Number of hours */
+        $since = sprintf( _n( '%s hour', '%s hours', $hours ), $hours );
+    } elseif ( $diff < WEEK_IN_SECONDS && $diff >= DAY_IN_SECONDS ) {
+        $days = round( $diff / DAY_IN_SECONDS );
+        if ( $days <= 1 )
+            $days = 1;
+        /* translators: Time difference between two dates, in days. 1: Number of days */
+        $since = sprintf( _n( '%s day', '%s days', $days ), $days );
+    } elseif ( $diff < MONTH_IN_SECONDS && $diff >= WEEK_IN_SECONDS ) {
+        $weeks = round( $diff / WEEK_IN_SECONDS );
+        if ( $weeks <= 1 )
+            $weeks = 1;
+        /* translators: Time difference between two dates, in weeks. 1: Number of weeks */
+        $since = sprintf( _n( '%s week', '%s weeks', $weeks ), $weeks );
+    } elseif ( $diff < YEAR_IN_SECONDS && $diff >= MONTH_IN_SECONDS ) {
+        $months = round( $diff / MONTH_IN_SECONDS );
+        if ( $months <= 1 )
+            $months = 1;
+        /* translators: Time difference between two dates, in months. 1: Number of months */
+        $since = sprintf( _n( '%s month', '%s months', $months ), $months );
+    } elseif ( $diff >= YEAR_IN_SECONDS ) {
+        $years = round( $diff / YEAR_IN_SECONDS );
+        if ( $years <= 1 )
+            $years = 1;
+        /* translators: Time difference between two dates, in years. 1: Number of years */
+        $since = sprintf( _n( '%s year', '%s years', $years ), $years );
+    }
+
+    return apply_filters( 'human_time_diff', $since, $diff, $from, $to );
+}
+
 function wp_image_editor_supports()
 {}
 function wp_embed_defaults()
@@ -382,10 +419,7 @@ function post_type_supports()
 function get_post_type()
 {}
 function delete_option()
-{
-
-}
-
+{}
 function set_transient($transient, $value, $expiration = 0)
 {
 
@@ -415,11 +449,8 @@ function remove_filter($tag, $function_to_remove, $priority = 10)
 
     $r = false;
     if (isset($enqueued_actions[$tag])) {
-        // $r = $enqueued_actions[$tag]->remove_filter($tag, $function_to_remove, $priority);
-        // if (!$enqueued_actions[$tag]->callbacks) {
         unset($enqueued_actions[$tag]);
         $r = true;
-        // }
     }
 
     return $r;
@@ -440,46 +471,21 @@ function wp_get_post_parent_id()
 {}
 function apply_filters_ref_array($tag, $args)
 {
-    /*   global $wp_filter, $wp_current_filter;
-
-    // Do 'all' actions first
-    if ( isset($wp_filter['all']) ) {
-    $wp_current_filter[] = $tag;
-    $all_args = func_get_args();
-    _wp_call_all_hook($all_args);
-    }
-
-    if ( !isset($wp_filter[$tag]) ) {
-    if ( isset($wp_filter['all']) )
-    array_pop($wp_current_filter);
-    return $args[0];
-    }
-
-    if ( !isset($wp_filter['all']) )
-    $wp_current_filter[] = $tag;
-
-    $filtered = $wp_filter[ $tag ]->apply_filters( $args[0], $args );
-
-    array_pop( $wp_current_filter );
-
-    return $filtered;
-     */
     return $tag;
 }
 function apply_filters_deprecated($tag, $args, $version, $replacement = false, $message = null)
 {
-    //   if ( ! has_filter( $tag ) ) {
-    //       return $args[0];
-    //   }
-    //   _deprecated_hook( $tag, $version, $replacement, $message );
     return apply_filters_ref_array($tag, $args);
 }
-// function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
-//     return true;
-// }
+
 function apply_filters($tag, $value)
 {
-    return $value;
+    $all_args = array();
+    for ($a = 0, $num = func_num_args(); $a < $num; $a++) {
+        $all_args[] = func_get_arg($a);
+    }
+
+    return call_user_func_array('do_action', $all_args);
 }
 
 function shortcode_unautop($value)
@@ -494,10 +500,6 @@ function wptexturize($value)
 {
     return $value;
 }
-// function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-//     return add_filter($tag, $function_to_add, $priority, $accepted_args);
-// }
-
 function wp_json_encode($data)
 {
     return json_encode($data);
@@ -516,6 +518,10 @@ function __($text, $context)
 }
 function _x($text, $context, $domain = 'default')
 {
+    return $text;
+}
+
+function _n($text) {
     return $text;
 }
 

@@ -1,4 +1,4 @@
-/*! elementor - v2.1.4 - 18-07-2018 */
+/*! elementor - v2.1.5 - 26-07-2018 */
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var TagPanelView = require( 'elementor-dynamic-tags/tag-panel-view' );
 
@@ -3439,7 +3439,7 @@ ControlChooseItemView = ControlBaseDataView.extend( {
 }, {
 
 	onPasteStyle: function( control, clipboardValue ) {
-		return undefined !== control.options[ clipboardValue ];
+		return '' === clipboardValue || undefined !== control.options[ clipboardValue ];
 	}
 } );
 
@@ -5445,6 +5445,10 @@ App = Marionette.Application.extend( {
 		this.notifications = new Notifications();
 
 		this.ajax.init();
+
+		this.initHotKeys();
+
+		this.initEnvData();
 	},
 
 	initDialogsManager: function() {
@@ -5653,7 +5657,33 @@ App = Marionette.Application.extend( {
 						return false;
 					}
 
-					var textSelection = getSelection() + elementorFrontend.getElements( 'window' ).getSelection();
+					var frontendWindow = elementorFrontend.getElements( 'window' ),
+						textSelection = getSelection() + frontendWindow.getSelection();
+
+					if ( ! textSelection && elementor.envData.gecko ) {
+						textSelection = [ window, frontendWindow ].some( function( window ) {
+							var activeElement = window.document.activeElement;
+
+							if ( ! activeElement || -1 === [ 'INPUT', 'TEXTAREA' ].indexOf( activeElement.tagName ) ) {
+								return;
+							}
+
+							var originalInputType;
+
+							// Some of input types can't retrieve a selection
+							if ( 'INPUT' === activeElement.tagName ) {
+								originalInputType = activeElement.type;
+
+								activeElement.type = 'text';
+							}
+
+							var selection = activeElement.value.substring( activeElement.selectionStart, activeElement.selectionEnd );
+
+							activeElement.type = originalInputType;
+
+							return ! ! selection;
+						} );
+					}
 
 					return ! textSelection;
 				},
@@ -5700,7 +5730,7 @@ App = Marionette.Application.extend( {
 			} );
 		} );
 
-		hotKeysManager.bindListener( this.$window.add( elementorFrontend.getElements( '$window' ) ) );
+		hotKeysManager.bindListener( this.$window );
 	},
 
 	preventClicksInsideEditor: function() {
@@ -5836,7 +5866,6 @@ App = Marionette.Application.extend( {
 		this.initModulesBC();
 
 		this.initComponents();
-		this.initEnvData();
 
 		if ( ! this.checkEnvCompatibility() ) {
 			this.onEnvNotCompatible();
@@ -5847,11 +5876,13 @@ App = Marionette.Application.extend( {
 		this.listenTo( this.channels.dataEditMode, 'switch', this.onEditModeSwitched );
 
 		this.initClearPageDialog();
+
 		this.addBackgroundClickArea( document );
 
 		this.$window.trigger( 'elementor:init' );
 
 		this.initPreview();
+
 		this.logSite();
 	},
 
@@ -5876,8 +5907,8 @@ App = Marionette.Application.extend( {
 		}
 
 		this.initFrontend();
+
 		this.initElements();
-		this.initHotKeys();
 
 		var iframeRegion = new Marionette.Region( {
 			// Make sure you get the DOM object out of the jQuery object
@@ -5926,6 +5957,8 @@ App = Marionette.Application.extend( {
 		this.enqueueTypographyFonts();
 
 		this.onEditModeSwitched();
+
+		this.hotKeys.bindListener( elementorFrontend.getElements( '$window' ) );
 
 		this.trigger( 'preview:loaded' );
 	},
@@ -10401,7 +10434,7 @@ PanelSchemeTypographyView = PanelSchemeItemView.extend( {
 	},
 
 	toggleVisibility: function() {
-		this.ui.heading.toggleClass( 'elementor-open' );
+		this.$el.toggleClass( 'elementor-open' );
 	},
 
 	changeUIValue: function( newValue ) {
@@ -13587,7 +13620,7 @@ ControlsStack = Marionette.CompositeView.extend( {
 			} );
 
 		if ( activeSectionView[0] ) {
-			activeSectionView[0].ui.heading.addClass( 'elementor-open' );
+			activeSectionView[0].$el.addClass( 'elementor-open' );
 		}
 	},
 
@@ -13629,7 +13662,7 @@ ControlsStack = Marionette.CompositeView.extend( {
 	},
 
 	onChildviewControlSectionClicked: function( childView ) {
-		var isSectionOpen = childView.ui.heading.hasClass( 'elementor-open' );
+		var isSectionOpen = childView.$el.hasClass( 'elementor-open' );
 
 		this.activateSection( isSectionOpen ? null : childView.model.get( 'name' ) );
 
@@ -14782,16 +14815,8 @@ var	Manager = function() {
 
 	var addHotKeys = function() {
 		var H_KEY = 72,
+			Y_KEY = 89,
 			Z_KEY = 90;
-
-		elementor.hotKeys.addHotKeyHandler( Z_KEY, 'historyNavigation', {
-			isWorthHandling: function( event ) {
-				return items.length && ! jQuery( event.target ).is( 'input, textarea, [contenteditable=true]' );
-			},
-			handle: function( event ) {
-				navigate( Z_KEY === event.which && event.shiftKey );
-			}
-		} );
 
 		elementor.hotKeys.addHotKeyHandler( H_KEY, 'showHistoryPage', {
 			isWorthHandling: function( event ) {
@@ -14799,6 +14824,24 @@ var	Manager = function() {
 			},
 			handle: function() {
 				elementor.getPanelView().setPage( 'historyPage' );
+			}
+		} );
+
+		var navigationWorthHandling = function( event ) {
+			return items.length && elementor.hotKeys.isControlEvent( event ) && ! jQuery( event.target ).is( 'input, textarea, [contenteditable=true]' );
+		};
+
+		elementor.hotKeys.addHotKeyHandler( Y_KEY, 'historyNavigationRedo', {
+			isWorthHandling: navigationWorthHandling,
+			handle: function( event ) {
+				navigate( true );
+			}
+		} );
+
+		elementor.hotKeys.addHotKeyHandler( Z_KEY, 'historyNavigation', {
+			isWorthHandling: navigationWorthHandling,
+			handle: function( event ) {
+				navigate( event.shiftKey );
 			}
 		} );
 	};

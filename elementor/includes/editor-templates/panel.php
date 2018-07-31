@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @var Editor $this
  */
-$document = Plugin::$instance->documents->get( $this->get_post_id() );
+$document = Plugin::$instance->documents->get( 1 );
 
 ?>
 <script type="text/template" id="tmpl-elementor-panel">
