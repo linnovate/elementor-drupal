@@ -275,7 +275,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
 
         $source = $this->get_source($args['source']);
 
-        return $source->mark_as_favorite($args['template_id'], filter_var($args['favorite'], FILTER_VALIDATE_BOOLEAN));
+        return false;//$source->mark_as_favorite($args['template_id'], filter_var($args['favorite'], FILTER_VALIDATE_BOOLEAN));
     }
 
     /**

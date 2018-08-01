@@ -56,6 +56,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     {
         $editor_data = $this->ElementorDrupal->editor();
 
+
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
 
         $html = $template->render([

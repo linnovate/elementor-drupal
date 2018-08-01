@@ -33,6 +33,23 @@ require drupal_get_path('module', 'elementor') . '/drupal_elementor/ElementorDru
 
 use Drupal\elementor\ElementorDrupal;
 
+
+/**
+ * Implements hook_theme().
+ */
+
+function elementor_theme($existing, $type, $theme, $path)
+{
+    return array(
+        'elementor_field' => array(
+            'variables' => array('elementor_data' => null, 'elementor_tmp' => null, 'base_path' => base_path()),
+        ),
+        'elementor_editor' => array(
+            'variables' => array('elementor_data' => null),
+        ),
+    );
+}
+
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
@@ -95,17 +112,126 @@ function elementor_menu_local_tasks_alter(&$data, $route_name)
 }
 
 /**
- * Implements hook_theme().
+ * Implements hook_library_info_build().
  */
 
-function elementor_theme($existing, $type, $theme, $path)
+function elementor_library_info_build()
 {
-    return array(
-        'elementor_field' => array(
-            'variables' => array('elementor_data' => null, 'elementor_tmp' => null, 'base_path' => base_path()),
-        ),
-        'elementor_editor' => array(
-            'variables' => array('elementor_data' => null),
-        ),
-    );
+    $path = drupal_get_path('module', 'elementor');
+
+    $libraries = [];
+    $libraries['elementor/editor'] = [
+        'js' => [
+            // $path . '/wp-includes/js/jquery/jquery.js' => [],
+            $path . '/wp-includes/js/jquery/jquery-migrate.min.js' => [],
+            $path . '/wp-includes/js/jquery/jquery.ui.touch-punch.js' => [],
+            $path . '/wp-includes/js/jquery/ui/core.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/widget.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/mouse.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/sortable.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/position.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/menu.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/autocomplete.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/resizable.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/draggable.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/slider.min.js' => [],
+
+            $path . '/wp-admin/js/image-edit.js' => [],
+            $path . '/wp-admin/js/color-picker.js' => [],
+            $path . '/wp-admin/js/iris.min.js' => [],
+
+            $path . '/wp-admin/js/editor.min.js' => [],
+
+            $path . '/wp-includes/js/underscore.min.js' => [],
+            $path . '/wp-includes/js/backbone.min.js' => [],
+
+            $path . '/wp-includes/js/shortcode.js' => [],
+            $path . '/wp-includes/js/wp-backbone.js' => [],
+            $path . '/wp-includes/js/utils.js' => [],
+            $path . '/wp-includes/js/wp-util.js' => [],
+
+            $path . '/wp-includes/js/media-models.js' => [],
+            $path . '/wp-includes/js/plupload/moxie.min.js' => [],
+            $path . '/wp-includes/js/plupload/plupload.js' => [],
+            $path . '/wp-includes/js/plupload/wp-plupload.js' => [],
+            $path . '/wp-includes/js/wp-embed.js' => [],
+
+            $path . '/wp-includes/js/mce-view.js' => [],
+            $path . '/wp-includes/js/imgareaselect/jquery.imgareaselect.js' => [],
+
+            $path . '/wp-includes/js/quicktags.js' => [],
+
+            $path . '/wp-includes/js/wplink.js' => [],
+
+            $path . '/wp-includes/js/thickbox/thickbox.js' => [],
+            $path . '/wp-admin/js/media-upload.js' => [],
+            $path . '/wp-includes/js/heartbeat.min.js' => [],
+            $path . '/wp-includes/js/wp-auth-check.min.js' => [],
+            $path . '/wp-includes/js/imagesloaded.min.js' => [],
+
+            $path . '/wp-includes/js/tinymce/tinymce.min.js?ver=4711-20180425' => [],
+            $path . '/wp-includes/js/tinymce/plugins/compat3x/plugin.min.js?ver=4711-20180425' => [],
+
+            $path . '/elementor/assets/lib/backbone/backbone.marionette.min.js' => [],
+            $path . '/elementor/assets/lib/backbone/backbone.radio.min.js' => [],
+            $path . '/elementor/assets/lib/dialog/dialog.min.js' => [],
+            $path . '/elementor/assets/lib/e-select2/js/e-select2.full.min.js' => [],
+            $path . '/elementor/assets/lib/flatpickr/flatpickr.min.js' => [],
+            $path . '/elementor/assets/lib/inline-editor/js/inline-editor.min.js' => [],
+            $path . '/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js' => [],
+            $path . '/elementor/assets/lib/nprogress/nprogress.min.js' => [],
+            $path . '/elementor/assets/lib/perfect-scrollbar/perfect-scrollbar.jquery.min.js' => [],
+            $path . '/elementor/assets/lib/slick/slick.min.js' => [],
+            $path . '/elementor/assets/lib/swiper/swiper.jquery.min.js' => [],
+            $path . '/elementor/assets/lib/tipsy/tipsy.min.js' => [],
+            $path . '/elementor/assets/lib/waypoints/waypoints.min.js' => [],
+            $path . '/elementor/assets/lib/wp-color-picker/wp-color-picker-alpha.min.js' => [],
+            $path . '/elementor/assets/js/editor.js' => [],
+
+            $path . '/drupal_media.js' => [],
+        ],
+        'css' => [
+            'base' => [
+                $path . '/wp-admin/css/color-picker.min.css' => [],
+                $path . '/elementor/assets/lib/animate.css/animate.min.css' => [],
+                $path . '/elementor/assets/lib/e-select2/css/e-select2.min.css' => [],
+                $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css' => [],
+                $path . '/elementor/assets/lib/flatpickr/flatpickr.min.css' => [],
+                $path . '/elementor/assets/lib/font-awesome/css/font-awesome.min.css' => [],
+                $path . '/wp-includes/js/imgareaselect/imgareaselect.css' => [],
+                $path . '/wp-includes/css/dashicons.min.css?ver=4.9.6" type="text/css' => [],
+                $path . '/wp-includes/css/editor.min.css' => [],
+                $path . '/elementor/assets/css/editor.css' => [],
+            ],
+        ],
+    ];
+
+    $libraries['elementor/frontend'] = [
+        'js' => [
+            // $path . '/wp-includes/js/jquery/jquery.js' => [],
+            $path . '/wp-includes/js/jquery/jquery-migrate.min.js' => [],
+            $path . '/wp-includes/js/jquery/ui/position.min.js' => [],
+
+            $path . '/elementor/assets/lib/slick/slick.min.js?ver=1.8.1' => [],
+            $path . '/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js?ver=0.2.1' => [],
+            $path . '/elementor/assets/lib/inline-editor/js/inline-editor.min.js?ver=4.9.6' => [],
+            $path . '/elementor/assets/lib/dialog/dialog.min.js?ver=4.3.2' => [],
+            $path . '/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2' => [],
+            $path . '/elementor/assets/lib/swiper/swiper.jquery.min.js?ver=3.4.2' => [],
+            $path . '/elementor/assets/js/frontend.min.js?ver=2.0.16' => [],
+        ],
+        'css' => [
+            'base' => [
+                $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=3.3.0' => [],
+                $path . '/elementor/assets/lib/font-awesome/css/font-awesome.min.css?ver=4.7.0' => [],
+                $path . '/elementor/assets/lib/e-select2/css/e-select2.min.css?ver=4.0.6-rc.1' => [],
+                $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=3.3.0' => [],
+                $path . '/elementor/assets/lib/animations/animations.min.css?ver=2.0.16' => [],
+                $path . '/elementor/assets/css/editor-preview.min.css?ver=2.0.16' => [],
+                $path . '/elementor/assets/css/frontend.min.css?ver=2.0.16' => [],
+            ],
+        ],
+    ];
+    
+    return $libraries;
 }

@@ -435,7 +435,7 @@ class Source_Local extends Source_Base {
 
 		$templates = [];
 		$connection = \Drupal::database();
-        $result = $connection->query("SELECT id FROM elementor_data WHERE uid = " . 0)
+        $result = $connection->query("SELECT id FROM elementor_tmps WHERE type = '" . $this->get_id() . "'")
             ->fetchAll();
 
 		foreach ( $result as $item ) {
@@ -462,9 +462,10 @@ class Source_Local extends Source_Base {
         $timestamp = time();
 
         $connection = \Drupal::database();
-        $template_id = $connection->insert('elementor_data')
+        $template_id = $connection->insert('elementor_tmps')
             ->fields([
-                'uid' => 0,
+				'type' => $this->get_id(),
+				'name' =>  ! empty( $template_data['title'] ) ? $template_data['title'] : __( '(no title)', 'elementor' ),
                 'author' => 'admin',
                 'timestamp' => $timestamp,
                 'data' => json_encode($template_data['content']),
@@ -527,18 +528,18 @@ class Source_Local extends Source_Base {
 	public function get_item( $template_id ) {
 		
 		$connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_data WHERE id = " . $template_id)
+        $result = $connection->query("SELECT * FROM elementor_tmps WHERE id = " . $template_id)
             ->fetch();
 
         $data = [
             'template_id' => $template_id,
             'source' => $this->get_id(),
             'type' => 'elementor_library',
-            'title' => 'Test',//$result['title'],
+            'title' =>$result->name,
             'thumbnail' => '', //get_the_post_thumbnail_url( $post ),
-            'date' => $timestamp,
-            'human_date' => $timestamp,
-            'author' => 'admin', //$user->display_name,
+            'date' => date('M j @ H:i', $result->timestamp),
+            'human_date' => human_time_diff($result->timestamp),
+            'author' => $result->author, //$user->display_name,
             'hasPageSettings' => false,
             'tags' => [],
             'export_link' => '', //  $this->get_export_link( $template_id ),
@@ -574,7 +575,7 @@ class Source_Local extends Source_Base {
 	 */
 	public function get_data( array $args ) {
         $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_data WHERE id = " . $args['template_id'])
+        $result = $connection->query("SELECT data FROM elementor_tmps WHERE id = " . $args['template_id'])
             ->fetch();
         $content = json_decode($result->data, true);
 

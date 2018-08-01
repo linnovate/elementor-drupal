@@ -53,5 +53,46 @@ function elementor_schema()
         ),
     );
 
+    $schema['elementor_tmps'] = array(
+        'description' => 'Elementor templates.',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'description' => "The ID of the Elementor template.",
+            ),
+            'type' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The type of the template.",
+            ),
+            'name' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The name of the template.",
+            ),
+            'author' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The author of the target entity.",
+            ),
+            'data' => array(
+                'type' => 'blob',
+                'not null' => true,
+                'description' => 'The json of the Elementor editor get.',
+            ),
+            'timestamp' => array(
+                'type' => 'int',
+                'not null' => true,
+                'default' => 0,
+                'description' => "The timestamp of edited data.",
+            ),
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'type' => array('type'),
+        ),
+    );
+
     return $schema;
 }
