@@ -17,6 +17,18 @@ elementor.autosave:
   methods:  [POST]
   requirements:
     _permission: 'administer content types'
+elementor.upload:
+  path: '/elementor/upload'
+  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::upload' }
+  methods:  [POST]
+  requirements:
+    _permission: 'administer content types'
+elementor.delete_upload:
+  path: '/elementor/delete_upload/{fid}'
+  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::delete_upload' }
+  methods:  [DELETE]
+  requirements:
+    _permission: 'administer content types'
 elementor.settings:
   path: '/admin/config/services/elementor/settings'
   defaults: 

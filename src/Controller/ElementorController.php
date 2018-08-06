@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use \Drupal\file\Entity\File;
+
 class ElementorController extends ControllerBase implements ContainerInjectionInterface
 {
 
@@ -56,7 +58,6 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     {
         $editor_data = $this->ElementorDrupal->editor();
 
-
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
 
         $html = $template->render([
@@ -68,5 +69,27 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
         $response->setContent($html);
 
         return $response;
+    }
+
+    public function upload(Request $request)
+    {
+        $files = [];
+
+        foreach ($request->files->all() as $key => $file) {
+            $data = file_get_contents($file->getPathName());
+            $newFile = file_save_data($data, "public://" . $file->getClientOriginalName(), FILE_EXISTS_REPLACE);
+            $files[] = [
+                url => $newFile->url(),
+                id => $newFile->id()
+            ];
+        }
+
+        return new JsonResponse($files);
+    }
+
+    public function delete_upload(Request $request)
+    {
+        $newFile =  file_delete($request->get('fid'));
+        return new JsonResponse();
     }
 }

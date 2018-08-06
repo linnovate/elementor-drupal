@@ -281,7 +281,7 @@ class ElementorDrupal
     private function getData($uid)
     {
         $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $uid)
+        $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $uid . " ORDER BY ID DESC LIMIT 1")
             ->fetch();
         return json_decode($result->data, true);
     }
