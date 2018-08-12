@@ -105,7 +105,7 @@ class Responsive {
 				if ( ! in_array( $breakpoint_key, self::$editable_breakpoints_keys ) ) {
 					$new_array[ $breakpoint_key ] = self::$default_breakpoints[ $breakpoint_key ];
 				} else {
-					$saved_option = get_option( self::BREAKPOINT_OPTION_PREFIX . $breakpoint_key );
+					$saved_option = get_option_elementor_adapter( self::BREAKPOINT_OPTION_PREFIX . $breakpoint_key );
 
 					$new_array[ $breakpoint_key ] = $saved_option ? (int) $saved_option : self::$default_breakpoints[ $breakpoint_key ];
 				}
@@ -142,6 +142,6 @@ class Responsive {
 			$templates[ $file_name ] = $template_path;
 		}
 
-		return apply_filters( 'elementor/core/responsive/get_stylesheet_templates', $templates );
+		return apply_filters_elementor_adapter( 'elementor/core/responsive/get_stylesheet_templates', $templates );
 	}
 }

@@ -102,7 +102,7 @@ class Manager {
 			]
 		);
 
-		delete_option( Frontend::META_KEY );
+		delete_option_elementor_adapter( Frontend::META_KEY );
 
 		// Delete files.
 		$path = Base::get_base_uploads_dir() . Base::DEFAULT_FILES_DIR . '*';
@@ -128,7 +128,7 @@ class Manager {
 		 *
 		 * @since 2.1.0
 		 */
-		do_action( 'elementor/core/files/clear_cache' );
+		do_action_elementor_adapter( 'elementor/core/files/clear_cache' );
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Manager {
 	 * @access private
 	 */
 	private function register_actions() {
-		add_action( 'deleted_post', [ $this, 'on_delete_post' ] );
-		add_filter( 'wxr_export_skip_postmeta', [ $this, 'on_export_post_meta' ], 10, 2 );
+		add_action_elementor_adapter( 'deleted_post', [ $this, 'on_delete_post' ] );
+		add_filter_elementor_adapter( 'wxr_export_skip_postmeta', [ $this, 'on_export_post_meta' ], 10, 2 );
 	}
 }

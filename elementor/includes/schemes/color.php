@@ -61,7 +61,7 @@ class Scheme_Color extends Scheme_Base {
 	 * @return string Color scheme title.
 	 */
 	public function get_title() {
-		return __( 'Colors', 'elementor' );
+		return ___elementor_adapter( 'Colors', 'elementor' );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Scheme_Color extends Scheme_Base {
 	 * @return string Color scheme disabled title.
 	 */
 	public function get_disabled_title() {
-		return __( 'Color Palettes', 'elementor' );
+		return ___elementor_adapter( 'Color Palettes', 'elementor' );
 	}
 
 	/**
@@ -90,10 +90,10 @@ class Scheme_Color extends Scheme_Base {
 	 */
 	public function get_scheme_titles() {
 		return [
-			self::COLOR_1 => __( 'Primary', 'elementor' ),
-			self::COLOR_2 => __( 'Secondary', 'elementor' ),
-			self::COLOR_3 => __( 'Text', 'elementor' ),
-			self::COLOR_4 => __( 'Accent', 'elementor' ),
+			self::COLOR_1 => ___elementor_adapter( 'Primary', 'elementor' ),
+			self::COLOR_2 => ___elementor_adapter( 'Secondary', 'elementor' ),
+			self::COLOR_3 => ___elementor_adapter( 'Text', 'elementor' ),
+			self::COLOR_4 => ___elementor_adapter( 'Accent', 'elementor' ),
 		];
 	}
 
@@ -142,14 +142,14 @@ class Scheme_Color extends Scheme_Base {
 		</div>
 		<div class="elementor-panel-scheme-colors-more-palettes elementor-panel-box">
 			<div class="elementor-panel-heading">
-				<div class="elementor-panel-heading-title"><?php echo __( 'More Palettes', 'elementor' ); ?></div>
+				<div class="elementor-panel-heading-title"><?php echo ___elementor_adapter( 'More Palettes', 'elementor' ); ?></div>
 			</div>
 			<div class="elementor-panel-box-content">
 				<?php foreach ( $this->_get_system_schemes_to_print() as $scheme_name => $scheme ) : ?>
-					<div class="elementor-panel-scheme-color-system-scheme" data-scheme-name="<?php echo esc_attr( $scheme_name ); ?>">
+					<div class="elementor-panel-scheme-color-system-scheme" data-scheme-name="<?php echo esc_attr_elementor_adapter( $scheme_name ); ?>">
 						<div class="elementor-panel-scheme-color-system-items">
 							<?php foreach ( $scheme['items'] as $color_value ) : ?>
-								<div class="elementor-panel-scheme-color-system-item" style="background-color: <?php echo esc_attr( $color_value ); ?>;"></div>
+								<div class="elementor-panel-scheme-color-system-item" style="background-color: <?php echo esc_attr_elementor_adapter( $color_value ); ?>;"></div>
 							<?php endforeach; ?>
 						</div>
 						<div class="elementor-title"><?php echo $scheme['title']; ?></div>
@@ -281,6 +281,6 @@ class Scheme_Color extends Scheme_Base {
 	 * @return string The current color scheme title.
 	 */
 	protected function _get_current_scheme_title() {
-		return __( 'Color Palette', 'elementor' );
+		return ___elementor_adapter( 'Color Palette', 'elementor' );
 	}
 }

@@ -34,9 +34,9 @@ class User {
 	 * @static
 	 */
 	public static function init() {
-		add_action( 'wp_ajax_elementor_set_admin_notice_viewed', [ __CLASS__, 'ajax_set_admin_notice_viewed' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_set_admin_notice_viewed', [ __CLASS__, 'ajax_set_admin_notice_viewed' ] );
 
-		add_action( 'elementor/ajax/register_actions', [ __CLASS__, 'register_ajax_actions' ] );
+		add_action_elementor_adapter( 'elementor/ajax/register_actions', [ __CLASS__, 'register_ajax_actions' ] );
 	}
 
 	public static function register_ajax_actions() {
@@ -58,7 +58,7 @@ class User {
 	 */
 	public static function is_current_user_can_edit( $post_id = 0 ) {
 		if ( empty( $post_id ) ) {
-			$post_id = get_the_ID();
+			$post_id = get_the_ID_elementor_adapter();
 		}
 
 		if ( ! Utils::is_post_type_support( $post_id ) ) {
@@ -69,7 +69,7 @@ class User {
 			return false;
 		}
 
-		$post_type_object = get_post_type_object( get_post_type( $post_id ) );
+		$post_type_object = get_post_type_object_elementor_adapter( get_post_type_elementor_adapter( $post_id ) );
 		if ( empty( $post_type_object ) ) {
 			return false;
 		}
@@ -83,12 +83,12 @@ class User {
 			return false;
 		}
 
-		if ( get_option( 'page_for_posts' ) === $post_id ) {
+		if ( get_option_elementor_adapter( 'page_for_posts' ) === $post_id ) {
 			return false;
 		}
 
-		$user = wp_get_current_user();
-		$exclude_roles = get_option( 'elementor_exclude_user_roles', [] );
+		$user = wp_get_current_user_elementor_adapter();
+		$exclude_roles = get_option_elementor_adapter( 'elementor_exclude_user_roles', [] );
 
 		$compare_roles = array_intersect( $user->roles, $exclude_roles );
 		if ( ! empty( $compare_roles ) ) {
@@ -116,12 +116,12 @@ class User {
 			return false;
 		}
 
-		if ( ! post_type_supports( $post_type, 'elementor' ) ) {
+		if ( ! post_type_supports_elementor_adapter( $post_type, 'elementor' ) ) {
 			return false;
 		}
 
-		$user = wp_get_current_user();
-		$exclude_roles = get_option( 'elementor_exclude_user_roles', [] );
+		$user = wp_get_current_user_elementor_adapter();
+		$exclude_roles = get_option_elementor_adapter( 'elementor_exclude_user_roles', [] );
 
 		$compare_roles = array_intersect( $user->roles, $exclude_roles );
 		if ( ! empty( $compare_roles ) ) {
@@ -143,7 +143,7 @@ class User {
 	 * @return array A list of user notices.
 	 */
 	private static function get_user_notices() {
-		return get_user_meta( get_current_user_id(), self::ADMIN_NOTICES_KEY, true );
+		return get_user_meta_elementor_adapter( get_current_user_id_elementor_adapter(), self::ADMIN_NOTICES_KEY, true );
 	}
 
 	/**
@@ -190,7 +190,7 @@ class User {
 		}
 
 		$notices[ $_POST['notice_id'] ] = 'true';
-		update_user_meta( get_current_user_id(), self::ADMIN_NOTICES_KEY, $notices );
+		update_user_meta( get_current_user_id_elementor_adapter(), self::ADMIN_NOTICES_KEY, $notices );
 
 		die;
 	}
@@ -204,7 +204,7 @@ class User {
 
 		$user_introduction_meta[ self::INTRODUCTION_VERSION ] = true;
 
-		update_user_meta( get_current_user_id(), self::INTRODUCTION_KEY, $user_introduction_meta );
+		update_user_meta( get_current_user_id_elementor_adapter(), self::INTRODUCTION_KEY, $user_introduction_meta );
 	}
 
 	public static function is_should_view_introduction() {
@@ -214,7 +214,7 @@ class User {
 	}
 
 	private static function get_introduction_meta() {
-		return get_user_meta( get_current_user_id(), self::INTRODUCTION_KEY, true );
+		return get_user_meta_elementor_adapter( get_current_user_id_elementor_adapter(), self::INTRODUCTION_KEY, true );
 	}
 }
 

@@ -15,13 +15,13 @@ class Inspector {
 	protected $log = [];
 
 	public function __construct() {
-		$this->is_enabled = 'enable' === get_option( 'elementor_enable_inspector' );
+		$this->is_enabled = 'enable' === get_option_elementor_adapter( 'elementor_enable_inspector' );
 
 		if ( $this->is_enabled ) {
-			add_action( 'admin_bar_menu', [ $this, 'add_menu_in_admin_bar' ], 201 );
+			add_action_elementor_adapter( 'admin_bar_menu', [ $this, 'add_menu_in_admin_bar' ], 201 );
 		}
 
-		add_action( 'elementor/admin/after_create_settings/' . Tools::PAGE_ID, [ $this, 'register_admin_tools_fields' ], 50 );
+		add_action_elementor_adapter( 'elementor/admin/after_create_settings/' . Tools::PAGE_ID, [ $this, 'register_admin_tools_fields' ], 50 );
 	}
 
 	public function is_enabled() {
@@ -31,15 +31,15 @@ class Inspector {
 	public function register_admin_tools_fields( Tools $tools ) {
 		$tools->add_fields( Settings::TAB_GENERAL, 'tools', [
 			'enable_inspector' => [
-				'label' => __( 'Inspector', 'elementor' ),
+				'label' => ___elementor_adapter( 'Inspector', 'elementor' ),
 				'field_args' => [
 					'type' => 'select',
 					'options' => [
-						'' => __( 'Disable', 'elementor' ),
-						'enable' => __( 'Enable', 'elementor' ),
+						'' => ___elementor_adapter( 'Disable', 'elementor' ),
+						'enable' => ___elementor_adapter( 'Enable', 'elementor' ),
 					],
-					'sub_desc' => __( 'Enable Inspector', 'elementor' ),
-					'desc' => __( 'Inspector adds an admin bar menu that lists all the templates that are used on a page that is being displayed.', 'elementor' ),
+					'sub_desc' => ___elementor_adapter( 'Enable Inspector', 'elementor' ),
+					'desc' => ___elementor_adapter( 'Inspector adds an admin bar menu that lists all the templates that are used on a page that is being displayed.', 'elementor' ),
 				],
 			],
 		] );
@@ -52,7 +52,7 @@ class Inspector {
 		}
 
 		if ( 0 === strpos( $template, get_stylesheet_directory() ) ) {
-			return wp_get_theme()->get( 'Name' ) . ' - ' . basename( $template );
+			return wp_get_theme_elementor_adapter()->get( 'Name' ) . ' - ' . basename( $template );
 		}
 
 		$plugins_dir = dirname( ELEMENTOR_PATH );
@@ -85,11 +85,11 @@ class Inspector {
 
 		$wp_admin_bar->add_node( [
 			'id' => 'elementor_inspector',
-			'title' => __( 'Elementor Inspector', 'elementor' ),
+			'title' => ___elementor_adapter( 'Elementor Inspector', 'elementor' ),
 		] );
 
 		foreach ( $this->log as $module => $log ) {
-			$module_id = sanitize_key( $module );
+			$module_id = sanitize_key_elementor_adapter( $module );
 
 			$wp_admin_bar->add_menu( [
 				'id' => 'elementor_inspector_' . $module_id,

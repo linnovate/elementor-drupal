@@ -77,7 +77,7 @@ abstract class Base {
 	public function get_url() {
 		$url = set_url_scheme( self::get_base_uploads_url() . $this->files_dir . $this->file_name );
 
-		return add_query_arg( [ 'ver' => $this->get_meta( 'time' ) ], $url );
+		return add_query_arg_elementor_adapter( [ 'ver' => $this->get_meta( 'time' ) ], $url );
 	}
 
 	public function get_content() {
@@ -160,7 +160,7 @@ abstract class Base {
 	 * @access protected
 	 */
 	protected function load_meta() {
-		return get_option( static::META_KEY );
+		return get_option_elementor_adapter( static::META_KEY );
 	}
 
 	/**
@@ -174,7 +174,7 @@ abstract class Base {
 	 * @param array $meta New meta data.
 	 */
 	protected function update_meta( $meta ) {
-		update_option( static::META_KEY, $meta );
+		update_option_elementor_adapter( static::META_KEY, $meta );
 	}
 
 	/**
@@ -186,7 +186,7 @@ abstract class Base {
 	 * @access protected
 	 */
 	protected function delete_meta() {
-		delete_option( static::META_KEY );
+		delete_option_elementor_adapter( static::META_KEY );
 	}
 
 	protected function get_default_meta() {
@@ -197,7 +197,7 @@ abstract class Base {
 
 	private static function get_wp_uploads_dir() {
 		if ( ! self::$wp_uploads_dir ) {
-			self::$wp_uploads_dir = wp_upload_dir( null, false );
+			self::$wp_uploads_dir = wp_upload_dir_elementor_adapter( null, false );
 		}
 
 		return self::$wp_uploads_dir;
@@ -207,7 +207,7 @@ abstract class Base {
 		$dir_path = self::get_base_uploads_dir() . $this->files_dir;
 
 		if ( ! is_dir( $dir_path ) ) {
-			wp_mkdir_p( $dir_path );
+			wp_mkdir_p_elementor_adapter( $dir_path );
 		}
 
 		$this->path = $dir_path . $this->file_name;

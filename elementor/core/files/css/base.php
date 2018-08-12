@@ -117,7 +117,7 @@ abstract class Base extends Base_File {
 	 * @return bool True if the CSS requires an update, False otherwise.
 	 */
 	protected function use_external_file() {
-		return 'internal' !== get_option( 'elementor_css_print_method' );
+		return 'internal' !== get_option_elementor_adapter( 'elementor_css_print_method' );
 	}
 
 	/**
@@ -203,7 +203,7 @@ abstract class Base extends Base_File {
 				wp_add_inline_style( $dep , $meta['css'] );
 			}
 		} elseif ( self::CSS_STATUS_FILE === $meta['status'] ) { // Re-check if it's not empty after CSS update.
-			wp_enqueue_style( $this->get_file_handle_id(), $this->get_url(), $this->get_enqueue_dependencies(), null );
+			wp_enqueue_style_elementor_adapter( $this->get_file_handle_id(), $this->get_url(), $this->get_enqueue_dependencies(), null );
 		}
 
 		// Handle fonts.
@@ -228,7 +228,7 @@ abstract class Base extends Base_File {
 		 *
 		 * @param Base $this The current CSS file.
 		 */
-		do_action( "elementor/{$name}-css-file/enqueue", $this );
+		do_action_elementor_adapter( "elementor/{$name}-css-file/enqueue", $this );
 
 		/**
 		 * Enqueue CSS file.
@@ -241,7 +241,7 @@ abstract class Base extends Base_File {
 		 *
 		 * @param Base $this The current CSS file.
 		 */
-		do_action( "elementor/css-file/{$name}/enqueue", $this );
+		do_action_elementor_adapter( "elementor/css-file/{$name}/enqueue", $this );
 	}
 
 	/**
@@ -480,7 +480,7 @@ abstract class Base extends Base_File {
 	/**
 	 * Get enqueue dependencies.
 	 *
-	 * Retrieve the name of the stylesheet used by `wp_enqueue_style()`.
+	 * Retrieve the name of the stylesheet used by `wp_enqueue_style_elementor_adapter()`.
 	 *
 	 * @since 1.2.0
 	 * @access protected
@@ -546,7 +546,7 @@ abstract class Base extends Base_File {
 		 *
 		 * @param Base $this The current CSS file.
 		 */
-		do_action( "elementor/{$name}-css-file/parse", $this );
+		do_action_elementor_adapter( "elementor/{$name}-css-file/parse", $this );
 
 		/**
 		 * Parse CSS file.
@@ -559,7 +559,7 @@ abstract class Base extends Base_File {
 		 *
 		 * @param Base $this The current CSS file.
 		 */
-		do_action( "elementor/css-file/{$name}/parse", $this );
+		do_action_elementor_adapter( "elementor/css-file/{$name}/parse", $this );
 
 		return $this->stylesheet_obj->__toString();
 	}

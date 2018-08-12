@@ -39,7 +39,7 @@ class Widget_Image_Gallery extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Image Gallery', 'elementor' );
+		return ___elementor_adapter( 'Image Gallery', 'elementor' );
 	}
 
 	/**
@@ -98,14 +98,14 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->start_controls_section(
 			'section_gallery',
 			[
-				'label' => __( 'Image Gallery', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Gallery', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'wp_gallery',
 			[
-				'label' => __( 'Add Images', 'elementor' ),
+				'label' => ___elementor_adapter( 'Add Images', 'elementor' ),
 				'type' => Controls_Manager::GALLERY,
 				'show_label' => false,
 				'dynamic' => [
@@ -129,7 +129,7 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'gallery_columns',
 			[
-				'label' => __( 'Columns', 'elementor' ),
+				'label' => ___elementor_adapter( 'Columns', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 4,
 				'options' => $gallery_columns,
@@ -139,13 +139,13 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'gallery_link',
 			[
-				'label' => __( 'Link to', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link to', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'file',
 				'options' => [
-					'file' => __( 'Media File', 'elementor' ),
-					'attachment' => __( 'Attachment Page', 'elementor' ),
-					'none' => __( 'None', 'elementor' ),
+					'file' => ___elementor_adapter( 'Media File', 'elementor' ),
+					'attachment' => ___elementor_adapter( 'Attachment Page', 'elementor' ),
+					'none' => ___elementor_adapter( 'None', 'elementor' ),
 				],
 			]
 		);
@@ -153,13 +153,13 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'open_lightbox',
 			[
-				'label' => __( 'Lightbox', 'elementor' ),
+				'label' => ___elementor_adapter( 'Lightbox', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
-					'default' => __( 'Default', 'elementor' ),
-					'yes' => __( 'Yes', 'elementor' ),
-					'no' => __( 'No', 'elementor' ),
+					'default' => ___elementor_adapter( 'Default', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
 				],
 				'condition' => [
 					'gallery_link' => 'file',
@@ -170,11 +170,11 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'gallery_rand',
 			[
-				'label' => __( 'Ordering', 'elementor' ),
+				'label' => ___elementor_adapter( 'Ordering', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Default', 'elementor' ),
-					'rand' => __( 'Random', 'elementor' ),
+					'' => ___elementor_adapter( 'Default', 'elementor' ),
+					'rand' => ___elementor_adapter( 'Random', 'elementor' ),
 				],
 				'default' => '',
 			]
@@ -183,7 +183,7 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -194,7 +194,7 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->start_controls_section(
 			'section_gallery_images',
 			[
-				'label' => __( 'Images', 'elementor' ),
+				'label' => ___elementor_adapter( 'Images', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -202,24 +202,24 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'image_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Default', 'elementor' ),
-					'custom' => __( 'Custom', 'elementor' ),
+					'' => ___elementor_adapter( 'Default', 'elementor' ),
+					'custom' => ___elementor_adapter( 'Custom', 'elementor' ),
 				],
 				'prefix_class' => 'gallery-spacing-',
 				'default' => '',
 			]
 		);
 
-		$columns_margin = is_rtl() ? '0 0 -{{SIZE}}{{UNIT}} -{{SIZE}}{{UNIT}};' : '0 -{{SIZE}}{{UNIT}} -{{SIZE}}{{UNIT}} 0;';
-		$columns_padding = is_rtl() ? '0 0 {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}};' : '0 {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0;';
+		$columns_margin = is_rtl_elementor_adapter() ? '0 0 -{{SIZE}}{{UNIT}} -{{SIZE}}{{UNIT}};' : '0 -{{SIZE}}{{UNIT}} -{{SIZE}}{{UNIT}} 0;';
+		$columns_padding = is_rtl_elementor_adapter() ? '0 0 {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}};' : '0 {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0;';
 
 		$this->add_control(
 			'image_spacing_custom',
 			[
-				'label' => __( 'Image Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'show_label' => false,
 				'range' => [
@@ -252,7 +252,7 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'image_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -266,7 +266,7 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->start_controls_section(
 			'section_caption',
 			[
-				'label' => __( 'Caption', 'elementor' ),
+				'label' => ___elementor_adapter( 'Caption', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -274,12 +274,12 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'gallery_display_caption',
 			[
-				'label' => __( 'Display', 'elementor' ),
+				'label' => ___elementor_adapter( 'Display', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'Show', 'elementor' ),
-					'none' => __( 'Hide', 'elementor' ),
+					'' => ___elementor_adapter( 'Show', 'elementor' ),
+					'none' => ___elementor_adapter( 'Hide', 'elementor' ),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .gallery-item .gallery-caption' => 'display: {{VALUE}};',
@@ -290,23 +290,23 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor' ),
+						'title' => ___elementor_adapter( 'Justified', 'elementor' ),
 						'icon' => 'fa fa-align-justify',
 					],
 				],
@@ -323,7 +323,7 @@ class Widget_Image_Gallery extends Widget_Base {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -395,11 +395,11 @@ class Widget_Image_Gallery extends Widget_Base {
 				] );
 			}
 
-			add_filter( 'wp_get_attachment_link', [ $this, 'add_lightbox_data_to_image_link' ] );
+			add_filter_elementor_adapter( 'wp_get_attachment_link', [ $this, 'add_lightbox_data_to_image_link' ] );
 
-			echo do_shortcode( '[gallery ' . $this->get_render_attribute_string( 'shortcode' ) . ']' );
+			echo do_shortcode_elementor_adapter( '[gallery ' . $this->get_render_attribute_string( 'shortcode' ) . ']' );
 
-			remove_filter( 'wp_get_attachment_link', [ $this, 'add_lightbox_data_to_image_link' ] );
+			remove_filter_elementor_adapter( 'wp_get_attachment_link', [ $this, 'add_lightbox_data_to_image_link' ] );
 			?>
 		</div>
 		<?php

@@ -10,8 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="elementor-templates-modal__header__menu-area"></div>
 	<div class="elementor-templates-modal__header__items-area">
 		<div class="elementor-templates-modal__header__close-modal elementor-templates-modal__header__item">
-			<i class="eicon-close" aria-hidden="true" title="<?php esc_attr_e( 'Close', 'elementor' ); ?>"></i>
-			<span class="elementor-screen-only"><?php echo __( 'Close', 'elementor' ); ?></span>
+			<i class="eicon-close" aria-hidden="true" title="<?php esc_attr_e_elementor_adapter( 'Close', 'elementor' ); ?>"></i>
+			<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Close', 'elementor' ); ?></span>
 		</div>
 		<div id="elementor-template-library-header-tools"></div>
 	</div>
@@ -26,23 +26,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <script type="text/template" id="tmpl-elementor-template-library-header-actions">
 	<div id="elementor-template-library-header-import" class="elementor-templates-modal__header__item">
-		<i class="eicon-upload-circle-o" aria-hidden="true" title="<?php esc_attr_e( 'Import Template', 'elementor' ); ?>"></i>
-		<span class="elementor-screen-only"><?php echo __( 'Import Template', 'elementor' ); ?></span>
+		<i class="eicon-upload-circle-o" aria-hidden="true" title="<?php esc_attr_e_elementor_adapter( 'Import Template', 'elementor' ); ?>"></i>
+		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Import Template', 'elementor' ); ?></span>
 	</div>
 	<div id="elementor-template-library-header-sync" class="elementor-templates-modal__header__item">
-		<i class="eicon-sync" aria-hidden="true" title="<?php esc_attr_e( 'Sync Library', 'elementor' ); ?>"></i>
-		<span class="elementor-screen-only"><?php echo __( 'Sync Library', 'elementor' ); ?></span>
+		<i class="eicon-sync" aria-hidden="true" title="<?php esc_attr_e_elementor_adapter( 'Sync Library', 'elementor' ); ?>"></i>
+		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Sync Library', 'elementor' ); ?></span>
 	</div>
 	<div id="elementor-template-library-header-save" class="elementor-templates-modal__header__item">
-		<i class="eicon-save-o" aria-hidden="true" title="<?php esc_attr_e( 'Save', 'elementor' ); ?>"></i>
-		<span class="elementor-screen-only"><?php echo __( 'Save', 'elementor' ); ?></span>
+		<i class="eicon-save-o" aria-hidden="true" title="<?php esc_attr_e_elementor_adapter( 'Save', 'elementor' ); ?>"></i>
+		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Save', 'elementor' ); ?></span>
 	</div>
 </script>
 
 <script type="text/template" id="tmpl-elementor-template-library-header-menu">
-	<div id="elementor-template-library-menu-pre-made-blocks" class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="block"><?php echo __( 'Blocks', 'elementor' ); ?></div>
-	<div id="elementor-template-library-menu-pre-made-pages" class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="page"><?php echo __( 'Pages', 'elementor' ); ?></div>
-	<div id="elementor-template-library-menu-my-templates" class="elementor-template-library-menu-item" data-template-source="local"><?php echo __( 'My Templates', 'elementor' ); ?></div>
+	<div id="elementor-template-library-menu-pre-made-blocks" class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="block"><?php echo ___elementor_adapter( 'Blocks', 'elementor' ); ?></div>
+	<div id="elementor-template-library-menu-pre-made-pages" class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="page"><?php echo ___elementor_adapter( 'Pages', 'elementor' ); ?></div>
+	<div id="elementor-template-library-menu-my-templates" class="elementor-template-library-menu-item" data-template-source="local"><?php echo ___elementor_adapter( 'My Templates', 'elementor' ); ?></div>
 </script>
 
 <script type="text/template" id="tmpl-elementor-template-library-header-preview">
@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <script type="text/template" id="tmpl-elementor-template-library-header-back">
 	<i class="eicon-" aria-hidden="true"></i>
-	<span><?php echo __( 'Back to Library', 'elementor' ); ?></span>
+	<span><?php echo ___elementor_adapter( 'Back to Library', 'elementor' ); ?></span>
 </script>
 
 <script type="text/template" id="tmpl-elementor-template-library-loading">
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="elementor-loader-box"></div>
 			<div class="elementor-loader-box"></div>
 		</div>
-		<div class="elementor-loading-title"><?php echo __( 'Loading', 'elementor' ); ?></div>
+		<div class="elementor-loading-title"><?php echo ___elementor_adapter( 'Loading', 'elementor' ); ?></div>
 	</div>
 </script>
 
@@ -80,11 +80,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<# if ( 'page' === activeType ) { #>
 					<div id="elementor-template-library-order">
 						<input type="radio" id="elementor-template-library-order-new" class="elementor-template-library-order-input" name="elementor-template-library-order" value="date">
-						<label for="elementor-template-library-order-new" class="elementor-template-library-order-label"><?php echo __( 'New', 'elementor' ); ?></label>
+						<label for="elementor-template-library-order-new" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'New', 'elementor' ); ?></label>
 						<input type="radio" id="elementor-template-library-order-trend" class="elementor-template-library-order-input" name="elementor-template-library-order" value="trendIndex">
-						<label for="elementor-template-library-order-trend" class="elementor-template-library-order-label"><?php echo __( 'Trend', 'elementor' ); ?></label>
+						<label for="elementor-template-library-order-trend" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Trend', 'elementor' ); ?></label>
 						<input type="radio" id="elementor-template-library-order-popular" class="elementor-template-library-order-input" name="elementor-template-library-order" value="popularityIndex">
-						<label for="elementor-template-library-order-popular" class="elementor-template-library-order-label"><?php echo __( 'Popular', 'elementor' ); ?></label>
+						<label for="elementor-template-library-order-popular" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Popular', 'elementor' ); ?></label>
 					</div>
 				<# } else { #>
 					<div id="elementor-template-library-filter">
@@ -103,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<input id="elementor-template-library-filter-my-favorites" type="checkbox"{{{ checked }}}>
 					<label id="elementor-template-library-filter-my-favorites-label" for="elementor-template-library-filter-my-favorites">
 						<i class="fa" aria-hidden="true"></i>
-						<?php echo __( 'My Favorites', 'elementor' ); ?>
+						<?php echo ___elementor_adapter( 'My Favorites', 'elementor' ); ?>
 					</label>
 				</div>
 			</div>
@@ -111,30 +111,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div id="elementor-template-library-filter-toolbar-local" class="elementor-template-library-filter-toolbar"></div>
 		<# } #>
 		<div id="elementor-template-library-filter-text-wrapper">
-			<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php echo __( 'Search Templates:', 'elementor' ); ?></label>
-			<input id="elementor-template-library-filter-text" placeholder="<?php echo esc_attr__( 'Search', 'elementor' ); ?>">
+			<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php echo ___elementor_adapter( 'Search Templates:', 'elementor' ); ?></label>
+			<input id="elementor-template-library-filter-text" placeholder="<?php echo esc_attr___elementor_adapter( 'Search', 'elementor' ); ?>">
 		</div>
 	</div>
 	<# if ( 'local' === activeSource ) { #>
 		<div id="elementor-template-library-order-toolbar-local">
 			<div class="elementor-template-library-local-column-1">
 				<input type="radio" id="elementor-template-library-order-local-title" class="elementor-template-library-order-input" name="elementor-template-library-order-local" value="title" data-default-ordering-direction="asc">
-				<label for="elementor-template-library-order-local-title" class="elementor-template-library-order-label"><?php echo __( 'Name', 'elementor' ); ?></label>
+				<label for="elementor-template-library-order-local-title" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Name', 'elementor' ); ?></label>
 			</div>
 			<div class="elementor-template-library-local-column-2">
 				<input type="radio" id="elementor-template-library-order-local-type" class="elementor-template-library-order-input" name="elementor-template-library-order-local" value="type" data-default-ordering-direction="asc">
-				<label for="elementor-template-library-order-local-type" class="elementor-template-library-order-label"><?php echo __( 'Type', 'elementor' ); ?></label>
+				<label for="elementor-template-library-order-local-type" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Type', 'elementor' ); ?></label>
 			</div>
 			<div class="elementor-template-library-local-column-3">
 				<input type="radio" id="elementor-template-library-order-local-author" class="elementor-template-library-order-input" name="elementor-template-library-order-local" value="author" data-default-ordering-direction="asc">
-				<label for="elementor-template-library-order-local-author" class="elementor-template-library-order-label"><?php echo __( 'Created By', 'elementor' ); ?></label>
+				<label for="elementor-template-library-order-local-author" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Created By', 'elementor' ); ?></label>
 			</div>
 			<div class="elementor-template-library-local-column-4">
 				<input type="radio" id="elementor-template-library-order-local-date" class="elementor-template-library-order-input" name="elementor-template-library-order-local" value="date">
-				<label for="elementor-template-library-order-local-date" class="elementor-template-library-order-label"><?php echo __( 'Creation Date', 'elementor' ); ?></label>
+				<label for="elementor-template-library-order-local-date" class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Creation Date', 'elementor' ); ?></label>
 			</div>
 			<div class="elementor-template-library-local-column-5">
-				<div class="elementor-template-library-order-label"><?php echo __( 'Actions', 'elementor' ); ?></div>
+				<div class="elementor-template-library-order-label"><?php echo ___elementor_adapter( 'Actions', 'elementor' ); ?></div>
 			</div>
 		</div>
 	<# } #>
@@ -142,7 +142,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<# if ( 'remote' === activeSource ) { #>
 		<div id="elementor-template-library-footer-banner">
 			<i class="eicon-nerd" aria-hidden="true"></i>
-			<div class="elementor-excerpt"><?php echo __( 'Stay tuned! More awesome templates coming real soon.', 'elementor' ); ?></div>
+			<div class="elementor-excerpt"><?php echo ___elementor_adapter( 'Stay tuned! More awesome templates coming real soon.', 'elementor' ); ?></div>
 		</div>
 	<# } #>
 </script>
@@ -165,7 +165,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<input id="elementor-template-library-template-{{ template_id }}-favorite-input" class="elementor-template-library-template-favorite-input" type="checkbox"{{ favorite ? " checked" : "" }}>
 			<label for="elementor-template-library-template-{{ template_id }}-favorite-input" class="elementor-template-library-template-favorite-label">
 				<i class="fa fa-heart-o" aria-hidden="true"></i>
-				<span class="elementor-screen-only"><?php echo __( 'Favorite', 'elementor' ); ?></span>
+				<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Favorite', 'elementor' ); ?></span>
 			</label>
 		</div>
 	</div>
@@ -179,25 +179,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="elementor-template-library-template-controls elementor-template-library-local-column-5">
 		<div class="elementor-template-library-template-preview">
 			<i class="fa fa-eye" aria-hidden="true"></i>
-			<span class="elementor-template-library-template-control-title"><?php echo __( 'Preview', 'elementor' ); ?></span>
+			<span class="elementor-template-library-template-control-title"><?php echo ___elementor_adapter( 'Preview', 'elementor' ); ?></span>
 		</div>
 		<button class="elementor-template-library-template-action elementor-template-library-template-insert elementor-button elementor-button-success">
 			<i class="eicon-file-download" aria-hidden="true"></i>
-			<span class="elementor-button-title"><?php echo __( 'Insert', 'elementor' ); ?></span>
+			<span class="elementor-button-title"><?php echo ___elementor_adapter( 'Insert', 'elementor' ); ?></span>
 		</button>
 		<div class="elementor-template-library-template-more-toggle">
 			<i class="eicon-ellipsis-h" aria-hidden="true"></i>
-			<span class="elementor-screen-only"><?php echo __( 'More actions', 'elementor' ); ?></span>
+			<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'More actions', 'elementor' ); ?></span>
 		</div>
 		<div class="elementor-template-library-template-more">
 			<div class="elementor-template-library-template-delete">
 				<i class="fa fa-trash-o" aria-hidden="true"></i>
-				<span class="elementor-template-library-template-control-title"><?php echo __( 'Delete', 'elementor' ); ?></span>
+				<span class="elementor-template-library-template-control-title"><?php echo ___elementor_adapter( 'Delete', 'elementor' ); ?></span>
 			</div>
 			<div class="elementor-template-library-template-export">
 				<a href="{{ export_link }}">
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
-					<span class="elementor-template-library-template-control-title"><?php echo __( 'Export', 'elementor' ); ?></span>
+					<span class="elementor-template-library-template-control-title"><?php echo ___elementor_adapter( 'Export', 'elementor' ); ?></span>
 				</a>
 			</div>
 		</div>
@@ -207,37 +207,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 <script type="text/template" id="tmpl-elementor-template-library-insert-button">
 	<a class="elementor-template-library-template-action elementor-template-library-template-insert elementor-button">
 		<i class="eicon-file-download" aria-hidden="true"></i>
-		<span class="elementor-button-title"><?php echo __( 'Insert', 'elementor' ); ?></span>
+		<span class="elementor-button-title"><?php echo ___elementor_adapter( 'Insert', 'elementor' ); ?></span>
 	</a>
 </script>
 
 <script type="text/template" id="tmpl-elementor-template-library-get-pro-button">
 	<a class="elementor-template-library-template-action elementor-button elementor-button-go-pro" href="<?php echo Utils::get_pro_link( 'https://elementor.com/pro/?utm_source=panel-library&utm_campaign=gopro&utm_medium=wp-dash' ); ?>" target="_blank">
 		<i class="fa fa-external-link-square" aria-hidden="true"></i>
-		<span class="elementor-button-title"><?php echo __( 'Go Pro', 'elementor' ); ?></span>
+		<span class="elementor-button-title"><?php echo ___elementor_adapter( 'Go Pro', 'elementor' ); ?></span>
 	</a>
 </script>
 
 <script type="text/template" id="tmpl-elementor-template-library-save-template">
 	<div class="elementor-template-library-blank-icon">
 		<i class="eicon-library-save" aria-hidden="true"></i>
-		<span class="elementor-screen-only"><?php echo __( 'Save', 'elementor' ); ?></span>
+		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Save', 'elementor' ); ?></span>
 	</div>
 	<div class="elementor-template-library-blank-title">{{{ title }}}</div>
 	<div class="elementor-template-library-blank-message">{{{ description }}}</div>
 	<form id="elementor-template-library-save-template-form">
-		<input type="hidden" name="post_id" value="<?php echo get_the_ID(); ?>">
-		<input id="elementor-template-library-save-template-name" name="title" placeholder="<?php echo esc_attr__( 'Enter Template Name', 'elementor' ); ?>" required>
+		<input type="hidden" name="post_id" value="<?php echo get_the_ID_elementor_adapter(); ?>">
+		<input id="elementor-template-library-save-template-name" name="title" placeholder="<?php echo esc_attr___elementor_adapter( 'Enter Template Name', 'elementor' ); ?>" required>
 		<button id="elementor-template-library-save-template-submit" class="elementor-button elementor-button-success">
 			<span class="elementor-state-icon">
 				<i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
 			</span>
-			<?php echo __( 'Save', 'elementor' ); ?>
+			<?php echo ___elementor_adapter( 'Save', 'elementor' ); ?>
 		</button>
 	</form>
 	<div class="elementor-template-library-blank-footer">
-		<?php echo __( 'Want to learn more about the Elementor library?', 'elementor' ); ?>
-		<a class="elementor-template-library-blank-footer-link" href="https://go.elementor.com/docs-library/" target="_blank"><?php echo __( 'Click here', 'elementor' ); ?></a>
+		<?php echo ___elementor_adapter( 'Want to learn more about the Elementor library?', 'elementor' ); ?>
+		<a class="elementor-template-library-blank-footer-link" href="https://go.elementor.com/docs-library/" target="_blank"><?php echo ___elementor_adapter( 'Click here', 'elementor' ); ?></a>
 	</div>
 </script>
 
@@ -246,14 +246,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="elementor-template-library-blank-icon">
 			<i class="eicon-library-upload" aria-hidden="true"></i>
 		</div>
-		<div class="elementor-template-library-blank-title"><?php echo __( 'Import Template to Your Library', 'elementor' ); ?></div>
-		<div class="elementor-template-library-blank-message"><?php echo __( 'Drag & drop your .JSON or .zip template file', 'elementor' ); ?></div>
-		<div id="elementor-template-library-import-form-or"><?php echo __( 'or', 'elementor' ); ?></div>
-		<label for="elementor-template-library-import-form-input" id="elementor-template-library-import-form-label" class="elementor-button elementor-button-success"><?php echo __( 'Select File', 'elementor' ); ?></label>
+		<div class="elementor-template-library-blank-title"><?php echo ___elementor_adapter( 'Import Template to Your Library', 'elementor' ); ?></div>
+		<div class="elementor-template-library-blank-message"><?php echo ___elementor_adapter( 'Drag & drop your .JSON or .zip template file', 'elementor' ); ?></div>
+		<div id="elementor-template-library-import-form-or"><?php echo ___elementor_adapter( 'or', 'elementor' ); ?></div>
+		<label for="elementor-template-library-import-form-input" id="elementor-template-library-import-form-label" class="elementor-button elementor-button-success"><?php echo ___elementor_adapter( 'Select File', 'elementor' ); ?></label>
 		<input id="elementor-template-library-import-form-input" type="file" name="file" accept=".json,.zip" required/>
 		<div class="elementor-template-library-blank-footer">
-			<?php echo __( 'Want to learn more about the Elementor library?', 'elementor' ); ?>
-			<a class="elementor-template-library-blank-footer-link" href="https://go.elementor.com/docs-library/" target="_blank"><?php echo __( 'Click here', 'elementor' ); ?></a>
+			<?php echo ___elementor_adapter( 'Want to learn more about the Elementor library?', 'elementor' ); ?>
+			<a class="elementor-template-library-blank-footer-link" href="https://go.elementor.com/docs-library/" target="_blank"><?php echo ___elementor_adapter( 'Click here', 'elementor' ); ?></a>
 		</div>
 	</form>
 </script>
@@ -265,8 +265,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="elementor-template-library-blank-title"></div>
 	<div class="elementor-template-library-blank-message"></div>
 	<div class="elementor-template-library-blank-footer">
-		<?php echo __( 'Want to learn more about the Elementor library?', 'elementor' ); ?>
-		<a class="elementor-template-library-blank-footer-link" href="https://go.elementor.com/docs-library/" target="_blank"><?php echo __( 'Click here', 'elementor' ); ?></a>
+		<?php echo ___elementor_adapter( 'Want to learn more about the Elementor library?', 'elementor' ); ?>
+		<a class="elementor-template-library-blank-footer-link" href="https://go.elementor.com/docs-library/" target="_blank"><?php echo ___elementor_adapter( 'Click here', 'elementor' ); ?></a>
 	</div>
 </script>
 

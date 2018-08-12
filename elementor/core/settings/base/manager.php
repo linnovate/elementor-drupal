@@ -41,12 +41,12 @@ abstract class Manager {
 	 * @access public
 	 */
 	public function __construct() {
-		add_action( 'elementor/init', [ $this, 'on_elementor_init' ] );
+		add_action_elementor_adapter( 'elementor/init', [ $this, 'on_elementor_init' ] );
 
-		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+		add_action_elementor_adapter( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 
 		$name = $this->get_css_file_name();
-		add_action( "elementor/css-file/{$name}/parse", [ $this, 'add_settings_css_rules' ] );
+		add_action_elementor_adapter( "elementor/css-file/{$name}/parse", [ $this, 'add_settings_css_rules' ] );
 	}
 
 	/**
@@ -145,7 +145,7 @@ abstract class Manager {
 		 *
 		 * The dynamic portion of the hook name, `$settings_name`, refers to the settings name.
 		 *
-		 * @todo Need to be hard deprecated using `apply_filters_deprecated()`.
+		 * @todo Need to be hard deprecated using `apply_filters_deprecated_elementor_adapter()`.
 		 *
 		 * @since 1.6.0
 		 * @deprecated 2.0.0 Use `elementor/settings/{$settings_name}/success_response_data` filter.
@@ -154,7 +154,7 @@ abstract class Manager {
 		 * @param int   $id                    Settings ID.
 		 * @param array $data                  Settings data.
 		 */
-		$success_response_data = apply_filters( "elementor/{$settings_name}/settings/success_response_data", $success_response_data, $id, $data );
+		$success_response_data = apply_filters_elementor_adapter( "elementor/{$settings_name}/settings/success_response_data", $success_response_data, $id, $data );
 
 		/**
 		 * Settings success response data.
@@ -169,7 +169,7 @@ abstract class Manager {
 		 * @param int   $id                    Settings ID.
 		 * @param array $data                  Settings data.
 		 */
-		$success_response_data = apply_filters( "elementor/settings/{$settings_name}/success_response_data", $success_response_data, $id, $data );
+		$success_response_data = apply_filters_elementor_adapter( "elementor/settings/{$settings_name}/success_response_data", $success_response_data, $id, $data );
 
 		return $success_response_data;
 	}
@@ -355,13 +355,13 @@ abstract class Manager {
 	protected function print_editor_template_content( $name ) {
 		?>
 		<div class="elementor-panel-navigation">
-			<# _.each( elementor.config.settings.<?php echo esc_html( $name ); ?>.tabs, function( tabTitle, tabSlug ) { #>
+			<# _.each( elementor.config.settings.<?php echo esc_html_elementor_adapter( $name ); ?>.tabs, function( tabTitle, tabSlug ) { #>
 				<div class="elementor-panel-navigation-tab elementor-tab-control-{{ tabSlug }}" data-tab="{{ tabSlug }}">
 					<a href="#">{{{ tabTitle }}}</a>
 				</div>
 				<# } ); #>
 		</div>
-		<div id="elementor-panel-<?php echo esc_attr( $name ); ?>-settings-controls"></div>
+		<div id="elementor-panel-<?php echo esc_attr_elementor_adapter( $name ); ?>-settings-controls"></div>
 		<?php
 	}
 
@@ -404,7 +404,7 @@ abstract class Manager {
 
 		ob_start();
 		?>
-		<script type="text/template" id="tmpl-elementor-panel-<?php echo esc_attr( $name ); ?>-settings">
+		<script type="text/template" id="tmpl-elementor-panel-<?php echo esc_attr_elementor_adapter( $name ); ?>-settings">
 			<?php $this->print_editor_template_content( $name ); ?>
 		</script>
 		<?php

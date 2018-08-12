@@ -75,8 +75,8 @@ class Module extends BaseModule {
 	 * @return string The path of the template to include.
 	 */
 	public function template_include( $template ) {
-		if ( is_singular() ) {
-			$document = Plugin::$instance->documents->get_doc_for_frontend( get_the_ID() );
+		if ( is_singular_elementor_adapter() ) {
+			$document = Plugin::$instance->documents->get_doc_for_frontend( get_the_ID_elementor_adapter() );
 
 			if ( $document ) {
 				$template_path = $this->get_template_path( $document->get_meta( '_wp_page_template' ) );
@@ -106,7 +106,7 @@ class Module extends BaseModule {
 		$post_types = get_post_types_by_support( 'elementor' );
 
 		foreach ( $post_types as $post_type ) {
-			add_filter( "theme_{$post_type}_templates", [ $this, 'add_page_templates' ], 10, 4 );
+			add_filter_elementor_adapter( "theme_{$post_type}_templates", [ $this, 'add_page_templates' ], 10, 4 );
 		}
 	}
 
@@ -141,8 +141,8 @@ class Module extends BaseModule {
 		}
 
 		$page_templates = [
-			self::TEMPLATE_CANVAS => _x( 'Elementor Canvas', 'Page Template', 'elementor' ),
-			self::TEMPLATE_HEADER_FOOTER => _x( 'Elementor Full Width', 'Page Template', 'elementor' ),
+			self::TEMPLATE_CANVAS => _x_elementor_adapter( 'Elementor Canvas', 'Page Template', 'elementor' ),
+			self::TEMPLATE_HEADER_FOOTER => _x_elementor_adapter( 'Elementor Full Width', 'Page Template', 'elementor' ),
 		] + $page_templates;
 
 		return $page_templates;
@@ -171,7 +171,7 @@ class Module extends BaseModule {
 	 * @access public
 	 */
 	public function print_callback() {
-		while ( have_posts() ) :
+		while ( have_posts_elementor_adapter() ) :
 			the_post();
 			the_content();
 		endwhile;
@@ -256,7 +256,7 @@ class Module extends BaseModule {
 		require_once ABSPATH . '/wp-admin/includes/template.php';
 
 		$options = [
-			'default' => __( 'Default', 'elementor' ),
+			'default' => ___elementor_adapter( 'Default', 'elementor' ),
 		];
 
 		$options += array_flip( get_page_templates( null, $document->get_main_post()->post_type ) );
@@ -271,7 +271,7 @@ class Module extends BaseModule {
 		$document->add_control(
 			$control_id,
 			[
-				'label' => __( 'Page Layout', 'elementor' ),
+				'label' => ___elementor_adapter( 'Page Layout', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => $options,
@@ -282,7 +282,7 @@ class Module extends BaseModule {
 			$control_id . '_default_description',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'Default Page Template from your theme', 'elementor' ),
+				'raw' => ___elementor_adapter( 'Default Page Template from your theme', 'elementor' ),
 				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
@@ -295,7 +295,7 @@ class Module extends BaseModule {
 			$control_id . '_canvas_description',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'No header, no footer, just Elementor', 'elementor' ),
+				'raw' => ___elementor_adapter( 'No header, no footer, just Elementor', 'elementor' ),
 				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
@@ -308,7 +308,7 @@ class Module extends BaseModule {
 			$control_id . '_header_footer_description',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => __( 'This template includes the header, full-width content and footer', 'elementor' ),
+				'raw' => ___elementor_adapter( 'This template includes the header, full-width content and footer', 'elementor' ),
 				'separator' => 'none',
 				'content_classes' => 'elementor-descriptor',
 				'condition' => [
@@ -347,7 +347,7 @@ class Module extends BaseModule {
 
 			// Don't allow WP to update the parent page template.
 			// (during `wp_update_post` from page-settings or save_plain_text).
-			if ( $is_autosave_action && ! wp_is_post_autosave( $object_id ) && DB::STATUS_DRAFT !== get_post_status( $object_id ) ) {
+			if ( $is_autosave_action && ! wp_is_post_autosave_elementor_adapter( $object_id ) && DB::STATUS_DRAFT !== get_post_status( $object_id ) ) {
 				$check = false;
 			}
 		}
@@ -364,12 +364,12 @@ class Module extends BaseModule {
 	 * @access public
 	 */
 	public function __construct() {
-		add_action( 'init', [ $this, 'add_wp_templates_support' ] );
+		add_action_elementor_adapter( 'init', [ $this, 'add_wp_templates_support' ] );
 
-		add_filter( 'template_include', [ $this, 'template_include' ], 11 /* After Plugins/WooCommerce */ );
+		add_filter_elementor_adapter( 'template_include', [ $this, 'template_include' ], 11 /* After Plugins/WooCommerce */ );
 
-		add_action( 'elementor/documents/register_controls', [ $this, 'action_register_template_control' ] );
+		add_action_elementor_adapter( 'elementor/documents/register_controls', [ $this, 'action_register_template_control' ] );
 
-		add_filter( 'update_post_metadata', [ $this, 'filter_update_meta' ], 10, 3 );
+		add_filter_elementor_adapter( 'update_post_metadata', [ $this, 'filter_update_meta' ], 10, 3 );
 	}
 }

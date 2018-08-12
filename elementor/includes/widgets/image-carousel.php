@@ -40,7 +40,7 @@ class Widget_Image_Carousel extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Image Carousel', 'elementor' );
+		return ___elementor_adapter( 'Image Carousel', 'elementor' );
 	}
 
 	/**
@@ -97,14 +97,14 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'section_image_carousel',
 			[
-				'label' => __( 'Image Carousel', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Carousel', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'carousel',
 			[
-				'label' => __( 'Add Images', 'elementor' ),
+				'label' => ___elementor_adapter( 'Add Images', 'elementor' ),
 				'type' => Controls_Manager::GALLERY,
 				'default' => [],
 				'show_label' => false,
@@ -128,10 +128,10 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_responsive_control(
 			'slides_to_show',
 			[
-				'label' => __( 'Slides to Show', 'elementor' ),
+				'label' => ___elementor_adapter( 'Slides to Show', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Default', 'elementor' ),
+					'' => ___elementor_adapter( 'Default', 'elementor' ),
 				] + $slides_to_show,
 				'frontend_available' => true,
 			]
@@ -140,9 +140,9 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'slides_to_scroll',
 			[
-				'label' => __( 'Slides to Scroll', 'elementor' ),
+				'label' => ___elementor_adapter( 'Slides to Scroll', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
-				'description' => __( 'Set how many slides are scrolled per swipe.', 'elementor' ),
+				'description' => ___elementor_adapter( 'Set how many slides are scrolled per swipe.', 'elementor' ),
 				'default' => '2',
 				'options' => $slides_to_show,
 				'condition' => [
@@ -155,12 +155,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'image_stretch',
 			[
-				'label' => __( 'Image Stretch', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Stretch', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'no',
 				'options' => [
-					'no' => __( 'No', 'elementor' ),
-					'yes' => __( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
 				],
 			]
 		);
@@ -168,14 +168,14 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'navigation',
 			[
-				'label' => __( 'Navigation', 'elementor' ),
+				'label' => ___elementor_adapter( 'Navigation', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'both',
 				'options' => [
-					'both' => __( 'Arrows and Dots', 'elementor' ),
-					'arrows' => __( 'Arrows', 'elementor' ),
-					'dots' => __( 'Dots', 'elementor' ),
-					'none' => __( 'None', 'elementor' ),
+					'both' => ___elementor_adapter( 'Arrows and Dots', 'elementor' ),
+					'arrows' => ___elementor_adapter( 'Arrows', 'elementor' ),
+					'dots' => ___elementor_adapter( 'Dots', 'elementor' ),
+					'none' => ___elementor_adapter( 'None', 'elementor' ),
 				],
 				'frontend_available' => true,
 			]
@@ -184,13 +184,13 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'link_to',
 			[
-				'label' => __( 'Link to', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link to', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => [
-					'none' => __( 'None', 'elementor' ),
-					'file' => __( 'Media File', 'elementor' ),
-					'custom' => __( 'Custom URL', 'elementor' ),
+					'none' => ___elementor_adapter( 'None', 'elementor' ),
+					'file' => ___elementor_adapter( 'Media File', 'elementor' ),
+					'custom' => ___elementor_adapter( 'Custom URL', 'elementor' ),
 				],
 			]
 		);
@@ -198,9 +198,9 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link to', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link to', 'elementor' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'https://your-link.com', 'elementor' ),
 				'condition' => [
 					'link_to' => 'custom',
 				],
@@ -211,13 +211,13 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'open_lightbox',
 			[
-				'label' => __( 'Lightbox', 'elementor' ),
+				'label' => ___elementor_adapter( 'Lightbox', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
-					'default' => __( 'Default', 'elementor' ),
-					'yes' => __( 'Yes', 'elementor' ),
-					'no' => __( 'No', 'elementor' ),
+					'default' => ___elementor_adapter( 'Default', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
 				],
 				'condition' => [
 					'link_to' => 'file',
@@ -228,14 +228,14 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'caption_type',
 			[
-				'label' => __( 'Caption', 'elementor' ),
+				'label' => ___elementor_adapter( 'Caption', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'elementor' ),
-					'title' => __( 'Title', 'elementor' ),
-					'caption' => __( 'Caption', 'elementor' ),
-					'description' => __( 'Description', 'elementor' ),
+					'' => ___elementor_adapter( 'None', 'elementor' ),
+					'title' => ___elementor_adapter( 'Title', 'elementor' ),
+					'caption' => ___elementor_adapter( 'Caption', 'elementor' ),
+					'description' => ___elementor_adapter( 'Description', 'elementor' ),
 				],
 			]
 		);
@@ -243,7 +243,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -254,19 +254,19 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'section_additional_options',
 			[
-				'label' => __( 'Additional Options', 'elementor' ),
+				'label' => ___elementor_adapter( 'Additional Options', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'pause_on_hover',
 			[
-				'label' => __( 'Pause on Hover', 'elementor' ),
+				'label' => ___elementor_adapter( 'Pause on Hover', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'yes',
 				'options' => [
-					'yes' => __( 'Yes', 'elementor' ),
-					'no' => __( 'No', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
 				],
 				'frontend_available' => true,
 			]
@@ -275,12 +275,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'autoplay',
 			[
-				'label' => __( 'Autoplay', 'elementor' ),
+				'label' => ___elementor_adapter( 'Autoplay', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'yes',
 				'options' => [
-					'yes' => __( 'Yes', 'elementor' ),
-					'no' => __( 'No', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
 				],
 				'frontend_available' => true,
 			]
@@ -289,7 +289,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'autoplay_speed',
 			[
-				'label' => __( 'Autoplay Speed', 'elementor' ),
+				'label' => ___elementor_adapter( 'Autoplay Speed', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 5000,
 				'frontend_available' => true,
@@ -299,12 +299,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'infinite',
 			[
-				'label' => __( 'Infinite Loop', 'elementor' ),
+				'label' => ___elementor_adapter( 'Infinite Loop', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'yes',
 				'options' => [
-					'yes' => __( 'Yes', 'elementor' ),
-					'no' => __( 'No', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
 				],
 				'frontend_available' => true,
 			]
@@ -313,12 +313,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'effect',
 			[
-				'label' => __( 'Effect', 'elementor' ),
+				'label' => ___elementor_adapter( 'Effect', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'slide',
 				'options' => [
-					'slide' => __( 'Slide', 'elementor' ),
-					'fade' => __( 'Fade', 'elementor' ),
+					'slide' => ___elementor_adapter( 'Slide', 'elementor' ),
+					'fade' => ___elementor_adapter( 'Fade', 'elementor' ),
 				],
 				'condition' => [
 					'slides_to_show' => '1',
@@ -330,7 +330,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'speed',
 			[
-				'label' => __( 'Animation Speed', 'elementor' ),
+				'label' => ___elementor_adapter( 'Animation Speed', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 500,
 				'frontend_available' => true,
@@ -340,12 +340,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'direction',
 			[
-				'label' => __( 'Direction', 'elementor' ),
+				'label' => ___elementor_adapter( 'Direction', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'ltr',
 				'options' => [
-					'ltr' => __( 'Left', 'elementor' ),
-					'rtl' => __( 'Right', 'elementor' ),
+					'ltr' => ___elementor_adapter( 'Left', 'elementor' ),
+					'rtl' => ___elementor_adapter( 'Right', 'elementor' ),
 				],
 				'frontend_available' => true,
 			]
@@ -356,7 +356,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label' => __( 'Navigation', 'elementor' ),
+				'label' => ___elementor_adapter( 'Navigation', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'navigation' => [ 'arrows', 'dots', 'both' ],
@@ -367,7 +367,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'heading_style_arrows',
 			[
-				'label' => __( 'Arrows', 'elementor' ),
+				'label' => ___elementor_adapter( 'Arrows', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -379,12 +379,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'arrows_position',
 			[
-				'label' => __( 'Position', 'elementor' ),
+				'label' => ___elementor_adapter( 'Position', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'inside',
 				'options' => [
-					'inside' => __( 'Inside', 'elementor' ),
-					'outside' => __( 'Outside', 'elementor' ),
+					'inside' => ___elementor_adapter( 'Inside', 'elementor' ),
+					'outside' => ___elementor_adapter( 'Outside', 'elementor' ),
 				],
 				'condition' => [
 					'navigation' => [ 'arrows', 'both' ],
@@ -395,7 +395,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'arrows_size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -415,7 +415,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'arrows_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-image-carousel-wrapper .slick-slider .slick-prev:before, {{WRAPPER}} .elementor-image-carousel-wrapper .slick-slider .slick-next:before' => 'color: {{VALUE}};',
@@ -429,7 +429,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'heading_style_dots',
 			[
-				'label' => __( 'Dots', 'elementor' ),
+				'label' => ___elementor_adapter( 'Dots', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -441,12 +441,12 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'dots_position',
 			[
-				'label' => __( 'Position', 'elementor' ),
+				'label' => ___elementor_adapter( 'Position', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'outside',
 				'options' => [
-					'outside' => __( 'Outside', 'elementor' ),
-					'inside' => __( 'Inside', 'elementor' ),
+					'outside' => ___elementor_adapter( 'Outside', 'elementor' ),
+					'inside' => ___elementor_adapter( 'Inside', 'elementor' ),
 				],
 				'condition' => [
 					'navigation' => [ 'dots', 'both' ],
@@ -457,7 +457,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'dots_size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -477,7 +477,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'dots_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-image-carousel-wrapper .elementor-image-carousel .slick-dots li button:before' => 'color: {{VALUE}};',
@@ -493,7 +493,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label' => __( 'Image', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -501,11 +501,11 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'image_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Default', 'elementor' ),
-					'custom' => __( 'Custom', 'elementor' ),
+					'' => ___elementor_adapter( 'Default', 'elementor' ),
+					'custom' => ___elementor_adapter( 'Custom', 'elementor' ),
 				],
 				'default' => '',
 				'condition' => [
@@ -517,7 +517,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'image_spacing_custom',
 			[
-				'label' => __( 'Image Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -551,7 +551,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'image_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -565,7 +565,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'section_caption',
 			[
-				'label' => __( 'Caption', 'elementor' ),
+				'label' => ___elementor_adapter( 'Caption', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'caption_type!' => '',
@@ -576,23 +576,23 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'caption_align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor' ),
+						'title' => ___elementor_adapter( 'Justified', 'elementor' ),
 						'icon' => 'fa fa-align-justify',
 					],
 				],
@@ -606,7 +606,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		$this->add_control(
 			'caption_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -648,7 +648,7 @@ class Widget_Image_Carousel extends Widget_Base {
 		foreach ( $settings['carousel'] as $index => $attachment ) {
 			$image_url = Group_Control_Image_Size::get_attachment_image_src( $attachment['id'], 'thumbnail', $settings );
 
-			$image_html = '<img class="slick-slide-image" src="' . esc_attr( $image_url ) . '" alt="' . esc_attr( Control_Media::get_image_alt( $attachment ) ) . '" />';
+			$image_html = '<img class="slick-slide-image" src="' . esc_attr_elementor_adapter( $image_url ) . '" alt="' . esc_attr_elementor_adapter( Control_Media::get_image_alt( $attachment ) ) . '" />';
 
 			$link = $this->get_link_url( $attachment, $settings );
 
@@ -768,7 +768,7 @@ class Widget_Image_Carousel extends Widget_Base {
 			return '';
 		}
 
-		$attachment_post = get_post( $attachment['id'] );
+		$attachment_post = get_post_elementor_adapter( $attachment['id'] );
 
 		if ( 'caption' === $caption_type ) {
 			return $attachment_post->post_excerpt;

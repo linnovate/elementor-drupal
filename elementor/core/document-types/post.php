@@ -29,7 +29,7 @@ class Post extends Document {
 			'theme-elements',
 			[
 				'theme-elements-single' => [
-					'title' => __( 'Single', 'elementor' ),
+					'title' => ___elementor_adapter( 'Single', 'elementor' ),
 					'active' => false,
 				],
 			]
@@ -50,7 +50,7 @@ class Post extends Document {
 	 * @static
 	 */
 	public static function get_title() {
-		return __( 'Page', 'elementor' );
+		return ___elementor_adapter( 'Page', 'elementor' );
 	}
 
 	/**
@@ -100,11 +100,11 @@ class Post extends Document {
 		$document->add_control(
 			'hide_title',
 			[
-				'label' => __( 'Hide Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Hide Title', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'description' => sprintf(
 					/* translators: %s: Setting page link */
-					__( 'Not working? You can set a different selector for the title in the <a href="%s" target="_blank">Settings page</a>.', 'elementor' ),
+					___elementor_adapter( 'Not working? You can set a different selector for the title in the <a href="%s" target="_blank">Settings page</a>.', 'elementor' ),
 					Settings::get_url() . '#tab-style'
 				),
 				'selectors' => [
@@ -126,7 +126,7 @@ class Post extends Document {
 		$document->start_controls_section(
 			'section_page_style',
 			[
-				'label' => __( 'Body Style', 'elementor' ),
+				'label' => ___elementor_adapter( 'Body Style', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -149,7 +149,7 @@ class Post extends Document {
 		$document->add_responsive_control(
 			'padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -177,11 +177,11 @@ class Post extends Document {
 			],
 		] );
 
-		if ( post_type_supports( $document->post->post_type, 'excerpt' ) ) {
+		if ( post_type_supports_elementor_adapter( $document->post->post_type, 'excerpt' ) ) {
 			$document->add_control(
 				'post_excerpt',
 				[
-					'label' => __( 'Excerpt', 'elementor' ),
+					'label' => ___elementor_adapter( 'Excerpt', 'elementor' ),
 					'type' => Controls_Manager::TEXTAREA,
 					'default' => $document->post->post_excerpt,
 					'label_block' => true,
@@ -189,11 +189,11 @@ class Post extends Document {
 			);
 		}
 
-		if ( current_theme_supports( 'post-thumbnails' ) && post_type_supports( $document->post->post_type, 'thumbnail' ) ) {
+		if ( current_theme_supports_elementor_adapter( 'post-thumbnails' ) && post_type_supports_elementor_adapter( $document->post->post_type, 'thumbnail' ) ) {
 			$document->add_control(
 				'post_featured_image',
 				[
-					'label' => __( 'Featured Image', 'elementor' ),
+					'label' => ___elementor_adapter( 'Featured Image', 'elementor' ),
 					'type' => Controls_Manager::MEDIA,
 					'default' => [
 						'id' => get_post_thumbnail_id(),
@@ -214,7 +214,7 @@ class Post extends Document {
 	 */
 	public function __construct( array $data = [] ) {
 		if ( $data ) {
-			$template = get_post_meta( $data['post_id'], '_wp_page_template', true );
+			$template = get_post_meta_elementor_adapter( $data['post_id'], '_wp_page_template', true );
 			if ( empty( $template ) ) {
 				$template = 'default';
 			}

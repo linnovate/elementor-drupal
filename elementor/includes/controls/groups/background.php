@@ -89,15 +89,15 @@ class Group_Control_Background extends Group_Control_Base {
 	private static function get_default_background_types() {
 		return [
 			'classic' => [
-				'title' => _x( 'Classic', 'Background Control', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Classic', 'Background Control', 'elementor' ),
 				'icon' => 'fa fa-paint-brush',
 			],
 			'gradient' => [
-				'title' => _x( 'Gradient', 'Background Control', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Gradient', 'Background Control', 'elementor' ),
 				'icon' => 'fa fa-barcode',
 			],
 			'video' => [
-				'title' => _x( 'Background Video', 'Background Control', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Background Video', 'Background Control', 'elementor' ),
 				'icon' => 'fa fa-video-camera',
 			],
 		];
@@ -117,17 +117,17 @@ class Group_Control_Background extends Group_Control_Base {
 		$fields = [];
 
 		$fields['background'] = [
-			'label' => _x( 'Background Type', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Background Type', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::CHOOSE,
 			'label_block' => false,
 			'render_type' => 'ui',
 		];
 
 		$fields['color'] = [
-			'label' => _x( 'Color', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Color', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::COLOR,
 			'default' => '',
-			'title' => _x( 'Background Color', 'Background Control', 'elementor' ),
+			'title' => _x_elementor_adapter( 'Background Color', 'Background Control', 'elementor' ),
 			'selectors' => [
 				'{{SELECTOR}}' => 'background-color: {{VALUE}};',
 			],
@@ -137,7 +137,7 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['color_stop'] = [
-			'label' => _x( 'Location', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Location', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'size_units' => [ '%' ],
 			'default' => [
@@ -152,7 +152,7 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['color_b'] = [
-			'label' => _x( 'Second Color', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Second Color', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::COLOR,
 			'default' => '#f2295b',
 			'render_type' => 'ui',
@@ -163,7 +163,7 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['color_b_stop'] = [
-			'label' => _x( 'Location', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Location', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'size_units' => [ '%' ],
 			'default' => [
@@ -178,11 +178,11 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['gradient_type'] = [
-			'label' => _x( 'Type', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Type', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'linear' => _x( 'Linear', 'Background Control', 'elementor' ),
-				'radial' => _x( 'Radial', 'Background Control', 'elementor' ),
+				'linear' => _x_elementor_adapter( 'Linear', 'Background Control', 'elementor' ),
+				'radial' => _x_elementor_adapter( 'Radial', 'Background Control', 'elementor' ),
 			],
 			'default' => 'linear',
 			'render_type' => 'ui',
@@ -193,7 +193,7 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['gradient_angle'] = [
-			'label' => _x( 'Angle', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Angle', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'size_units' => [ 'deg' ],
 			'default' => [
@@ -216,18 +216,18 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['gradient_position'] = [
-			'label' => _x( 'Position', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Position', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'center center' => _x( 'Center Center', 'Background Control', 'elementor' ),
-				'center left' => _x( 'Center Left', 'Background Control', 'elementor' ),
-				'center right' => _x( 'Center Right', 'Background Control', 'elementor' ),
-				'top center' => _x( 'Top Center', 'Background Control', 'elementor' ),
-				'top left' => _x( 'Top Left', 'Background Control', 'elementor' ),
-				'top right' => _x( 'Top Right', 'Background Control', 'elementor' ),
-				'bottom center' => _x( 'Bottom Center', 'Background Control', 'elementor' ),
-				'bottom left' => _x( 'Bottom Left', 'Background Control', 'elementor' ),
-				'bottom right' => _x( 'Bottom Right', 'Background Control', 'elementor' ),
+				'center center' => _x_elementor_adapter( 'Center Center', 'Background Control', 'elementor' ),
+				'center left' => _x_elementor_adapter( 'Center Left', 'Background Control', 'elementor' ),
+				'center right' => _x_elementor_adapter( 'Center Right', 'Background Control', 'elementor' ),
+				'top center' => _x_elementor_adapter( 'Top Center', 'Background Control', 'elementor' ),
+				'top left' => _x_elementor_adapter( 'Top Left', 'Background Control', 'elementor' ),
+				'top right' => _x_elementor_adapter( 'Top Right', 'Background Control', 'elementor' ),
+				'bottom center' => _x_elementor_adapter( 'Bottom Center', 'Background Control', 'elementor' ),
+				'bottom left' => _x_elementor_adapter( 'Bottom Left', 'Background Control', 'elementor' ),
+				'bottom right' => _x_elementor_adapter( 'Bottom Right', 'Background Control', 'elementor' ),
 			],
 			'default' => 'center center',
 			'selectors' => [
@@ -241,12 +241,12 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['image'] = [
-			'label' => _x( 'Image', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Image', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::MEDIA,
 			'dynamic' => [
 				'active' => true,
 			],
-			'title' => _x( 'Background Image', 'Background Control', 'elementor' ),
+			'title' => _x_elementor_adapter( 'Background Image', 'Background Control', 'elementor' ),
 			'selectors' => [
 				'{{SELECTOR}}' => 'background-image: url("{{URL}}");',
 			],
@@ -256,20 +256,20 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['position'] = [
-			'label' => _x( 'Position', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Position', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => _x( 'Default', 'Background Control', 'elementor' ),
-				'top left' => _x( 'Top Left', 'Background Control', 'elementor' ),
-				'top center' => _x( 'Top Center', 'Background Control', 'elementor' ),
-				'top right' => _x( 'Top Right', 'Background Control', 'elementor' ),
-				'center left' => _x( 'Center Left', 'Background Control', 'elementor' ),
-				'center center' => _x( 'Center Center', 'Background Control', 'elementor' ),
-				'center right' => _x( 'Center Right', 'Background Control', 'elementor' ),
-				'bottom left' => _x( 'Bottom Left', 'Background Control', 'elementor' ),
-				'bottom center' => _x( 'Bottom Center', 'Background Control', 'elementor' ),
-				'bottom right' => _x( 'Bottom Right', 'Background Control', 'elementor' ),
+				'' => _x_elementor_adapter( 'Default', 'Background Control', 'elementor' ),
+				'top left' => _x_elementor_adapter( 'Top Left', 'Background Control', 'elementor' ),
+				'top center' => _x_elementor_adapter( 'Top Center', 'Background Control', 'elementor' ),
+				'top right' => _x_elementor_adapter( 'Top Right', 'Background Control', 'elementor' ),
+				'center left' => _x_elementor_adapter( 'Center Left', 'Background Control', 'elementor' ),
+				'center center' => _x_elementor_adapter( 'Center Center', 'Background Control', 'elementor' ),
+				'center right' => _x_elementor_adapter( 'Center Right', 'Background Control', 'elementor' ),
+				'bottom left' => _x_elementor_adapter( 'Bottom Left', 'Background Control', 'elementor' ),
+				'bottom center' => _x_elementor_adapter( 'Bottom Center', 'Background Control', 'elementor' ),
+				'bottom right' => _x_elementor_adapter( 'Bottom Right', 'Background Control', 'elementor' ),
 			],
 			'selectors' => [
 				'{{SELECTOR}}' => 'background-position: {{VALUE}};',
@@ -281,13 +281,13 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['attachment'] = [
-			'label' => _x( 'Attachment', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Attachment', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => _x( 'Default', 'Background Control', 'elementor' ),
-				'scroll' => _x( 'Scroll', 'Background Control', 'elementor' ),
-				'fixed' => _x( 'Fixed', 'Background Control', 'elementor' ),
+				'' => _x_elementor_adapter( 'Default', 'Background Control', 'elementor' ),
+				'scroll' => _x_elementor_adapter( 'Scroll', 'Background Control', 'elementor' ),
+				'fixed' => _x_elementor_adapter( 'Fixed', 'Background Control', 'elementor' ),
 			],
 			'selectors' => [
 				'(desktop+){{SELECTOR}}' => 'background-attachment: {{VALUE}};',
@@ -301,7 +301,7 @@ class Group_Control_Background extends Group_Control_Base {
 		$fields['attachment_alert'] = [
 			'type' => Controls_Manager::RAW_HTML,
 			'content_classes' => 'elementor-control-field-description',
-			'raw' => __( 'Note: Attachment Fixed works only on desktop.', 'elementor' ),
+			'raw' => ___elementor_adapter( 'Note: Attachment Fixed works only on desktop.', 'elementor' ),
 			'separator' => 'none',
 			'condition' => [
 				'background' => [ 'classic' ],
@@ -311,15 +311,15 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['repeat'] = [
-			'label' => _x( 'Repeat', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Repeat', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => _x( 'Default', 'Background Control', 'elementor' ),
-				'no-repeat' => _x( 'No-repeat', 'Background Control', 'elementor' ),
-				'repeat' => _x( 'Repeat', 'Background Control', 'elementor' ),
-				'repeat-x' => _x( 'Repeat-x', 'Background Control', 'elementor' ),
-				'repeat-y' => _x( 'Repeat-y', 'Background Control', 'elementor' ),
+				'' => _x_elementor_adapter( 'Default', 'Background Control', 'elementor' ),
+				'no-repeat' => _x_elementor_adapter( 'No-repeat', 'Background Control', 'elementor' ),
+				'repeat' => _x_elementor_adapter( 'Repeat', 'Background Control', 'elementor' ),
+				'repeat-x' => _x_elementor_adapter( 'Repeat-x', 'Background Control', 'elementor' ),
+				'repeat-y' => _x_elementor_adapter( 'Repeat-y', 'Background Control', 'elementor' ),
 			],
 			'selectors' => [
 				'{{SELECTOR}}' => 'background-repeat: {{VALUE}};',
@@ -331,14 +331,14 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['size'] = [
-			'label' => _x( 'Size', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Size', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => _x( 'Default', 'Background Control', 'elementor' ),
-				'auto' => _x( 'Auto', 'Background Control', 'elementor' ),
-				'cover' => _x( 'Cover', 'Background Control', 'elementor' ),
-				'contain' => _x( 'Contain', 'Background Control', 'elementor' ),
+				'' => _x_elementor_adapter( 'Default', 'Background Control', 'elementor' ),
+				'auto' => _x_elementor_adapter( 'Auto', 'Background Control', 'elementor' ),
+				'cover' => _x_elementor_adapter( 'Cover', 'Background Control', 'elementor' ),
+				'contain' => _x_elementor_adapter( 'Contain', 'Background Control', 'elementor' ),
 			],
 			'selectors' => [
 				'{{SELECTOR}}' => 'background-size: {{VALUE}};',
@@ -350,10 +350,10 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['video_link'] = [
-			'label' => _x( 'Video Link', 'Background Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Video Link', 'Background Control', 'elementor' ),
 			'type' => Controls_Manager::TEXT,
 			'placeholder' => 'https://www.youtube.com/watch?v=9uOETcuFjbE',
-			'description' => __( 'YouTube link or video file (mp4 is recommended).', 'elementor' ),
+			'description' => ___elementor_adapter( 'YouTube link or video file (mp4 is recommended).', 'elementor' ),
 			'label_block' => true,
 			'default' => '',
 			'condition' => [
@@ -363,9 +363,9 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['video_start'] = [
-			'label' => __( 'Start Time', 'elementor' ),
+			'label' => ___elementor_adapter( 'Start Time', 'elementor' ),
 			'type' => Controls_Manager::NUMBER,
-			'description' => __( 'Specify a start time (in seconds)', 'elementor' ),
+			'description' => ___elementor_adapter( 'Specify a start time (in seconds)', 'elementor' ),
 			'placeholder' => 10,
 			'condition' => [
 				'background' => [ 'video' ],
@@ -374,9 +374,9 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['video_end'] = [
-			'label' => __( 'End Time', 'elementor' ),
+			'label' => ___elementor_adapter( 'End Time', 'elementor' ),
 			'type' => Controls_Manager::NUMBER,
-			'description' => __( 'Specify an end time (in seconds)', 'elementor' ),
+			'description' => ___elementor_adapter( 'Specify an end time (in seconds)', 'elementor' ),
 			'placeholder' => 70,
 			'condition' => [
 				'background' => [ 'video' ],
@@ -385,8 +385,8 @@ class Group_Control_Background extends Group_Control_Base {
 		];
 
 		$fields['video_fallback'] = [
-			'label' => _x( 'Background Fallback', 'Background Control', 'elementor' ),
-			'description' => __( 'This cover image will replace the background video on mobile and tablet devices.', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Background Fallback', 'Background Control', 'elementor' ),
+			'description' => ___elementor_adapter( 'This cover image will replace the background video on mobile and tablet devices.', 'elementor' ),
 			'type' => Controls_Manager::MEDIA,
 			'label_block' => true,
 			'condition' => [

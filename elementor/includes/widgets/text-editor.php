@@ -40,7 +40,7 @@ class Widget_Text_Editor extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Text Editor', 'elementor' );
+		return ___elementor_adapter( 'Text Editor', 'elementor' );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->start_controls_section(
 			'section_editor',
 			[
-				'label' => __( 'Text Editor', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Editor', 'elementor' ),
 			]
 		);
 
@@ -111,16 +111,16 @@ class Widget_Text_Editor extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => __( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+				'default' => ___elementor_adapter( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'drop_cap',[
-				'label' => __( 'Drop Cap', 'elementor' ),
+				'label' => ___elementor_adapter( 'Drop Cap', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Off', 'elementor' ),
-				'label_on' => __( 'On', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Off', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'On', 'elementor' ),
 				'prefix_class' => 'elementor-drop-cap-',
 				'frontend_available' => true,
 			]
@@ -131,7 +131,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Text Editor', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Editor', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -139,23 +139,23 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor' ),
+						'title' => ___elementor_adapter( 'Justified', 'elementor' ),
 						'icon' => 'fa fa-align-justify',
 					],
 				],
@@ -168,7 +168,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -194,7 +194,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->start_controls_section(
 			'section_drop_cap',
 			[
-				'label' => __( 'Drop Cap', 'elementor' ),
+				'label' => ___elementor_adapter( 'Drop Cap', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'drop_cap' => 'yes',
@@ -205,12 +205,12 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'drop_cap_view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'default' => __( 'Default', 'elementor' ),
-					'stacked' => __( 'Stacked', 'elementor' ),
-					'framed' => __( 'Framed', 'elementor' ),
+					'default' => ___elementor_adapter( 'Default', 'elementor' ),
+					'stacked' => ___elementor_adapter( 'Stacked', 'elementor' ),
+					'framed' => ___elementor_adapter( 'Framed', 'elementor' ),
 				],
 				'default' => 'default',
 				'prefix_class' => 'elementor-drop-cap-view-',
@@ -223,7 +223,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'drop_cap_primary_color',
 			[
-				'label' => __( 'Primary Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Primary Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}.elementor-drop-cap-view-stacked .elementor-drop-cap' => 'background-color: {{VALUE}};',
@@ -242,7 +242,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'drop_cap_secondary_color',
 			[
-				'label' => __( 'Secondary Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Secondary Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}}.elementor-drop-cap-view-framed .elementor-drop-cap' => 'background-color: {{VALUE}};',
@@ -257,7 +257,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'drop_cap_size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 5,
@@ -279,7 +279,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'drop_cap_space',
 			[
-				'label' => __( 'Space', 'elementor' ),
+				'label' => ___elementor_adapter( 'Space', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 10,
@@ -299,7 +299,7 @@ class Widget_Text_Editor extends Widget_Base {
 		$this->add_control(
 			'drop_cap_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default' => [
@@ -318,7 +318,7 @@ class Widget_Text_Editor extends Widget_Base {
 
 		$this->add_control(
 			'drop_cap_border_width',[
-				'label' => __( 'Border Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Width', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-drop-cap' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',

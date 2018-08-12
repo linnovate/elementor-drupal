@@ -40,7 +40,7 @@ class Widget_Toggle extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Toggle', 'elementor' );
+		return ___elementor_adapter( 'Toggle', 'elementor' );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle',
 			[
-				'label' => __( 'Toggle', 'elementor' ),
+				'label' => ___elementor_adapter( 'Toggle', 'elementor' ),
 			]
 		);
 
@@ -92,9 +92,9 @@ class Widget_Toggle extends Widget_Base {
 		$repeater->add_control(
 			'tab_title',
 			[
-				'label' => __( 'Title & Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title & Content', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Toggle Title' , 'elementor' ),
+				'default' => ___elementor_adapter( 'Toggle Title' , 'elementor' ),
 				'label_block' => true,
 			]
 		);
@@ -102,9 +102,9 @@ class Widget_Toggle extends Widget_Base {
 		$repeater->add_control(
 			'tab_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'type' => Controls_Manager::WYSIWYG,
-				'default' => __( 'Toggle Content', 'elementor' ),
+				'default' => ___elementor_adapter( 'Toggle Content', 'elementor' ),
 				'show_label' => false,
 			]
 		);
@@ -112,17 +112,17 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'tabs',
 			[
-				'label' => __( 'Toggle Items', 'elementor' ),
+				'label' => ___elementor_adapter( 'Toggle Items', 'elementor' ),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'tab_title' => __( 'Toggle #1', 'elementor' ),
-						'tab_content' => __( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_title' => ___elementor_adapter( 'Toggle #1', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 					[
-						'tab_title' => __( 'Toggle #2', 'elementor' ),
-						'tab_content' => __( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_title' => ___elementor_adapter( 'Toggle #2', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 				],
 				'title_field' => '{{{ tab_title }}}',
@@ -132,7 +132,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -141,9 +141,9 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'icon',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'type' => Controls_Manager::ICON,
-				'default' => is_rtl() ? 'fa fa-caret-left' : 'fa fa-caret-right',
+				'default' => is_rtl_elementor_adapter() ? 'fa fa-caret-left' : 'fa fa-caret-right',
 				'separator' => 'before',
 			]
 		);
@@ -151,7 +151,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'icon_active',
 			[
-				'label' => __( 'Active Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Icon', 'elementor' ),
 				'type' => Controls_Manager::ICON,
 				'default' => 'fa fa-caret-up',
 				'condition' => [
@@ -163,7 +163,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'title_html_tag',
 			[
-				'label' => __( 'Title HTML Tag', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title HTML Tag', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -184,7 +184,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style',
 			[
-				'label' => __( 'Toggle', 'elementor' ),
+				'label' => ___elementor_adapter( 'Toggle', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -192,7 +192,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'border_width',
 			[
-				'label' => __( 'Border Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Width', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -210,7 +210,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'border_color',
 			[
-				'label' => __( 'Border Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-content' => 'border-bottom-color: {{VALUE}};',
@@ -222,7 +222,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_responsive_control(
 			'space_between',
 			[
-				'label' => __( 'Space Between', 'elementor' ),
+				'label' => ___elementor_adapter( 'Space Between', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -249,7 +249,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style_title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -257,7 +257,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'title_background',
 			[
-				'label' => __( 'Background', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-title' => 'background-color: {{VALUE}};',
@@ -268,7 +268,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-title' => 'color: {{VALUE}};',
@@ -283,7 +283,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'tab_active_color',
 			[
-				'label' => __( 'Active Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-title.elementor-active' => 'color: {{VALUE}};',
@@ -307,7 +307,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_responsive_control(
 			'title_padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -321,7 +321,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style_icon',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'icon!' => '',
@@ -332,19 +332,19 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'icon_align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Start', 'elementor' ),
+						'title' => ___elementor_adapter( 'Start', 'elementor' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'right' => [
-						'title' => __( 'End', 'elementor' ),
+						'title' => ___elementor_adapter( 'End', 'elementor' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
-				'default' => is_rtl() ? 'right' : 'left',
+				'default' => is_rtl_elementor_adapter() ? 'right' : 'left',
 				'toggle' => false,
 				'label_block' => false,
 				'condition' => [
@@ -356,7 +356,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'icon_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-title .elementor-toggle-icon .fa:before' => 'color: {{VALUE}};',
@@ -370,7 +370,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'icon_active_color',
 			[
-				'label' => __( 'Active Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-title.elementor-active .elementor-toggle-icon .fa:before' => 'color: {{VALUE}};',
@@ -384,7 +384,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_space',
 			[
-				'label' => __( 'Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -407,7 +407,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'icon!' => '',
@@ -418,7 +418,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'content_background_color',
 			[
-				'label' => __( 'Background', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-content' => 'background-color: {{VALUE}};',
@@ -429,7 +429,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_control(
 			'content_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-toggle .elementor-tab-content' => 'color: {{VALUE}};',
@@ -453,7 +453,7 @@ class Widget_Toggle extends Widget_Base {
 		$this->add_responsive_control(
 			'content_padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -507,15 +507,15 @@ class Widget_Toggle extends Widget_Base {
 				$this->add_inline_editing_attributes( $tab_content_setting_key, 'advanced' );
 				?>
 				<div class="elementor-toggle-item">
-					<<?php echo esc_html( $settings['title_html_tag'] ); ?> <?php echo $this->get_render_attribute_string( $tab_title_setting_key ); ?>>
+					<<?php echo esc_html_elementor_adapter( $settings['title_html_tag'] ); ?> <?php echo $this->get_render_attribute_string( $tab_title_setting_key ); ?>>
 						<?php if ( $settings['icon'] ) : ?>
-						<span class="elementor-toggle-icon elementor-toggle-icon-<?php echo esc_attr( $settings['icon_align'] ); ?>" aria-hidden="true">
-							<i class="elementor-toggle-icon-closed <?php echo esc_attr( $settings['icon'] ); ?>"></i>
-							<i class="elementor-toggle-icon-opened <?php echo esc_attr( $settings['icon_active'] ); ?>"></i>
+						<span class="elementor-toggle-icon elementor-toggle-icon-<?php echo esc_attr_elementor_adapter( $settings['icon_align'] ); ?>" aria-hidden="true">
+							<i class="elementor-toggle-icon-closed <?php echo esc_attr_elementor_adapter( $settings['icon'] ); ?>"></i>
+							<i class="elementor-toggle-icon-opened <?php echo esc_attr_elementor_adapter( $settings['icon_active'] ); ?>"></i>
 						</span>
 						<?php endif; ?>
 						<?php echo $item['tab_title']; ?>
-					</<?php echo esc_html( $settings['title_html_tag'] ); ?>>
+					</<?php echo esc_html_elementor_adapter( $settings['title_html_tag'] ); ?>>
 					<div <?php echo $this->get_render_attribute_string( $tab_content_setting_key ); ?>><?php echo $this->parse_text_editor( $item['tab_content'] ); ?></div>
 				</div>
 			<?php endforeach; ?>

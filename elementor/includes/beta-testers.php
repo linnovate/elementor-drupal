@@ -44,9 +44,9 @@ class Beta_Testers {
 		if ( false === $beta_version ) {
 			$beta_version = 'false';
 
-			$response = wp_remote_get( 'https://plugins.svn.wordpress.org/elementor/trunk/readme.txt' );
+			$response = wp_remote_get_elementor_adapter( 'https://plugins.svn.wordpress.org/elementor/trunk/readme.txt' );
 
-			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
+			if ( ! is_wp_error_elementor_adapter( $response ) && ! empty( $response['body'] ) ) {
 				preg_match( '/Beta tag: (.*)/i', $response['body'], $matches );
 				if ( isset( $matches[1] ) ) {
 					$beta_version = $matches[1];
@@ -107,12 +107,12 @@ class Beta_Testers {
 	 * @access public
 	 */
 	public function __construct() {
-		if ( 'yes' !== get_option( 'elementor_beta', 'no' ) ) {
+		if ( 'yes' !== get_option_elementor_adapter( 'elementor_beta', 'no' ) ) {
 			return;
 		}
 
 		$this->transient_key = md5( 'elementor_beta_testers_response_key' );
 
-		add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'check_version' ] );
+		add_filter_elementor_adapter( 'pre_set_site_transient_update_plugins', [ $this, 'check_version' ] );
 	}
 }

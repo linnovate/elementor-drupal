@@ -48,7 +48,7 @@ class Maintenance_Mode {
 	 * @return bool False if value was not updated and true if value was updated.
 	 */
 	public static function get( $option, $default = false ) {
-		return get_option( self::OPTION_PREFIX . $option, $default );
+		return get_option_elementor_adapter( self::OPTION_PREFIX . $option, $default );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Maintenance_Mode {
 	 * @return bool False if value was not updated and true if value was updated.
 	 */
 	public static function set( $option, $value ) {
-		return update_option( self::OPTION_PREFIX . $option, $value );
+		return update_option_elementor_adapter( self::OPTION_PREFIX . $option, $value );
 	}
 
 	/**
@@ -113,10 +113,10 @@ class Maintenance_Mode {
 		}
 
 		// Setup global post for Elementor\frontend so `_has_elementor_in_page = true`.
-		$GLOBALS['post'] = get_post( self::get( 'template_id' ) ); // WPCS: override ok.
+		$GLOBALS['post'] = get_post_elementor_adapter( self::get( 'template_id' ) ); // WPCS: override ok.
 
 		// Set the template as `$wp_query->current_object` for `wp_title` and etc.
-		query_posts( [
+		query_posts_elementor_adapter( [
 			'p' => self::get( 'template_id' ),
 			'post_type' => Source_Local::CPT,
 		] );
@@ -150,64 +150,64 @@ class Maintenance_Mode {
 
 		$template_id = self::get( 'template_id' );
 		$edit_url = '';
-		if ( $template_id && get_post( $template_id ) ) {
+		if ( $template_id && get_post_elementor_adapter( $template_id ) ) {
 			$edit_url = Utils::get_edit_link( $template_id );
 		}
 
-		$template_description = sprintf( ' <a target="_blank" class="elementor-edit-template" style="display: none" href="%1$s">%2$s</a>', $edit_url, __( 'Edit Template', 'elementor' ) );
+		$template_description = sprintf( ' <a target="_blank" class="elementor-edit-template" style="display: none" href="%1$s">%2$s</a>', $edit_url, ___elementor_adapter( 'Edit Template', 'elementor' ) );
 
 		$template_description .= '<span class="elementor-maintenance-mode-error" style="display: none">' .
-								 __( 'To enable maintenance mode you have to set a template for the maintenance mode page.', 'elementor' ) .
+								 ___elementor_adapter( 'To enable maintenance mode you have to set a template for the maintenance mode page.', 'elementor' ) .
 								 '<br>' .
 								 sprintf(
 									 /* translators: %s: Create page URL */
-									 __( 'Select one or go ahead and <a target="_blank" href="%s">create one</a> now.', 'elementor' ), admin_url( 'post-new.php?post_type=' . Source_Local::CPT )
+									 ___elementor_adapter( 'Select one or go ahead and <a target="_blank" href="%s">create one</a> now.', 'elementor' ), admin_url_elementor_adapter( 'post-new.php?post_type=' . Source_Local::CPT )
 								 ) .
 								 '</span>';
 
 		$tools->add_tab(
 			'maintenance_mode', [
-				'label' => __( 'Maintenance Mode', 'elementor' ),
+				'label' => ___elementor_adapter( 'Maintenance Mode', 'elementor' ),
 				'sections' => [
 					'maintenance_mode' => [
 						'callback' => function() {
-							echo '<div>' . __( 'Set your entire website as MAINTENANCE MODE, meaning the site is offline temporarily for maintenance, or set it as COMING SOON mode, meaning the site is offline until it is ready to be launched.', 'elementor' ) . '</div>';
+							echo '<div>' . ___elementor_adapter( 'Set your entire website as MAINTENANCE MODE, meaning the site is offline temporarily for maintenance, or set it as COMING SOON mode, meaning the site is offline until it is ready to be launched.', 'elementor' ) . '</div>';
 						},
 						'fields' => [
 							'maintenance_mode_mode' => [
-								'label' => __( 'Choose Mode', 'elementor' ),
+								'label' => ___elementor_adapter( 'Choose Mode', 'elementor' ),
 								'field_args' => [
 									'type' => 'select',
 									'options' => [
-										'' => __( 'Disabled', 'elementor' ),
-										self::MODE_COMING_SOON => __( 'Coming Soon', 'elementor' ),
-										self::MODE_MAINTENANCE => __( 'Maintenance', 'elementor' ),
+										'' => ___elementor_adapter( 'Disabled', 'elementor' ),
+										self::MODE_COMING_SOON => ___elementor_adapter( 'Coming Soon', 'elementor' ),
+										self::MODE_MAINTENANCE => ___elementor_adapter( 'Maintenance', 'elementor' ),
 									],
 									'desc' => '<div class="elementor-maintenance-mode-description" data-value="" style="display: none">' .
-											  __( 'Choose between Coming Soon mode (returning HTTP 200 code) or Maintenance Mode (returning HTTP 503 code).', 'elementor' ) .
+											  ___elementor_adapter( 'Choose between Coming Soon mode (returning HTTP 200 code) or Maintenance Mode (returning HTTP 503 code).', 'elementor' ) .
 											  '</div>' .
 											  '<div class="elementor-maintenance-mode-description" data-value="maintenance" style="display: none">' .
-											  __( 'Maintenance Mode returns HTTP 503 code, so search engines know to come back a short time later. It is not recommended to use this mode for more than a couple of days.', 'elementor' ) .
+											  ___elementor_adapter( 'Maintenance Mode returns HTTP 503 code, so search engines know to come back a short time later. It is not recommended to use this mode for more than a couple of days.', 'elementor' ) .
 											  '</div>' .
 											  '<div class="elementor-maintenance-mode-description" data-value="coming_soon" style="display: none">' .
-											  __( 'Coming Soon returns HTTP 200 code, meaning the site is ready to be indexed.', 'elementor' ) .
+											  ___elementor_adapter( 'Coming Soon returns HTTP 200 code, meaning the site is ready to be indexed.', 'elementor' ) .
 											  '</div>',
 								],
 							],
 							'maintenance_mode_exclude_mode' => [
-								'label' => __( 'Who Can Access', 'elementor' ),
+								'label' => ___elementor_adapter( 'Who Can Access', 'elementor' ),
 								'field_args' => [
 									'class' => 'elementor-default-hide',
 									'type' => 'select',
 									'std' => 'logged_in',
 									'options' => [
-										'logged_in' => __( 'Logged In', 'elementor' ),
-										'custom' => __( 'Custom', 'elementor' ),
+										'logged_in' => ___elementor_adapter( 'Logged In', 'elementor' ),
+										'custom' => ___elementor_adapter( 'Custom', 'elementor' ),
 									],
 								],
 							],
 							'maintenance_mode_exclude_roles' => [
-								'label' => __( 'Roles', 'elementor' ),
+								'label' => ___elementor_adapter( 'Roles', 'elementor' ),
 								'field_args' => [
 									'class' => 'elementor-default-hide',
 									'type' => 'checkbox_list_roles',
@@ -215,7 +215,7 @@ class Maintenance_Mode {
 								'setting_args' => [ __NAMESPACE__ . '\Settings_Validations', 'checkbox_list' ],
 							],
 							'maintenance_mode_template_id' => [
-								'label' => __( 'Choose Template', 'elementor' ),
+								'label' => ___elementor_adapter( 'Choose Template', 'elementor' ),
 								'field_args' => [
 									'class' => 'elementor-default-hide',
 									'type' => 'select',
@@ -246,14 +246,14 @@ class Maintenance_Mode {
 	public function add_menu_in_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		$wp_admin_bar->add_node( [
 			'id' => 'elementor-maintenance-on',
-			'title' => __( 'Maintenance Mode ON', 'elementor' ),
+			'title' => ___elementor_adapter( 'Maintenance Mode ON', 'elementor' ),
 			'href' => Tools::get_url() . '#tab-maintenance_mode',
 		] );
 
 		$wp_admin_bar->add_node( [
 			'id' => 'elementor-maintenance-edit',
 			'parent' => 'elementor-maintenance-on',
-			'title' => __( 'Edit Template', 'elementor' ),
+			'title' => ___elementor_adapter( 'Edit Template', 'elementor' ),
 			'href' => Utils::get_edit_link( self::get( 'template_id' ) ),
 		] );
 	}
@@ -287,20 +287,20 @@ class Maintenance_Mode {
 	public function __construct() {
 		$is_enabled = (bool) self::get( 'mode' ) && (bool) self::get( 'template_id' );
 
-		if ( is_admin() ) {
+		if ( is_admin_elementor_adapter() ) {
 			$page_id = Tools::PAGE_ID;
-			add_action( "elementor/admin/after_create_settings/{$page_id}", [ $this, 'register_settings_fields' ] );
+			add_action_elementor_adapter( "elementor/admin/after_create_settings/{$page_id}", [ $this, 'register_settings_fields' ] );
 		}
 
 		if ( ! $is_enabled ) {
 			return;
 		}
 
-		add_action( 'admin_bar_menu', [ $this, 'add_menu_in_admin_bar' ], 300 );
-		add_action( 'admin_head', [ $this, 'print_style' ] );
-		add_action( 'wp_head', [ $this, 'print_style' ] );
+		add_action_elementor_adapter( 'admin_bar_menu', [ $this, 'add_menu_in_admin_bar' ], 300 );
+		add_action_elementor_adapter( 'admin_head', [ $this, 'print_style' ] );
+		add_action_elementor_adapter( 'wp_head', [ $this, 'print_style' ] );
 
-		$user = wp_get_current_user();
+		$user = wp_get_current_user_elementor_adapter();
 
 		$exclude_mode = self::get( 'exclude_mode', [] );
 
@@ -318,9 +318,9 @@ class Maintenance_Mode {
 			}
 		}
 
-		add_filter( 'body_class', [ $this, 'body_class' ] );
+		add_filter_elementor_adapter( 'body_class', [ $this, 'body_class' ] );
 
 		// Priority = 11 that is *after* WP default filter `redirect_canonical` in order to avoid redirection loop.
-		add_action( 'template_redirect', [ $this, 'template_redirect' ], 11 );
+		add_action_elementor_adapter( 'template_redirect', [ $this, 'template_redirect' ], 11 );
 	}
 }

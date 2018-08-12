@@ -61,7 +61,7 @@ class Scheme_Typography extends Scheme_Base {
 	 * @return string Typography scheme title.
 	 */
 	public function get_title() {
-		return __( 'Typography', 'elementor' );
+		return ___elementor_adapter( 'Typography', 'elementor' );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Scheme_Typography extends Scheme_Base {
 	 * @return string Typography scheme disabled title.
 	 */
 	public function get_disabled_title() {
-		return __( 'Default Fonts', 'elementor' );
+		return ___elementor_adapter( 'Default Fonts', 'elementor' );
 	}
 
 	/**
@@ -90,10 +90,10 @@ class Scheme_Typography extends Scheme_Base {
 	 */
 	public function get_scheme_titles() {
 		return [
-			self::TYPOGRAPHY_1 => __( 'Primary Headline', 'elementor' ),
-			self::TYPOGRAPHY_2 => __( 'Secondary Headline', 'elementor' ),
-			self::TYPOGRAPHY_3 => __( 'Body Text', 'elementor' ),
-			self::TYPOGRAPHY_4 => __( 'Accent Text', 'elementor' ),
+			self::TYPOGRAPHY_1 => ___elementor_adapter( 'Primary Headline', 'elementor' ),
+			self::TYPOGRAPHY_2 => ___elementor_adapter( 'Secondary Headline', 'elementor' ),
+			self::TYPOGRAPHY_3 => ___elementor_adapter( 'Body Text', 'elementor' ),
+			self::TYPOGRAPHY_4 => ___elementor_adapter( 'Accent Text', 'elementor' ),
 		];
 	}
 

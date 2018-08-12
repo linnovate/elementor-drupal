@@ -64,7 +64,7 @@ class Group_Control_Css_Filter extends Group_Control_Base {
 		];
 
 		$controls['blur'] = [
-			'label' => _x( 'Blur', 'Filter Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Blur', 'Filter Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'required' => 'true',
 			'range' => [
@@ -86,7 +86,7 @@ class Group_Control_Css_Filter extends Group_Control_Base {
 		];
 
 		$controls['brightness'] = [
-			'label' => _x( 'Brightness', 'Filter Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Brightness', 'Filter Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'render_type' => 'ui',
 			'required' => 'true',
@@ -106,7 +106,7 @@ class Group_Control_Css_Filter extends Group_Control_Base {
 		];
 
 		$controls['contrast'] = [
-			'label' => _x( 'Contrast', 'Filter Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Contrast', 'Filter Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'render_type' => 'ui',
 			'required' => 'true',
@@ -126,7 +126,7 @@ class Group_Control_Css_Filter extends Group_Control_Base {
 		];
 
 		$controls['saturate'] = [
-			'label' => _x( 'Saturation', 'Filter Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Saturation', 'Filter Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'render_type' => 'ui',
 			'required' => 'true',
@@ -178,7 +178,7 @@ class Group_Control_Css_Filter extends Group_Control_Base {
 		return [
 			'popover' => [
 				'starter_name' => 'css_filter',
-				'starter_title' => _x( 'CSS Filters', 'Filter Control', 'elementor' ),
+				'starter_title' => _x_elementor_adapter( 'CSS Filters', 'Filter Control', 'elementor' ),
 			],
 		];
 	}

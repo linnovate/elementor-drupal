@@ -119,7 +119,7 @@ class Server_Reporter extends Base_Reporter {
 		];
 
 		if ( version_compare( $result['value'], '5.4', '<' ) ) {
-			$result['recommendation'] = _x( 'We recommend to use php 5.4 or higher', 'System Info', 'elementor' );
+			$result['recommendation'] = _x_elementor_adapter( 'We recommend to use php 5.4 or higher', 'System Info', 'elementor' );
 
 			$result['warning'] = true;
 		}
@@ -260,7 +260,7 @@ class Server_Reporter extends Base_Reporter {
 
 		$write_problems = [];
 
-		$wp_upload_dir = wp_upload_dir();
+		$wp_upload_dir = wp_upload_dir_elementor_adapter();
 
 		if ( $wp_upload_dir['error'] ) {
 			$write_problems[] = 'WordPress root uploads directory';
@@ -315,26 +315,26 @@ class Server_Reporter extends Base_Reporter {
 	 * }
 	 */
 	public function get_elementor_library() {
-		$response = wp_remote_post(
+		$response = wp_remote_post_elementor_adapter(
 			Api::$api_info_url, [
 				'timeout' => 5,
 				'body' => [
 					// Which API version is used
 					'api_version' => ELEMENTOR_VERSION,
 					// Which language to return
-					'site_lang' => get_bloginfo( 'language' ),
+					'site_lang' => get_bloginfo_elementor_adapter( 'language' ),
 				],
 			]
 		);
 
-		if ( is_wp_error( $response ) ) {
+		if ( is_wp_error_elementor_adapter( $response ) ) {
 			return [
 				'value' => 'Not connected (' . $response->get_error_message() . ')',
 				'warning' => true,
 			];
 		}
 
-		$http_response_code = wp_remote_retrieve_response_code( $response );
+		$http_response_code = wp_remote_retrieve_response_code_elementor_adapter( $response );
 
 		if ( 200 !== (int) $http_response_code ) {
 			$error_msg = 'HTTP Error (' . $http_response_code . ')';
@@ -345,7 +345,7 @@ class Server_Reporter extends Base_Reporter {
 			];
 		}
 
-		$info_data = json_decode( wp_remote_retrieve_body( $response ), true );
+		$info_data = json_decode( wp_remote_retrieve_body_elementor_adapter( $response ), true );
 
 		if ( empty( $info_data ) ) {
 			return [

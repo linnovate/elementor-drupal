@@ -75,9 +75,9 @@ class Fonts {
 	public static function get_font_groups() {
 		if ( null === self::$font_groups ) {
 			$font_groups = [
-				self::SYSTEM => __( 'System', 'elementor' ),
-				self::GOOGLE => __( 'Google', 'elementor' ),
-				self::EARLYACCESS => __( 'Google Early Access', 'elementor' ),
+				self::SYSTEM => ___elementor_adapter( 'System', 'elementor' ),
+				self::GOOGLE => ___elementor_adapter( 'Google', 'elementor' ),
+				self::EARLYACCESS => ___elementor_adapter( 'Google Early Access', 'elementor' ),
 			];
 
 			/**
@@ -89,7 +89,7 @@ class Fonts {
 			 *
 			 * @param array $font_groups Font groups.
 			 */
-			$font_groups = apply_filters( 'elementor/fonts/groups', $font_groups );
+			$font_groups = apply_filters_elementor_adapter( 'elementor/fonts/groups', $font_groups );
 
 			self::$font_groups = $font_groups;
 		}
@@ -121,7 +121,7 @@ class Fonts {
 			 *
 			 * @param array $additional_fonts Additional Elementor fonts.
 			 */
-			$additional_fonts = apply_filters( 'elementor/fonts/additional_fonts', $additional_fonts );
+			$additional_fonts = apply_filters_elementor_adapter( 'elementor/fonts/additional_fonts', $additional_fonts );
 
 			self::$additional_fonts = $additional_fonts;
 		}

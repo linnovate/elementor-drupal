@@ -130,82 +130,82 @@ class Shapes {
 	private static function init_shapes() {
 		$native_shapes = [
 			'mountains' => [
-				'title' => _x( 'Mountains', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Mountains', 'Shapes', 'elementor' ),
 				'has_flip' => true,
 			],
 			'drops' => [
-				'title' => _x( 'Drops', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Drops', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 				'has_flip' => true,
 				'height_only' => true,
 			],
 			'clouds' => [
-				'title' => _x( 'Clouds', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Clouds', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 				'has_flip' => true,
 				'height_only' => true,
 			],
 			'zigzag' => [
-				'title' => _x( 'Zigzag', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Zigzag', 'Shapes', 'elementor' ),
 			],
 			'pyramids' => [
-				'title' => _x( 'Pyramids', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Pyramids', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 				'has_flip' => true,
 			],
 			'triangle' => [
-				'title' => _x( 'Triangle', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Triangle', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 			],
 			'triangle-asymmetrical' => [
-				'title' => _x( 'Triangle Asymmetrical', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Triangle Asymmetrical', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 				'has_flip' => true,
 			],
 			'tilt' => [
-				'title' => _x( 'Tilt', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Tilt', 'Shapes', 'elementor' ),
 				'has_flip' => true,
 				'height_only' => true,
 			],
 			'opacity-tilt' => [
-				'title' => _x( 'Tilt Opacity', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Tilt Opacity', 'Shapes', 'elementor' ),
 				'has_flip' => true,
 			],
 			'opacity-fan' => [
-				'title' => _x( 'Fan Opacity', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Fan Opacity', 'Shapes', 'elementor' ),
 			],
 			'curve' => [
-				'title' => _x( 'Curve', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Curve', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 			],
 			'curve-asymmetrical' => [
-				'title' => _x( 'Curve Asymmetrical', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Curve Asymmetrical', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 				'has_flip' => true,
 			],
 			'waves' => [
-				'title' => _x( 'Waves', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Waves', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 				'has_flip' => true,
 			],
 			'wave-brush' => [
-				'title' => _x( 'Waves Brush', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Waves Brush', 'Shapes', 'elementor' ),
 				'has_flip' => true,
 			],
 			'waves-pattern' => [
-				'title' => _x( 'Waves Pattern', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Waves Pattern', 'Shapes', 'elementor' ),
 				'has_flip' => true,
 			],
 			'arrow' => [
-				'title' => _x( 'Arrow', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Arrow', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 			],
 			'split' => [
-				'title' => _x( 'Split', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Split', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 			],
 			'book' => [
-				'title' => _x( 'Book', 'Shapes', 'elementor' ),
+				'title' => _x_elementor_adapter( 'Book', 'Shapes', 'elementor' ),
 				'has_negative' => true,
 			],
 		];
@@ -220,7 +220,7 @@ class Shapes {
 		 *
 		 * @param array $additional_shapes Additional Elementor fonts.
 		 */
-		$additional_shapes = apply_filters( 'elementor/shapes/additional_shapes', $additional_shapes );
+		$additional_shapes = apply_filters_elementor_adapter( 'elementor/shapes/additional_shapes', $additional_shapes );
 
 		self::$shapes = array_merge( $native_shapes, $additional_shapes );
 	}

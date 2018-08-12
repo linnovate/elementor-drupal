@@ -62,7 +62,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
         $validate_args = $this->ensure_args(['post_id', 'source', 'content', 'type'], $args);
 
-        if (is_wp_error($validate_args)) {
+        if (is_wp_error_elementor_adapter($validate_args)) {
             return $validate_args;
         }
 
@@ -82,7 +82,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
 		
 		$template_id = $source->save_item( $args );
 
-		if ( is_wp_error( $template_id ) ) {
+		if ( is_wp_error_elementor_adapter( $template_id ) ) {
 			return $template_id;
 		}
 
@@ -93,7 +93,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
         $validate_args = $this->ensure_args(['source', 'content', 'type'], $template_data);
 
-        if (is_wp_error($validate_args)) {
+        if (is_wp_error_elementor_adapter($validate_args)) {
             return $validate_args;
         }
 
@@ -107,7 +107,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
 
         $update = $source->update_item($template_data);
 
-        if (is_wp_error($update)) {
+        if (is_wp_error_elementor_adapter($update)) {
             return $update;
         }
 
@@ -131,7 +131,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
         foreach ($args['templates'] as $template_data) {
             $result = $this->update_template($template_data);
 
-            if (is_wp_error($result)) {
+            if (is_wp_error_elementor_adapter($result)) {
                 return $result;
             }
         }
@@ -152,7 +152,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
         $validate_args = $this->ensure_args(['source', 'template_id'], $args);
 
-        if (is_wp_error($validate_args)) {
+        if (is_wp_error_elementor_adapter($validate_args)) {
             return $validate_args;
         }
 
@@ -166,11 +166,11 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
             return new \WP_Error('template_error', 'Template source not found.');
 		}
 		
-		do_action( 'elementor/template-library/before_get_source_data', $args, $source );
+		do_action_elementor_adapter( 'elementor/template-library/before_get_source_data', $args, $source );
 
 		$data = $source->get_data( $args );
 
-		do_action( 'elementor/template-library/after_get_source_data', $args, $source );
+		do_action_elementor_adapter( 'elementor/template-library/after_get_source_data', $args, $source );
 
 		return $data;
     }
@@ -192,7 +192,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
 		$validate_args = $this->ensure_args( [ 'source', 'template_id' ], $args );
 
-		if ( is_wp_error( $validate_args ) ) {
+		if ( is_wp_error_elementor_adapter( $validate_args ) ) {
 			return $validate_args;
 		}
 
@@ -221,7 +221,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
         $validate_args = $this->ensure_args(['source', 'template_id'], $args);
 
-        if (is_wp_error($validate_args)) {
+        if (is_wp_error_elementor_adapter($validate_args)) {
             return $validate_args;
         }
 
@@ -269,7 +269,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
         $validate_args = $this->ensure_args(['source', 'template_id', 'favorite'], $args);
 
-        if (is_wp_error($validate_args)) {
+        if (is_wp_error_elementor_adapter($validate_args)) {
             return $validate_args;
         }
 
@@ -289,7 +289,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
      */
     public function on_import_template_success()
     {
-        wp_redirect(admin_url('edit.php?post_type=' . Source_Local::CPT));
+        wp_redirect_elementor_adapter(admin_url_elementor_adapter('edit.php?post_type=' . Source_Local::CPT));
     }
 
     /**
@@ -341,10 +341,10 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
     {
 
         if (!empty($_REQUEST['editor_post_id'])) {
-            $editor_post_id = absint($_REQUEST['editor_post_id']);
+            $editor_post_id = absint_elementor_adapter($_REQUEST['editor_post_id']);
 
-            if (!get_post($editor_post_id)) {
-                wp_send_json_error(__('Post not found.', 'elementor'));
+            if (!get_post_elementor_adapter($editor_post_id)) {
+                wp_send_json_error_elementor_adapter(___elementor_adapter('Post not found.', 'elementor'));
             }
 
             Plugin::$instance->db->switch_to_post($editor_post_id);
@@ -362,9 +362,9 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
             }
         }
 
-        if (is_wp_error($result)) {
+        if (is_wp_error_elementor_adapter($result)) {
             if ('ajax' === $request_type) {
-                wp_send_json_error($result);
+                wp_send_json_error_elementor_adapter($result);
             }
 
             $callback = "on_{$ajax_request}_error";
@@ -377,7 +377,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
         }
 
         if ('ajax' === $request_type) {
-            return wp_send_json_success($result);
+            return wp_send_json_success_elementor_adapter($result);
         }
 
         $callback = "on_{$ajax_request}_success";
@@ -411,8 +411,8 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
         ];
 
         foreach ($allowed_ajax_requests as $ajax_request) {
-            remove_action('wp_ajax_elementor_' . $ajax_request);
-            add_action('wp_ajax_elementor_' . $ajax_request, function () use ($ajax_request) {
+            remove_action_elementor_adapter('wp_ajax_elementor_' . $ajax_request);
+            add_action_elementor_adapter('wp_ajax_elementor_' . $ajax_request, function () use ($ajax_request) {
                 return $this->handle_ajax_request($ajax_request);
             });
         }

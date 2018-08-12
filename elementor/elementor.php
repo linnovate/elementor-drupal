@@ -44,12 +44,12 @@ define( 'ELEMENTOR_MODULES_PATH', plugin_dir_path( ELEMENTOR__FILE__ ) . '/modul
 define( 'ELEMENTOR_ASSETS_PATH', ELEMENTOR_PATH . 'assets/' );
 define( 'ELEMENTOR_ASSETS_URL', ELEMENTOR_URL . 'assets/' );
 
-add_action( 'plugins_loaded', 'elementor_load_plugin_textdomain' );
+add_action_elementor_adapter( 'plugins_loaded', 'elementor_load_plugin_textdomain' );
 
 if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
-	add_action( 'admin_notices', 'elementor_fail_php_version' );
-} elseif ( ! version_compare( get_bloginfo( 'version' ), '4.7', '>=' ) ) {
-	add_action( 'admin_notices', 'elementor_fail_wp_version' );
+	add_action_elementor_adapter( 'admin_notices', 'elementor_fail_php_version' );
+} elseif ( ! version_compare( get_bloginfo_elementor_adapter( 'version' ), '4.7', '>=' ) ) {
+	add_action_elementor_adapter( 'admin_notices', 'elementor_fail_wp_version' );
 } else {
 	require( ELEMENTOR_PATH . 'includes/plugin.php' );
 }
@@ -78,7 +78,7 @@ function elementor_load_plugin_textdomain() {
  */
 function elementor_fail_php_version() {
 	/* translators: %s: PHP version */
-	$message = sprintf( esc_html__( 'Elementor requires PHP version %s+, plugin is currently NOT RUNNING.', 'elementor' ), '5.4' );
+	$message = sprintf( esc_html___elementor_adapter( 'Elementor requires PHP version %s+, plugin is currently NOT RUNNING.', 'elementor' ), '5.4' );
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
 	echo wp_kses_post( $html_message );
 }
@@ -94,7 +94,7 @@ function elementor_fail_php_version() {
  */
 function elementor_fail_wp_version() {
 	/* translators: %s: WordPress version */
-	$message = sprintf( esc_html__( 'Elementor requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT RUNNING.', 'elementor' ), '4.6' );
+	$message = sprintf( esc_html___elementor_adapter( 'Elementor requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT RUNNING.', 'elementor' ), '4.6' );
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
 	echo wp_kses_post( $html_message );
 }

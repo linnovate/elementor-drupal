@@ -66,7 +66,7 @@ abstract class Settings_Page {
 	 * @return string Settings page URL.
 	 */
 	public final static function get_url() {
-		return admin_url( 'admin.php?page=' . static::PAGE_ID );
+		return admin_url_elementor_adapter( 'admin.php?page=' . static::PAGE_ID );
 	}
 
 	/**
@@ -78,7 +78,7 @@ abstract class Settings_Page {
 	 * @access public
 	 */
 	public function __construct() {
-		add_action( 'admin_init', [ $this, 'register_settings_fields' ] );
+		add_action_elementor_adapter( 'admin_init', [ $this, 'register_settings_fields' ] );
 	}
 
 	/**
@@ -373,7 +373,7 @@ abstract class Settings_Page {
 			 *
 			 * @param Settings_Page $this The settings page.
 			 */
-			do_action( "elementor/admin/after_create_settings/{$page_id}", $this );
+			do_action_elementor_adapter( "elementor/admin/after_create_settings/{$page_id}", $this );
 		}
 	}
 }

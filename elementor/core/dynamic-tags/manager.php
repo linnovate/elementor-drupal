@@ -136,7 +136,7 @@ class Manager {
 	 * @return string The shortcode that represents the dynamic tag.
 	 */
 	public function tag_to_text( Base_Tag $tag ) {
-		return sprintf( '[%1$s id="%2$s" name="%3$s" settings="%4$s"]', self::TAG_LABEL, $tag->get_id(), $tag->get_name(), urlencode( wp_json_encode( $tag->get_settings(), JSON_FORCE_OBJECT ) ) );
+		return sprintf( '[%1$s id="%2$s" name="%3$s" settings="%4$s"]', self::TAG_LABEL, $tag->get_id(), $tag->get_name(), urlencode( wp_json_encode_elementor_adapter( $tag->get_settings(), JSON_FORCE_OBJECT ) ) );
 	}
 
 	/**
@@ -225,7 +225,7 @@ class Manager {
 	}
 
 	public function get_tags() {
-		if ( ! did_action( 'elementor/dynamic_tags/register_tags' ) ) {
+		if ( ! did_action_elementor_adapter( 'elementor/dynamic_tags/register_tags' ) ) {
 			/**
 			 * Register dynamic tags.
 			 *
@@ -235,7 +235,7 @@ class Manager {
 			 *
 			 * @param Manager $this Dynamic tags manager.
 			 */
-			do_action( 'elementor/dynamic_tags/register_tags', $this );
+			do_action_elementor_adapter( 'elementor/dynamic_tags/register_tags', $this );
 		}
 
 		return $this->tags_info;
@@ -356,7 +356,7 @@ class Manager {
 		 *
 		 * @since 2.0.0
 		 */
-		do_action( 'elementor/dynamic_tags/before_render' );
+		do_action_elementor_adapter( 'elementor/dynamic_tags/before_render' );
 
 		$tags_data = [];
 
@@ -379,9 +379,9 @@ class Manager {
 		 *
 		 * @since 2.0.0
 		 */
-		do_action( 'elementor/dynamic_tags/after_render' );
+		do_action_elementor_adapter( 'elementor/dynamic_tags/after_render' );
 
-		wp_send_json_success( $tags_data );
+		wp_send_json_success_elementor_adapter( $tags_data );
 	}
 
 	/**
@@ -424,7 +424,7 @@ class Manager {
 	 * @access private
 	 */
 	private function add_actions() {
-		add_action( 'wp_ajax_elementor_render_tags', [ $this, 'ajax_render_tags' ] );
-		add_action( 'elementor/css-file/post/enqueue', [ $this, 'after_enqueue_post_css' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_render_tags', [ $this, 'ajax_render_tags' ] );
+		add_action_elementor_adapter( 'elementor/css-file/post/enqueue', [ $this, 'after_enqueue_post_css' ] );
 	}
 }

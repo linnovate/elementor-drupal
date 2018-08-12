@@ -95,10 +95,10 @@ class Manager extends BaseManager {
 			foreach ( $sections as $section_name => $section_data ) {
 
 				foreach ( $section_data['controls'] as $control_name => $control_data ) {
-					$saved_setting = get_option( $control_name, null );
+					$saved_setting = get_option_elementor_adapter( $control_name, null );
 
 					if ( null !== $saved_setting ) {
-						$settings[ $control_name ] = get_option( $control_name );
+						$settings[ $control_name ] = get_option_elementor_adapter( $control_name );
 					}
 				}
 			}
@@ -148,9 +148,9 @@ class Manager extends BaseManager {
 
 						$one_list_settings[ $one_list_control_name ] = $settings[ $control_name ];
 
-						update_option( $control_name, $settings[ $control_name ] );
+						update_option_elementor_adapter( $control_name, $settings[ $control_name ] );
 					} else {
-						delete_option( $control_name );
+						delete_option_elementor_adapter( $control_name );
 					}
 				}
 			}
@@ -158,9 +158,9 @@ class Manager extends BaseManager {
 
 		// Save all settings in one list for a future usage
 		if ( ! empty( $one_list_settings ) ) {
-			update_option( self::META_KEY, $one_list_settings );
+			update_option_elementor_adapter( self::META_KEY, $one_list_settings );
 		} else {
-			delete_option( self::META_KEY );
+			delete_option_elementor_adapter( self::META_KEY );
 		}
 	}
 
@@ -205,6 +205,6 @@ class Manager extends BaseManager {
 	 * @access private
 	 */
 	private function add_panel_tabs() {
-		Controls_Manager::add_tab( self::PANEL_TAB_LIGHTBOX, __( 'Lightbox', 'elementor' ) );
+		Controls_Manager::add_tab( self::PANEL_TAB_LIGHTBOX, ___elementor_adapter( 'Lightbox', 'elementor' ) );
 	}
 }

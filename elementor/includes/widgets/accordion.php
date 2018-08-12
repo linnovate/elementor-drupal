@@ -40,7 +40,7 @@ class Widget_Accordion extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Accordion', 'elementor' );
+		return ___elementor_adapter( 'Accordion', 'elementor' );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Accordion', 'elementor' ),
+				'label' => ___elementor_adapter( 'Accordion', 'elementor' ),
 			]
 		);
 
@@ -92,9 +92,9 @@ class Widget_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'tab_title',
 			[
-				'label' => __( 'Title & Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title & Content', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Accordion Title' , 'elementor' ),
+				'default' => ___elementor_adapter( 'Accordion Title' , 'elementor' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -105,9 +105,9 @@ class Widget_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'tab_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'type' => Controls_Manager::WYSIWYG,
-				'default' => __( 'Accordion Content', 'elementor' ),
+				'default' => ___elementor_adapter( 'Accordion Content', 'elementor' ),
 				'show_label' => false,
 			]
 		);
@@ -115,17 +115,17 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'tabs',
 			[
-				'label' => __( 'Accordion Items', 'elementor' ),
+				'label' => ___elementor_adapter( 'Accordion Items', 'elementor' ),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'tab_title' => __( 'Accordion #1', 'elementor' ),
-						'tab_content' => __( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_title' => ___elementor_adapter( 'Accordion #1', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 					[
-						'tab_title' => __( 'Accordion #2', 'elementor' ),
-						'tab_content' => __( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_title' => ___elementor_adapter( 'Accordion #2', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 				],
 				'title_field' => '{{{ tab_title }}}',
@@ -135,7 +135,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -144,7 +144,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'icon',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'type' => Controls_Manager::ICON,
 				'default' => 'fa fa-plus',
 				'separator' => 'before',
@@ -154,7 +154,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'icon_active',
 			[
-				'label' => __( 'Active Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Icon', 'elementor' ),
 				'type' => Controls_Manager::ICON,
 				'default' => 'fa fa-minus',
 				'condition' => [
@@ -166,7 +166,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'title_html_tag',
 			[
-				'label' => __( 'Title HTML Tag', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title HTML Tag', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -187,7 +187,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_title_style',
 			[
-				'label' => __( 'Accordion', 'elementor' ),
+				'label' => ___elementor_adapter( 'Accordion', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -195,7 +195,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'border_width',
 			[
-				'label' => __( 'Border Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Width', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -214,7 +214,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'border_color',
 			[
-				'label' => __( 'Border Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-accordion-item' => 'border-color: {{VALUE}};',
@@ -229,7 +229,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style_title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -237,7 +237,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'title_background',
 			[
-				'label' => __( 'Background', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-title' => 'background-color: {{VALUE}};',
@@ -248,7 +248,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-title' => 'color: {{VALUE}};',
@@ -263,7 +263,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'tab_active_color',
 			[
-				'label' => __( 'Active Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-title.elementor-active' => 'color: {{VALUE}};',
@@ -287,7 +287,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_responsive_control(
 			'title_padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -301,7 +301,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style_icon',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'icon!' => '',
@@ -312,19 +312,19 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'icon_align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Start', 'elementor' ),
+						'title' => ___elementor_adapter( 'Start', 'elementor' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'right' => [
-						'title' => __( 'End', 'elementor' ),
+						'title' => ___elementor_adapter( 'End', 'elementor' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
-				'default' => is_rtl() ? 'right' : 'left',
+				'default' => is_rtl_elementor_adapter() ? 'right' : 'left',
 				'toggle' => false,
 				'label_block' => false,
 				'condition' => [
@@ -336,7 +336,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'icon_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-title .elementor-accordion-icon .fa:before' => 'color: {{VALUE}};',
@@ -350,7 +350,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'icon_active_color',
 			[
-				'label' => __( 'Active Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-title.elementor-active .elementor-accordion-icon .fa:before' => 'color: {{VALUE}};',
@@ -364,7 +364,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_space',
 			[
-				'label' => __( 'Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -387,7 +387,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_toggle_style_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'icon!' => '',
@@ -398,7 +398,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'content_background_color',
 			[
-				'label' => __( 'Background', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-content' => 'background-color: {{VALUE}};',
@@ -409,7 +409,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_control(
 			'content_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-accordion .elementor-tab-content' => 'color: {{VALUE}};',
@@ -433,7 +433,7 @@ class Widget_Accordion extends Widget_Base {
 		$this->add_responsive_control(
 			'content_padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -489,9 +489,9 @@ class Widget_Accordion extends Widget_Base {
 				<div class="elementor-accordion-item">
 					<<?php echo $settings['title_html_tag']; ?> <?php echo $this->get_render_attribute_string( $tab_title_setting_key ); ?>>
 						<?php if ( $settings['icon'] ) : ?>
-						<span class="elementor-accordion-icon elementor-accordion-icon-<?php echo esc_attr( $settings['icon_align'] ); ?>" aria-hidden="true">
-							<i class="elementor-accordion-icon-closed <?php echo esc_attr( $settings['icon'] ); ?>"></i>
-							<i class="elementor-accordion-icon-opened <?php echo esc_attr( $settings['icon_active'] ); ?>"></i>
+						<span class="elementor-accordion-icon elementor-accordion-icon-<?php echo esc_attr_elementor_adapter( $settings['icon_align'] ); ?>" aria-hidden="true">
+							<i class="elementor-accordion-icon-closed <?php echo esc_attr_elementor_adapter( $settings['icon'] ); ?>"></i>
+							<i class="elementor-accordion-icon-opened <?php echo esc_attr_elementor_adapter( $settings['icon_active'] ); ?>"></i>
 						</span>
 						<?php endif; ?>
 						<?php echo $item['tab_title']; ?>

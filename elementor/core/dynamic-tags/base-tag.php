@@ -110,10 +110,10 @@ abstract class Base_Tag extends Controls_Stack {
 			return;
 		}
 		?><#
-		var key = <?php echo esc_html( $panel_template_setting_key ); ?>;
+		var key = <?php echo esc_html_elementor_adapter( $panel_template_setting_key ); ?>;
 
 		if ( key ) {
-			var settingsKey = "<?php echo esc_html( $panel_template_setting_key ); ?>";
+			var settingsKey = "<?php echo esc_html_elementor_adapter( $panel_template_setting_key ); ?>";
 
 			/*
 			 * If the tag has controls,
@@ -163,7 +163,7 @@ abstract class Base_Tag extends Controls_Stack {
 		Plugin::$instance->controls_manager->open_stack( $this );
 
 		$this->start_controls_section( 'settings', [
-			'label' => __( 'Settings', 'elementor' ),
+			'label' => ___elementor_adapter( 'Settings', 'elementor' ),
 		] );
 
 		$this->_register_controls();

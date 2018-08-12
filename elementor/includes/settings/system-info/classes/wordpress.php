@@ -88,7 +88,7 @@ class WordPress_Reporter extends Base_Reporter {
 		if ( $memory_limit_bytes < $min_recommended_bytes ) {
 			$result['recommendation'] = sprintf(
 				/* translators: 1: Minimum recommended_memory, 2: Codex URL */
-				_x( 'We recommend setting memory to at least %1$s. For more information, read about <a href="%2$s">how to Increase memory allocated to PHP</a>.', 'System Info', 'elementor' ),
+				_x_elementor_adapter( 'We recommend setting memory to at least %1$s. For more information, read about <a href="%2$s">how to Increase memory allocated to PHP</a>.', 'System Info', 'elementor' ),
 				$min_recommended_memory,
 				'https://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP'
 			);
@@ -115,7 +115,7 @@ class WordPress_Reporter extends Base_Reporter {
 	 */
 	public function get_version() {
 		return [
-			'value' => get_bloginfo( 'version' ),
+			'value' => get_bloginfo_elementor_adapter( 'version' ),
 		];
 	}
 
@@ -223,7 +223,7 @@ class WordPress_Reporter extends Base_Reporter {
 	 */
 	public function get_language() {
 		return [
-			'value' => get_bloginfo( 'language' ),
+			'value' => get_bloginfo_elementor_adapter( 'language' ),
 		];
 	}
 
@@ -262,9 +262,9 @@ class WordPress_Reporter extends Base_Reporter {
 	 * }
 	 */
 	public function get_timezone() {
-		$timezone = get_option( 'timezone_string' );
+		$timezone = get_option_elementor_adapter( 'timezone_string' );
 		if ( ! $timezone ) {
-			$timezone = get_option( 'gmt_offset' );
+			$timezone = get_option_elementor_adapter( 'gmt_offset' );
 		}
 
 		return [
@@ -288,7 +288,7 @@ class WordPress_Reporter extends Base_Reporter {
 	 */
 	public function get_admin_email() {
 		return [
-			'value' => get_option( 'admin_email' ),
+			'value' => get_option_elementor_adapter( 'admin_email' ),
 		];
 	}
 

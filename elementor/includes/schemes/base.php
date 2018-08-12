@@ -88,12 +88,12 @@ abstract class Scheme_Base implements Scheme_Interface {
 	 * @return string Scheme value.
 	 */
 	public function get_scheme_value() {
-		$scheme_value = get_option( 'elementor_scheme_' . static::get_type() );
+		$scheme_value = get_option_elementor_adapter( 'elementor_scheme_' . static::get_type() );
 
 		if ( ! $scheme_value ) {
 			$scheme_value = $this->get_default_scheme();
 
-			update_option( 'elementor_scheme_' . static::get_type(), $scheme_value );
+			update_option_elementor_adapter( 'elementor_scheme_' . static::get_type(), $scheme_value );
 		}
 
 		return $scheme_value;
@@ -113,9 +113,9 @@ abstract class Scheme_Base implements Scheme_Interface {
 	public function save_scheme( array $posted ) {
 		$scheme_value = $this->get_scheme_value();
 
-		update_option( 'elementor_scheme_' . static::get_type(), array_replace( $scheme_value, array_intersect_key( $posted, $scheme_value ) ) );
+		update_option_elementor_adapter( 'elementor_scheme_' . static::get_type(), array_replace( $scheme_value, array_intersect_key( $posted, $scheme_value ) ) );
 
-		update_option( self::LAST_UPDATED_META, time() );
+		update_option_elementor_adapter( self::LAST_UPDATED_META, time() );
 	}
 
 	/**
@@ -159,17 +159,17 @@ abstract class Scheme_Base implements Scheme_Interface {
 				<div class="elementor-panel-scheme-button-wrapper elementor-panel-scheme-reset">
 					<button class="elementor-button">
 						<i class="fa fa-undo" aria-hidden="true"></i>
-						<?php echo __( 'Reset', 'elementor' ); ?>
+						<?php echo ___elementor_adapter( 'Reset', 'elementor' ); ?>
 					</button>
 				</div>
 				<div class="elementor-panel-scheme-button-wrapper elementor-panel-scheme-discard">
 					<button class="elementor-button">
 						<i class="fa fa-times" aria-hidden="true"></i>
-						<?php echo __( 'Discard', 'elementor' ); ?>
+						<?php echo ___elementor_adapter( 'Discard', 'elementor' ); ?>
 					</button>
 				</div>
 				<div class="elementor-panel-scheme-button-wrapper elementor-panel-scheme-save">
-					<button class="elementor-button elementor-button-success" disabled><?php echo __( 'Apply', 'elementor' ); ?></button>
+					<button class="elementor-button elementor-button-success" disabled><?php echo ___elementor_adapter( 'Apply', 'elementor' ); ?></button>
 				</div>
 			</div>
 			<?php $this->print_template_content(); ?>

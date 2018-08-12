@@ -39,7 +39,7 @@ class Widget_Shortcode extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Shortcode', 'elementor' );
+		return ___elementor_adapter( 'Shortcode', 'elementor' );
 	}
 
 	/**
@@ -96,14 +96,14 @@ class Widget_Shortcode extends Widget_Base {
 		$this->start_controls_section(
 			'section_shortcode',
 			[
-				'label' => __( 'Shortcode', 'elementor' ),
+				'label' => ___elementor_adapter( 'Shortcode', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'shortcode',
 			[
-				'label' => __( 'Enter your shortcode', 'elementor' ),
+				'label' => ___elementor_adapter( 'Enter your shortcode', 'elementor' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
@@ -127,7 +127,7 @@ class Widget_Shortcode extends Widget_Base {
 	protected function render() {
 		$shortcode = $this->get_settings_for_display( 'shortcode' );
 
-		$shortcode = do_shortcode( shortcode_unautop( $shortcode ) );
+		$shortcode = do_shortcode_elementor_adapter( shortcode_unautop_elementor_adapter( $shortcode ) );
 		?>
 		<div class="elementor-shortcode"><?php echo $shortcode; ?></div>
 		<?php

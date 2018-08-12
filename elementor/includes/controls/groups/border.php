@@ -57,15 +57,15 @@ class Group_Control_Border extends Group_Control_Base {
 		$fields = [];
 
 		$fields['border'] = [
-			'label' => _x( 'Border Type', 'Border Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Border Type', 'Border Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				'' => __( 'None', 'elementor' ),
-				'solid' => _x( 'Solid', 'Border Control', 'elementor' ),
-				'double' => _x( 'Double', 'Border Control', 'elementor' ),
-				'dotted' => _x( 'Dotted', 'Border Control', 'elementor' ),
-				'dashed' => _x( 'Dashed', 'Border Control', 'elementor' ),
-				'groove' => _x( 'Groove', 'Border Control', 'elementor' ),
+				'' => ___elementor_adapter( 'None', 'elementor' ),
+				'solid' => _x_elementor_adapter( 'Solid', 'Border Control', 'elementor' ),
+				'double' => _x_elementor_adapter( 'Double', 'Border Control', 'elementor' ),
+				'dotted' => _x_elementor_adapter( 'Dotted', 'Border Control', 'elementor' ),
+				'dashed' => _x_elementor_adapter( 'Dashed', 'Border Control', 'elementor' ),
+				'groove' => _x_elementor_adapter( 'Groove', 'Border Control', 'elementor' ),
 			],
 			'selectors' => [
 				'{{SELECTOR}}' => 'border-style: {{VALUE}};',
@@ -73,7 +73,7 @@ class Group_Control_Border extends Group_Control_Base {
 		];
 
 		$fields['width'] = [
-			'label' => _x( 'Width', 'Border Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Width', 'Border Control', 'elementor' ),
 			'type' => Controls_Manager::DIMENSIONS,
 			'selectors' => [
 				'{{SELECTOR}}' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -84,7 +84,7 @@ class Group_Control_Border extends Group_Control_Base {
 		];
 
 		$fields['color'] = [
-			'label' => _x( 'Color', 'Border Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Color', 'Border Control', 'elementor' ),
 			'type' => Controls_Manager::COLOR,
 			'default' => '',
 			'selectors' => [

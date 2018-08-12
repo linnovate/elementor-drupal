@@ -95,14 +95,14 @@ class Group_Control_Typography extends Group_Control_Base {
 		}
 
 		$fields['font_family'] = [
-			'label' => _x( 'Family', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Family', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::FONT,
 			'default' => '',
 			'selector_value' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
 		];
 
 		$fields['font_size'] = [
-			'label' => _x( 'Size', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Size', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'size_units' => [ 'px', 'em', 'rem' ],
 			'range' => [
@@ -116,7 +116,7 @@ class Group_Control_Typography extends Group_Control_Base {
 		];
 
 		$typo_weight_options = [
-			'' => __( 'Default', 'elementor' ),
+			'' => ___elementor_adapter( 'Default', 'elementor' ),
 		];
 
 		foreach ( array_merge( [ 'normal', 'bold' ], range( 100, 900, 100 ) ) as $weight ) {
@@ -124,52 +124,52 @@ class Group_Control_Typography extends Group_Control_Base {
 		}
 
 		$fields['font_weight'] = [
-			'label' => _x( 'Weight', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Weight', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => $typo_weight_options,
 		];
 
 		$fields['text_transform'] = [
-			'label' => _x( 'Transform', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Transform', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => __( 'Default', 'elementor' ),
-				'uppercase' => _x( 'Uppercase', 'Typography Control', 'elementor' ),
-				'lowercase' => _x( 'Lowercase', 'Typography Control', 'elementor' ),
-				'capitalize' => _x( 'Capitalize', 'Typography Control', 'elementor' ),
-				'none' => _x( 'Normal', 'Typography Control', 'elementor' ),
+				'' => ___elementor_adapter( 'Default', 'elementor' ),
+				'uppercase' => _x_elementor_adapter( 'Uppercase', 'Typography Control', 'elementor' ),
+				'lowercase' => _x_elementor_adapter( 'Lowercase', 'Typography Control', 'elementor' ),
+				'capitalize' => _x_elementor_adapter( 'Capitalize', 'Typography Control', 'elementor' ),
+				'none' => _x_elementor_adapter( 'Normal', 'Typography Control', 'elementor' ),
 			],
 		];
 
 		$fields['font_style'] = [
-			'label' => _x( 'Style', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Style', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => __( 'Default', 'elementor' ),
-				'normal' => _x( 'Normal', 'Typography Control', 'elementor' ),
-				'italic' => _x( 'Italic', 'Typography Control', 'elementor' ),
-				'oblique' => _x( 'Oblique', 'Typography Control', 'elementor' ),
+				'' => ___elementor_adapter( 'Default', 'elementor' ),
+				'normal' => _x_elementor_adapter( 'Normal', 'Typography Control', 'elementor' ),
+				'italic' => _x_elementor_adapter( 'Italic', 'Typography Control', 'elementor' ),
+				'oblique' => _x_elementor_adapter( 'Oblique', 'Typography Control', 'elementor' ),
 			],
 		];
 
 		$fields['text_decoration'] = [
-			'label' => _x( 'Decoration', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Decoration', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => '',
 			'options' => [
-				'' => __( 'Default', 'elementor' ),
-				'underline' => _x( 'Underline', 'Typography Control', 'elementor' ),
-				'overline' => _x( 'Overline', 'Typography Control', 'elementor' ),
-				'line-through' => _x( 'Line Through', 'Typography Control', 'elementor' ),
-				'none' => _x( 'None', 'Typography Control', 'elementor' ),
+				'' => ___elementor_adapter( 'Default', 'elementor' ),
+				'underline' => _x_elementor_adapter( 'Underline', 'Typography Control', 'elementor' ),
+				'overline' => _x_elementor_adapter( 'Overline', 'Typography Control', 'elementor' ),
+				'line-through' => _x_elementor_adapter( 'Line Through', 'Typography Control', 'elementor' ),
+				'none' => _x_elementor_adapter( 'None', 'Typography Control', 'elementor' ),
 			],
 		];
 
 		$fields['line_height'] = [
-			'label' => _x( 'Line-Height', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Line-Height', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'default' => [
 				'unit' => 'em',
@@ -185,7 +185,7 @@ class Group_Control_Typography extends Group_Control_Base {
 		];
 
 		$fields['letter_spacing'] = [
-			'label' => _x( 'Letter Spacing', 'Typography Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Letter Spacing', 'Typography Control', 'elementor' ),
 			'type' => Controls_Manager::SLIDER,
 			'range' => [
 				'px' => [
@@ -279,7 +279,7 @@ class Group_Control_Typography extends Group_Control_Base {
 		return [
 			'popover' => [
 				'starter_name' => 'typography',
-				'starter_title' => _x( 'Typography', 'Typography Control', 'elementor' ),
+				'starter_title' => _x_elementor_adapter( 'Typography', 'Typography Control', 'elementor' ),
 			],
 		];
 	}

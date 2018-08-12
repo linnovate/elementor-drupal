@@ -400,7 +400,7 @@ class Plugin {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'elementor' ), '1.0.0' );
+		_doing_it_wrong_elementor_adapter( __FUNCTION__, esc_html___elementor_adapter( 'Something went wrong.', 'elementor' ), '1.0.0' );
 	}
 
 	/**
@@ -413,7 +413,7 @@ class Plugin {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'elementor' ), '1.0.0' );
+		_doing_it_wrong_elementor_adapter( __FUNCTION__, esc_html___elementor_adapter( 'Something went wrong.', 'elementor' ), '1.0.0' );
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Plugin {
 			 *
 			 * @since 1.0.0
 			 */
-			do_action( 'elementor/loaded' );
+			do_action_elementor_adapter( 'elementor/loaded' );
 		}
 
 		return self::$instance;
@@ -466,7 +466,7 @@ class Plugin {
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'elementor/init' );
+		do_action_elementor_adapter( 'elementor/init' );
 	}
 
 	/**
@@ -514,7 +514,7 @@ class Plugin {
 		Api::init();
 		Tracker::init();
 
-		if ( is_admin() ) {
+		if ( is_admin_elementor_adapter() ) {
 			$this->revisions_manager = new Revisions_Manager();
 			$this->heartbeat = new Heartbeat();
 			$this->wordpress_widgets_manager = new WordPress_Widgets_Manager();
@@ -543,10 +543,10 @@ class Plugin {
 	 * @access private
 	 */
 	private function add_cpt_support() {
-		$cpt_support = get_option( 'elementor_cpt_support', [ 'page', 'post' ] );
+		$cpt_support = get_option_elementor_adapter( 'elementor_cpt_support', [ 'page', 'post' ] );
 
 		foreach ( $cpt_support as $cpt_slug ) {
-			add_post_type_support( $cpt_slug, 'elementor' );
+			add_post_type_support_elementor_adapter( $cpt_slug, 'elementor' );
 		}
 	}
 
@@ -578,7 +578,7 @@ class Plugin {
 		Maintenance::init();
 		Compatibility::register_actions();
 
-		add_action( 'init', [ $this, 'init' ], 0 );
+		add_action_elementor_adapter( 'init', [ $this, 'init' ], 0 );
 	}
 }
 

@@ -71,8 +71,8 @@ class Control_Switcher extends Base_Data_Control {
 	 */
 	protected function get_default_settings() {
 		return [
-			'label_off' => __( 'No', 'elementor' ),
-			'label_on' => __( 'Yes', 'elementor' ),
+			'label_off' => ___elementor_adapter( 'No', 'elementor' ),
+			'label_on' => ___elementor_adapter( 'Yes', 'elementor' ),
 			'return_value' => 'yes',
 		];
 	}

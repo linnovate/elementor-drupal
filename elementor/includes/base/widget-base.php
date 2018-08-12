@@ -140,7 +140,7 @@ abstract class Widget_Base extends Element_Base {
 			 *
 			 * @param Widget_Base $this The current widget.
 			 */
-			do_action( "elementor/widget/{$widget_name}/skins_init", $this );
+			do_action_elementor_adapter( "elementor/widget/{$widget_name}/skins_init", $this );
 		}
 	}
 
@@ -250,7 +250,7 @@ abstract class Widget_Base extends Element_Base {
 			$skin_options = [];
 
 			if ( $this->_has_template_content ) {
-				$skin_options[''] = __( 'Default', 'elementor' );
+				$skin_options[''] = ___elementor_adapter( 'Default', 'elementor' );
 			}
 
 			foreach ( $skins as $skin_id => $skin ) {
@@ -265,7 +265,7 @@ abstract class Widget_Base extends Element_Base {
 				$this->add_control(
 					'_skin',
 					[
-						'label' => __( 'Skin', 'elementor' ),
+						'label' => ___elementor_adapter( 'Skin', 'elementor' ),
 						'type' => Controls_Manager::HIDDEN,
 						'default' => $default_value,
 					]
@@ -274,7 +274,7 @@ abstract class Widget_Base extends Element_Base {
 				$this->add_control(
 					'_skin',
 					[
-						'label' => __( 'Skin', 'elementor' ),
+						'label' => ___elementor_adapter( 'Skin', 'elementor' ),
 						'type' => Controls_Manager::SELECT,
 						'default' => $default_value,
 						'options' => $skin_options,
@@ -299,7 +299,7 @@ abstract class Widget_Base extends Element_Base {
 	protected static function get_default_edit_tools() {
 		return [
 			'edit' => [
-				'title' => __( 'Edit', 'elementor' ),
+				'title' => ___elementor_adapter( 'Edit', 'elementor' ),
 				'icon' => 'edit',
 			],
 		];
@@ -385,11 +385,11 @@ abstract class Widget_Base extends Element_Base {
 	 */
 	protected function parse_text_editor( $content ) {
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-text.php */
-		$content = apply_filters( 'widget_text', $content, $this->get_settings() );
+		$content = apply_filters_elementor_adapter( 'widget_text', $content, $this->get_settings() );
 
-		$content = shortcode_unautop( $content );
-		$content = do_shortcode( $content );
-		$content = wptexturize( $content );
+		$content = shortcode_unautop_elementor_adapter( $content );
+		$content = do_shortcode_elementor_adapter( $content );
+		$content = wptexturize_elementor_adapter( $content );
 
 		if ( $GLOBALS['wp_embed'] instanceof \WP_Embed ) {
 			$content = $GLOBALS['wp_embed']->autoembed( $content );
@@ -455,7 +455,7 @@ abstract class Widget_Base extends Element_Base {
 		 *
 		 * @param Widget_Base $this The current widget.
 		 */
-		do_action( 'elementor/widget/before_render_content', $this );
+		do_action_elementor_adapter( 'elementor/widget/before_render_content', $this );
 
 		if ( Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_edit_tools();
@@ -486,7 +486,7 @@ abstract class Widget_Base extends Element_Base {
 			 * @param string      $widget_content The content of the widget.
 			 * @param Widget_Base $this           The widget.
 			 */
-			$widget_content = apply_filters( 'elementor/widget/render_content', $widget_content, $this );
+			$widget_content = apply_filters_elementor_adapter( 'elementor/widget/render_content', $widget_content, $this );
 
 			echo $widget_content; // XSS ok.
 			?>

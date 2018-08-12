@@ -34,7 +34,7 @@ class DocumentDrupal extends Document {
 	 * @static
 	 */
 	public static function get_title() {
-		return __( 'Page', 'elementor' );
+		return ___elementor_adapter( 'Page', 'elementor' );
 	}
 
 	public function get_exit_to_dashboard_url() {
@@ -49,7 +49,7 @@ class DocumentDrupal extends Document {
 
 	}
 	
-	public function get_post() {
+	public function get_post_elementor_adapter() {
 		$post->ID = 36;
 		return $post;
 	}
@@ -69,7 +69,7 @@ class DocumentDrupal extends Document {
 	public function __construct( array $data = [] ) {
 		$data['post_id'] = 1;
 		if ( $data ) {
-			$template = get_post_meta( $data['post_id'], '_wp_page_template', true );
+			$template = get_post_meta_elementor_adapter( $data['post_id'], '_wp_page_template', true );
 			if ( empty( $template ) ) {
 				$template = 'default';
 			}

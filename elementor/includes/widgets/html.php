@@ -41,7 +41,7 @@ class Widget_Html extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'HTML', 'elementor' );
+		return ___elementor_adapter( 'HTML', 'elementor' );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class Widget_Html extends Widget_Base {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'HTML Code', 'elementor' ),
+				'label' => ___elementor_adapter( 'HTML Code', 'elementor' ),
 			]
 		);
 
@@ -94,7 +94,7 @@ class Widget_Html extends Widget_Base {
 				'label' => '',
 				'type' => Controls_Manager::CODE,
 				'default' => '',
-				'placeholder' => __( 'Enter your code', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Enter your code', 'elementor' ),
 				'show_label' => false,
 			]
 		);

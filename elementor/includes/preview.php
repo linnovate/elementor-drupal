@@ -38,32 +38,32 @@ class Preview {
 	 * @access public
 	 */
 	public function init() {
-		if ( is_admin() || ! $this->is_preview_mode() ) {
+		if ( is_admin_elementor_adapter() || ! $this->is_preview_mode() ) {
 			return;
 		}
 
-		$this->post_id = get_the_ID();
+		$this->post_id = get_the_ID_elementor_adapter();
 
 		// Don't redirect to permalink.
-		remove_action( 'template_redirect', 'redirect_canonical' );
+		remove_action_elementor_adapter( 'template_redirect', 'redirect_canonical' );
 
 		// Compatibility with Yoast SEO plugin when 'Removes unneeded query variables from the URL' enabled.
 		// TODO: Move this code to `includes/compatibility.php`.
 		if ( class_exists( 'WPSEO_Frontend' ) ) {
-			remove_action( 'template_redirect', [ \WPSEO_Frontend::get_instance(), 'clean_permalink' ], 1 );
+			remove_action_elementor_adapter( 'template_redirect', [ \WPSEO_Frontend::get_instance(), 'clean_permalink' ], 1 );
 		}
 
 		// Disable the WP admin bar in preview mode.
-		add_filter( 'show_admin_bar', '__return_false' );
+		add_filter_elementor_adapter( 'show_admin_bar', '__return_false' );
 
-		add_action( 'wp_enqueue_scripts', function() {
+		add_action_elementor_adapter( 'wp_enqueue_scripts', function() {
 			$this->enqueue_styles();
 			$this->enqueue_scripts();
 		} );
 
-		add_filter( 'the_content', [ $this, 'builder_wrapper' ], 999999 );
+		add_filter_elementor_adapter( 'the_content', [ $this, 'builder_wrapper' ], 999999 );
 
-		add_action( 'wp_footer', [ $this, 'wp_footer' ] );
+		add_action_elementor_adapter( 'wp_footer', [ $this, 'wp_footer' ] );
 
 		// Tell to WP Cache plugins do not cache this request.
 		Utils::do_not_cache();
@@ -78,7 +78,7 @@ class Preview {
 		 *
 		 * @param Preview $this The current preview.
 		 */
-		do_action( 'elementor/preview/init', $this );
+		do_action_elementor_adapter( 'elementor/preview/init', $this );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Preview {
 	 */
 	public function is_preview_mode( $post_id = 0 ) {
 		if ( empty( $post_id ) ) {
-			$post_id = get_the_ID();
+			$post_id = get_the_ID_elementor_adapter();
 		}
 
 		if ( ! User::is_current_user_can_edit( $post_id ) ) {
@@ -137,7 +137,7 @@ class Preview {
 	 * @return string HTML wrapper for the builder.
 	 */
 	public function builder_wrapper( $content ) {
-		if ( get_the_ID() === $this->post_id ) {
+		if ( get_the_ID_elementor_adapter() === $this->post_id ) {
 			$classes = 'elementor-edit-mode';
 
 			$document = Plugin::$instance->documents->get( $this->post_id );
@@ -170,7 +170,7 @@ class Preview {
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		$direction_suffix = is_rtl() ? '-rtl' : '';
+		$direction_suffix = is_rtl_elementor_adapter() ? '-rtl' : '';
 
 		wp_register_style(
 			'elementor-select2',
@@ -188,7 +188,7 @@ class Preview {
 			ELEMENTOR_VERSION
 		);
 
-		wp_enqueue_style( 'editor-preview' );
+		wp_enqueue_style_elementor_adapter( 'editor-preview' );
 
 		/**
 		 * Preview enqueue styles.
@@ -197,7 +197,7 @@ class Preview {
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'elementor/preview/enqueue_styles' );
+		do_action_elementor_adapter( 'elementor/preview/enqueue_styles' );
 	}
 
 	/**
@@ -217,7 +217,7 @@ class Preview {
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script(
+		wp_enqueue_script_elementor_adapter(
 			'elementor-inline-editor',
 			ELEMENTOR_ASSETS_URL . 'lib/inline-editor/js/inline-editor' . $suffix . '.js',
 			[],
@@ -232,7 +232,7 @@ class Preview {
 		 *
 		 * @since 1.5.4
 		 */
-		do_action( 'elementor/preview/enqueue_scripts' );
+		do_action_elementor_adapter( 'elementor/preview/enqueue_scripts' );
 	}
 
 	/**
@@ -265,6 +265,6 @@ class Preview {
 	 * @access public
 	 */
 	public function __construct() {
-		add_action( 'template_redirect', [ $this, 'init' ], 0 );
+		add_action_elementor_adapter( 'template_redirect', [ $this, 'init' ], 0 );
 	}
 }

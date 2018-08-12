@@ -69,12 +69,12 @@ class Settings_Controls {
 		}
 
 		foreach ( $field['attributes'] as $attribute_key => $attribute_values ) {
-			$attributes[] = sprintf( '%1$s="%2$s"', $attribute_key, esc_attr( $attribute_values ) );
+			$attributes[] = sprintf( '%1$s="%2$s"', $attribute_key, esc_attr_elementor_adapter( $attribute_values ) );
 		}
 
 		$attributes = implode( ' ', $attributes );
 		?>
-		<input type="<?php echo esc_attr( $field['type'] ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo esc_attr( get_option( $field['id'], $field['std'] ) ); ?>" <?php echo $attributes; ?>/>
+		<input type="<?php echo esc_attr_elementor_adapter( $field['type'] ); ?>" id="<?php echo esc_attr_elementor_adapter( $field['id'] ); ?>" name="<?php echo esc_attr_elementor_adapter( $field['id'] ); ?>" value="<?php echo esc_attr_elementor_adapter( get_option_elementor_adapter( $field['id'], $field['std'] ) ); ?>" <?php echo $attributes; ?>/>
 		<?php
 		if ( ! empty( $field['sub_desc'] ) ) :
 			echo $field['sub_desc'];
@@ -100,7 +100,7 @@ class Settings_Controls {
 	private static function checkbox( array $field ) {
 		?>
 		<label>
-			<input type="<?php echo esc_attr( $field['type'] ); ?>" id="<?php echo esc_attr( $field['id'] ); ?>" name="<?php echo esc_attr( $field['id'] ); ?>" value="<?php echo $field['value']; ?>"<?php checked( $field['value'], get_option( $field['id'], $field['std'] ) ); ?> />
+			<input type="<?php echo esc_attr_elementor_adapter( $field['type'] ); ?>" id="<?php echo esc_attr_elementor_adapter( $field['id'] ); ?>" name="<?php echo esc_attr_elementor_adapter( $field['id'] ); ?>" value="<?php echo $field['value']; ?>"<?php checked( $field['value'], get_option_elementor_adapter( $field['id'], $field['std'] ) ); ?> />
 			<?php
 			if ( ! empty( $field['sub_desc'] ) ) :
 				echo $field['sub_desc'];
@@ -125,7 +125,7 @@ class Settings_Controls {
 	 * @param array $field Field data.
 	 */
 	private static function checkbox_list( array $field ) {
-		$old_value = get_option( $field['id'], $field['std'] );
+		$old_value = get_option_elementor_adapter( $field['id'], $field['std'] );
 		if ( ! is_array( $old_value ) ) {
 			$old_value = [];
 		}
@@ -155,15 +155,15 @@ class Settings_Controls {
 	 * @param array $field Field data.
 	 */
 	private static function select( array $field ) {
-		$old_value = get_option( $field['id'], $field['std'] );
+		$old_value = get_option_elementor_adapter( $field['id'], $field['std'] );
 		?>
-		<select name="<?php echo esc_attr( $field['id'] ); ?>">
+		<select name="<?php echo esc_attr_elementor_adapter( $field['id'] ); ?>">
 			<?php if ( ! empty( $field['show_select'] ) ) : ?>
-				<option value="">— <?php echo __( 'Select', 'elementor' ); ?> —</option>
+				<option value="">— <?php echo ___elementor_adapter( 'Select', 'elementor' ); ?> —</option>
 			<?php endif; ?>
 
 			<?php foreach ( $field['options'] as $value => $label ) : ?>
-				<option value="<?php echo esc_attr( $value ); ?>"<?php selected( $value, $old_value ); ?>><?php echo $label; ?></option>
+				<option value="<?php echo esc_attr_elementor_adapter( $value ); ?>"<?php selected( $value, $old_value ); ?>><?php echo $label; ?></option>
 			<?php endforeach; ?>
 		</select>
 

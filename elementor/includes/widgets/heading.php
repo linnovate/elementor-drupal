@@ -39,7 +39,7 @@ class Widget_Heading extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Heading', 'elementor' );
+		return ___elementor_adapter( 'Heading', 'elementor' );
 	}
 
 	/**
@@ -98,32 +98,32 @@ class Widget_Heading extends Widget_Base {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __( 'Enter your title', 'elementor' ),
-				'default' => __( 'Add Your Heading Text Here', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Enter your title', 'elementor' ),
+				'default' => ___elementor_adapter( 'Add Your Heading Text Here', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link', 'elementor' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'https://your-link.com', 'elementor' ),
 				'default' => [
 					'url' => '',
 				],
@@ -134,16 +134,16 @@ class Widget_Heading extends Widget_Base {
 		$this->add_control(
 			'size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
-					'default' => __( 'Default', 'elementor' ),
-					'small' => __( 'Small', 'elementor' ),
-					'medium' => __( 'Medium', 'elementor' ),
-					'large' => __( 'Large', 'elementor' ),
-					'xl' => __( 'XL', 'elementor' ),
-					'xxl' => __( 'XXL', 'elementor' ),
+					'default' => ___elementor_adapter( 'Default', 'elementor' ),
+					'small' => ___elementor_adapter( 'Small', 'elementor' ),
+					'medium' => ___elementor_adapter( 'Medium', 'elementor' ),
+					'large' => ___elementor_adapter( 'Large', 'elementor' ),
+					'xl' => ___elementor_adapter( 'XL', 'elementor' ),
+					'xxl' => ___elementor_adapter( 'XXL', 'elementor' ),
 				],
 			]
 		);
@@ -151,7 +151,7 @@ class Widget_Heading extends Widget_Base {
 		$this->add_control(
 			'header_size',
 			[
-				'label' => __( 'HTML Tag', 'elementor' ),
+				'label' => ___elementor_adapter( 'HTML Tag', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -171,23 +171,23 @@ class Widget_Heading extends Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor' ),
+						'title' => ___elementor_adapter( 'Justified', 'elementor' ),
 						'icon' => 'fa fa-align-justify',
 					],
 				],
@@ -201,7 +201,7 @@ class Widget_Heading extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -212,7 +212,7 @@ class Widget_Heading extends Widget_Base {
 		$this->start_controls_section(
 			'section_title_style',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -220,7 +220,7 @@ class Widget_Heading extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),
@@ -253,10 +253,10 @@ class Widget_Heading extends Widget_Base {
 		$this->add_control(
 			'blend_mode',
 			[
-				'label' => __( 'Blend Mode', 'elementor' ),
+				'label' => ___elementor_adapter( 'Blend Mode', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => __( 'Normal', 'elementor' ),
+					'' => ___elementor_adapter( 'Normal', 'elementor' ),
 					'multiply' => 'Multiply',
 					'screen' => 'Screen',
 					'overlay' => 'Overlay',

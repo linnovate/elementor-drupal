@@ -94,13 +94,13 @@ class Global_CSS extends Base {
 	protected function is_update_required() {
 		$file_last_updated = $this->get_meta( 'time' );
 
-		$schemes_last_update = get_option( Scheme_Base::LAST_UPDATED_META );
+		$schemes_last_update = get_option_elementor_adapter( Scheme_Base::LAST_UPDATED_META );
 
 		if ( $file_last_updated < $schemes_last_update ) {
 			return true;
 		}
 
-		$elementor_settings_last_updated = get_option( Settings::UPDATE_TIME_FIELD );
+		$elementor_settings_last_updated = get_option_elementor_adapter( Settings::UPDATE_TIME_FIELD );
 
 		if ( $file_last_updated < $elementor_settings_last_updated ) {
 			return true;

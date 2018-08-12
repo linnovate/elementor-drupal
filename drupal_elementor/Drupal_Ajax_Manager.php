@@ -18,32 +18,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Drupal_Ajax_Manager extends Ajax_Manager {
 
 	protected function send_success() {
-		return wp_send_json_success( [
+		return wp_send_json_success_elementor_adapter( [
 			'responses' => $this->response_data,
 		] );
 	}
 
 	protected function send_error( $code = null ) {
-		return wp_send_json_error( [
+		return wp_send_json_error_elementor_adapter( [
 			'responses' => $this->response_data,
 		], $code );
 	}
 
 	public function handle_ajax_request() {
 		if ( ! Plugin::$instance->editor->verify_request_nonce() ) {
-			$this->add_response_data( false, __( 'Token Expired.', 'elementor' ) )
+			$this->add_response_data( false, ___elementor_adapter( 'Token Expired.', 'elementor' ) )
 				->send_error( Exceptions::UNAUTHORIZED );
 		}
 
 		if ( empty( $_REQUEST['actions'] ) || empty( $_REQUEST['editor_post_id'] ) ) {
-			$this->add_response_data( false, __( 'Actions and Post ID are required.', 'elementor' ) )
+			$this->add_response_data( false, ___elementor_adapter( 'Actions and Post ID are required.', 'elementor' ) )
 				->send_error( Exceptions::BAD_REQUEST );
 		}
 
-		$editor_post_id = absint( $_REQUEST['editor_post_id'] );
+		$editor_post_id = absint_elementor_adapter( $_REQUEST['editor_post_id'] );
 
-		if ( ! get_post( $editor_post_id ) ) {
-			$this->add_response_data( false, __( 'Post not found.', 'elementor' ) )
+		if ( ! get_post_elementor_adapter( $editor_post_id ) ) {
+			$this->add_response_data( false, ___elementor_adapter( 'Post not found.', 'elementor' ) )
 				->send_error( Exceptions::NOT_FOUND );
 		}
 
@@ -60,7 +60,7 @@ class Drupal_Ajax_Manager extends Ajax_Manager {
 		 *
 		 * @param Ajax_Manager $this An instance of ajax manager.
 		 */
-		do_action( 'elementor/ajax/register_actions', $this );
+		do_action_elementor_adapter( 'elementor/ajax/register_actions', $this );
 
 		$this->requests = json_decode( stripslashes( $_REQUEST['actions'] ), true );
 
@@ -68,7 +68,7 @@ class Drupal_Ajax_Manager extends Ajax_Manager {
 			$this->current_action_id = $id;
 
 			if ( ! isset( $this->ajax_actions[ $action_data['action'] ] ) ) {
-				$this->add_response_data( false, __( 'Action not found.', 'elementor' ), Exceptions::BAD_REQUEST );
+				$this->add_response_data( false, ___elementor_adapter( 'Action not found.', 'elementor' ), Exceptions::BAD_REQUEST );
 
 				continue;
 			}
@@ -104,7 +104,7 @@ class Drupal_Ajax_Manager extends Ajax_Manager {
 	 * @access public
 	 */
 	public function __construct() {
-		remove_action( 'wp_ajax_elementor_ajax', [ $this, 'handle_ajax_request' ] );
-		add_action( 'wp_ajax_elementor_ajax', [ $this, 'handle_ajax_request' ] );
+		remove_action_elementor_adapter( 'wp_ajax_elementor_ajax', [ $this, 'handle_ajax_request' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_ajax', [ $this, 'handle_ajax_request' ] );
 	}
 }

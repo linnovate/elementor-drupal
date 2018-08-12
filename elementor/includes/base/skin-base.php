@@ -98,7 +98,7 @@ abstract class Skin_Base {
 	 * the skin in the widget.
 	 *
 	 * Example usage:
-	 * `add_action( 'elementor/element/{widget_id}/{section_id}/before_section_end', [ $this, 'register_controls' ] );`
+	 * `add_action_elementor_adapter( 'elementor/element/{widget_id}/{section_id}/before_section_end', [ $this, 'register_controls' ] );`
 	 *
 	 * @since 1.0.0
 	 * @access protected

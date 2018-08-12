@@ -234,17 +234,17 @@ class Schemes_Manager {
 		Plugin::$instance->editor->verify_ajax_nonce();
 
 		if ( ! isset( $_POST['scheme_name'] ) ) {
-			wp_send_json_error();
+			wp_send_json_error_elementor_adapter();
 		}
 
 		$scheme_obj = $this->get_scheme( $_POST['scheme_name'] );
 		if ( ! $scheme_obj ) {
-			wp_send_json_error();
+			wp_send_json_error_elementor_adapter();
 		}
 		$posted = json_decode( stripslashes( $_POST['data'] ), true );
 		$scheme_obj->save_scheme( $posted );
 
-		wp_send_json_success();
+		wp_send_json_success_elementor_adapter();
 	}
 
 	/**
@@ -279,7 +279,7 @@ class Schemes_Manager {
 			$enabled_schemes = [];
 
 			foreach ( self::$_schemes_types as $schemes_type => $scheme_class ) {
-				if ( 'yes' === get_option( 'elementor_disable_' . $schemes_type . '_schemes' ) ) {
+				if ( 'yes' === get_option_elementor_adapter( 'elementor_disable_' . $schemes_type . '_schemes' ) ) {
 					continue;
 				}
 				$enabled_schemes[] = $schemes_type;
@@ -294,7 +294,7 @@ class Schemes_Manager {
 			 *
 			 * @param array $enabled_schemes The list of enabled schemes.
 			 */
-			$enabled_schemes = apply_filters( 'elementor/schemes/enabled_schemes', $enabled_schemes );
+			$enabled_schemes = apply_filters_elementor_adapter( 'elementor/schemes/enabled_schemes', $enabled_schemes );
 
 			self::$_enabled_schemes = $enabled_schemes;
 		}
@@ -328,6 +328,6 @@ class Schemes_Manager {
 	public function __construct() {
 		$this->register_default_schemes();
 
-		add_action( 'wp_ajax_elementor_apply_scheme', [ $this, 'ajax_apply_scheme' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_apply_scheme', [ $this, 'ajax_apply_scheme' ] );
 	}
 }

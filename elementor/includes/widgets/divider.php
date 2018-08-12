@@ -40,7 +40,7 @@ class Widget_Divider extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Divider', 'elementor' );
+		return ___elementor_adapter( 'Divider', 'elementor' );
 	}
 
 	/**
@@ -99,20 +99,20 @@ class Widget_Divider extends Widget_Base {
 		$this->start_controls_section(
 			'section_divider',
 			[
-				'label' => __( 'Divider', 'elementor' ),
+				'label' => ___elementor_adapter( 'Divider', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'style',
 			[
-				'label' => __( 'Style', 'elementor' ),
+				'label' => ___elementor_adapter( 'Style', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'solid' => __( 'Solid', 'elementor' ),
-					'double' => __( 'Double', 'elementor' ),
-					'dotted' => __( 'Dotted', 'elementor' ),
-					'dashed' => __( 'Dashed', 'elementor' ),
+					'solid' => ___elementor_adapter( 'Solid', 'elementor' ),
+					'double' => ___elementor_adapter( 'Double', 'elementor' ),
+					'dotted' => ___elementor_adapter( 'Dotted', 'elementor' ),
+					'dashed' => ___elementor_adapter( 'Dashed', 'elementor' ),
 				],
 				'default' => 'solid',
 				'selectors' => [
@@ -124,7 +124,7 @@ class Widget_Divider extends Widget_Base {
 		$this->add_control(
 			'weight',
 			[
-				'label' => __( 'Weight', 'elementor' ),
+				'label' => ___elementor_adapter( 'Weight', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 1,
@@ -144,7 +144,7 @@ class Widget_Divider extends Widget_Base {
 		$this->add_control(
 			'color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'scheme' => [
@@ -160,7 +160,7 @@ class Widget_Divider extends Widget_Base {
 		$this->add_responsive_control(
 			'width',
 			[
-				'label' => __( 'Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Width', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'range' => [
@@ -187,19 +187,19 @@ class Widget_Divider extends Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 				],
@@ -213,7 +213,7 @@ class Widget_Divider extends Widget_Base {
 		$this->add_responsive_control(
 			'gap',
 			[
-				'label' => __( 'Gap', 'elementor' ),
+				'label' => ___elementor_adapter( 'Gap', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 15,
@@ -233,7 +233,7 @@ class Widget_Divider extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]

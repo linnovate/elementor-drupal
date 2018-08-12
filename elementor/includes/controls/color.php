@@ -43,7 +43,7 @@ class Control_Color extends Base_Data_Control {
 	public function enqueue() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script(
+		wp_register_script_elementor_adapter(
 			'wp-color-picker-alpha',
 			ELEMENTOR_ASSETS_URL . 'lib/wp-color-picker/wp-color-picker-alpha' . $suffix . '.js',
 			[
@@ -53,8 +53,8 @@ class Control_Color extends Base_Data_Control {
 			true
 		);
 
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker-alpha' );
+		wp_enqueue_style_elementor_adapter( 'wp-color-picker' );
+		wp_enqueue_script_elementor_adapter( 'wp-color-picker-alpha' );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Control_Color extends Base_Data_Control {
 				<# } #>
 			</label>
 			<div class="elementor-control-input-wrapper">
-				<input data-setting="{{ name }}" type="text" placeholder="<?php echo esc_attr( 'Hex/rgba', 'elementor' ); ?>" {{ defaultValue }}{{ dataAlpha }} />
+				<input data-setting="{{ name }}" type="text" placeholder="<?php echo esc_attr_elementor_adapter( 'Hex/rgba', 'elementor' ); ?>" {{ defaultValue }}{{ dataAlpha }} />
 			</div>
 		</div>
 		<?php

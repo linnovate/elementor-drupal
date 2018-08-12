@@ -40,7 +40,7 @@ class Widget_Tabs extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Tabs', 'elementor' );
+		return ___elementor_adapter( 'Tabs', 'elementor' );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->start_controls_section(
 			'section_tabs',
 			[
-				'label' => __( 'Tabs', 'elementor' ),
+				'label' => ___elementor_adapter( 'Tabs', 'elementor' ),
 			]
 		);
 
@@ -92,10 +92,10 @@ class Widget_Tabs extends Widget_Base {
 		$repeater->add_control(
 			'tab_title',
 			[
-				'label' => __( 'Title & Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title & Content', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => __( 'Tab Title', 'elementor' ),
-				'placeholder' => __( 'Tab Title', 'elementor' ),
+				'default' => ___elementor_adapter( 'Tab Title', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Tab Title', 'elementor' ),
 				'label_block' => true,
 			]
 		);
@@ -103,9 +103,9 @@ class Widget_Tabs extends Widget_Base {
 		$repeater->add_control(
 			'tab_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
-				'default' => __( 'Tab Content', 'elementor' ),
-				'placeholder' => __( 'Tab Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
+				'default' => ___elementor_adapter( 'Tab Content', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Tab Content', 'elementor' ),
 				'type' => Controls_Manager::WYSIWYG,
 				'show_label' => false,
 			]
@@ -114,17 +114,17 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'tabs',
 			[
-				'label' => __( 'Tabs Items', 'elementor' ),
+				'label' => ___elementor_adapter( 'Tabs Items', 'elementor' ),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'tab_title' => __( 'Tab #1', 'elementor' ),
-						'tab_content' => __( 'I am tab content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_title' => ___elementor_adapter( 'Tab #1', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'I am tab content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 					[
-						'tab_title' => __( 'Tab #2', 'elementor' ),
-						'tab_content' => __( 'I am tab content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_title' => ___elementor_adapter( 'Tab #2', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'I am tab content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 				],
 				'title_field' => '{{{ tab_title }}}',
@@ -134,7 +134,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -143,12 +143,12 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor' ),
+				'label' => ___elementor_adapter( 'Type', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'horizontal',
 				'options' => [
-					'horizontal' => __( 'Horizontal', 'elementor' ),
-					'vertical' => __( 'Vertical', 'elementor' ),
+					'horizontal' => ___elementor_adapter( 'Horizontal', 'elementor' ),
+					'vertical' => ___elementor_adapter( 'Vertical', 'elementor' ),
 				],
 				'prefix_class' => 'elementor-tabs-view-',
 				'separator' => 'before',
@@ -160,7 +160,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->start_controls_section(
 			'section_tabs_style',
 			[
-				'label' => __( 'Tabs', 'elementor' ),
+				'label' => ___elementor_adapter( 'Tabs', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -168,7 +168,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'navigation_width',
 			[
-				'label' => __( 'Navigation Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Navigation Width', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => '%',
@@ -191,7 +191,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'border_width',
 			[
-				'label' => __( 'Border Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Width', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 1,
@@ -211,7 +211,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'border_color',
 			[
-				'label' => __( 'Border Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-tab-mobile-title, {{WRAPPER}} .elementor-tab-desktop-title.elementor-active, {{WRAPPER}} .elementor-tab-title:before, {{WRAPPER}} .elementor-tab-title:after, {{WRAPPER}} .elementor-tab-content, {{WRAPPER}} .elementor-tabs-content-wrapper' => 'border-color: {{VALUE}};',
@@ -222,7 +222,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'background_color',
 			[
-				'label' => __( 'Background Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-tab-desktop-title.elementor-active' => 'background-color: {{VALUE}};',
@@ -234,7 +234,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'heading_title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -243,7 +243,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'tab_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-tab-title' => 'color: {{VALUE}};',
@@ -258,7 +258,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'tab_active_color',
 			[
-				'label' => __( 'Active Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Active Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-tab-title.elementor-active' => 'color: {{VALUE}};',
@@ -282,7 +282,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'heading_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -291,7 +291,7 @@ class Widget_Tabs extends Widget_Base {
 		$this->add_control(
 			'content_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-tab-content' => 'color: {{VALUE}};',

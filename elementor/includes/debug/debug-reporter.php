@@ -58,7 +58,7 @@ class Debug_Reporter extends Base_Reporter {
 	 * @return array Debug reporter errors.
 	 */
 	public function get_errors() {
-		$log = get_option( Debug::OPTION_NAME, [] );
+		$log = get_option_elementor_adapter( Debug::OPTION_NAME, [] );
 
 		$log = array_reverse( $log );
 

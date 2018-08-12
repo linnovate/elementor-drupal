@@ -110,7 +110,7 @@ class Import_Images {
 		// Extract the file name and extension from the url.
 		$filename = basename( $attachment['url'] );
 
-		$file_content = wp_remote_retrieve_body( wp_safe_remote_get( $attachment['url'] ) );
+		$file_content = wp_remote_retrieve_body_elementor_adapter( wp_safe_remote_get( $attachment['url'] ) );
 
 		if ( empty( $file_content ) ) {
 			return false;
@@ -133,7 +133,7 @@ class Import_Images {
 		} else {
 			// For now just return the origin attachment
 			return $attachment;
-			// return new \WP_Error( 'attachment_processing_error', __( 'Invalid file type.', 'elementor' ) );
+			// return new \WP_Error( 'attachment_processing_error', ___elementor_adapter( 'Invalid file type.', 'elementor' ) );
 		}
 
 		$post_id = wp_insert_attachment( $post, $upload['file'] );
@@ -141,7 +141,7 @@ class Import_Images {
 			$post_id,
 			wp_generate_attachment_metadata( $post_id, $upload['file'] )
 		);
-		update_post_meta( $post_id, '_elementor_source_image_hash', $this->get_hash_image( $attachment['url'] ) );
+		update_post_meta_elementor_adapter( $post_id, '_elementor_source_image_hash', $this->get_hash_image( $attachment['url'] ) );
 
 		$new_attachment = [
 			'id' => $post_id,

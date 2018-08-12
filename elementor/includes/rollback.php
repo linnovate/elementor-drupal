@@ -137,7 +137,7 @@ class Rollback {
 		$update_plugins->response[ $this->plugin_name ] = $plugin_info;
 
 		// Remove handle beta testers.
-		remove_filter( 'pre_set_site_transient_update_plugins', [ Plugin::instance()->beta_testers, 'check_version' ] );
+		remove_filter_elementor_adapter( 'pre_set_site_transient_update_plugins', [ Plugin::instance()->beta_testers, 'check_version' ] );
 
 		set_site_transient( 'update_plugins', $update_plugins );
 	}
@@ -159,7 +159,7 @@ class Rollback {
 			'url' => 'update.php?action=upgrade-plugin&plugin=' . rawurlencode( $this->plugin_name ),
 			'plugin' => $this->plugin_name,
 			'nonce' => 'upgrade-plugin_' . $this->plugin_name,
-			'title' => '<img src="' . $logo_url . '" alt="Elementor">' . __( 'Rollback to Previous Version', 'elementor' ),
+			'title' => '<img src="' . $logo_url . '" alt="Elementor">' . ___elementor_adapter( 'Rollback to Previous Version', 'elementor' ),
 		];
 
 		$this->print_inline_style();

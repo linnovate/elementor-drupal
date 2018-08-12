@@ -39,7 +39,7 @@ class Widget_Counter extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Counter', 'elementor' );
+		return ___elementor_adapter( 'Counter', 'elementor' );
 	}
 
 	/**
@@ -96,14 +96,14 @@ class Widget_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'section_counter',
 			[
-				'label' => __( 'Counter', 'elementor' ),
+				'label' => ___elementor_adapter( 'Counter', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'starting_number',
 			[
-				'label' => __( 'Starting Number', 'elementor' ),
+				'label' => ___elementor_adapter( 'Starting Number', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 0,
 			]
@@ -112,7 +112,7 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'ending_number',
 			[
-				'label' => __( 'Ending Number', 'elementor' ),
+				'label' => ___elementor_adapter( 'Ending Number', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 100,
 			]
@@ -121,7 +121,7 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'prefix',
 			[
-				'label' => __( 'Number Prefix', 'elementor' ),
+				'label' => ___elementor_adapter( 'Number Prefix', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'placeholder' => 1,
@@ -131,17 +131,17 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'suffix',
 			[
-				'label' => __( 'Number Suffix', 'elementor' ),
+				'label' => ___elementor_adapter( 'Number Suffix', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
-				'placeholder' => __( 'Plus', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Plus', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'duration',
 			[
-				'label' => __( 'Animation Duration', 'elementor' ),
+				'label' => ___elementor_adapter( 'Animation Duration', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 2000,
 				'min' => 100,
@@ -152,18 +152,18 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'thousand_separator',
 			[
-				'label' => __( 'Thousand Separator', 'elementor' ),
+				'label' => ___elementor_adapter( 'Thousand Separator', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'label_on' => __( 'Show', 'elementor' ),
-				'label_off' => __( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'thousand_separator_char',
 			[
-				'label' => __( 'Separator', 'elementor' ),
+				'label' => ___elementor_adapter( 'Separator', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'condition' => [
 					'thousand_separator' => 'yes',
@@ -179,18 +179,18 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'default' => __( 'Cool Number', 'elementor' ),
-				'placeholder' => __( 'Cool Number', 'elementor' ),
+				'default' => ___elementor_adapter( 'Cool Number', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Cool Number', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -201,7 +201,7 @@ class Widget_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'section_number',
 			[
-				'label' => __( 'Number', 'elementor' ),
+				'label' => ___elementor_adapter( 'Number', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -209,7 +209,7 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'number_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),
@@ -235,7 +235,7 @@ class Widget_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -243,7 +243,7 @@ class Widget_Counter extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),

@@ -25,12 +25,12 @@ class WordPress_Widgets_Manager {
 	 * @access public
 	 */
 	public function __construct() {
-		if ( version_compare( get_bloginfo( 'version' ), '4.8', '<' ) ) {
+		if ( version_compare( get_bloginfo_elementor_adapter( 'version' ), '4.8', '<' ) ) {
 			return;
 		}
 
-		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'before_enqueue_scripts' ] );
-		add_action( 'elementor/editor/footer', [ $this, 'footer' ] );
+		add_action_elementor_adapter( 'elementor/editor/before_enqueue_scripts', [ $this, 'before_enqueue_scripts' ] );
+		add_action_elementor_adapter( 'elementor/editor/footer', [ $this, 'footer' ] );
 	}
 
 	/**
@@ -59,15 +59,15 @@ class WordPress_Widgets_Manager {
 		$wp_scripts->add( 'text-widgets', "/wp-admin/js/widgets/text-widgets$suffix.js", array( 'jquery', 'editor', 'wp-util' ) );
 		$wp_scripts->add_inline_script( 'text-widgets', 'wp.textWidgets.init();', 'after' );
 
-		wp_enqueue_style( 'widgets' );
-		wp_enqueue_style( 'media-views' );
+		wp_enqueue_style_elementor_adapter( 'widgets' );
+		wp_enqueue_style_elementor_adapter( 'media-views' );
 		// End TODO.
 
 		// Don't enqueue `code-editor` for WP Custom HTML widget.
-		wp_get_current_user()->syntax_highlighting = 'false';
+		wp_get_current_user_elementor_adapter()->syntax_highlighting = 'false';
 
 		/** This action is documented in wp-admin/admin-header.php */
-		do_action( 'admin_print_scripts-widgets.php' );
+		do_action_elementor_adapter( 'admin_print_scripts-widgets.php' );
 	}
 
 	/**
@@ -82,6 +82,6 @@ class WordPress_Widgets_Manager {
 	 */
 	public function footer() {
 		/** This action is documented in wp-admin/admin-footer.php */
-		do_action( 'admin_footer-widgets.php' );
+		do_action_elementor_adapter( 'admin_footer-widgets.php' );
 	}
 }

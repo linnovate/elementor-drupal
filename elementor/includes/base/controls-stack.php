@@ -390,7 +390,7 @@ abstract class Controls_Stack {
 
 			if ( null !== $target_section_args ) {
 				if ( ! empty( $args['section'] ) || ! empty( $args['tab'] ) ) {
-					_doing_it_wrong( sprintf( '%s::%s', get_called_class(), __FUNCTION__ ), sprintf( 'Cannot redeclare control with `tab` or `section` args inside section "%s".', $id ), '1.0.0' );
+					_doing_it_wrong_elementor_adapter( sprintf( '%s::%s', get_called_class(), __FUNCTION__ ), sprintf( 'Cannot redeclare control with `tab` or `section` args inside section "%s".', $id ), '1.0.0' );
 				}
 
 				$args = array_replace_recursive( $target_section_args, $args );
@@ -398,7 +398,7 @@ abstract class Controls_Stack {
 				if ( null !== $target_tab ) {
 					$args = array_merge( $args, $target_tab );
 				}
-			} elseif ( empty( $args['section'] ) && ( ! $options['overwrite'] || is_wp_error( Plugin::$instance->controls_manager->get_control_from_stack( $this->get_unique_name(), $id ) ) ) ) {
+			} elseif ( empty( $args['section'] ) && ( ! $options['overwrite'] || is_wp_error_elementor_adapter( Plugin::$instance->controls_manager->get_control_from_stack( $this->get_unique_name(), $id ) ) ) ) {
 				wp_die( sprintf( '%s::%s: Cannot add a control outside of a section (use `start_controls_section`).', get_called_class(), __FUNCTION__ ) );
 			}
 		}
@@ -541,7 +541,7 @@ abstract class Controls_Stack {
 			'control' === $position['type'] && in_array( $position['at'], [ 'start', 'end' ], true ) ||
 			'section' === $position['type'] && in_array( $position['at'], [ 'before', 'after' ], true )
 		) {
-			_doing_it_wrong( sprintf( '%s::%s', get_called_class(), __FUNCTION__ ), 'Invalid position arguments. Use `before` / `after` for control or `start` / `end` for section.', '1.7.0' );
+			_doing_it_wrong_elementor_adapter( sprintf( '%s::%s', get_called_class(), __FUNCTION__ ), 'Invalid position arguments. Use `before` / `after` for control or `start` / `end` for section.', '1.7.0' );
 
 			return false;
 		}
@@ -1365,7 +1365,7 @@ abstract class Controls_Stack {
 		 * @param string         $section_id Section ID.
 		 * @param array          $args       Section arguments.
 		 */
-		do_action( 'elementor/element/before_section_start', $this, $section_id, $args );
+		do_action_elementor_adapter( 'elementor/element/before_section_start', $this, $section_id, $args );
 
 		/**
 		 * Before section start.
@@ -1379,7 +1379,7 @@ abstract class Controls_Stack {
 		 * @param Controls_Stack $this The control.
 		 * @param array          $args Section arguments.
 		 */
-		do_action( "elementor/element/{$section_name}/{$section_id}/before_section_start", $this, $args );
+		do_action_elementor_adapter( "elementor/element/{$section_name}/{$section_id}/before_section_start", $this, $args );
 
 		$args['type'] = Controls_Manager::SECTION;
 
@@ -1406,7 +1406,7 @@ abstract class Controls_Stack {
 		 * @param string         $section_id Section ID.
 		 * @param array          $args       Section arguments.
 		 */
-		do_action( 'elementor/element/after_section_start', $this, $section_id, $args );
+		do_action_elementor_adapter( 'elementor/element/after_section_start', $this, $section_id, $args );
 
 		/**
 		 * After section start.
@@ -1420,7 +1420,7 @@ abstract class Controls_Stack {
 		 * @param Controls_Stack $this The control.
 		 * @param array          $args Section arguments.
 		 */
-		do_action( "elementor/element/{$section_name}/{$section_id}/after_section_start", $this, $args );
+		do_action_elementor_adapter( "elementor/element/{$section_name}/{$section_id}/after_section_start", $this, $args );
 	}
 
 	/**
@@ -1455,7 +1455,7 @@ abstract class Controls_Stack {
 		 * @param string         $section_id Section ID.
 		 * @param array          $args       Section arguments.
 		 */
-		do_action( 'elementor/element/before_section_end', $this, $section_id, $args );
+		do_action_elementor_adapter( 'elementor/element/before_section_end', $this, $section_id, $args );
 
 		/**
 		 * Before section end.
@@ -1469,7 +1469,7 @@ abstract class Controls_Stack {
 		 * @param Controls_Stack $this The control.
 		 * @param array          $args Section arguments.
 		 */
-		do_action( "elementor/element/{$stack_name}/{$section_id}/before_section_end", $this, $args );
+		do_action_elementor_adapter( "elementor/element/{$stack_name}/{$section_id}/before_section_end", $this, $args );
 
 		$this->current_section = null;
 
@@ -1484,7 +1484,7 @@ abstract class Controls_Stack {
 		 * @param string         $section_id Section ID.
 		 * @param array          $args       Section arguments.
 		 */
-		do_action( 'elementor/element/after_section_end', $this, $section_id, $args );
+		do_action_elementor_adapter( 'elementor/element/after_section_end', $this, $section_id, $args );
 
 		/**
 		 * After section end.
@@ -1498,7 +1498,7 @@ abstract class Controls_Stack {
 		 * @param Controls_Stack $this The control.
 		 * @param array          $args Section arguments.
 		 */
-		do_action( "elementor/element/{$stack_name}/{$section_id}/after_section_end", $this, $args );
+		do_action_elementor_adapter( "elementor/element/{$stack_name}/{$section_id}/after_section_end", $this, $args );
 	}
 
 	/**
@@ -1676,13 +1676,13 @@ abstract class Controls_Stack {
 		 * @param string         $content_template The controls stack template in the editor.
 		 * @param Controls_Stack $this             The controls stack.
 		 */
-		$template_content = apply_filters( "elementor/{$element_type}/print_template", $template_content, $this );
+		$template_content = apply_filters_elementor_adapter( "elementor/{$element_type}/print_template", $template_content, $this );
 
 		if ( empty( $template_content ) ) {
 			return;
 		}
 		?>
-		<script type="text/html" id="tmpl-elementor-<?php echo esc_attr( $this->get_name() ); ?>-content">
+		<script type="text/html" id="tmpl-elementor-<?php echo esc_attr_elementor_adapter( $this->get_name() ); ?>-content">
 			<?php $this->print_template_content( $template_content ); ?>
 		</script>
 		<?php

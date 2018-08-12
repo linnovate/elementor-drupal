@@ -66,7 +66,7 @@ class Module extends BaseModule {
 	public function __construct() {
 		$this->register_groups();
 
-		add_action( 'elementor/dynamic_tags/register_tags', [ $this, 'register_tags' ] );
+		add_action_elementor_adapter( 'elementor/dynamic_tags/register_tags', [ $this, 'register_tags' ] );
 	}
 
 	/**

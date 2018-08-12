@@ -289,12 +289,12 @@ class Controls_Manager {
 	 */
 	private static function init_tabs() {
 		self::$tabs = [
-			self::TAB_CONTENT => __( 'Content', 'elementor' ),
-			self::TAB_STYLE => __( 'Style', 'elementor' ),
-			self::TAB_ADVANCED => __( 'Advanced', 'elementor' ),
-			self::TAB_RESPONSIVE => __( 'Responsive', 'elementor' ),
-			self::TAB_LAYOUT => __( 'Layout', 'elementor' ),
-			self::TAB_SETTINGS => __( 'Settings', 'elementor' ),
+			self::TAB_CONTENT => ___elementor_adapter( 'Content', 'elementor' ),
+			self::TAB_STYLE => ___elementor_adapter( 'Style', 'elementor' ),
+			self::TAB_ADVANCED => ___elementor_adapter( 'Advanced', 'elementor' ),
+			self::TAB_RESPONSIVE => ___elementor_adapter( 'Responsive', 'elementor' ),
+			self::TAB_LAYOUT => ___elementor_adapter( 'Layout', 'elementor' ),
+			self::TAB_SETTINGS => ___elementor_adapter( 'Settings', 'elementor' ),
 		];
 	}
 
@@ -433,7 +433,7 @@ class Controls_Manager {
 		 *
 		 * @param Controls_Manager $this The controls manager.
 		 */
-		do_action( 'elementor/controls/controls_registered', $this );
+		do_action_elementor_adapter( 'elementor/controls/controls_registered', $this );
 	}
 
 	/**
@@ -674,7 +674,7 @@ class Controls_Manager {
 		$control_type_instance = $this->get_control( $control_data['type'] );
 
 		if ( ! $control_type_instance ) {
-			_doing_it_wrong( sprintf( '%1$s::%2$s', __CLASS__, __FUNCTION__ ), sprintf( 'Control type "%s" not found.', $control_data['type'] ), '1.0.0' );
+			_doing_it_wrong_elementor_adapter( sprintf( '%1$s::%2$s', __CLASS__, __FUNCTION__ ), sprintf( 'Control type "%s" not found.', $control_data['type'] ), '1.0.0' );
 			return false;
 		}
 
@@ -691,7 +691,7 @@ class Controls_Manager {
 		$stack_id = $element->get_unique_name();
 
 		if ( ! $options['overwrite'] && isset( $this->stacks[ $stack_id ]['controls'][ $control_id ] ) ) {
-			_doing_it_wrong( sprintf( '%1$s::%2$s', __CLASS__, __FUNCTION__ ), sprintf( 'Cannot redeclare control with same name "%s".', $control_id ), '1.0.0' );
+			_doing_it_wrong_elementor_adapter( sprintf( '%1$s::%2$s', __CLASS__, __FUNCTION__ ), sprintf( 'Cannot redeclare control with same name "%s".', $control_id ), '1.0.0' );
 
 			return false;
 		}
@@ -794,7 +794,7 @@ class Controls_Manager {
 	public function update_control_in_stack( Controls_Stack $element, $control_id, $control_data, array $options = [] ) {
 		$old_control_data = $this->get_control_from_stack( $element->get_unique_name(), $control_id );
 
-		if ( is_wp_error( $old_control_data ) ) {
+		if ( is_wp_error_elementor_adapter( $old_control_data ) ) {
 			return false;
 		}
 
@@ -876,7 +876,7 @@ class Controls_Manager {
 		$element->start_controls_section(
 			'section_custom_css_pro',
 			[
-				'label' => __( 'Custom CSS', 'elementor' ),
+				'label' => ___elementor_adapter( 'Custom CSS', 'elementor' ),
 				'tab' => $tab,
 			]
 		);
@@ -888,16 +888,16 @@ class Controls_Manager {
 				'raw' => '<div class="elementor-panel-nerd-box">' .
 						'<i class="elementor-panel-nerd-box-icon eicon-hypster" aria-hidden="true"></i>
 						<div class="elementor-panel-nerd-box-title">' .
-							__( 'Meet Our Custom CSS', 'elementor' ) .
+							___elementor_adapter( 'Meet Our Custom CSS', 'elementor' ) .
 						'</div>
 						<div class="elementor-panel-nerd-box-message">' .
-							__( 'Custom CSS lets you add CSS code to any widget, and see it render live right in the editor.', 'elementor' ) .
+							___elementor_adapter( 'Custom CSS lets you add CSS code to any widget, and see it render live right in the editor.', 'elementor' ) .
 						'</div>
 						<div class="elementor-panel-nerd-box-message">' .
-							__( 'This feature is only available on Elementor Pro.', 'elementor' ) .
+							___elementor_adapter( 'This feature is only available on Elementor Pro.', 'elementor' ) .
 						'</div>
 						<a class="elementor-panel-nerd-box-link elementor-button elementor-button-default elementor-go-pro" href="' . Utils::get_pro_link( 'https://elementor.com/pro/?utm_source=panel-custom-css&utm_campaign=gopro&utm_medium=wp-dash' ) . '" target="_blank">' .
-							__( 'Go Pro', 'elementor' ) .
+							___elementor_adapter( 'Go Pro', 'elementor' ) .
 						'</a>
 						</div>',
 			]

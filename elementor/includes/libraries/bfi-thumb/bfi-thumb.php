@@ -98,7 +98,7 @@ if ( ! class_exists( 'BFI_Class_Factory' ) ) {
 /*
  * Change the default image editors
  */
-add_filter( 'wp_image_editors', 'bfi_wp_image_editor' );
+add_filter_elementor_adapter( 'wp_image_editors', 'bfi_wp_image_editor' );
 
 // Instead of using the default image editors, use our extended ones
 if ( ! function_exists( 'bfi_wp_image_editor' ) ) {
@@ -434,7 +434,7 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 			$crop_only = isset( $crop_only ) ? $crop_only : false;
 
 			//define upload path & dir
-			$upload_info = wp_upload_dir();
+			$upload_info = wp_upload_dir_elementor_adapter();
 			$upload_dir = $upload_info['basedir'];
 			$upload_url = $upload_info['baseurl'];
 			$theme_url = get_template_directory_uri();
@@ -589,7 +589,7 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 				$upload_url .= "/bfi_thumb";
 			}
 			if ( ! is_dir( $upload_dir ) ) {
-				wp_mkdir_p( $upload_dir );
+				wp_mkdir_p_elementor_adapter( $upload_dir );
 			}
 
 
@@ -606,7 +606,7 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 				// perform resizing and other filters
 				$editor = wp_get_image_editor( $img_path );
 
-				if ( is_wp_error( $editor ) ) {
+				if ( is_wp_error_elementor_adapter( $editor ) ) {
 					return false;
 				}
 
@@ -615,40 +615,40 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 				 */
 				if ( $crop_only === false ) {
 					if ( ( isset( $width ) && $width ) || ( isset( $height ) && $height ) ) {
-						if ( is_wp_error( $editor->resize( isset( $width ) ? $width : null, isset( $height ) ? $height : null, isset( $crop ) ? $crop : false ) ) ) {
+						if ( is_wp_error_elementor_adapter( $editor->resize( isset( $width ) ? $width : null, isset( $height ) ? $height : null, isset( $crop ) ? $crop : false ) ) ) {
 							return false;
 						}
 					}
 				} else {
-					if ( is_wp_error( $editor->crop( $src_x, $src_y, $src_w, $src_h, $dst_w, $dst_h ) ) ) {
+					if ( is_wp_error_elementor_adapter( $editor->crop( $src_x, $src_y, $src_w, $src_h, $dst_w, $dst_h ) ) ) {
 						return false;
 					}
 				}
 
 				if ( isset( $negate ) ) {
 					if ( $negate ) {
-						if ( is_wp_error( $editor->negate() ) ) {
+						if ( is_wp_error_elementor_adapter( $editor->negate() ) ) {
 							return false;
 						}
 					}
 				}
 
 				if ( isset( $opacity ) ) {
-					if ( is_wp_error( $editor->opacity( $opacity ) ) ) {
+					if ( is_wp_error_elementor_adapter( $editor->opacity( $opacity ) ) ) {
 						return false;
 					}
 				}
 
 				if ( isset( $grayscale ) ) {
 					if ( $grayscale ) {
-						if ( is_wp_error( $editor->grayscale() ) ) {
+						if ( is_wp_error_elementor_adapter( $editor->grayscale() ) ) {
 							return false;
 						}
 					}
 				}
 
 				if ( isset( $color ) ) {
-					if ( is_wp_error( $editor->colorize( $color ) ) ) {
+					if ( is_wp_error_elementor_adapter( $editor->colorize( $color ) ) ) {
 						return false;
 					}
 				}
@@ -726,8 +726,8 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 // Parts are copied from media.php
 // Crop is always applied (just like timthumb)
 // Don't use this inside the admin since sometimes images in the media library get resized
-if ( ! is_admin() ) {
-	add_filter( 'image_resize_dimensions', 'bfi_image_resize_dimensions', 10, 5 );
+if ( ! is_admin_elementor_adapter() ) {
+	add_filter_elementor_adapter( 'image_resize_dimensions', 'bfi_image_resize_dimensions', 10, 5 );
 }
 
 if ( ! function_exists( 'bfi_image_resize_dimensions' ) ) {
@@ -772,7 +772,7 @@ if ( ! function_exists( 'bfi_image_resize_dimensions' ) ) {
 // the array, then add your normal $params arguments.
 //
 // e.g. the_post_thumbnail( array( 1024, 400, 'bfi_thumb' => true, 'grayscale' => true ) );
-add_filter( 'image_downsize', 'bfi_image_downsize', 1, 3 );
+add_filter_elementor_adapter( 'image_downsize', 'bfi_image_downsize', 1, 3 );
 
 if ( ! function_exists( 'bfi_image_downsize' ) ) {
 	function bfi_image_downsize( $out, $id, $size ) {

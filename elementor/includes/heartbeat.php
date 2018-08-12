@@ -42,7 +42,7 @@ class Heartbeat {
 				$response['locked_user'] = $locked_user->display_name;
 			}
 
-			$response['elementorNonce'] = Plugin::$instance->editor->create_nonce( get_post_type( $post_id ) );
+			$response['elementorNonce'] = Plugin::$instance->editor->create_nonce( get_post_type_elementor_adapter( $post_id ) );
 		}
 		return $response;
 	}
@@ -67,7 +67,7 @@ class Heartbeat {
 	 */
 	public function refresh_nonces( $response, $data ) {
 		if ( isset( $data['elementor_post_lock']['post_ID'] ) ) {
-			$post_type = get_post_type( $data['elementor_post_lock']['post_ID'] );
+			$post_type = get_post_type_elementor_adapter( $data['elementor_post_lock']['post_ID'] );
 			$response['elementor-refresh-nonces'] = [
 				'elementorNonce' => Plugin::$instance->editor->create_nonce( $post_type ),
 				'heartbeatNonce' => wp_create_nonce( 'heartbeat-nonce' ),
@@ -86,7 +86,7 @@ class Heartbeat {
 	 * @access public
 	 */
 	public function __construct() {
-		add_filter( 'heartbeat_received', [ $this, 'heartbeat_received' ], 10, 2 );
-		add_filter( 'wp_refresh_nonces', [ $this, 'refresh_nonces' ], 30, 2 );
+		add_filter_elementor_adapter( 'heartbeat_received', [ $this, 'heartbeat_received' ], 10, 2 );
+		add_filter_elementor_adapter( 'wp_refresh_nonces', [ $this, 'refresh_nonces' ], 30, 2 );
 	}
 }

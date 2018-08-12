@@ -164,7 +164,7 @@ abstract class Base_Control {
 	 */
 	final public function print_template() {
 		?>
-		<script type="text/html" id="tmpl-elementor-control-<?php echo esc_attr( $this->get_type() ); ?>-content">
+		<script type="text/html" id="tmpl-elementor-control-<?php echo esc_attr_elementor_adapter( $this->get_type() ); ?>-content">
 			<div class="elementor-control-content">
 				<?php $this->content_template(); ?>
 			</div>

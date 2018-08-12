@@ -284,7 +284,7 @@ class Elements_Manager {
 		 *
 		 * @param array $return_data The returned data. Default is an empty array.
 		 */
-		$return_data = apply_filters_deprecated( 'elementor/ajax_save_builder/return_data', [ $return_data, $request['editor_post_id'] ], '2.0.0', 'elementor/documents/ajax_save/return_data' );
+		$return_data = apply_filters_deprecated_elementor_adapter( 'elementor/ajax_save_builder/return_data', [ $return_data, $request['editor_post_id'] ], '2.0.0', 'elementor/documents/ajax_save/return_data' );
 
 		return $return_data;
 	}
@@ -314,7 +314,7 @@ class Elements_Manager {
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'elementor/elements/elements_registered' );
+		do_action_elementor_adapter( 'elementor/elements/elements_registered' );
 	}
 
 	/**
@@ -328,22 +328,22 @@ class Elements_Manager {
 	private function init_categories() {
 		$this->categories = [
 			'basic' => [
-				'title' => __( 'Basic', 'elementor' ),
+				'title' => ___elementor_adapter( 'Basic', 'elementor' ),
 				'icon' => 'eicon-font',
 			],
 			'pro-elements' => [
-				'title' => __( 'Pro', 'elementor' ),
+				'title' => ___elementor_adapter( 'Pro', 'elementor' ),
 			],
 			'general' => [
-				'title' => __( 'General', 'elementor' ),
+				'title' => ___elementor_adapter( 'General', 'elementor' ),
 				'icon' => 'eicon-font',
 			],
 			'theme-elements' => [
-				'title' => __( 'Site', 'elementor' ),
+				'title' => ___elementor_adapter( 'Site', 'elementor' ),
 				'active' => false,
 			],
 			'woocommerce-elements' => [
-				'title' => __( 'WooCommerce', 'elementor' ),
+				'title' => ___elementor_adapter( 'WooCommerce', 'elementor' ),
 				'active' => false,
 			],
 		];
@@ -361,15 +361,15 @@ class Elements_Manager {
 		 *
 		 * @param Elements_Manager $this Elements manager instance.
 		 */
-		do_action( 'elementor/elements/categories_registered', $this );
+		do_action_elementor_adapter( 'elementor/elements/categories_registered', $this );
 
 		$this->categories['pojo'] = [
-			'title' => __( 'Pojo Themes', 'elementor' ),
+			'title' => ___elementor_adapter( 'Pojo Themes', 'elementor' ),
 			'icon' => 'eicon-pojome',
 		];
 
 		$this->categories['wordpress'] = [
-			'title' => __( 'WordPress', 'elementor' ),
+			'title' => ___elementor_adapter( 'WordPress', 'elementor' ),
 			'icon' => 'eicon-wordpress',
 			'active' => false,
 		];

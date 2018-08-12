@@ -44,7 +44,7 @@ class Source_Remote extends Source_Base {
 	 * @return string The remote template title.
 	 */
 	public function get_title() {
-		return __( 'Remote', 'elementor' );
+		return ___elementor_adapter( 'Remote', 'elementor' );
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Source_Remote extends Source_Base {
 	 * @return array Remote template.
 	 */
 	public function get_item( $template_data ) {
-		$favorite_templates = $this->get_user_meta( 'favorites' );
+		$favorite_templates = $this->get_user_meta_elementor_adapter( 'favorites' );
 
 		return [
 			'template_id' => $template_data['id'],
@@ -207,7 +207,7 @@ class Source_Remote extends Source_Base {
 	public function get_data( array $args, $context = 'display' ) {
 		$data = Api::get_template_content($args['template_id']);
 
-        if (is_wp_error($data)) {
+        if (is_wp_error_elementor_adapter($data)) {
             return $data;
         }
 

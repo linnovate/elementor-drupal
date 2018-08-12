@@ -39,7 +39,7 @@ class Widget_Testimonial extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Testimonial', 'elementor' );
+		return ___elementor_adapter( 'Testimonial', 'elementor' );
 	}
 
 	/**
@@ -82,14 +82,14 @@ class Widget_Testimonial extends Widget_Base {
 		$this->start_controls_section(
 			'section_testimonial',
 			[
-				'label' => __( 'Testimonial', 'elementor' ),
+				'label' => ___elementor_adapter( 'Testimonial', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'testimonial_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
@@ -102,7 +102,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'testimonial_image',
 			[
-				'label' => __( 'Choose Image', 'elementor' ),
+				'label' => ___elementor_adapter( 'Choose Image', 'elementor' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
@@ -122,7 +122,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'testimonial_name',
 			[
-				'label' => __( 'Name', 'elementor' ),
+				'label' => ___elementor_adapter( 'Name', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -134,7 +134,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'testimonial_job',
 			[
-				'label' => __( 'Job', 'elementor' ),
+				'label' => ___elementor_adapter( 'Job', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -146,21 +146,21 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link to', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link to', 'elementor' ),
 				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'https://your-link.com', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'testimonial_image_position',
 			[
-				'label' => __( 'Image Position', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Position', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'aside',
 				'options' => [
-					'aside' => __( 'Aside', 'elementor' ),
-					'top' => __( 'Top', 'elementor' ),
+					'aside' => ___elementor_adapter( 'Aside', 'elementor' ),
+					'top' => ___elementor_adapter( 'Top', 'elementor' ),
 				],
 				'condition' => [
 					'testimonial_image[url]!' => '',
@@ -173,20 +173,20 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'testimonial_alignment',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'center',
 				'options' => [
 					'left'    => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 				],
@@ -198,7 +198,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -210,7 +210,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_testimonial_content',
 			[
-				'label' => __( 'Content', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -218,7 +218,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'content_content_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),
@@ -246,7 +246,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_testimonial_image',
 			[
-				'label' => __( 'Image', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'testimonial_image[url]!' => '',
@@ -257,7 +257,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'image_size',
 			[
-				'label' => __( 'Image Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
@@ -284,7 +284,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'image_border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -299,7 +299,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_testimonial_name',
 			[
-				'label' => __( 'Name', 'elementor' ),
+				'label' => ___elementor_adapter( 'Name', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -307,7 +307,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'name_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),
@@ -335,7 +335,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_testimonial_job',
 			[
-				'label' => __( 'Job', 'elementor' ),
+				'label' => ___elementor_adapter( 'Job', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -343,7 +343,7 @@ class Widget_Testimonial extends Widget_Base {
 		$this->add_control(
 			'job_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),

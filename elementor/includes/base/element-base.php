@@ -153,7 +153,7 @@ abstract class Element_Base extends Controls_Stack {
 	 */
 	final public function enqueue_scripts() {
 		foreach ( $this->get_script_depends() as $script ) {
-			wp_enqueue_script( $script );
+			wp_enqueue_script_elementor_adapter( $script );
 		}
 	}
 
@@ -182,7 +182,7 @@ abstract class Element_Base extends Controls_Stack {
 	 */
 	final public function enqueue_styles() {
 		foreach ( $this->get_style_depends() as $style ) {
-			wp_enqueue_style( $style );
+			wp_enqueue_style_elementor_adapter( $style );
 		}
 	}
 
@@ -554,7 +554,7 @@ abstract class Element_Base extends Controls_Stack {
 		$attributes = [];
 
 		foreach ( $render_attributes as $attribute_key => $attribute_values ) {
-			$attributes[] = sprintf( '%1$s="%2$s"', $attribute_key, esc_attr( implode( ' ', $attribute_values ) ) );
+			$attributes[] = sprintf( '%1$s="%2$s"', $attribute_key, esc_attr_elementor_adapter( implode( ' ', $attribute_values ) ) );
 		}
 
 		return implode( ' ', $attributes );
@@ -596,7 +596,7 @@ abstract class Element_Base extends Controls_Stack {
 		 *
 		 * @param Element_Base $this The element.
 		 */
-		do_action( "elementor/frontend/{$element_type}/before_render", $this );
+		do_action_elementor_adapter( "elementor/frontend/{$element_type}/before_render", $this );
 
 		$this->_add_render_attributes();
 
@@ -617,7 +617,7 @@ abstract class Element_Base extends Controls_Stack {
 		 *
 		 * @param Element_Base $this The element.
 		 */
-		do_action( "elementor/frontend/{$element_type}/after_render", $this );
+		do_action_elementor_adapter( "elementor/frontend/{$element_type}/after_render", $this );
 	}
 
 	/**
@@ -703,9 +703,9 @@ abstract class Element_Base extends Controls_Stack {
 				<?php
 				foreach ( self::get_edit_tools() as $edit_tool_name => $edit_tool ) {
 					?>
-					<li class="elementor-editor-element-setting elementor-editor-element-<?php echo esc_attr( $edit_tool_name ); ?>" title="<?php echo esc_attr( $edit_tool['title'] ); ?>">
-						<i class="eicon-<?php echo esc_attr( $edit_tool['icon'] ); ?>" aria-hidden="true"></i>
-						<span class="elementor-screen-only"><?php echo esc_html( $edit_tool['title'] ); ?></span>
+					<li class="elementor-editor-element-setting elementor-editor-element-<?php echo esc_attr_elementor_adapter( $edit_tool_name ); ?>" title="<?php echo esc_attr_elementor_adapter( $edit_tool['title'] ); ?>">
+						<i class="eicon-<?php echo esc_attr_elementor_adapter( $edit_tool['icon'] ); ?>" aria-hidden="true"></i>
+						<span class="elementor-screen-only"><?php echo esc_html_elementor_adapter( $edit_tool['title'] ); ?></span>
 					</li>
 				<?php } ?>
 			</ul>
@@ -779,7 +779,7 @@ abstract class Element_Base extends Controls_Stack {
 		$frontend_settings = $this->get_frontend_settings();
 
 		if ( $frontend_settings ) {
-			$this->add_render_attribute( '_wrapper', 'data-settings', wp_json_encode( $frontend_settings ) );
+			$this->add_render_attribute( '_wrapper', 'data-settings', wp_json_encode_elementor_adapter( $frontend_settings ) );
 		}
 	}
 
@@ -874,7 +874,7 @@ abstract class Element_Base extends Controls_Stack {
 		 * @param array        $element_data The original element ID.
 		 * @param Element_Base $this         The original element.
 		 */
-		$child_type = apply_filters( 'elementor/element/get_child_type', $child_type, $element_data, $this );
+		$child_type = apply_filters_elementor_adapter( 'elementor/element/get_child_type', $child_type, $element_data, $this );
 
 		return $child_type;
 	}

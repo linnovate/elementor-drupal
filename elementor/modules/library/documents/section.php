@@ -61,6 +61,6 @@ class Section extends Library_Document {
 	 * @return string Document title.
 	 */
 	public static function get_title() {
-		return __( 'Section', 'elementor' );
+		return ___elementor_adapter( 'Section', 'elementor' );
 	}
 }

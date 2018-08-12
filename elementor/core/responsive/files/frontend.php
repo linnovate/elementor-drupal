@@ -84,7 +84,7 @@ class Frontend extends Base {
 
 		$option[ $this->get_file_meta_key() ] = $meta;
 
-		update_option( static::META_KEY, $option );
+		update_option_elementor_adapter( static::META_KEY, $option );
 	}
 
 	/**
@@ -105,9 +105,9 @@ class Frontend extends Base {
 		}
 
 		if ( $option ) {
-			update_option( static::META_KEY, $option );
+			update_option_elementor_adapter( static::META_KEY, $option );
 		} else {
-			delete_option( static::META_KEY );
+			delete_option_elementor_adapter( static::META_KEY );
 		}
 	}
 
@@ -116,7 +116,7 @@ class Frontend extends Base {
 	}
 
 	private function load_meta_option() {
-		$option = get_option( static::META_KEY );
+		$option = get_option_elementor_adapter( static::META_KEY );
 
 		if ( ! $option ) {
 			$option = [];

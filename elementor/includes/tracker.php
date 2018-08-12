@@ -37,9 +37,9 @@ class Tracker {
 	 * @static
 	 */
 	public static function init() {
-		add_action( 'elementor/tracker/send_event', [ __CLASS__, 'send_tracking_data' ] );
-		add_action( 'admin_init', [ __CLASS__, 'handle_tracker_actions' ] );
-		add_action( 'admin_notices', [ __CLASS__, 'admin_notices' ] );
+		add_action_elementor_adapter( 'elementor/tracker/send_event', [ __CLASS__, 'send_tracking_data' ] );
+		add_action_elementor_adapter( 'admin_init', [ __CLASS__, 'handle_tracker_actions' ] );
+		add_action_elementor_adapter( 'admin_notices', [ __CLASS__, 'admin_notices' ] );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Tracker {
 	 * @return string Return `yes` if tracking allowed, `no` otherwise.
 	 */
 	public static function check_for_settings_optin( $new_value ) {
-		$old_value = get_option( 'elementor_allow_tracking', 'no' );
+		$old_value = get_option_elementor_adapter( 'elementor_allow_tracking', 'no' );
 		if ( $old_value !== $new_value && 'yes' === $new_value ) {
 			self::send_tracking_data( true );
 		}
@@ -99,7 +99,7 @@ class Tracker {
 		 *
 		 * @param bool $override Whether to override default setting or not.
 		 */
-		$override = apply_filters( 'elementor/tracker/send_override', $override );
+		$override = apply_filters_elementor_adapter( 'elementor/tracker/send_override', $override );
 
 		if ( ! $override ) {
 			$last_send_interval = strtotime( '-1 week' );
@@ -113,7 +113,7 @@ class Tracker {
 			 *
 			 * @param int $last_send_interval A date/time string. Default is `strtotime( '-1 week' )`.
 			 */
-			$last_send_interval = apply_filters( 'elementor/tracker/last_send_interval', $last_send_interval );
+			$last_send_interval = apply_filters_elementor_adapter( 'elementor/tracker/last_send_interval', $last_send_interval );
 
 			// Send a maximum of once per week by default.
 			if ( $last_send && $last_send > $last_send_interval ) {
@@ -127,13 +127,13 @@ class Tracker {
 		}
 
 		// Update time first before sending to ensure it is set.
-		update_option( 'elementor_tracker_last_send', time() );
+		update_option_elementor_adapter( 'elementor_tracker_last_send', time() );
 
 		// Send here..
 		$params = [
 			'system' => self::get_system_reports_data(),
-			'site_lang' => get_bloginfo( 'language' ),
-			'email' => get_option( 'admin_email' ),
+			'site_lang' => get_bloginfo_elementor_adapter( 'language' ),
+			'email' => get_option_elementor_adapter( 'admin_email' ),
 			'usages' => [
 				'posts' => self::get_posts_usage(),
 				'library' => self::get_library_usage(),
@@ -150,9 +150,9 @@ class Tracker {
 		 *
 		 * @param array $params Variable to encode as JSON.
 		 */
-		$params = apply_filters( 'elementor/tracker/send_tracking_data_params', $params );
+		$params = apply_filters_elementor_adapter( 'elementor/tracker/send_tracking_data_params', $params );
 
-		add_filter( 'https_ssl_verify', '__return_false' );
+		add_filter_elementor_adapter( 'https_ssl_verify', '__return_false' );
 
 		wp_safe_remote_post(
 			self::$_api_url,
@@ -161,7 +161,7 @@ class Tracker {
 				'blocking' => false,
 				// 'sslverify' => false,
 				'body' => [
-					'data' => wp_json_encode( $params ),
+					'data' => wp_json_encode_elementor_adapter( $params ),
 				],
 			]
 		);
@@ -177,7 +177,7 @@ class Tracker {
 	 * @static
 	 */
 	public static function is_allow_track() {
-		return 'yes' === get_option( 'elementor_allow_tracking', 'no' );
+		return 'yes' === get_option_elementor_adapter( 'elementor_allow_tracking', 'no' );
 	}
 
 	/**
@@ -197,20 +197,20 @@ class Tracker {
 		}
 
 		if ( 'opt_into' === $_GET['elementor_tracker'] ) {
-			check_admin_referer( 'opt_into' );
+			check_admin_referer_elementor_adapter( 'opt_into' );
 
-			update_option( 'elementor_allow_tracking', 'yes' );
+			update_option_elementor_adapter( 'elementor_allow_tracking', 'yes' );
 			self::send_tracking_data( true );
 		}
 
 		if ( 'opt_out' === $_GET['elementor_tracker'] ) {
-			check_admin_referer( 'opt_out' );
+			check_admin_referer_elementor_adapter( 'opt_out' );
 
-			update_option( 'elementor_allow_tracking', 'no' );
-			update_option( 'elementor_tracker_notice', '1' );
+			update_option_elementor_adapter( 'elementor_allow_tracking', 'no' );
+			update_option_elementor_adapter( 'elementor_tracker_notice', '1' );
 		}
 
-		wp_redirect( remove_query_arg( 'elementor_tracker' ) );
+		wp_redirect_elementor_adapter( remove_query_arg( 'elementor_tracker' ) );
 		exit;
 	}
 
@@ -231,7 +231,7 @@ class Tracker {
 			return;
 		}
 
-		if ( '1' === get_option( 'elementor_tracker_notice' ) ) {
+		if ( '1' === get_option_elementor_adapter( 'elementor_tracker_notice' ) ) {
 			return;
 		}
 
@@ -244,10 +244,10 @@ class Tracker {
 		}
 
 		// TODO: Skip for development env.
-		$optin_url = wp_nonce_url( add_query_arg( 'elementor_tracker', 'opt_into' ), 'opt_into' );
-		$optout_url = wp_nonce_url( add_query_arg( 'elementor_tracker', 'opt_out' ), 'opt_out' );
+		$optin_url = wp_nonce_url( add_query_arg_elementor_adapter( 'elementor_tracker', 'opt_into' ), 'opt_into' );
+		$optout_url = wp_nonce_url( add_query_arg_elementor_adapter( 'elementor_tracker', 'opt_out' ), 'opt_out' );
 
-		$tracker_description_text = __( 'Love using Elementor? Become a super contributor by opting in to our anonymous plugin data collection and to our updates. We guarantee no sensitive data is collected.', 'elementor' );
+		$tracker_description_text = ___elementor_adapter( 'Love using Elementor? Become a super contributor by opting in to our anonymous plugin data collection and to our updates. We guarantee no sensitive data is collected.', 'elementor' );
 
 		/**
 		 * Tracker admin description text.
@@ -258,11 +258,11 @@ class Tracker {
 		 *
 		 * @param string $tracker_description_text Description text displayed in admin notice.
 		 */
-		$tracker_description_text = apply_filters( 'elementor/tracker/admin_description_text', $tracker_description_text );
+		$tracker_description_text = apply_filters_elementor_adapter( 'elementor/tracker/admin_description_text', $tracker_description_text );
 		?>
 		<div class="updated">
-			<p><?php echo esc_html( $tracker_description_text ); ?> <a href="https://go.elementor.com/usage-data-tracking/" target="_blank"><?php echo __( 'Learn more.', 'elementor' ); ?></a></p>
-			<p><a href="<?php echo $optin_url; ?>" class="button-primary"><?php echo __( 'Sure! I\'d love to help', 'elementor' ); ?></a>&nbsp;<a href="<?php echo $optout_url; ?>" class="button-secondary"><?php echo __( 'No thanks', 'elementor' ); ?></a></p>
+			<p><?php echo esc_html_elementor_adapter( $tracker_description_text ); ?> <a href="https://go.elementor.com/usage-data-tracking/" target="_blank"><?php echo ___elementor_adapter( 'Learn more.', 'elementor' ); ?></a></p>
+			<p><a href="<?php echo $optin_url; ?>" class="button-primary"><?php echo ___elementor_adapter( 'Sure! I\'d love to help', 'elementor' ); ?></a>&nbsp;<a href="<?php echo $optout_url; ?>" class="button-secondary"><?php echo ___elementor_adapter( 'No thanks', 'elementor' ); ?></a></p>
 		</div>
 		<?php
 	}
@@ -279,10 +279,10 @@ class Tracker {
 	 * @return int Unix timestamp when Elementor was installed.
 	 */
 	private static function get_installed_time() {
-		$installed_time = get_option( '_elementor_installed_time' );
+		$installed_time = get_option_elementor_adapter( '_elementor_installed_time' );
 		if ( ! $installed_time ) {
 			$installed_time = time();
-			update_option( '_elementor_installed_time', $installed_time );
+			update_option_elementor_adapter( '_elementor_installed_time', $installed_time );
 		}
 		return $installed_time;
 	}
@@ -324,7 +324,7 @@ class Tracker {
 	 *                   tracking data never sent.
 	 */
 	private static function get_last_send_time() {
-		$last_send_time = get_option( 'elementor_tracker_last_send', false );
+		$last_send_time = get_option_elementor_adapter( 'elementor_tracker_last_send', false );
 
 		/**
 		 * Tracker last send time.
@@ -336,7 +336,7 @@ class Tracker {
 		 * @param int|false $last_send_time The last time tracking data was sent,
 		 *                                  or false if tracking data never sent.
 		 */
-		$last_send_time = apply_filters( 'elementor/tracker/last_send_time', $last_send_time );
+		$last_send_time = apply_filters_elementor_adapter( 'elementor/tracker/last_send_time', $last_send_time );
 
 		return $last_send_time;
 	}

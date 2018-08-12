@@ -72,7 +72,7 @@ abstract class Document extends Controls_Stack {
 			'elements_categories' => static::get_editor_panel_categories(),
 			'messages' => [
 				/* translators: %s: the document title. */
-				'publish_notification' => sprintf( __( 'Hurray! Your %s is live.', 'elementor' ), self::get_title() ),
+				'publish_notification' => sprintf( ___elementor_adapter( 'Hurray! Your %s is live.', 'elementor' ), self::get_title() ),
 			],
 		];
 	}
@@ -89,7 +89,7 @@ abstract class Document extends Controls_Stack {
 	 * @return string Element title.
 	 */
 	public static function get_title() {
-		return __( 'Document', 'elementor' );
+		return ___elementor_adapter( 'Document', 'elementor' );
 	}
 
 	/**
@@ -142,7 +142,7 @@ abstract class Document extends Controls_Stack {
 	 */
 	public function get_main_id() {
 		$post_id = $this->post->ID;
-		$parent_post_id = wp_is_post_revision( $post_id );
+		$parent_post_id = wp_is_post_revision_elementor_adapter( $post_id );
 		if ( $parent_post_id ) {
 			$post_id = $parent_post_id;
 		}
@@ -183,7 +183,7 @@ abstract class Document extends Controls_Stack {
 	 * @access public
 	 */
 	public function get_main_post() {
-		return get_post( $this->get_main_id() );
+		return get_post_elementor_adapter( $this->get_main_id() );
 	}
 
 	/**
@@ -217,7 +217,7 @@ abstract class Document extends Controls_Stack {
 		 * @param string   $url  WordPress preview URL.
 		 * @param Document $this The document instance.
 		 */
-		$url = apply_filters( 'elementor/document/urls/wp_preview', $url, $this );
+		$url = apply_filters_elementor_adapter( 'elementor/document/urls/wp_preview', $url, $this );
 
 		return $url;
 	}
@@ -227,7 +227,7 @@ abstract class Document extends Controls_Stack {
 	 * @access public
 	 */
 	public function get_exit_to_dashboard_url() {
-		$url = get_edit_post_link( $this->get_main_id(), 'raw' );
+		$url = get_edit_post_link_elementor_adapter( $this->get_main_id(), 'raw' );
 
 		/**
 		 * Document "exit to dashboard" URL.
@@ -239,7 +239,7 @@ abstract class Document extends Controls_Stack {
 		 * @param string   $url  The exit URL
 		 * @param Document $this The document instance.
 		 */
-		$url = apply_filters( 'elementor/document/urls/exit_to_dashboard', $url, $this );
+		$url = apply_filters_elementor_adapter( 'elementor/document/urls/exit_to_dashboard', $url, $this );
 
 		return $url;
 	}
@@ -260,7 +260,7 @@ abstract class Document extends Controls_Stack {
 		$autosave = $this->get_autosave();
 
 		// Detect if there exists an autosave newer than the post.
-		if ( $autosave && mysql2date( 'U', $autosave->get_post()->post_modified_gmt, false ) > mysql2date( 'U', $this->post->post_modified_gmt, false ) ) {
+		if ( $autosave && mysql2date( 'U', $autosave->get_post_elementor_adapter()->post_modified_gmt, false ) > mysql2date( 'U', $this->post->post_modified_gmt, false ) ) {
 			return $autosave;
 		}
 
@@ -272,7 +272,7 @@ abstract class Document extends Controls_Stack {
 	 * @access public
 	 */
 	public function is_autosave() {
-		return wp_is_post_autosave( $this->post->ID );
+		return wp_is_post_autosave_elementor_adapter( $this->post->ID );
 	}
 
 	/**
@@ -286,7 +286,7 @@ abstract class Document extends Controls_Stack {
 	 */
 	public function get_autosave( $user_id = 0, $create = false ) {
 		if ( ! $user_id ) {
-			$user_id = get_current_user_id();
+			$user_id = get_current_user_id_elementor_adapter();
 		}
 
 		$autosave_id = $this->get_autosave_id( $user_id );
@@ -351,7 +351,7 @@ abstract class Document extends Controls_Stack {
 		$this->start_controls_section(
 			'document_settings',
 			[
-				'label' => __( 'General Settings', 'elementor' ),
+				'label' => ___elementor_adapter( 'General Settings', 'elementor' ),
 				'tab' => Controls_Manager::TAB_SETTINGS,
 			]
 		);
@@ -359,7 +359,7 @@ abstract class Document extends Controls_Stack {
 		$this->add_control(
 			'post_title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => $this->post->post_title,
 				'label_block' => true,
@@ -367,7 +367,7 @@ abstract class Document extends Controls_Stack {
 			]
 		);
 
-		$post_type_object = get_post_type_object( $this->post->post_type );
+		$post_type_object = get_post_type_object_elementor_adapter( $this->post->post_type );
 
 		$can_publish = $post_type_object && current_user_can( $post_type_object->cap->publish_posts );
 		$is_published = DB::STATUS_PUBLISH === $this->post->post_status || DB::STATUS_PRIVATE === $this->post->post_status;
@@ -377,10 +377,10 @@ abstract class Document extends Controls_Stack {
 			$this->add_control(
 				'post_status',
 				[
-					'label' => __( 'Status', 'elementor' ),
+					'label' => ___elementor_adapter( 'Status', 'elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => $this->get_main_post()->post_status,
-					'options' => get_post_statuses(),
+					'options' => get_post_statuses_elementor_adapter(),
 				]
 			);
 		}
@@ -396,7 +396,7 @@ abstract class Document extends Controls_Stack {
 		 *
 		 * @param Document $this The document instance.
 		 */
-		do_action( 'elementor/documents/register_controls', $this );
+		do_action_elementor_adapter( 'elementor/documents/register_controls', $this );
 	}
 
 	/**
@@ -423,7 +423,7 @@ abstract class Document extends Controls_Stack {
 		}
 
 		// Refresh post after save settings.
-		$this->post = get_post( $this->post->ID );
+		$this->post = get_post_elementor_adapter( $this->post->ID );
 
 		// TODO: refresh settings.
 		$this->save_elements( $data['elements'] );
@@ -447,7 +447,7 @@ abstract class Document extends Controls_Stack {
 	 * @return bool Whether the post was built with Elementor.
 	 */
 	public function is_built_with_elementor() {
-		return ! ! get_post_meta( $this->post->ID, '_elementor_edit_mode', true );
+		return ! ! get_post_meta_elementor_adapter( $this->post->ID, '_elementor_edit_mode', true );
 	}
 
 	/**
@@ -458,12 +458,12 @@ abstract class Document extends Controls_Stack {
 	 * @return mixed
 	 */
 	public function get_edit_url() {
-		$url = add_query_arg(
+		$url = add_query_arg_elementor_adapter(
 			[
 				'post' => $this->get_main_id(),
 				'action' => 'elementor',
 			],
-			admin_url( 'post.php' )
+			admin_url_elementor_adapter( 'post.php' )
 		);
 
 		/**
@@ -476,7 +476,7 @@ abstract class Document extends Controls_Stack {
 		 * @param string   $url  The edit url.
 		 * @param Document $this The document instance.
 		 */
-		$url = apply_filters( 'elementor/document/urls/edit', $url, $this );
+		$url = apply_filters_elementor_adapter( 'elementor/document/urls/edit', $url, $this );
 
 		return $url;
 	}
@@ -493,14 +493,14 @@ abstract class Document extends Controls_Stack {
 
 		if ( empty( $url ) ) {
 
-			add_filter( 'pre_option_permalink_structure', '__return_empty_string' );
+			add_filter_elementor_adapter( 'pre_option_permalink_structure', '__return_empty_string' );
 
-			$url = set_url_scheme( add_query_arg( [
+			$url = set_url_scheme( add_query_arg_elementor_adapter( [
 				'elementor-preview' => $this->get_main_id(),
 				'ver' => time(),
 			] , $this->get_permalink() ) );
 
-			remove_filter( 'pre_option_permalink_structure', '__return_empty_string' );
+			remove_filter_elementor_adapter( 'pre_option_permalink_structure', '__return_empty_string' );
 
 			/**
 			 * Document preview URL.
@@ -512,7 +512,7 @@ abstract class Document extends Controls_Stack {
 			 * @param string   $url  The preview URL.
 			 * @param Document $this The document instance.
 			 */
-			$url = apply_filters( 'elementor/document/urls/preview', $url, $this );
+			$url = apply_filters_elementor_adapter( 'elementor/document/urls/preview', $url, $this );
 		}
 
 		return $url;
@@ -527,7 +527,7 @@ abstract class Document extends Controls_Stack {
 	 * @return array
 	 */
 	public function get_json_meta( $key ) {
-		$meta = get_post_meta( $this->post->ID, $key, true );
+		$meta = get_post_meta_elementor_adapter( $this->post->ID, $key, true );
 
 		if ( is_string( $meta ) && ! empty( $meta ) ) {
 			$meta = json_decode( $meta, true );
@@ -590,7 +590,7 @@ abstract class Document extends Controls_Stack {
 
 			if ( is_object( $autosave ) ) {
 				$autosave_elements = Plugin::$instance->documents
-					->get( $autosave->get_post()->ID )
+					->get( $autosave->get_post_elementor_adapter()->ID )
 					->get_json_meta( '_elementor_data' );
 			}
 		}
@@ -617,7 +617,7 @@ abstract class Document extends Controls_Stack {
 			$elements_data = $this->get_elements_data();
 		}
 		?>
-		<div class="<?php echo esc_attr( $this->get_container_classes() ); ?>">
+		<div class="<?php echo esc_attr_elementor_adapter( $this->get_container_classes() ); ?>">
 			<div class="elementor-inner">
 				<div class="elementor-section-wrap">
 					<?php $this->print_elements( $elements_data ) ?>
@@ -642,7 +642,7 @@ abstract class Document extends Controls_Stack {
 	public function get_panel_page_settings() {
 		return [
 			/* translators: %s: Document title */
-			'title' => sprintf( __( '%s Settings', 'elementor' ), self::get_title() ),
+			'title' => sprintf( ___elementor_adapter( '%s Settings', 'elementor' ), self::get_title() ),
 		];
 	}
 
@@ -650,7 +650,7 @@ abstract class Document extends Controls_Stack {
 	 * @since 2.0.0
 	 * @access public
 	 */
-	public function get_post() {
+	public function get_post_elementor_adapter() {
 		return $this->post;
 	}
 
@@ -677,7 +677,7 @@ abstract class Document extends Controls_Stack {
 			$deleted = wp_delete_post( $this->post->ID );
 		}
 
-		return $deleted && ! is_wp_error( $deleted );
+		return $deleted && ! is_wp_error_elementor_adapter( $deleted );
 	}
 
 	/**
@@ -694,7 +694,7 @@ abstract class Document extends Controls_Stack {
 		$editor_data = $this->get_elements_raw_data( $elements );
 
 		// We need the `wp_slash` in order to avoid the unslashing during the `update_post_meta`
-		$json_value = wp_slash( wp_json_encode( $editor_data ) );
+		$json_value = wp_slash( wp_json_encode_elementor_adapter( $editor_data ) );
 
 		// Don't use `update_post_meta` that can't handle `revision` post type
 		$is_meta_updated = update_metadata( 'post', $this->post->ID, '_elementor_data', $json_value );
@@ -709,7 +709,7 @@ abstract class Document extends Controls_Stack {
 		 * @param string   $status          Post status.
 		 * @param int|bool $is_meta_updated Meta ID if the key didn't exist, true on successful update, false on failure.
 		 */
-		do_action( 'elementor/db/before_save', $this->post->post_status, $is_meta_updated );
+		do_action_elementor_adapter( 'elementor/db/before_save', $this->post->post_status, $is_meta_updated );
 
 		Plugin::$instance->db->save_plain_text( $this->post->ID );
 
@@ -725,7 +725,7 @@ abstract class Document extends Controls_Stack {
 		 * @param int   $post_id     The ID of the post.
 		 * @param array $editor_data Sanitize posted data.
 		 */
-		do_action( 'elementor/editor/after_save', $this->post->ID, $editor_data );
+		do_action_elementor_adapter( 'elementor/editor/after_save', $this->post->ID, $editor_data );
 	}
 
 	/**
@@ -738,7 +738,7 @@ abstract class Document extends Controls_Stack {
 	 */
 	public function get_autosave_id( $user_id = 0 ) {
 		if ( ! $user_id ) {
-			$user_id = get_current_user_id();
+			$user_id = get_current_user_id_elementor_adapter();
 		}
 
 		$autosave = Utils::get_post_autosave( $this->post->ID, $user_id );
@@ -754,7 +754,7 @@ abstract class Document extends Controls_Stack {
 	 * @access public
 	 */
 	public function save_type() {
-		update_post_meta( $this->post->ID, self::TYPE_META_KEY, $this->get_name() );
+		update_post_meta_elementor_adapter( $this->post->ID, self::TYPE_META_KEY, $this->get_name() );
 	}
 
 	/**
@@ -766,7 +766,7 @@ abstract class Document extends Controls_Stack {
 	 * @return mixed
 	 */
 	public function get_main_meta( $key ) {
-		return get_post_meta( $this->get_main_id(), $key, true );
+		return get_post_meta_elementor_adapter( $this->get_main_id(), $key, true );
 	}
 
 	/**
@@ -779,7 +779,7 @@ abstract class Document extends Controls_Stack {
 	 * @return bool|int
 	 */
 	public function update_main_meta( $key, $value ) {
-		return update_post_meta( $this->get_main_id(), $key, $value );
+		return update_post_meta_elementor_adapter( $this->get_main_id(), $key, $value );
 	}
 
 	/**
@@ -792,7 +792,7 @@ abstract class Document extends Controls_Stack {
 	 * @return bool
 	 */
 	public function delete_main_meta( $key, $value = '' ) {
-		return delete_post_meta( $this->get_main_id(), $key, $value );
+		return delete_post_meta_elementor_adapter( $this->get_main_id(), $key, $value );
 	}
 
 	/**
@@ -804,7 +804,7 @@ abstract class Document extends Controls_Stack {
 	 * @return mixed
 	 */
 	public function get_meta( $key ) {
-		return get_post_meta( $this->post->ID, $key, true );
+		return get_post_meta_elementor_adapter( $this->post->ID, $key, true );
 	}
 
 	/**
@@ -844,18 +844,18 @@ abstract class Document extends Controls_Stack {
 		$autosave_post = $this->get_autosave();
 
 		if ( $autosave_post ) {
-			$post = $autosave_post->get_post();
+			$post = $autosave_post->get_post_elementor_adapter();
 		}
 
-		$date = date_i18n( _x( 'M j, H:i', 'revision date format', 'elementor' ), strtotime( $post->post_modified ) );
+		$date = date_i18n( _x_elementor_adapter( 'M j, H:i', 'revision date format', 'elementor' ), strtotime( $post->post_modified ) );
 		$display_name = get_the_author_meta( 'display_name' , $post->post_author );
 
 		if ( $autosave_post || 'revision' === $post->post_type ) {
 			/* translators: 1: Saving date, 2: Author display name */
-			$last_edited = sprintf( __( 'Draft saved on %1$s by %2$s', 'elementor' ), '<time>' . $date . '</time>', $display_name );
+			$last_edited = sprintf( ___elementor_adapter( 'Draft saved on %1$s by %2$s', 'elementor' ), '<time>' . $date . '</time>', $display_name );
 		} else {
 			/* translators: 1: Editing date, 2: Author display name */
-			$last_edited = sprintf( __( 'Last edited on %1$s by %2$s', 'elementor' ), '<time>' . $date . '</time>', $display_name );
+			$last_edited = sprintf( ___elementor_adapter( 'Last edited on %1$s by %2$s', 'elementor' ), '<time>' . $date . '</time>', $display_name );
 		}
 
 		return $last_edited;
@@ -874,7 +874,7 @@ abstract class Document extends Controls_Stack {
 			if ( empty( $data['post_id'] ) ) {
 				$this->post = new \WP_Post( (object) [] );
 			} else {
-				$this->post = get_post( $data['post_id'] );
+				$this->post = get_post_elementor_adapter( $data['post_id'] );
 
 				if ( ! $this->post ) {
 					throw new \Exception( sprintf( 'Post ID #%s does not exist.', $data['post_id'] ), Exceptions::NOT_FOUND );
@@ -888,7 +888,7 @@ abstract class Document extends Controls_Stack {
 				$data['settings'] = [];
 			}
 
-			$saved_settings = get_post_meta( $this->post->ID, '_elementor_page_settings', true );
+			$saved_settings = get_post_meta_elementor_adapter( $this->post->ID, '_elementor_page_settings', true );
 			if ( ! empty( $saved_settings ) && is_array( $saved_settings ) ) {
 				$data['settings'] += $saved_settings;
 			}

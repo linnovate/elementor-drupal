@@ -46,7 +46,7 @@ class Command extends \WP_CLI_Command {
 
 				Plugin::$instance->files_manager->clear_cache();
 
-				\WP_CLI::success( 'Flushed the Elementor CSS Cache for site - ' . get_option( 'home' ) );
+				\WP_CLI::success( 'Flushed the Elementor CSS Cache for site - ' . get_option_elementor_adapter( 'home' ) );
 
 				restore_current_blog();
 			}

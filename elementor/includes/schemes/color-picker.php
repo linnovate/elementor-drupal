@@ -63,7 +63,7 @@ class Scheme_Color_Picker extends Scheme_Color {
 	 */
 
 	public static function get_description() {
-		return __( 'Choose which colors appear in the editor\'s color picker. This makes accessing the colors you chose for the site much easier.', 'elementor' );
+		return ___elementor_adapter( 'Choose which colors appear in the editor\'s color picker. This makes accessing the colors you chose for the site much easier.', 'elementor' );
 	}
 
 	/**
@@ -225,6 +225,6 @@ class Scheme_Color_Picker extends Scheme_Color {
 	 * @return string The current color picker scheme title.
 	 */
 	protected function _get_current_scheme_title() {
-		return __( 'Color Picker', 'elementor' );
+		return ___elementor_adapter( 'Color Picker', 'elementor' );
 	}
 }

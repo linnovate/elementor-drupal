@@ -47,7 +47,7 @@ class Debug {
 			return;
 		}
 
-		$log = get_option( self::OPTION_NAME, [] );
+		$log = get_option_elementor_adapter( self::OPTION_NAME, [] );
 
 		foreach ( $_POST['data'] as $error ) {
 			$last_error = end( $log );
@@ -109,7 +109,7 @@ class Debug {
 			$log = array_splice( $log, -self::MAX_LOGS_TO_SAVE );
 		}
 
-		update_option( self::OPTION_NAME, $log );
+		update_option_elementor_adapter( self::OPTION_NAME, $log );
 	}
 
 	/**
@@ -138,9 +138,9 @@ class Debug {
 	 * @access public
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_elementor_debug_log', [ $this, 'debug_log' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_debug_log', [ $this, 'debug_log' ] );
 
-		if ( is_admin() ) {
+		if ( is_admin_elementor_adapter() ) {
 			$this->add_system_info_report();
 		}
 	}

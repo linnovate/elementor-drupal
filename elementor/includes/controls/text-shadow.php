@@ -63,17 +63,17 @@ class Control_Text_Shadow extends Control_Base_Multiple {
 	public function get_sliders() {
 		return [
 			'blur' => [
-				'label' => __( 'Blur', 'elementor' ),
+				'label' => ___elementor_adapter( 'Blur', 'elementor' ),
 				'min' => 0,
 				'max' => 100,
 			],
 			'horizontal' => [
-				'label' => __( 'Horizontal', 'elementor' ),
+				'label' => ___elementor_adapter( 'Horizontal', 'elementor' ),
 				'min' => -100,
 				'max' => 100,
 			],
 			'vertical' => [
-				'label' => __( 'Vertical', 'elementor' ),
+				'label' => ___elementor_adapter( 'Vertical', 'elementor' ),
 				'min' => -100,
 				'max' => 100,
 			],
@@ -100,9 +100,9 @@ class Control_Text_Shadow extends Control_Base_Multiple {
 		}
 		#>
 		<div class="elementor-control-field">
-			<label class="elementor-control-title"><?php echo __( 'Color', 'elementor' ); ?></label>
+			<label class="elementor-control-title"><?php echo ___elementor_adapter( 'Color', 'elementor' ); ?></label>
 			<div class="elementor-control-input-wrapper">
-				<input data-setting="color" class="elementor-shadow-color-picker" type="text" placeholder="<?php echo esc_attr( 'Hex/rgba', 'elementor' ); ?>" data-alpha="true"{{{ defaultColorValue }}} />
+				<input data-setting="color" class="elementor-shadow-color-picker" type="text" placeholder="<?php echo esc_attr_elementor_adapter( 'Hex/rgba', 'elementor' ); ?>" data-alpha="true"{{{ defaultColorValue }}} />
 			</div>
 		</div>
 		<?php
@@ -110,11 +110,11 @@ class Control_Text_Shadow extends Control_Base_Multiple {
 			$control_uid = $this->get_control_uid( $slider_name );
 			?>
 			<div class="elementor-shadow-slider">
-				<label for="<?php echo esc_attr( $control_uid ); ?>" class="elementor-control-title"><?php echo $slider['label']; ?></label>
+				<label for="<?php echo esc_attr_elementor_adapter( $control_uid ); ?>" class="elementor-control-title"><?php echo $slider['label']; ?></label>
 				<div class="elementor-control-input-wrapper">
-					<div class="elementor-slider" data-input="<?php echo esc_attr( $slider_name ); ?>"></div>
+					<div class="elementor-slider" data-input="<?php echo esc_attr_elementor_adapter( $slider_name ); ?>"></div>
 					<div class="elementor-slider-input">
-						<input id="<?php echo esc_attr( $control_uid ); ?>" type="number" min="<?php echo esc_attr( $slider['min'] ); ?>" max="<?php echo esc_attr( $slider['max'] ); ?>" data-setting="<?php echo esc_attr( $slider_name ); ?>"/>
+						<input id="<?php echo esc_attr_elementor_adapter( $control_uid ); ?>" type="number" min="<?php echo esc_attr_elementor_adapter( $slider['min'] ); ?>" max="<?php echo esc_attr_elementor_adapter( $slider['max'] ); ?>" data-setting="<?php echo esc_attr_elementor_adapter( $slider_name ); ?>"/>
 					</div>
 				</div>
 			</div>

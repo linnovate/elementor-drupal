@@ -129,8 +129,8 @@ class Main {
 	 * @access private
 	 */
 	private function add_actions() {
-		add_action( 'admin_menu', [ $this, 'register_menu' ], 500 );
-		add_action( 'wp_ajax_elementor_system_info_download_file', [ $this, 'download_file' ] );
+		add_action_elementor_adapter( 'admin_menu', [ $this, 'register_menu' ], 500 );
+		add_action_elementor_adapter( 'wp_ajax_elementor_system_info_download_file', [ $this, 'download_file' ] );
 	}
 
 	/**
@@ -148,11 +148,11 @@ class Main {
 
 		?>
 		<div id="elementor-system-info">
-			<h3><?php echo __( 'System Info', 'elementor' ); ?></h3>
+			<h3><?php echo ___elementor_adapter( 'System Info', 'elementor' ); ?></h3>
 			<div><?php $this->print_report( $reports, 'html' ); ?></div>
-			<h3><?php echo __( 'Copy & Paste Info', 'elementor' ); ?></h3>
+			<h3><?php echo ___elementor_adapter( 'Copy & Paste Info', 'elementor' ); ?></h3>
 			<div id="elementor-system-info-raw">
-				<label id="elementor-system-info-raw-code-label" for="elementor-system-info-raw-code"><?php echo __( 'You can copy the below info as simple text with Ctrl+C / Ctrl+V:', 'elementor' ); ?></label>
+				<label id="elementor-system-info-raw-code-label" for="elementor-system-info-raw-code"><?php echo ___elementor_adapter( 'You can copy the below info as simple text with Ctrl+C / Ctrl+V:', 'elementor' ); ?></label>
 				<textarea id="elementor-system-info-raw-code" readonly>
 					<?php
 					unset( $reports['wordpress']['report']['admin_email'] );
@@ -170,9 +170,9 @@ class Main {
 				</script>
 			</div>
 			<hr>
-			<form action="<?php echo admin_url( 'admin-ajax.php' ); ?>" method="post">
+			<form action="<?php echo admin_url_elementor_adapter( 'admin-ajax.php' ); ?>" method="post">
 				<input type="hidden" name="action" value="elementor_system_info_download_file">
-				<input type="submit" class="button button-primary" value="<?php echo __( 'Download System Info', 'elementor' ); ?>">
+				<input type="submit" class="button button-primary" value="<?php echo ___elementor_adapter( 'Download System Info', 'elementor' ); ?>">
 			</form>
 		</div>
 		<?php
@@ -190,7 +190,7 @@ class Main {
 	 */
 	public function download_file() {
 		if ( ! current_user_can( $this->capability ) ) {
-			wp_die( __( 'You don\'t have a permission to download this file', 'elementor' ) );
+			wp_die( ___elementor_adapter( 'You don\'t have a permission to download this file', 'elementor' ) );
 		}
 
 		$reports_info = self::get_allowed_reports();
@@ -309,9 +309,9 @@ class Main {
 	 * @access public
 	 */
 	public function register_menu() {
-		$system_info_text = __( 'System Info', 'elementor' );
+		$system_info_text = ___elementor_adapter( 'System Info', 'elementor' );
 
-		add_submenu_page(
+		add_submenu_page_elementor_adapter(
 			'elementor',
 			$system_info_text,
 			$system_info_text,

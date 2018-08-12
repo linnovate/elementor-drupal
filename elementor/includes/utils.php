@@ -27,7 +27,7 @@ class Utils {
 	 * @return bool True if it's a WordPress ajax request, false otherwise.
 	 */
 	public static function is_ajax() {
-		// TODO: When minimum required version of WordPress will be 4.7, use `wp_doing_ajax()` instead.
+		// TODO: When minimum required version of WordPress will be 4.7, use `wp_doing_ajax_elementor_adapter()` instead.
 		return defined( 'DOING_AJAX' ) && DOING_AJAX;
 	}
 
@@ -65,7 +65,7 @@ class Utils {
 		// TODO: _deprecated_function( __METHOD__, '2.0.0', 'Plugin::$instance->documents->get( $post_id )->get_edit_url()' );
 
 		if ( ! $post_id ) {
-			$post_id = get_the_ID();
+			$post_id = get_the_ID_elementor_adapter();
 		}
 
 		$edit_link = '';
@@ -86,7 +86,7 @@ class Utils {
 		 * @param string $edit_link New URL query string (unescaped).
 		 * @param int    $post_id   Post ID.
 		 */
-		$edit_link = apply_filters( 'elementor/utils/get_edit_link', $edit_link, $post_id );
+		$edit_link = apply_filters_elementor_adapter( 'elementor/utils/get_edit_link', $edit_link, $post_id );
 
 		return $edit_link;
 	}
@@ -108,20 +108,20 @@ class Utils {
 		static $theme_name = false;
 
 		if ( ! $theme_name ) {
-			$theme_obj = wp_get_theme();
+			$theme_obj = wp_get_theme_elementor_adapter();
 			if ( $theme_obj->parent() ) {
 				$theme_name = $theme_obj->parent()->get( 'Name' );
 			} else {
 				$theme_name = $theme_obj->get( 'Name' );
 			}
 
-			$theme_name = sanitize_key( $theme_name );
+			$theme_name = sanitize_key_elementor_adapter( $theme_name );
 		}
 
-		$link = add_query_arg( 'utm_term', $theme_name, $link );
+		$link = add_query_arg_elementor_adapter( 'utm_term', $theme_name, $link );
 
 		if ( defined( 'ELEMENTOR_PARTNER_ID' ) ) {
-			$link = add_query_arg( 'partner_id', sanitize_key( ELEMENTOR_PARTNER_ID ), $link );
+			$link = add_query_arg_elementor_adapter( 'partner_id', sanitize_key_elementor_adapter( ELEMENTOR_PARTNER_ID ), $link );
 		}
 
 		return $link;
@@ -158,7 +158,7 @@ class Utils {
 		 * @param string $preview_url URL with chosen scheme.
 		 * @param int    $post_id     Post ID.
 		 */
-		$url = apply_filters( 'elementor/utils/preview_url', $url, $post_id );
+		$url = apply_filters_elementor_adapter( 'elementor/utils/preview_url', $url, $post_id );
 
 		return $url;
 	}
@@ -194,7 +194,7 @@ class Utils {
 		 * @param string $wp_preview_url WordPress preview URL.
 		 * @param int    $post_id        Post ID.
 		 */
-		$wp_preview_url = apply_filters( 'elementor/utils/wp_preview_url', $wp_preview_url, $post_id );
+		$wp_preview_url = apply_filters_elementor_adapter( 'elementor/utils/wp_preview_url', $wp_preview_url, $post_id );
 
 		return $wp_preview_url;
 	}
@@ -218,12 +218,12 @@ class Utils {
 		$to = trim( $to );
 
 		if ( $from === $to ) {
-			throw new \Exception( __( 'The `from` and `to` URL\'s must be different', 'elementor' ) );
+			throw new \Exception( ___elementor_adapter( 'The `from` and `to` URL\'s must be different', 'elementor' ) );
 		}
 
 		$is_valid_urls = ( filter_var( $from, FILTER_VALIDATE_URL ) && filter_var( $to, FILTER_VALIDATE_URL ) );
 		if ( ! $is_valid_urls ) {
-			throw new \Exception( __( 'The `from` and `to` URL\'s must be valid URL\'s', 'elementor' ) );
+			throw new \Exception( ___elementor_adapter( 'The `from` and `to` URL\'s must be valid URL\'s', 'elementor' ) );
 		}
 
 		global $wpdb;
@@ -236,14 +236,14 @@ class Utils {
 		// @codingStandardsIgnoreEnd
 
 		if ( false === $rows_affected ) {
-			throw new \Exception( __( 'An error occurred', 'elementor' ) );
+			throw new \Exception( ___elementor_adapter( 'An error occurred', 'elementor' ) );
 		}
 
 		Plugin::$instance->files_manager->clear_cache();
 
 		return sprintf(
 			/* translators: %d: Number of rows */
-			_n( '%d row affected.', '%d rows affected.', $rows_affected, 'elementor' ),
+			_n_elementor_adapter( '%d row affected.', '%d rows affected.', $rows_affected, 'elementor' ),
 			$rows_affected
 		);
 	}
@@ -283,8 +283,8 @@ class Utils {
 	 * @return string True if post type supports editing with Elementor, false otherwise.
 	 */
 	public static function is_post_type_support( $post_id = 0 ) {
-		$post_type = get_post_type( $post_id );
-		$is_supported = post_type_supports( $post_type, 'elementor' );
+		$post_type = get_post_type_elementor_adapter( $post_id );
+		$is_supported = post_type_supports_elementor_adapter( $post_type, 'elementor' );
 
 		/**
 		 * Is post type support.
@@ -297,7 +297,7 @@ class Utils {
 		 * @param int    $post_id      Post ID.
 		 * @param string $post_type    Post type.
 		 */
-		$is_supported = apply_filters( 'elementor/utils/is_post_type_support', $is_supported, $post_id, $post_type );
+		$is_supported = apply_filters_elementor_adapter( 'elementor/utils/is_post_type_support', $is_supported, $post_id, $post_type );
 
 		return $is_supported;
 	}
@@ -325,7 +325,7 @@ class Utils {
 		 *
 		 * @param string $placeholder_image The source of the default placeholder image.
 		 */
-		$placeholder_image = apply_filters( 'elementor/utils/get_placeholder_image_src', $placeholder_image );
+		$placeholder_image = apply_filters_elementor_adapter( 'elementor/utils/get_placeholder_image_src', $placeholder_image );
 
 		return $placeholder_image;
 	}
@@ -391,8 +391,8 @@ class Utils {
 	 * @return string Timezone string.
 	 */
 	public static function get_timezone_string() {
-		$current_offset = (float) get_option( 'gmt_offset' );
-		$timezone_string = get_option( 'timezone_string' );
+		$current_offset = (float) get_option_elementor_adapter( 'gmt_offset' );
+		$timezone_string = get_option_elementor_adapter( 'timezone_string' );
 
 		// Create a UTC+- zone if no timezone string exists.
 		if ( empty( $timezone_string ) ) {
@@ -419,7 +419,7 @@ class Utils {
 	 * @deprecated 2.1.0 Use `do_action_deprecated()` instead
 	 *
 	 * @param string $tag         The name of the action hook.
-	 * @param array  $args        Array of additional function arguments to be passed to `do_action()`.
+	 * @param array  $args        Array of additional function arguments to be passed to `do_action_elementor_adapter()`.
 	 * @param string $version     The version of WordPress that deprecated the hook.
 	 * @param bool   $replacement Optional. The hook that should have been used.
 	 * @param string $message     Optional. A message regarding the change.
@@ -438,20 +438,20 @@ class Utils {
 	 * @since 1.0.10
 	 * @access public
 	 * @static
-	 * @deprecated 2.1.0 Use `apply_filters_deprecated()` instead
+	 * @deprecated 2.1.0 Use `apply_filters_deprecated_elementor_adapter()` instead
 	 *
 	 * @param string $tag         The name of the filter hook.
-	 * @param array  $args        Array of additional function arguments to be passed to `apply_filters()`.
+	 * @param array  $args        Array of additional function arguments to be passed to `apply_filters_elementor_adapter()`.
 	 * @param string $version     The version of WordPress that deprecated the hook.
 	 * @param bool   $replacement Optional. The hook that should have been used.
 	 * @param string $message     Optional. A message regarding the change.
 	 *
 	 * @return mixed The filtered value after all hooked functions are applied to it.
 	 */
-	public static function apply_filters_deprecated( $tag, $args, $version, $replacement = false, $message = null ) {
-		_deprecated_function( __METHOD__, '2.1.0', 'apply_filters_deprecated()' );
+	public static function apply_filters_deprecated_elementor_adapter( $tag, $args, $version, $replacement = false, $message = null ) {
+		_deprecated_function( __METHOD__, '2.1.0', 'apply_filters_deprecated_elementor_adapter()' );
 
-		return apply_filters_deprecated( $tag, $args, $version, $replacement, $message );
+		return apply_filters_deprecated_elementor_adapter( $tag, $args, $version, $replacement, $message );
 	}
 
 	/**
@@ -491,10 +491,10 @@ class Utils {
 	 * @return string A URL for creating new post using Elementor.
 	 */
 	public static function get_create_new_post_url( $post_type = 'page' ) {
-		$new_post_url = add_query_arg( [
+		$new_post_url = add_query_arg_elementor_adapter( [
 			'action' => 'elementor_new_post',
 			'post_type' => $post_type,
-		], admin_url( 'edit.php' ) );
+		], admin_url_elementor_adapter( 'edit.php' ) );
 
 		$new_post_url = wp_nonce_url( $new_post_url, 'elementor_action_new_post' );
 
@@ -518,7 +518,7 @@ class Utils {
 	public static function get_post_autosave( $post_id, $user_id = 0 ) {
 		global $wpdb;
 
-		$post = get_post( $post_id );
+		$post = get_post_elementor_adapter( $post_id );
 
 		$where = $wpdb->prepare( 'post_parent = %d AND post_name LIKE %s AND post_modified_gmt > %s', [ $post_id, "{$post_id}-autosave%", $post->post_modified_gmt ] );
 
@@ -551,7 +551,7 @@ class Utils {
 	public static function is_cpt_custom_templates_supported() {
 		//require_once ABSPATH . '/wp-admin/includes/theme.php';
 
-		return method_exists( wp_get_theme(), 'get_post_templates' );
+		return method_exists( wp_get_theme_elementor_adapter(), 'get_post_templates' );
 	}
 
 	public static function array_inject( $array, $key, $insert ) {

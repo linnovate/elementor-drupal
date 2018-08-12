@@ -46,14 +46,14 @@ class Model extends BaseModel {
 	 * @param array $data Optional. Model data. Default is an empty array.
 	 */
 	public function __construct( array $data = [] ) {
-		$this->post = get_post( $data['id'] );
+		$this->post = get_post_elementor_adapter( $data['id'] );
 
 		if ( ! $this->post ) {
 			$this->post = new \WP_Post( (object) [] );
 		}
 
-		if ( wp_is_post_revision( $this->post->ID ) ) {
-			$this->post_parent = get_post( $this->post->post_parent );
+		if ( wp_is_post_revision_elementor_adapter( $this->post->ID ) ) {
+			$this->post_parent = get_post_elementor_adapter( $this->post->post_parent );
 		} else {
 			$this->post_parent = $this->post;
 		}
@@ -123,7 +123,7 @@ class Model extends BaseModel {
 
 		return [
 			/* translators: %s: Document title */
-			'title' => sprintf( __( '%s Settings', 'elementor' ), $document::get_title() ),
+			'title' => sprintf( ___elementor_adapter( '%s Settings', 'elementor' ), $document::get_title() ),
 		];
 	}
 

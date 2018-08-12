@@ -39,7 +39,7 @@ class Widget_Progress extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Progress Bar', 'elementor' );
+		return ___elementor_adapter( 'Progress Bar', 'elementor' );
 	}
 
 	/**
@@ -82,20 +82,20 @@ class Widget_Progress extends Widget_Base {
 		$this->start_controls_section(
 			'section_progress',
 			[
-				'label' => __( 'Progress Bar', 'elementor' ),
+				'label' => ___elementor_adapter( 'Progress Bar', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __( 'Enter your title', 'elementor' ),
-				'default' => __( 'My Skill', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Enter your title', 'elementor' ),
+				'default' => ___elementor_adapter( 'My Skill', 'elementor' ),
 				'label_block' => true,
 			]
 		);
@@ -103,15 +103,15 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'progress_type',
 			[
-				'label' => __( 'Type', 'elementor' ),
+				'label' => ___elementor_adapter( 'Type', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'Default', 'elementor' ),
-					'info' => __( 'Info', 'elementor' ),
-					'success' => __( 'Success', 'elementor' ),
-					'warning' => __( 'Warning', 'elementor' ),
-					'danger' => __( 'Danger', 'elementor' ),
+					'' => ___elementor_adapter( 'Default', 'elementor' ),
+					'info' => ___elementor_adapter( 'Info', 'elementor' ),
+					'success' => ___elementor_adapter( 'Success', 'elementor' ),
+					'warning' => ___elementor_adapter( 'Warning', 'elementor' ),
+					'danger' => ___elementor_adapter( 'Danger', 'elementor' ),
 				],
 			]
 		);
@@ -119,7 +119,7 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'percent',
 			[
-				'label' => __( 'Percentage', 'elementor' ),
+				'label' => ___elementor_adapter( 'Percentage', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 50,
@@ -130,25 +130,25 @@ class Widget_Progress extends Widget_Base {
 		);
 
 		$this->add_control( 'display_percentage', [
-			'label' => __( 'Display Percentage', 'elementor' ),
+			'label' => ___elementor_adapter( 'Display Percentage', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'default' => 'show',
 			'options' => [
-				'show' => __( 'Show', 'elementor' ),
-				'hide' => __( 'Hide', 'elementor' ),
+				'show' => ___elementor_adapter( 'Show', 'elementor' ),
+				'hide' => ___elementor_adapter( 'Hide', 'elementor' ),
 			],
 		] );
 
 		$this->add_control(
 			'inner_text',
 			[
-				'label' => __( 'Inner Text', 'elementor' ),
+				'label' => ___elementor_adapter( 'Inner Text', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __( 'e.g. Web Designer', 'elementor' ),
-				'default' => __( 'Web Designer', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'e.g. Web Designer', 'elementor' ),
+				'default' => ___elementor_adapter( 'Web Designer', 'elementor' ),
 				'label_block' => true,
 			]
 		);
@@ -156,7 +156,7 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -167,7 +167,7 @@ class Widget_Progress extends Widget_Base {
 		$this->start_controls_section(
 			'section_progress_style',
 			[
-				'label' => __( 'Progress Bar', 'elementor' ),
+				'label' => ___elementor_adapter( 'Progress Bar', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -175,7 +175,7 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'bar_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),
@@ -190,7 +190,7 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'bar_bg_color',
 			[
-				'label' => __( 'Background Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-progress-wrapper' => 'background-color: {{VALUE}};',
@@ -201,7 +201,7 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'bar_inline_color',
 			[
-				'label' => __( 'Inner Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Inner Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-progress-bar' => 'color: {{VALUE}};',
@@ -214,7 +214,7 @@ class Widget_Progress extends Widget_Base {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Title Style', 'elementor' ),
+				'label' => ___elementor_adapter( 'Title Style', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -222,7 +222,7 @@ class Widget_Progress extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-title' => 'color: {{VALUE}};',

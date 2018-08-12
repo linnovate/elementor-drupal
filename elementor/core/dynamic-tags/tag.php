@@ -45,7 +45,7 @@ abstract class Tag extends Base_Tag {
 			}
 
 			if ( self::WRAPPED_TAG ) :
-				$value = '<span id="elementor-tag-' . esc_attr( $this->get_id() ) . '" class="elementor-tag">' . $value . '</span>';
+				$value = '<span id="elementor-tag-' . esc_attr_elementor_adapter( $this->get_id() ) . '" class="elementor-tag">' . $value . '</span>';
 			endif;
 
 		} elseif ( ! empty( $settings['fallback'] ) ) {
@@ -79,28 +79,28 @@ abstract class Tag extends Base_Tag {
 		$this->start_controls_section(
 			'advanced',
 			[
-				'label' => __( 'Advanced', 'elementor' ),
+				'label' => ___elementor_adapter( 'Advanced', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'before',
 			[
-				'label' => __( 'Before', 'elementor' ),
+				'label' => ___elementor_adapter( 'Before', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'after',
 			[
-				'label' => __( 'After', 'elementor' ),
+				'label' => ___elementor_adapter( 'After', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'fallback',
 			[
-				'label' => __( 'Fallback', 'elementor' ),
+				'label' => ___elementor_adapter( 'Fallback', 'elementor' ),
 			]
 		);
 

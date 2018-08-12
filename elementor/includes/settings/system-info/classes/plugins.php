@@ -46,7 +46,7 @@ class Plugins_Reporter extends Base_Reporter {
 				include ABSPATH . '/wp-admin/includes/plugin.php';
 			}
 
-			$active_plugins = get_option( 'active_plugins' );
+			$active_plugins = get_option_elementor_adapter( 'active_plugins' );
 			$this->plugins  = array_intersect_key( get_plugins(), array_flip( $active_plugins ) );
 		}
 

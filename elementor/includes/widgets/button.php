@@ -40,7 +40,7 @@ class Widget_Button extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Button', 'elementor' );
+		return ___elementor_adapter( 'Button', 'elementor' );
 	}
 
 	/**
@@ -86,11 +86,11 @@ class Widget_Button extends Widget_Base {
 	 */
 	public static function get_button_sizes() {
 		return [
-			'xs' => __( 'Extra Small', 'elementor' ),
-			'sm' => __( 'Small', 'elementor' ),
-			'md' => __( 'Medium', 'elementor' ),
-			'lg' => __( 'Large', 'elementor' ),
-			'xl' => __( 'Extra Large', 'elementor' ),
+			'xs' => ___elementor_adapter( 'Extra Small', 'elementor' ),
+			'sm' => ___elementor_adapter( 'Small', 'elementor' ),
+			'md' => ___elementor_adapter( 'Medium', 'elementor' ),
+			'lg' => ___elementor_adapter( 'Large', 'elementor' ),
+			'xl' => ___elementor_adapter( 'Extra Large', 'elementor' ),
 		];
 	}
 
@@ -106,22 +106,22 @@ class Widget_Button extends Widget_Base {
 		$this->start_controls_section(
 			'section_button',
 			[
-				'label' => __( 'Button', 'elementor' ),
+				'label' => ___elementor_adapter( 'Button', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'button_type',
 			[
-				'label' => __( 'Type', 'elementor' ),
+				'label' => ___elementor_adapter( 'Type', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'Default', 'elementor' ),
-					'info' => __( 'Info', 'elementor' ),
-					'success' => __( 'Success', 'elementor' ),
-					'warning' => __( 'Warning', 'elementor' ),
-					'danger' => __( 'Danger', 'elementor' ),
+					'' => ___elementor_adapter( 'Default', 'elementor' ),
+					'info' => ___elementor_adapter( 'Info', 'elementor' ),
+					'success' => ___elementor_adapter( 'Success', 'elementor' ),
+					'warning' => ___elementor_adapter( 'Warning', 'elementor' ),
+					'danger' => ___elementor_adapter( 'Danger', 'elementor' ),
 				],
 				'prefix_class' => 'elementor-button-',
 			]
@@ -130,25 +130,25 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'text',
 			[
-				'label' => __( 'Text', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => __( 'Click here', 'elementor' ),
-				'placeholder' => __( 'Click here', 'elementor' ),
+				'default' => ___elementor_adapter( 'Click here', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Click here', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link', 'elementor' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'https://your-link.com', 'elementor' ),
 				'default' => [
 					'url' => '#',
 				],
@@ -158,23 +158,23 @@ class Widget_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left'    => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 					'justify' => [
-						'title' => __( 'Justified', 'elementor' ),
+						'title' => ___elementor_adapter( 'Justified', 'elementor' ),
 						'icon' => 'fa fa-align-justify',
 					],
 				],
@@ -186,7 +186,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'sm',
 				'options' => self::get_button_sizes(),
@@ -197,7 +197,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'icon',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'type' => Controls_Manager::ICON,
 				'label_block' => true,
 				'default' => '',
@@ -207,12 +207,12 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'icon_align',
 			[
-				'label' => __( 'Icon Position', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon Position', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'left',
 				'options' => [
-					'left' => __( 'Before', 'elementor' ),
-					'right' => __( 'After', 'elementor' ),
+					'left' => ___elementor_adapter( 'Before', 'elementor' ),
+					'right' => ___elementor_adapter( 'After', 'elementor' ),
 				],
 				'condition' => [
 					'icon!' => '',
@@ -223,7 +223,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'icon_indent',
 			[
-				'label' => __( 'Icon Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -243,7 +243,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -252,12 +252,12 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'button_css_id',
 			[
-				'label' => __( 'Button ID', 'elementor' ),
+				'label' => ___elementor_adapter( 'Button ID', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
-				'title' => __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor' ),
+				'title' => ___elementor_adapter( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor' ),
 				'label_block' => false,
-				'description' => __( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'elementor' ),
+				'description' => ___elementor_adapter( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'elementor' ),
 				'separator' => 'before',
 
 			]
@@ -268,7 +268,7 @@ class Widget_Button extends Widget_Base {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Button', 'elementor' ),
+				'label' => ___elementor_adapter( 'Button', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -287,14 +287,14 @@ class Widget_Button extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_normal',
 			[
-				'label' => __( 'Normal', 'elementor' ),
+				'label' => ___elementor_adapter( 'Normal', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'button_text_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -306,7 +306,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'background_color',
 			[
-				'label' => __( 'Background Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Scheme_Color::get_type(),
@@ -323,14 +323,14 @@ class Widget_Button extends Widget_Base {
 		$this->start_controls_tab(
 			'tab_button_hover',
 			[
-				'label' => __( 'Hover', 'elementor' ),
+				'label' => ___elementor_adapter( 'Hover', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'hover_color',
 			[
-				'label' => __( 'Text Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Text Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} a.elementor-button:hover, {{WRAPPER}} .elementor-button:hover' => 'color: {{VALUE}};',
@@ -341,7 +341,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'button_background_hover_color',
 			[
-				'label' => __( 'Background Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} a.elementor-button:hover, {{WRAPPER}} .elementor-button:hover' => 'background-color: {{VALUE}};',
@@ -352,7 +352,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'button_hover_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'condition' => [
 					'border_border!' => '',
@@ -366,7 +366,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'hover_animation',
 			[
-				'label' => __( 'Hover Animation', 'elementor' ),
+				'label' => ___elementor_adapter( 'Hover Animation', 'elementor' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
 			]
 		);
@@ -389,7 +389,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_control(
 			'border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -409,7 +409,7 @@ class Widget_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'text_padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
@@ -533,7 +533,7 @@ class Widget_Button extends Widget_Base {
 		<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
 			<?php if ( ! empty( $settings['icon'] ) ) : ?>
 			<span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
-				<i class="<?php echo esc_attr( $settings['icon'] ); ?>" aria-hidden="true"></i>
+				<i class="<?php echo esc_attr_elementor_adapter( $settings['icon'] ); ?>" aria-hidden="true"></i>
 			</span>
 			<?php endif; ?>
 			<span <?php echo $this->get_render_attribute_string( 'text' ); ?>><?php echo $settings['text']; ?></span>

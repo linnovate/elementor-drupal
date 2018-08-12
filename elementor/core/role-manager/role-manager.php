@@ -19,7 +19,7 @@ class Role_Manager extends Settings_Page {
 	 * @access public
 	 */
 	public function get_role_manager_options() {
-		return get_option( 'elementor_' . self::ROLE_MANAGER_OPTION_NAME, [] );
+		return get_option_elementor_adapter( 'elementor_' . self::ROLE_MANAGER_OPTION_NAME, [] );
 	}
 
 	/**
@@ -27,7 +27,7 @@ class Role_Manager extends Settings_Page {
 	 * @access protected
 	 */
 	protected function get_page_title() {
-		return __( 'Role Manager', 'elementor' );
+		return ___elementor_adapter( 'Role Manager', 'elementor' );
 	}
 
 	/**
@@ -35,7 +35,7 @@ class Role_Manager extends Settings_Page {
 	 * @access public
 	 */
 	public function register_admin_menu() {
-		add_submenu_page(
+		add_submenu_page_elementor_adapter(
 			Settings::PAGE_ID,
 			$this->get_page_title(),
 			$this->get_page_title(),
@@ -53,12 +53,12 @@ class Role_Manager extends Settings_Page {
 		$validation_class = 'Elementor\Settings_Validations';
 		return [
 			'general' => [
-				'label' => __( 'General', 'elementor' ),
+				'label' => ___elementor_adapter( 'General', 'elementor' ),
 				'sections' => [
 					'tools' => [
 						'fields' => [
 							'exclude_user_roles' => [
-								'label' => __( 'Exclude Roles', 'elementor' ),
+								'label' => ___elementor_adapter( 'Exclude Roles', 'elementor' ),
 								'field_args' => [
 									'type' => 'checkbox_list_roles',
 									'exclude' => [ 'administrator' ],
@@ -82,10 +82,10 @@ class Role_Manager extends Settings_Page {
 		$this->get_tabs();
 		?>
 		<div class="wrap">
-			<h1><?php echo esc_html( $this->get_page_title() ); ?></h1>
+			<h1><?php echo esc_html_elementor_adapter( $this->get_page_title() ); ?></h1>
 
 			<div id="elementor-role-manager">
-				<h3><?php echo __( 'Manage What Your Users Can Edit In Elementor', 'elementor' ); ?></h3>
+				<h3><?php echo ___elementor_adapter( 'Manage What Your Users Can Edit In Elementor', 'elementor' ); ?></h3>
 				<form id="elementor-settings-form" method="post" action="options.php">
 					<?php
 					settings_fields( static::PAGE_ID );
@@ -118,17 +118,17 @@ class Role_Manager extends Settings_Page {
 		}
 
 		?>
-		<div class="elementor-role-row <?php echo esc_attr( $role_slug ); ?>">
+		<div class="elementor-role-row <?php echo esc_attr_elementor_adapter( $role_slug ); ?>">
 			<div class="elementor-role-label">
-				<span class="elementor-role-name"><?php echo esc_html( $role_data['name'] ); ?></span>
-				<span data-excluded-label="<?php esc_attr_e( 'Role Excluded', 'elementor' ); ?>" class="elementor-role-excluded-indicator"></span>
+				<span class="elementor-role-name"><?php echo esc_html_elementor_adapter( $role_data['name'] ); ?></span>
+				<span data-excluded-label="<?php esc_attr_e_elementor_adapter( 'Role Excluded', 'elementor' ); ?>" class="elementor-role-excluded-indicator"></span>
 				<span class="elementor-role-toggle"><span class="dashicons dashicons-arrow-down"></span></span>
 			</div>
 			<div class="elementor-role-controls hidden">
 				<div class="elementor-role-control">
 					<label>
-						<input type="checkbox" name="elementor_exclude_user_roles[]" value="<?php echo esc_attr( $role_slug ); ?>"<?php checked( in_array( $role_slug, $excluded_options, true ), true ); ?>>
-						<?php echo __( 'No access to editor', 'elementor' ); ?>
+						<input type="checkbox" name="elementor_exclude_user_roles[]" value="<?php echo esc_attr_elementor_adapter( $role_slug ); ?>"<?php checked( in_array( $role_slug, $excluded_options, true ), true ); ?>>
+						<?php echo ___elementor_adapter( 'No access to editor', 'elementor' ); ?>
 					</label>
 				</div>
 				<div>
@@ -147,7 +147,7 @@ class Role_Manager extends Settings_Page {
 					 * @param string $role_slug The role slug.
 					 * @param array  $role_data An array with role data.
 					 */
-					do_action( 'elementor/role/restrictions/controls', $role_slug, $role_data );
+					do_action_elementor_adapter( 'elementor/role/restrictions/controls', $role_slug, $role_data );
 					?>
 				</div>
 			</div>
@@ -163,8 +163,8 @@ class Role_Manager extends Settings_Page {
 		$pro_link = Utils::get_pro_link( 'https://elementor.com/pro/?utm_source=wp-role-manager&utm_campaign=gopro&utm_medium=wp-dash' );
 		?>
 		<div class="elementor-role-go-pro">
-			<div class="elementor-role-go-pro__desc"><?php echo __( 'Want to give access only to content?', 'elementor' ); ?></div>
-			<div class="elementor-role-go-pro__link"><a class="elementor-button elementor-button-default elementor-button-go-pro" target="_blank" href="<?php echo esc_url( $pro_link ); ?>"><?php echo __( 'Go Pro', 'elementor' ); ?></a></div>
+			<div class="elementor-role-go-pro__desc"><?php echo ___elementor_adapter( 'Want to give access only to content?', 'elementor' ); ?></div>
+			<div class="elementor-role-go-pro__link"><a class="elementor-button elementor-button-default elementor-button-go-pro" target="_blank" href="<?php echo esc_url_elementor_adapter( $pro_link ); ?>"><?php echo ___elementor_adapter( 'Go Pro', 'elementor' ); ?></a></div>
 		</div>
 		<?php
 	}
@@ -174,7 +174,7 @@ class Role_Manager extends Settings_Page {
 	 * @access public
 	 */
 	public function get_user_restrictions_array() {
-		$user  = wp_get_current_user();
+		$user  = wp_get_current_user_elementor_adapter();
 		$user_roles = $user->roles;
 		$options = $this->get_user_restrictions();
 		$restrictions = [];
@@ -209,7 +209,7 @@ class Role_Manager extends Settings_Page {
 			 *
 			 * @param array $restrictions User restrictions.
 			 */
-			$restrictions = apply_filters( 'elementor/editor/user/restrictions', $restrictions );
+			$restrictions = apply_filters_elementor_adapter( 'elementor/editor/user/restrictions', $restrictions );
 		}
 		return $restrictions;
 	}
@@ -239,7 +239,7 @@ class Role_Manager extends Settings_Page {
 	public function __construct() {
 		parent::__construct();
 
-		add_action( 'admin_menu', [ $this, 'register_admin_menu' ], 100 );
-		add_action( 'elementor/role/restrictions/controls', [ $this, 'get_go_pro_link_html' ] );
+		add_action_elementor_adapter( 'admin_menu', [ $this, 'register_admin_menu' ], 100 );
+		add_action_elementor_adapter( 'elementor/role/restrictions/controls', [ $this, 'get_go_pro_link_html' ] );
 	}
 }

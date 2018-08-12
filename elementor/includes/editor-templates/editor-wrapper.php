@@ -14,7 +14,7 @@ $body_classes = [
 	'wp-version-' . str_replace( '.', '-', $wp_version ),
 ];
 
-if ( is_rtl() ) {
+if ( is_rtl_elementor_adapter() ) {
 	$body_classes[] = 'rtl';
 }
 if ( ! Plugin::$instance->role_manager->user_can( 'design' ) ) {
@@ -26,10 +26,10 @@ if ( ! Plugin::$instance->role_manager->user_can( 'design' ) ) {
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title><?php echo __( 'Elementor', 'elementor' ) . ' | ' . get_the_title(); ?></title>
+	<title><?php echo ___elementor_adapter( 'Elementor', 'elementor' ) . ' | ' . get_the_title_elementor_adapter(); ?></title>
 	<?php wp_head(); ?>
 	<script>
-		var ajaxurl = '<?php echo admin_url( 'admin-ajax.php', 'relative' ); ?>';
+		var ajaxurl = '<?php echo admin_url_elementor_adapter( 'admin-ajax.php', 'relative' ); ?>';
 	</script>
 </head>
 <body class="<?php echo implode( ' ', $body_classes ); ?>">
@@ -43,7 +43,7 @@ if ( ! Plugin::$instance->role_manager->user_can( 'design' ) ) {
 					<div class="elementor-loader-box"></div>
 					<div class="elementor-loader-box"></div>
 				</div>
-				<div class="elementor-loading-title"><?php echo __( 'Loading', 'elementor' ); ?></div>
+				<div class="elementor-loading-title"><?php echo ___elementor_adapter( 'Loading', 'elementor' ); ?></div>
 			</div>
 		</div>
 		<div id="elementor-preview-responsive-wrapper" class="elementor-device-desktop elementor-device-rotate-portrait">
@@ -60,7 +60,7 @@ if ( ! Plugin::$instance->role_manager->user_can( 'design' ) ) {
 <?php
 	wp_footer();
 	/** This action is documented in wp-admin/admin-footer.php */
-	do_action( 'admin_print_footer_scripts' );
+	do_action_elementor_adapter( 'admin_print_footer_scripts' );
 ?>
 </body>
 </html>

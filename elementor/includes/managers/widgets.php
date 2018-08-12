@@ -94,7 +94,7 @@ class Widgets_Manager {
 		 *
 		 * @param Widgets_Manager $this The widgets manager.
 		 */
-		do_action( 'elementor/widgets/widgets_registered', $this );
+		do_action_elementor_adapter( 'elementor/widgets/widgets_registered', $this );
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Widgets_Manager {
 		 *
 		 * @param array $black_list A black list of widgets. Default is an empty array.
 		 */
-		$black_list = apply_filters( 'elementor/widgets/black_list', $black_list );
+		$black_list = apply_filters_elementor_adapter( 'elementor/widgets/black_list', $black_list );
 
 		foreach ( $wp_widget_factory->widgets as $widget_class => $widget_obj ) {
 
@@ -288,7 +288,7 @@ class Widgets_Manager {
 		}
 
 		// Override the global $post for the render.
-		query_posts(
+		query_posts_elementor_adapter(
 			[
 				'p' => $request['editor_post_id'],
 				'post_type' => 'any',
@@ -473,7 +473,7 @@ class Widgets_Manager {
 	public function __construct() {
 		$this->require_files();
 
-		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+		add_action_elementor_adapter( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 	}
 
 	/**

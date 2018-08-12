@@ -25,7 +25,7 @@ class Upgrades {
 	 * @access public
 	 */
 	public static function add_actions() {
-		add_action( 'init', [ __CLASS__, 'init' ], 20 );
+		add_action_elementor_adapter( 'init', [ __CLASS__, 'init' ], 20 );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class Upgrades {
 	 * @access public
 	 */
 	public static function init() {
-		$elementor_version = get_option( 'elementor_version' );
+		$elementor_version = get_option_elementor_adapter( 'elementor_version' );
 
 		// Normal init.
 		if ( ELEMENTOR_VERSION === $elementor_version ) {
@@ -51,7 +51,7 @@ class Upgrades {
 
 		Plugin::$instance->files_manager->clear_cache();
 
-		update_option( 'elementor_version', ELEMENTOR_VERSION );
+		update_option_elementor_adapter( 'elementor_version', ELEMENTOR_VERSION );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Upgrades {
 			return;
 		}
 
-		$elementor_upgrades = get_option( 'elementor_upgrades', [] );
+		$elementor_upgrades = get_option_elementor_adapter( 'elementor_upgrades', [] );
 
 		$upgrades = [
 			'0.3.2' => 'upgrade_v032',
@@ -90,7 +90,7 @@ class Upgrades {
 			if ( version_compare( $elementor_version, $version, '<' ) && ! isset( $elementor_upgrades[ $version ] ) ) {
 				self::$function();
 				$elementor_upgrades[ $version ] = true;
-				update_option( 'elementor_upgrades', $elementor_upgrades );
+				update_option_elementor_adapter( 'elementor_upgrades', $elementor_upgrades );
 			}
 		}
 	}
@@ -282,7 +282,7 @@ class Upgrades {
 		foreach ( $posts as $post ) {
 			wp_update_post( [
 				'ID' => $post->ID,
-				'post_title' => get_the_title( $post->post_parent ),
+				'post_title' => get_the_title_elementor_adapter( $post->post_parent ),
 			] );
 		}
 	}
@@ -313,7 +313,7 @@ class Upgrades {
 		}
 
 		foreach ( $posts as $post ) {
-			$parent = get_post( $post->post_parent );
+			$parent = get_post_elementor_adapter( $post->post_parent );
 			$title = isset( $parent->post_title ) ? $parent->post_title : '';
 
 			wp_update_post( [
@@ -350,7 +350,7 @@ class Upgrades {
 		}
 
 		foreach ( $posts as $post ) {
-			$parent = get_post( $post->post_parent );
+			$parent = get_post_elementor_adapter( $post->post_parent );
 			$title = isset( $parent->post_title ) ? $parent->post_title : '';
 
 			wp_update_post( [
@@ -423,7 +423,7 @@ class Upgrades {
 			}
 
 			// We need the `wp_slash` in order to avoid the unslashing during the `update_post_meta`
-			$json_value = wp_slash( wp_json_encode( $data ) );
+			$json_value = wp_slash( wp_json_encode_elementor_adapter( $data ) );
 
 			update_metadata( 'post', $post_id, '_elementor_data', $json_value );
 

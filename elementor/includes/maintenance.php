@@ -58,7 +58,7 @@ class Maintenance {
 	 * @static
 	 */
 	public static function init() {
-		register_activation_hook( ELEMENTOR_PLUGIN_BASE, [ __CLASS__, 'activation' ] );
-		register_uninstall_hook( ELEMENTOR_PLUGIN_BASE, [ __CLASS__, 'uninstall' ] );
+		register_activation_hook_elementor_adapter( ELEMENTOR_PLUGIN_BASE, [ __CLASS__, 'activation' ] );
+		register_uninstall_hook_elementor_adapter( ELEMENTOR_PLUGIN_BASE, [ __CLASS__, 'uninstall' ] );
 	}
 }

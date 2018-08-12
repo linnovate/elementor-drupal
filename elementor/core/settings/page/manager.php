@@ -65,7 +65,7 @@ class Manager extends BaseManager {
 	 */
 	public static function get_page( $id ) {
 		// translators: %s Elementor Document Settings API URL
-		_deprecated_file( __METHOD__, '1.6.0', __( 'the new settings API', 'elementor' ), sprintf( __( 'See <a href="%s">Elementor Document Settings</a> for more information.', 'elementor' ), 'https://developers.elementor.com/elementor-document-settings/' ) );
+		_deprecated_file( __METHOD__, '1.6.0', ___elementor_adapter( 'the new settings API', 'elementor' ), sprintf( ___elementor_adapter( 'See <a href="%s">Elementor Document Settings</a> for more information.', 'elementor' ), 'https://developers.elementor.com/elementor-document-settings/' ) );
 
 		return SettingsManager::get_settings_managers( 'page' )->get_model( $id );
 	}
@@ -95,7 +95,7 @@ class Manager extends BaseManager {
 	 * @return BaseModel The model object.
 	 */
 	public function get_model_for_config() {
-		if ( ! is_singular() && ! Plugin::$instance->editor->is_edit_mode() ) {
+		if ( ! is_singular_elementor_adapter() && ! Plugin::$instance->editor->is_edit_mode() ) {
 			return null;
 		}
 
@@ -103,7 +103,7 @@ class Manager extends BaseManager {
 			$post_id = Plugin::$instance->editor->get_post_id();
 			$document = Plugin::$instance->documents->get_doc_or_auto_save( $post_id );
 		} else {
-			$post_id = get_the_ID();
+			$post_id = get_the_ID_elementor_adapter();
 			$document = Plugin::$instance->documents->get_doc_for_frontend( $post_id );
 		}
 
@@ -111,7 +111,7 @@ class Manager extends BaseManager {
 			return null;
 		}
 
-		$model = $this->get_model( $document->get_post()->ID );
+		$model = $this->get_model( $document->get_post_elementor_adapter()->ID );
 
 		if ( $document->is_autosave() ) {
 			$model->set_settings( 'post_status', $document->get_main_post()->post_status );
@@ -135,7 +135,7 @@ class Manager extends BaseManager {
 	 * @throws \Exception If current user don't have permissions to edit the post.
 	 */
 	public function ajax_before_save_settings( array $data, $id ) {
-		$post = get_post( $id );
+		$post = get_post_elementor_adapter( $id );
 
 		if ( empty( $post ) ) {
 			throw new \Exception( 'Invalid post.', Exceptions::NOT_FOUND );
@@ -150,7 +150,7 @@ class Manager extends BaseManager {
 			$post->post_title = $data['post_title'];
 		}
 
-		if ( isset( $data['post_excerpt'] ) && post_type_supports( $post->post_type, 'excerpt' ) ) {
+		if ( isset( $data['post_excerpt'] ) && post_type_supports_elementor_adapter( $post->post_type, 'excerpt' ) ) {
 			$post->post_excerpt = $data['post_excerpt'];
 		}
 
@@ -169,7 +169,7 @@ class Manager extends BaseManager {
 			}
 		}
 
-		if ( isset( $data['post_featured_image'] ) && post_type_supports( $post->post_type, 'thumbnail' ) ) {
+		if ( isset( $data['post_featured_image'] ) && post_type_supports_elementor_adapter( $post->post_type, 'thumbnail' ) ) {
 			if ( empty( $data['post_featured_image']['id'] ) ) {
 				delete_post_thumbnail( $post->ID );
 			} else {
@@ -244,14 +244,14 @@ class Manager extends BaseManager {
 	 * @return array Saved settings.
 	 */
 	protected function get_saved_settings( $id ) {
-		$settings = get_post_meta( $id, self::META_KEY, true );
+		$settings = get_post_meta_elementor_adapter( $id, self::META_KEY, true );
 
 		if ( ! $settings ) {
 			$settings = [];
 		}
 
 		if ( Utils::is_cpt_custom_templates_supported() ) {
-			$saved_template = get_post_meta( $id, '_wp_page_template', true );
+			$saved_template = get_post_meta_elementor_adapter( $id, '_wp_page_template', true );
 
 			if ( $saved_template ) {
 				$settings['template'] = $saved_template;
@@ -334,7 +334,7 @@ class Manager extends BaseManager {
 	 * @param $status
 	 */
 	public function save_post_status( $post_id, $status ) {
-		$parent_id = wp_is_post_revision( $post_id );
+		$parent_id = wp_is_post_revision_elementor_adapter( $post_id );
 
 		if ( $parent_id ) {
 			// Don't update revisions post-status
@@ -343,12 +343,12 @@ class Manager extends BaseManager {
 
 		$parent_id = $post_id;
 
-		$post = get_post( $parent_id );
+		$post = get_post_elementor_adapter( $parent_id );
 
-		$allowed_post_statuses = get_post_statuses();
+		$allowed_post_statuses = get_post_statuses_elementor_adapter();
 
 		if ( isset( $allowed_post_statuses[ $status ] ) ) {
-			$post_type_object = get_post_type_object( $post->post_type );
+			$post_type_object = get_post_type_object_elementor_adapter( $post->post_type );
 			if ( 'publish' !== $status || current_user_can( $post_type_object->cap->publish_posts ) ) {
 				$post->post_status = $status;
 			}

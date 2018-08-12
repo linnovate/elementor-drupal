@@ -122,7 +122,7 @@ class Embed {
 
 		$embed_pattern = str_replace( array_keys( $replacements ), $replacements, $embed_pattern );
 
-		return add_query_arg( $embed_url_params, $embed_pattern );
+		return add_query_arg_elementor_adapter( $embed_url_params, $embed_pattern );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Embed {
 		$attributes_for_print = [];
 
 		foreach ( $frame_attributes as $attribute_key => $attribute_value ) {
-			$attribute_value = esc_attr( $attribute_value );
+			$attribute_value = esc_attr_elementor_adapter( $attribute_value );
 
 			if ( is_numeric( $attribute_key ) ) {
 				$attributes_for_print[] = $attribute_value;
@@ -176,6 +176,6 @@ class Embed {
 		$iframe_html = "<iframe $attributes_for_print></iframe>";
 
 		/** This filter is documented in wp-includes/class-oembed.php */
-		return apply_filters( 'oembed_result', $iframe_html, $video_url, $frame_attributes );
+		return apply_filters_elementor_adapter( 'oembed_result', $iframe_html, $video_url, $frame_attributes );
 	}
 }

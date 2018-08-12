@@ -68,11 +68,11 @@ class Module extends BaseModule {
 			->register_document_type( 'page', Documents\Page::get_class_full_name() )
 			->register_document_type( 'section', Documents\Section::get_class_full_name() )
 			->register_group( 'blocks', [
-				'label' => __( 'Blocks', 'elementor' ),
+				'label' => ___elementor_adapter( 'Blocks', 'elementor' ),
 			] )->register_group( 'pages', [
-				'label' => __( 'Pages', 'elementor' ),
+				'label' => ___elementor_adapter( 'Pages', 'elementor' ),
 			] );
 
-		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
+		add_filter_elementor_adapter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 }

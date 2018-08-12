@@ -58,7 +58,7 @@ class Group_Control_Box_Shadow extends Group_Control_Base {
 		$controls = [];
 
 		$controls['box_shadow'] = [
-			'label' => _x( 'Box Shadow', 'Box Shadow Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Box Shadow', 'Box Shadow Control', 'elementor' ),
 			'type' => Controls_Manager::BOX_SHADOW,
 			'condition' => [
 				'box_shadow_type!' => '',
@@ -69,11 +69,11 @@ class Group_Control_Box_Shadow extends Group_Control_Base {
 		];
 
 		$controls['box_shadow_position'] = [
-			'label' => _x( 'Position', 'Box Shadow Control', 'elementor' ),
+			'label' => _x_elementor_adapter( 'Position', 'Box Shadow Control', 'elementor' ),
 			'type' => Controls_Manager::SELECT,
 			'options' => [
-				' ' => _x( 'Outline', 'Box Shadow Control', 'elementor' ),
-				'inset' => _x( 'Inset', 'Box Shadow Control', 'elementor' ),
+				' ' => _x_elementor_adapter( 'Outline', 'Box Shadow Control', 'elementor' ),
+				'inset' => _x_elementor_adapter( 'Inset', 'Box Shadow Control', 'elementor' ),
 			],
 			'condition' => [
 				'box_shadow_type!' => '',
@@ -99,7 +99,7 @@ class Group_Control_Box_Shadow extends Group_Control_Base {
 	protected function get_default_options() {
 		return [
 			'popover' => [
-				'starter_title' => _x( 'Box Shadow', 'Box Shadow Control', 'elementor' ),
+				'starter_title' => _x_elementor_adapter( 'Box Shadow', 'Box Shadow Control', 'elementor' ),
 				'starter_name' => 'box_shadow_type',
 				'starter_value' => 'yes',
 			],

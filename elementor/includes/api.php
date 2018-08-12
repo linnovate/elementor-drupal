@@ -78,31 +78,31 @@ class Api {
 	private static function get_info_data( $force_update = false ) {
 		$cache_key = 'elementor_remote_info_api_data_' . ELEMENTOR_VERSION;
 
-		$info_data = get_transient( $cache_key );
+		$info_data = get_transient_elementor_adapter( $cache_key );
 
 		if ( $force_update || false === $info_data ) {
 			$timeout = ( $force_update ) ? 25 : 8;
 
-			$response = wp_remote_post( self::$api_info_url, [
+			$response = wp_remote_post_elementor_adapter( self::$api_info_url, [
 				'timeout' => $timeout,
 				'body' => [
 					// Which API version is used.
 					'api_version' => ELEMENTOR_VERSION,
 					// Which language to return.
-					'site_lang' => get_bloginfo( 'language' ),
+					'site_lang' => get_bloginfo_elementor_adapter( 'language' ),
 				],
 			] );
 
-			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-				set_transient( $cache_key, [], 2 * HOUR_IN_SECONDS );
+			if ( is_wp_error_elementor_adapter( $response ) || 200 !== (int) wp_remote_retrieve_response_code_elementor_adapter( $response ) ) {
+				set_transient_elementor_adapter( $cache_key, [], 2 * HOUR_IN_SECONDS );
 
 				return false;
 			}
 
-			$info_data = json_decode( wp_remote_retrieve_body( $response ), true );
+			$info_data = json_decode( wp_remote_retrieve_body_elementor_adapter( $response ), true );
 
 			if ( empty( $info_data ) || ! is_array( $info_data ) ) {
-				set_transient( $cache_key, [], 2 * HOUR_IN_SECONDS );
+				set_transient_elementor_adapter( $cache_key, [], 2 * HOUR_IN_SECONDS );
 
 				return false;
 			}
@@ -110,18 +110,18 @@ class Api {
 			if ( isset( $info_data['library'] ) ) {
 				$info_data['library']['categories'] = json_decode( $info_data['library']['categories'] );
 
-				update_option( self::LIBRARY_OPTION_KEY, $info_data['library'], 'no' );
+				update_option_elementor_adapter( self::LIBRARY_OPTION_KEY, $info_data['library'], 'no' );
 
 				unset( $info_data['library'] );
 			}
 
 			if ( isset( $info_data['feed'] ) ) {
-				update_option( self::FEED_OPTION_KEY, $info_data['feed'], 'no' );
+				update_option_elementor_adapter( self::FEED_OPTION_KEY, $info_data['feed'], 'no' );
 
 				unset( $info_data['feed'] );
 			}
 
-			set_transient( $cache_key, $info_data, 12 * HOUR_IN_SECONDS );
+			set_transient_elementor_adapter( $cache_key, $info_data, 12 * HOUR_IN_SECONDS );
 		}
 
 		return $info_data;
@@ -165,7 +165,7 @@ class Api {
 	public static function get_library_data( $force_update = false ) {
 		self::get_info_data( $force_update );
 
-		$library_data = get_option( self::LIBRARY_OPTION_KEY );
+		$library_data = get_option_elementor_adapter( self::LIBRARY_OPTION_KEY );
 
 		if ( empty( $library_data ) ) {
 			return [];
@@ -191,7 +191,7 @@ class Api {
 	public static function get_feed_data( $force_update = false ) {
 		self::get_info_data( $force_update );
 
-		$feed = get_option( self::FEED_OPTION_KEY );
+		$feed = get_option_elementor_adapter( self::FEED_OPTION_KEY );
 
 		if ( empty( $feed ) ) {
 			return [];
@@ -220,7 +220,7 @@ class Api {
 			// Which API version is used.
 			'api_version' => ELEMENTOR_VERSION,
 			// Which language to return.
-			'site_lang' => get_bloginfo( 'language' ),
+			'site_lang' => get_bloginfo_elementor_adapter( 'language' ),
 		];
 
 		/**
@@ -232,24 +232,24 @@ class Api {
 		 *
 		 * @param array $body_args Body arguments.
 		 */
-		$body_args = apply_filters( 'elementor/api/get_templates/body_args', $body_args );
+		$body_args = apply_filters_elementor_adapter( 'elementor/api/get_templates/body_args', $body_args );
 
-		$response = wp_remote_get( $url, [
+		$response = wp_remote_get_elementor_adapter( $url, [
 			'timeout' => 40,
 			'body' => $body_args,
 		] );
 
-		if ( is_wp_error( $response ) ) {
+		if ( is_wp_error_elementor_adapter( $response ) ) {
 			return $response;
 		}
 
-		$response_code = (int) wp_remote_retrieve_response_code( $response );
+		$response_code = (int) wp_remote_retrieve_response_code_elementor_adapter( $response );
 
 		if ( 200 !== $response_code ) {
 			return new \WP_Error( 'response_code_error', sprintf( 'The request returned with a status code of %s.', $response_code ) );
 		}
 
-		$template_content = json_decode( wp_remote_retrieve_body( $response ), true );
+		$template_content = json_decode( wp_remote_retrieve_body_elementor_adapter( $response ), true );
 
 		if ( isset( $template_content['error'] ) ) {
 			return new \WP_Error( 'response_error', $template_content['error'] );
@@ -277,11 +277,11 @@ class Api {
 	 * @return array The response of the request.
 	 */
 	public static function send_feedback( $feedback_key, $feedback_text ) {
-		return wp_remote_post( self::$api_feedback_url, [
+		return wp_remote_post_elementor_adapter( self::$api_feedback_url, [
 			'timeout' => 30,
 			'body' => [
 				'api_version' => ELEMENTOR_VERSION,
-				'site_lang' => get_bloginfo( 'language' ),
+				'site_lang' => get_bloginfo_elementor_adapter( 'language' ),
 				'feedback_key' => $feedback_key,
 				'feedback' => $feedback_text,
 			],
@@ -302,7 +302,7 @@ class Api {
 
 		self::get_info_data( true );
 
-		wp_send_json_success();
+		wp_send_json_success_elementor_adapter();
 	}
 
 	/**
@@ -315,6 +315,6 @@ class Api {
 	 * @static
 	 */
 	public static function init() {
-		add_action( 'wp_ajax_elementor_reset_library', [ __CLASS__, 'ajax_reset_api_data' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_reset_library', [ __CLASS__, 'ajax_reset_api_data' ] );
 	}
 }

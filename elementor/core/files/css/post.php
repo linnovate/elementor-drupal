@@ -106,7 +106,7 @@ class Post extends Base {
 	 * @return array Post CSS file meta data.
 	 */
 	protected function load_meta() {
-		return get_post_meta( $this->post_id, static::META_KEY, true );
+		return get_post_meta_elementor_adapter( $this->post_id, static::META_KEY, true );
 	}
 
 	/**
@@ -120,7 +120,7 @@ class Post extends Base {
 	 * @param array $meta New meta data.
 	 */
 	protected function update_meta( $meta ) {
-		update_post_meta( $this->post_id, static::META_KEY, $meta );
+		update_post_meta_elementor_adapter( $this->post_id, static::META_KEY, $meta );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Post extends Base {
 	 * @access protected
 	 */
 	protected function delete_meta() {
-		delete_post_meta( $this->post_id, static::META_KEY );
+		delete_post_meta_elementor_adapter( $this->post_id, static::META_KEY );
 	}
 
 	/**
@@ -221,7 +221,7 @@ class Post extends Base {
 	/**
 	 * Get enqueue dependencies.
 	 *
-	 * Retrieve the name of the stylesheet used by `wp_enqueue_style()`.
+	 * Retrieve the name of the stylesheet used by `wp_enqueue_style_elementor_adapter()`.
 	 *
 	 * @since 1.2.0
 	 * @access protected
@@ -281,7 +281,7 @@ class Post extends Base {
 		 * @param Post         $this    The post CSS file.
 		 * @param Element_Base $element The element.
 		 */
-		do_action( 'elementor/element/before_parse_css', $this, $element );
+		do_action_elementor_adapter( 'elementor/element/before_parse_css', $this, $element );
 
 		$element_settings = $element->get_settings();
 
@@ -297,6 +297,6 @@ class Post extends Base {
 		 * @param Post         $this    The post CSS file.
 		 * @param Element_Base $element The element.
 		 */
-		do_action( 'elementor/element/parse_css', $this, $element );
+		do_action_elementor_adapter( 'elementor/element/parse_css', $this, $element );
 	}
 }

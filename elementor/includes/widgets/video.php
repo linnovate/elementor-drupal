@@ -41,7 +41,7 @@ class Widget_Video extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Video', 'elementor' );
+		return ___elementor_adapter( 'Video', 'elementor' );
 	}
 
 	/**
@@ -100,21 +100,21 @@ class Widget_Video extends Widget_Base {
 		$this->start_controls_section(
 			'section_video',
 			[
-				'label' => __( 'Video', 'elementor' ),
+				'label' => ___elementor_adapter( 'Video', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'video_type',
 			[
-				'label' => __( 'Source', 'elementor' ),
+				'label' => ___elementor_adapter( 'Source', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'youtube',
 				'options' => [
-					'youtube' => __( 'YouTube', 'elementor' ),
-					'vimeo' => __( 'Vimeo', 'elementor' ),
-					'dailymotion' => __( 'Dailymotion', 'elementor' ),
-					'hosted' => __( 'Self Hosted', 'elementor' ),
+					'youtube' => ___elementor_adapter( 'YouTube', 'elementor' ),
+					'vimeo' => ___elementor_adapter( 'Vimeo', 'elementor' ),
+					'dailymotion' => ___elementor_adapter( 'Dailymotion', 'elementor' ),
+					'hosted' => ___elementor_adapter( 'Self Hosted', 'elementor' ),
 				],
 			]
 		);
@@ -122,7 +122,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'youtube_url',
 			[
-				'label' => __( 'URL', 'elementor' ),
+				'label' => ___elementor_adapter( 'URL', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -131,7 +131,7 @@ class Widget_Video extends Widget_Base {
 						TagsModule::URL_CATEGORY,
 					],
 				],
-				'placeholder' => __( 'Enter your YouTube URL', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Enter your YouTube URL', 'elementor' ),
 				'default' => 'https://www.youtube.com/watch?v=9uOETcuFjbE',
 				'label_block' => true,
 				'condition' => [
@@ -143,7 +143,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'vimeo_url',
 			[
-				'label' => __( 'URL', 'elementor' ),
+				'label' => ___elementor_adapter( 'URL', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -152,7 +152,7 @@ class Widget_Video extends Widget_Base {
 						TagsModule::URL_CATEGORY,
 					],
 				],
-				'placeholder' => __( 'Enter your Vimeo URL', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Enter your Vimeo URL', 'elementor' ),
 				'default' => 'https://vimeo.com/235215203',
 				'label_block' => true,
 				'condition' => [
@@ -164,7 +164,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'dailymotion_url',
 			[
-				'label' => __( 'URL', 'elementor' ),
+				'label' => ___elementor_adapter( 'URL', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
@@ -173,7 +173,7 @@ class Widget_Video extends Widget_Base {
 						TagsModule::URL_CATEGORY,
 					],
 				],
-				'placeholder' => __( 'Enter your Dailymotion URL', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'Enter your Dailymotion URL', 'elementor' ),
 				'default' => 'https://www.dailymotion.com/video/x6koazf',
 				'label_block' => true,
 				'condition' => [
@@ -185,7 +185,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'hosted_url',
 			[
-				'label' => __( 'URL', 'elementor' ),
+				'label' => ___elementor_adapter( 'URL', 'elementor' ),
 				'type' => Controls_Manager::MEDIA,
 				'dynamic' => [
 					'active' => true,
@@ -204,9 +204,9 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'start',
 			[
-				'label' => __( 'Start Time', 'elementor' ),
+				'label' => ___elementor_adapter( 'Start Time', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
-				'description' => __( 'Specify a start time (in seconds)', 'elementor' ),
+				'description' => ___elementor_adapter( 'Specify a start time (in seconds)', 'elementor' ),
 				'condition' => [
 					'loop' => '',
 				],
@@ -216,9 +216,9 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'end',
 			[
-				'label' => __( 'End Time', 'elementor' ),
+				'label' => ___elementor_adapter( 'End Time', 'elementor' ),
 				'type' => Controls_Manager::NUMBER,
-				'description' => __( 'Specify an end time (in seconds)', 'elementor' ),
+				'description' => ___elementor_adapter( 'Specify an end time (in seconds)', 'elementor' ),
 				'condition' => [
 					'loop' => '',
 					'video_type' => [ 'youtube', 'hosted' ],
@@ -229,7 +229,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'video_options',
 			[
-				'label' => __( 'Video Options', 'elementor' ),
+				'label' => ___elementor_adapter( 'Video Options', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -238,7 +238,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'autoplay',
 			[
-				'label' => __( 'Autoplay', 'elementor' ),
+				'label' => ___elementor_adapter( 'Autoplay', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 			]
 		);
@@ -246,7 +246,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'mute',
 			[
-				'label' => __( 'Mute', 'elementor' ),
+				'label' => ___elementor_adapter( 'Mute', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 			]
 		);
@@ -254,7 +254,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'loop',
 			[
-				'label' => __( 'Loop', 'elementor' ),
+				'label' => ___elementor_adapter( 'Loop', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'video_type!' => 'dailymotion',
@@ -265,10 +265,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'controls',
 			[
-				'label' => __( 'Player Controls', 'elementor' ),
+				'label' => ___elementor_adapter( 'Player Controls', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'video_type!' => 'vimeo',
@@ -279,10 +279,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'showinfo',
 			[
-				'label' => __( 'Video Info', 'elementor' ),
+				'label' => ___elementor_adapter( 'Video Info', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'video_type' => [ 'youtube', 'dailymotion' ],
@@ -293,7 +293,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'modestbranding',
 			[
-				'label' => __( 'Modest Branding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Modest Branding', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'video_type' => [ 'youtube' ],
@@ -305,10 +305,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'logo',
 			[
-				'label' => __( 'Logo', 'elementor' ),
+				'label' => ___elementor_adapter( 'Logo', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'video_type' => [ 'dailymotion' ],
@@ -319,7 +319,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'color',
 			[
-				'label' => __( 'Controls Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Controls Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'condition' => [
@@ -332,10 +332,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'rel',
 			[
-				'label' => __( 'Suggested Videos', 'elementor' ),
+				'label' => ___elementor_adapter( 'Suggested Videos', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'condition' => [
 					'video_type' => 'youtube',
 				],
@@ -345,9 +345,9 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'yt_privacy',
 			[
-				'label' => __( 'Privacy Mode', 'elementor' ),
+				'label' => ___elementor_adapter( 'Privacy Mode', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'description' => __( 'When you turn on privacy mode, YouTube won\'t store information about visitors on your website unless they play the video.', 'elementor' ),
+				'description' => ___elementor_adapter( 'When you turn on privacy mode, YouTube won\'t store information about visitors on your website unless they play the video.', 'elementor' ),
 				'condition' => [
 					'video_type' => 'youtube',
 				],
@@ -358,10 +358,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'vimeo_title',
 			[
-				'label' => __( 'Intro Title', 'elementor' ),
+				'label' => ___elementor_adapter( 'Intro Title', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'video_type' => 'vimeo',
@@ -372,10 +372,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'vimeo_portrait',
 			[
-				'label' => __( 'Intro Portrait', 'elementor' ),
+				'label' => ___elementor_adapter( 'Intro Portrait', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'video_type' => 'vimeo',
@@ -386,10 +386,10 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'vimeo_byline',
 			[
-				'label' => __( 'Intro Byline', 'elementor' ),
+				'label' => ___elementor_adapter( 'Intro Byline', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'video_type' => 'vimeo',
@@ -400,7 +400,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'youtube',
 			]
@@ -411,24 +411,24 @@ class Widget_Video extends Widget_Base {
 		$this->start_controls_section(
 			'section_image_overlay',
 			[
-				'label' => __( 'Image Overlay', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Overlay', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'show_image_overlay',
 			[
-				'label' => __( 'Image Overlay', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image Overlay', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'image_overlay',
 			[
-				'label' => __( 'Image', 'elementor' ),
+				'label' => ___elementor_adapter( 'Image', 'elementor' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
@@ -454,7 +454,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'show_play_icon',
 			[
-				'label' => __( 'Play Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Play Icon', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'condition' => [
@@ -467,11 +467,11 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox',
 			[
-				'label' => __( 'Lightbox', 'elementor' ),
+				'label' => ___elementor_adapter( 'Lightbox', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'frontend_available' => true,
-				'label_off' => __( 'Off', 'elementor' ),
-				'label_on' => __( 'On', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Off', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'On', 'elementor' ),
 				'condition' => [
 					'show_image_overlay' => 'yes',
 					'image_overlay[url]!' => '',
@@ -485,7 +485,7 @@ class Widget_Video extends Widget_Base {
 		$this->start_controls_section(
 			'section_video_style',
 			[
-				'label' => __( 'Video', 'elementor' ),
+				'label' => ___elementor_adapter( 'Video', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -493,7 +493,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'aspect_ratio',
 			[
-				'label' => __( 'Aspect Ratio', 'elementor' ),
+				'label' => ___elementor_adapter( 'Aspect Ratio', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'169' => '16:9',
@@ -517,7 +517,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'play_icon_title',
 			[
-				'label' => __( 'Play Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Play Icon', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'condition' => [
 					'show_image_overlay' => 'yes',
@@ -530,7 +530,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'play_icon_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-custom-embed-play i' => 'color: {{VALUE}}',
@@ -545,7 +545,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_responsive_control(
 			'play_icon_size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -570,7 +570,7 @@ class Widget_Video extends Widget_Base {
 				'selector' => '{{WRAPPER}} .elementor-custom-embed-play i',
 				'fields_options' => [
 					'text_shadow_type' => [
-						'label' => _x( 'Shadow', 'Text Shadow Control', 'elementor' ),
+						'label' => _x_elementor_adapter( 'Shadow', 'Text Shadow Control', 'elementor' ),
 					],
 				],
 				'condition' => [
@@ -585,7 +585,7 @@ class Widget_Video extends Widget_Base {
 		$this->start_controls_section(
 			'section_lightbox_style',
 			[
-				'label' => __( 'Lightbox', 'elementor' ),
+				'label' => ___elementor_adapter( 'Lightbox', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_image_overlay' => 'yes',
@@ -598,7 +598,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox_color',
 			[
-				'label' => __( 'Background Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Background Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'#elementor-lightbox-{{ID}}' => 'background-color: {{VALUE}};',
@@ -609,7 +609,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox_ui_color',
 			[
-				'label' => __( 'UI Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'UI Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'#elementor-lightbox-{{ID}} .dialog-lightbox-close-button' => 'color: {{VALUE}}',
@@ -620,7 +620,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox_ui_color_hover',
 			[
-				'label' => __( 'UI Hover Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'UI Hover Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'#elementor-lightbox-{{ID}} .dialog-lightbox-close-button:hover' => 'color: {{VALUE}}',
@@ -632,7 +632,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox_video_width',
 			[
-				'label' => __( 'Content Width', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content Width', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => '%',
@@ -651,12 +651,12 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox_content_position',
 			[
-				'label' => __( 'Content Position', 'elementor' ),
+				'label' => ___elementor_adapter( 'Content Position', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'frontend_available' => true,
 				'options' => [
-					'' => __( 'Center', 'elementor' ),
-					'top' => __( 'Top', 'elementor' ),
+					'' => ___elementor_adapter( 'Center', 'elementor' ),
+					'top' => ___elementor_adapter( 'Top', 'elementor' ),
 				],
 				'selectors' => [
 					'#elementor-lightbox-{{ID}} .elementor-video-container' => '{{VALUE}}; transform: translateX(-50%);',
@@ -670,7 +670,7 @@ class Widget_Video extends Widget_Base {
 		$this->add_control(
 			'lightbox_content_animation',
 			[
-				'label' => __( 'Entrance Animation', 'elementor' ),
+				'label' => ___elementor_adapter( 'Entrance Animation', 'elementor' ),
 				'type' => Controls_Manager::ANIMATION,
 				'default' => '',
 				'frontend_available' => true,
@@ -717,7 +717,7 @@ class Widget_Video extends Widget_Base {
 		}
 
 		if ( empty( $video_html ) ) {
-			echo esc_url( $video_url );
+			echo esc_url_elementor_adapter( $video_url );
 
 			return;
 		}
@@ -763,7 +763,7 @@ class Widget_Video extends Widget_Base {
 
 					$this->add_render_attribute( 'image-overlay', [
 						'data-elementor-open-lightbox' => 'yes',
-						'data-elementor-lightbox' => wp_json_encode( $lightbox_options ),
+						'data-elementor-lightbox' => wp_json_encode_elementor_adapter( $lightbox_options ),
 					] );
 
 					if ( Plugin::$instance->editor->is_edit_mode() ) {
@@ -782,7 +782,7 @@ class Widget_Video extends Widget_Base {
 					<?php if ( 'yes' === $settings['show_play_icon'] ) : ?>
 						<div class="elementor-custom-embed-play" role="button">
 							<i class="eicon-play" aria-hidden="true"></i>
-							<span class="elementor-screen-only"><?php echo __( 'Play Video', 'elementor' ); ?></span>
+							<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Play Video', 'elementor' ); ?></span>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -804,7 +804,7 @@ class Widget_Video extends Widget_Base {
 
 		$url = $settings[ $settings['video_type'] . '_url' ];
 
-		echo esc_url( $url );
+		echo esc_url_elementor_adapter( $url );
 	}
 
 	/**
@@ -966,7 +966,7 @@ class Widget_Video extends Widget_Base {
 
 		$video_url = $this->get_hosted_video_url();
 		?>
-		<video class="elementor-video" src="<?php echo esc_url( $video_url ); ?>" <?php echo implode( ' ', $video_params ); ?>></video>
+		<video class="elementor-video" src="<?php echo esc_url_elementor_adapter( $video_url ); ?>" <?php echo implode( ' ', $video_params ); ?>></video>
 		<?php
 	}
 }

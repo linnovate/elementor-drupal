@@ -64,7 +64,7 @@ class Model extends BaseModel {
 	 */
 	public function get_panel_page_settings() {
 		return [
-			'title' => __( 'Global Settings', 'elementor' ),
+			'title' => ___elementor_adapter( 'Global Settings', 'elementor' ),
 			'menu' => [
 				'icon' => 'fa fa-cogs',
 				'beforeItem' => 'elementor-settings',
@@ -87,47 +87,47 @@ class Model extends BaseModel {
 		return [
 			Controls_Manager::TAB_STYLE => [
 				'style' => [
-					'label' => __( 'Style', 'elementor' ),
+					'label' => ___elementor_adapter( 'Style', 'elementor' ),
 					'controls' => [
 						'elementor_default_generic_fonts' => [
-							'label' => __( 'Default Generic Fonts', 'elementor' ),
+							'label' => ___elementor_adapter( 'Default Generic Fonts', 'elementor' ),
 							'type' => Controls_Manager::TEXT,
 							'default' => 'Sans-serif',
-							'description' => __( 'The list of fonts used if the chosen font is not available.', 'elementor' ),
+							'description' => ___elementor_adapter( 'The list of fonts used if the chosen font is not available.', 'elementor' ),
 							'label_block' => true,
 						],
 						'elementor_container_width' => [
-							'label' => __( 'Content Width', 'elementor' ) . ' (px)',
+							'label' => ___elementor_adapter( 'Content Width', 'elementor' ) . ' (px)',
 							'type' => Controls_Manager::NUMBER,
 							'min' => 0,
-							'description' => __( 'Sets the default width of the content area (Default: 1140)', 'elementor' ),
+							'description' => ___elementor_adapter( 'Sets the default width of the content area (Default: 1140)', 'elementor' ),
 							'selectors' => [
 								'.elementor-section.elementor-section-boxed > .elementor-container' => 'max-width: {{VALUE}}px',
 							],
 						],
 						'elementor_space_between_widgets' => [
-							'label' => __( 'Widgets Space', 'elementor' ) . ' (px)',
+							'label' => ___elementor_adapter( 'Widgets Space', 'elementor' ) . ' (px)',
 							'type' => Controls_Manager::NUMBER,
 							'min' => 0,
 							'placeholder' => '20',
-							'description' => __( 'Sets the default space between widgets (Default: 20)', 'elementor' ),
+							'description' => ___elementor_adapter( 'Sets the default space between widgets (Default: 20)', 'elementor' ),
 							'selectors' => [
 								'.elementor-widget:not(:last-child)' => 'margin-bottom: {{VALUE}}px',
 							],
 						],
 						'elementor_stretched_section_container' => [
-							'label' => __( 'Stretched Section Fit To', 'elementor' ),
+							'label' => ___elementor_adapter( 'Stretched Section Fit To', 'elementor' ),
 							'type' => Controls_Manager::TEXT,
 							'placeholder' => 'body',
-							'description' => __( 'Enter parent element selector to which stretched sections will fit to (e.g. #primary / .wrapper / main etc). Leave blank to fit to page width.', 'elementor' ),
+							'description' => ___elementor_adapter( 'Enter parent element selector to which stretched sections will fit to (e.g. #primary / .wrapper / main etc). Leave blank to fit to page width.', 'elementor' ),
 							'label_block' => true,
 							'frontend_available' => true,
 						],
 						'elementor_page_title_selector' => [
-							'label' => __( 'Page Title Selector', 'elementor' ),
+							'label' => ___elementor_adapter( 'Page Title Selector', 'elementor' ),
 							'type' => Controls_Manager::TEXT,
 							'placeholder' => 'h1.entry-title',
-							'description' => __( 'Elementor lets you hide the page title. This works for themes that have "h1.entry-title" selector. If your theme\'s selector is different, please enter it above.', 'elementor' ),
+							'description' => ___elementor_adapter( 'Elementor lets you hide the page title. This works for themes that have "h1.entry-title" selector. If your theme\'s selector is different, please enter it above.', 'elementor' ),
 							'label_block' => true,
 						],
 					],
@@ -135,37 +135,37 @@ class Model extends BaseModel {
 			],
 			Manager::PANEL_TAB_LIGHTBOX => [
 				'lightbox' => [
-					'label' => __( 'Lightbox', 'elementor' ),
+					'label' => ___elementor_adapter( 'Lightbox', 'elementor' ),
 					'controls' => [
 						'elementor_global_image_lightbox' => [
-							'label' => __( 'Image Lightbox', 'elementor' ),
+							'label' => ___elementor_adapter( 'Image Lightbox', 'elementor' ),
 							'type' => Controls_Manager::SWITCHER,
 							'default' => 'yes',
-							'description' => __( 'Open all image links in a lightbox popup window. The lightbox will automatically work on any link that leads to an image file.', 'elementor' ),
+							'description' => ___elementor_adapter( 'Open all image links in a lightbox popup window. The lightbox will automatically work on any link that leads to an image file.', 'elementor' ),
 							'frontend_available' => true,
 						],
 						'elementor_enable_lightbox_in_editor' => [
-							'label' => __( 'Enable In Editor', 'elementor' ),
+							'label' => ___elementor_adapter( 'Enable In Editor', 'elementor' ),
 							'type' => Controls_Manager::SWITCHER,
 							'default' => 'yes',
 							'frontend_available' => true,
 						],
 						'elementor_lightbox_color' => [
-							'label' => __( 'Background Color', 'elementor' ),
+							'label' => ___elementor_adapter( 'Background Color', 'elementor' ),
 							'type' => Controls_Manager::COLOR,
 							'selectors' => [
 								'.elementor-lightbox' => 'background-color: {{VALUE}}',
 							],
 						],
 						'elementor_lightbox_ui_color' => [
-							'label' => __( 'UI Color', 'elementor' ),
+							'label' => ___elementor_adapter( 'UI Color', 'elementor' ),
 							'type' => Controls_Manager::COLOR,
 							'selectors' => [
 								'.elementor-lightbox .dialog-lightbox-close-button, .elementor-lightbox .elementor-swiper-button' => 'color: {{VALUE}}',
 							],
 						],
 						'elementor_lightbox_ui_color_hover' => [
-							'label' => __( 'UI Hover Color', 'elementor' ),
+							'label' => ___elementor_adapter( 'UI Hover Color', 'elementor' ),
 							'type' => Controls_Manager::COLOR,
 							'selectors' => [
 								'.elementor-lightbox .dialog-lightbox-close-button:hover, .elementor-lightbox .elementor-swiper-button:hover' => 'color: {{VALUE}}',

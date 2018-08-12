@@ -188,7 +188,7 @@ abstract class Source_Base {
 	 *                  update, false on failure.
 	 */
 	public function mark_as_favorite( $template_id, $favorite = true ) {
-		$favorites_templates = $this->get_user_meta( 'favorites' );
+		$favorites_templates = $this->get_user_meta_elementor_adapter( 'favorites' );
 
 		if ( ! $favorites_templates ) {
 			$favorites_templates = [];
@@ -215,9 +215,9 @@ abstract class Source_Base {
 	 *
 	 * @return null|array An array of user meta data, or null otherwise.
 	 */
-	public function get_user_meta( $item = null ) {
+	public function get_user_meta_elementor_adapter( $item = null ) {
 		if ( null === $this->user_meta ) {
-			$this->user_meta = get_user_meta( get_current_user_id(), $this->get_user_meta_prefix(), true );
+			$this->user_meta = get_user_meta_elementor_adapter( get_current_user_id_elementor_adapter(), $this->get_user_meta_prefix(), true );
 		}
 
 		if ( ! $this->user_meta ) {
@@ -250,13 +250,13 @@ abstract class Source_Base {
 	 *                  update, false on failure.
 	 */
 	public function update_user_meta( $key, $value ) {
-		$meta = $this->get_user_meta();
+		$meta = $this->get_user_meta_elementor_adapter();
 
 		$meta[ $key ] = $value;
 
 		$this->user_meta = $meta;
 
-		return update_user_meta( get_current_user_id(), $this->get_user_meta_prefix(), $meta );
+		return update_user_meta( get_current_user_id_elementor_adapter(), $this->get_user_meta_prefix(), $meta );
 	}
 
 	/**

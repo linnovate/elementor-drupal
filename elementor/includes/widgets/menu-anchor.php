@@ -40,7 +40,7 @@ class Widget_Menu_Anchor extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Menu Anchor', 'elementor' );
+		return ___elementor_adapter( 'Menu Anchor', 'elementor' );
 	}
 
 	/**
@@ -83,14 +83,14 @@ class Widget_Menu_Anchor extends Widget_Base {
 		$this->start_controls_section(
 			'section_anchor',
 			[
-				'label' => __( 'Anchor', 'elementor' ),
+				'label' => ___elementor_adapter( 'Anchor', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'anchor_description',
 			[
-				'raw' => __( 'This ID will be the CSS ID you will have to use in your own page, Without #.', 'elementor' ),
+				'raw' => ___elementor_adapter( 'This ID will be the CSS ID you will have to use in your own page, Without #.', 'elementor' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-descriptor',
 			]
@@ -99,9 +99,9 @@ class Widget_Menu_Anchor extends Widget_Base {
 		$this->add_control(
 			'anchor',
 			[
-				'label' => __( 'The ID of Menu Anchor.', 'elementor' ),
+				'label' => ___elementor_adapter( 'The ID of Menu Anchor.', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => __( 'For Example: About', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'For Example: About', 'elementor' ),
 				'label_block' => true,
 			]
 		);

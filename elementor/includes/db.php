@@ -148,7 +148,7 @@ class DB {
 	 * @return array Decoded JSON data from post meta.
 	 */
 	protected function _get_json_meta( $post_id, $key ) {
-		$meta = get_post_meta( $post_id, $key, true );
+		$meta = get_post_meta_elementor_adapter( $post_id, $key, true );
 
 		if ( is_string( $meta ) && ! empty( $meta ) ) {
 			$meta = json_decode( $meta, true );
@@ -225,7 +225,7 @@ class DB {
 	 * @return array Content in Elementor format.
 	 */
 	public function get_new_editor_from_wp_editor( $post_id ) {
-		$post = get_post( $post_id );
+		$post = get_post_elementor_adapter( $post_id );
 
 		if ( empty( $post ) || empty( $post->post_content ) ) {
 			return [];
@@ -310,9 +310,9 @@ class DB {
 	public function set_is_elementor_page( $post_id, $is_elementor = true ) {
 		if ( $is_elementor ) {
 			// Use the string `builder` and not a boolean for rollback compatibility
-			update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
+			update_post_meta_elementor_adapter( $post_id, '_elementor_edit_mode', 'builder' );
 		} else {
-			delete_post_meta( $post_id, '_elementor_edit_mode' );
+			delete_post_meta_elementor_adapter( $post_id, '_elementor_edit_mode' );
 		}
 	}
 
@@ -425,14 +425,14 @@ class DB {
 	 */
 	public function safe_copy_elementor_meta( $from_post_id, $to_post_id ) {
 		// It's from  WP-Admin & not from Elementor.
-		if ( ! did_action( 'elementor/db/before_save' ) ) {
+		if ( ! did_action_elementor_adapter( 'elementor/db/before_save' ) ) {
 
 			if ( ! Plugin::$instance->db->is_built_with_elementor( $from_post_id ) ) {
 				return;
 			}
 
 			// It's an exited Elementor auto-save
-			if ( get_post_meta( $to_post_id, '_elementor_data', true ) ) {
+			if ( get_post_meta_elementor_adapter( $to_post_id, '_elementor_data', true ) ) {
 				return;
 			}
 		}
@@ -454,7 +454,7 @@ class DB {
 	 * @param int $to_post_id   Target post ID.
 	 */
 	public function copy_elementor_meta( $from_post_id, $to_post_id ) {
-		$from_post_meta = get_post_meta( $from_post_id );
+		$from_post_meta = get_post_meta_elementor_adapter( $from_post_id );
 		$core_meta = [
 			'_wp_page_template',
 			'_thumbnail_id',
@@ -491,7 +491,7 @@ class DB {
 	 * @return bool Whether the post was built with Elementor.
 	 */
 	public function is_built_with_elementor( $post_id ) {
-		return ! ! get_post_meta( $post_id, '_elementor_edit_mode', true );
+		return ! ! get_post_meta_elementor_adapter( $post_id, '_elementor_edit_mode', true );
 	}
 
 	/**
@@ -505,21 +505,21 @@ class DB {
 	 * @param int $post_id Post ID to switch to.
 	 */
 	public function switch_to_post( $post_id ) {
-		$post_id = absint( $post_id );
+		$post_id = absint_elementor_adapter( $post_id );
 		// If is already switched, or is the same post, return.
-		if ( get_the_ID() === $post_id ) {
+		if ( get_the_ID_elementor_adapter() === $post_id ) {
 			$this->switched_post_data[] = false;
 			return;
 		}
 
 		$this->switched_post_data[] = [
 			'switched_id' => $post_id,
-			'original_id' => get_the_ID(), // Note, it can be false if the global isn't set
+			'original_id' => get_the_ID_elementor_adapter(), // Note, it can be false if the global isn't set
 		];
 
-		$GLOBALS['post'] = get_post( $post_id ); // WPCS: override ok.
+		$GLOBALS['post'] = get_post_elementor_adapter( $post_id ); // WPCS: override ok.
 
-		setup_postdata( $GLOBALS['post'] );
+		setup_postdata_elementor_adapter( $GLOBALS['post'] );
 	}
 
 	/**
@@ -544,9 +544,9 @@ class DB {
 			return;
 		}
 
-		$GLOBALS['post'] = get_post( $data['original_id'] ); // WPCS: override ok.
+		$GLOBALS['post'] = get_post_elementor_adapter( $data['original_id'] ); // WPCS: override ok.
 
-		setup_postdata( $GLOBALS['post'] );
+		setup_postdata_elementor_adapter( $GLOBALS['post'] );
 	}
 
 
@@ -583,10 +583,10 @@ class DB {
 		// Ensure the global post is set only if needed
 		unset( $GLOBALS['post'] );
 
-		if ( $new_query->is_singular() && isset( $new_query->posts[0] ) ) {
+		if ( $new_query->is_singular_elementor_adapter() && isset( $new_query->posts[0] ) ) {
 			$GLOBALS['post'] = $new_query->posts[0]; // WPCS: override ok.
 
-			setup_postdata( $GLOBALS['post'] );
+			setup_postdata_elementor_adapter( $GLOBALS['post'] );
 		} elseif ( $new_query->is_author() ) {
 			$GLOBALS['authordata'] = get_userdata( $new_query->get( 'author' ) ); // WPCS: override ok.
 		}
@@ -616,9 +616,9 @@ class DB {
 		unset( $GLOBALS['post'] );
 		unset( $GLOBALS['authordata'] );
 
-		if ( $wp_query->is_singular() && isset( $wp_query->posts[0] ) ) {
+		if ( $wp_query->is_singular_elementor_adapter() && isset( $wp_query->posts[0] ) ) {
 			$GLOBALS['post'] = $wp_query->posts[0]; // WPCS: override ok.
-			setup_postdata( $GLOBALS['post'] );
+			setup_postdata_elementor_adapter( $GLOBALS['post'] );
 		} elseif ( $wp_query->is_author() ) {
 			$GLOBALS['authordata'] = get_userdata( $wp_query->get( 'author' ) ); // WPCS: override ok.
 		}

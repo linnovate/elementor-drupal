@@ -40,7 +40,7 @@ class Post_Preview extends Post {
 	public function __construct( $post_id ) {
 		$this->preview_id = $post_id;
 
-		$parent_id = wp_get_post_parent_id( $post_id );
+		$parent_id = wp_get_post_parent_id_elementor_adapter( $post_id );
 
 		parent::__construct( $parent_id );
 	}

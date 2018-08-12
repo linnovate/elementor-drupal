@@ -85,10 +85,10 @@ class Control_Dimensions extends Control_Base_Units {
 	 */
 	public function content_template() {
 		$dimensions = [
-			'top' => __( 'Top', 'elementor' ),
-			'right' => __( 'Right', 'elementor' ),
-			'bottom' => __( 'Bottom', 'elementor' ),
-			'left' => __( 'Left', 'elementor' ),
+			'top' => ___elementor_adapter( 'Top', 'elementor' ),
+			'right' => ___elementor_adapter( 'Right', 'elementor' ),
+			'bottom' => ___elementor_adapter( 'Bottom', 'elementor' ),
+			'left' => ___elementor_adapter( 'Left', 'elementor' ),
 		];
 		?>
 		<div class="elementor-control-field">
@@ -101,7 +101,7 @@ class Control_Dimensions extends Control_Base_Units {
 						$control_uid = $this->get_control_uid( $dimension_key );
 						?>
 						<li class="elementor-control-dimension">
-							<input id="<?php echo $control_uid; ?>" type="number" data-setting="<?php echo esc_attr( $dimension_key ); ?>"
+							<input id="<?php echo $control_uid; ?>" type="number" data-setting="<?php echo esc_attr_elementor_adapter( $dimension_key ); ?>"
 								   placeholder="<#
 							   if ( _.isObject( data.placeholder ) ) {
 								if ( ! _.isUndefined( data.placeholder.<?php echo $dimension_key; ?> ) ) {
@@ -114,18 +114,18 @@ class Control_Dimensions extends Control_Base_Units {
 								disabled
 								<# } #>
 									/>
-							<label for="<?php echo esc_attr( $control_uid ); ?>" class="elementor-control-dimension-label"><?php echo $dimension_title; ?></label>
+							<label for="<?php echo esc_attr_elementor_adapter( $control_uid ); ?>" class="elementor-control-dimension-label"><?php echo $dimension_title; ?></label>
 						</li>
 					<?php endforeach; ?>
 					<li>
-						<button class="elementor-link-dimensions tooltip-target" data-tooltip="<?php echo esc_attr__( 'Link values together', 'elementor' ); ?>">
+						<button class="elementor-link-dimensions tooltip-target" data-tooltip="<?php echo esc_attr___elementor_adapter( 'Link values together', 'elementor' ); ?>">
 							<span class="elementor-linked">
 								<i class="fa fa-link" aria-hidden="true"></i>
-								<span class="elementor-screen-only"><?php echo __( 'Link values together', 'elementor' ); ?></span>
+								<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Link values together', 'elementor' ); ?></span>
 							</span>
 							<span class="elementor-unlinked">
 								<i class="fa fa-chain-broken" aria-hidden="true"></i>
-								<span class="elementor-screen-only"><?php echo __( 'Unlinked values', 'elementor' ); ?></span>
+								<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Unlinked values', 'elementor' ); ?></span>
 							</span>
 						</button>
 					</li>

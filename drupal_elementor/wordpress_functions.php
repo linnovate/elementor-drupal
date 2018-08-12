@@ -6,7 +6,7 @@ class WP_Query
     {
         return [];
     }
-    public function have_posts()
+    public function have_posts_elementor_adapter()
     {
         return false;
     }
@@ -16,13 +16,13 @@ $enqueued_actions = array();
 
 $wpdb = [];
 
-function get_option($option, $default = false)
+function get_option_elementor_adapter($option, $default = false)
 {
     global $wpdb;
     return $wpdb[$option];
 }
 
-function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1)
+function add_filter_elementor_adapter($tag, $function_to_add, $priority = 10, $accepted_args = 1)
 {
     global $enqueued_actions;
 
@@ -34,23 +34,23 @@ function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1)
     return true;
 }
 
-function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1)
+function add_action_elementor_adapter($tag, $function_to_add, $priority = 10, $accepted_args = 1)
 {
-    return add_filter($tag, $function_to_add, $priority, $accepted_args);
+    return add_filter_elementor_adapter($tag, $function_to_add, $priority, $accepted_args);
 }
 
-function have_posts()
+function have_posts_elementor_adapter()
 {
     return false;
 }
-function update_option($option, $value, $autoload = null)
+function update_option_elementor_adapter($option, $value, $autoload = null)
 {
     global $wpdb;
 
     $wpdb[$option] = $value;
 }
 
-function do_action($tag, $args = [])
+function do_action_elementor_adapter($tag, $args = [])
 {
     global $enqueued_actions;
 
@@ -76,7 +76,7 @@ function do_action($tag, $args = [])
     return $value ? $value : $all_args[0];
 }
 
-function do_ajax($tag, $args = [])
+function do_ajax_elementor_adapter($tag, $args = [])
 {
     global $enqueued_actions;
 
@@ -98,7 +98,7 @@ function do_ajax($tag, $args = [])
     return $value;
 }
 
-function did_action($tag)
+function did_action_elementor_adapter($tag)
 {
     global $enqueued_actions;
 
@@ -109,22 +109,22 @@ function did_action($tag)
     return $enqueued_actions[$tag];
 }
 
-function get_user_meta()
+function get_user_meta_elementor_adapter()
 {
     return null;
 }
 
-function get_current_user_id()
+function get_current_user_id_elementor_adapter()
 {}
-function query_posts()
+function query_posts_elementor_adapter()
 {}
-function wp_register_script()
+function wp_register_script_elementor_adapter()
 {}
-function wp_enqueue_media()
+function wp_enqueue_media_elementor_adapter()
 {}
-function wp_enqueue_script()
+function wp_enqueue_script_elementor_adapter()
 {}
-function wp_enqueue_style()
+function wp_enqueue_style_elementor_adapter()
 {}
 
 class fun_parent
@@ -138,11 +138,11 @@ class fun_parent
         return '';
     }
 }
-function wp_get_theme()
+function wp_get_theme_elementor_adapter()
 {
     return new fun_parent;
 }
-function sanitize_key($key)
+function sanitize_key_elementor_adapter($key)
 {
     $raw_key = $key;
     $key = strtolower($key);
@@ -150,23 +150,23 @@ function sanitize_key($key)
     return $key;
 }
 
-function setup_postdata()
+function setup_postdata_elementor_adapter()
 {
 
 }
-function wp_verify_nonce()
+function wp_verify_nonce_elementor_adapter()
 {
     return true;
 }
-function wp_upload_dir()
+function wp_upload_dir_elementor_adapter()
 {}
-function wp_mkdir_p()
+function wp_mkdir_p_elementor_adapter()
 {}
-function wp_get_current_user()
+function wp_get_current_user_elementor_adapter()
 {}
-function wp_redirect()
+function wp_redirect_elementor_adapter()
 {}
-function wp_send_json_success($data = null, $status_code = null)
+function wp_send_json_success_elementor_adapter($data = null, $status_code = null)
 {
     $response = array('success' => true);
 
@@ -177,12 +177,12 @@ function wp_send_json_success($data = null, $status_code = null)
     return $response;
 }
 
-function wp_send_json_error($data = null, $status_code = null)
+function wp_send_json_error_elementor_adapter($data = null, $status_code = null)
 {
     $response = array('success' => false);
 
     if (isset($data)) {
-        if (is_wp_error($data)) {
+        if (is_wp_error_elementor_adapter($data)) {
             $result = array();
             foreach ($data->errors as $code => $messages) {
                 foreach ($messages as $message) {
@@ -198,29 +198,29 @@ function wp_send_json_error($data = null, $status_code = null)
 
     return $response; // $response, $status_code );
 }
-function wp_doing_ajax()
+function wp_doing_ajax_elementor_adapter()
 {
-    return apply_filters('wp_doing_ajax', defined('DOING_AJAX') && DOING_AJAX);
+    return apply_filters_elementor_adapter('wp_doing_ajax', defined('DOING_AJAX') && DOING_AJAX);
 }
 
-function wp_parse_str($string, &$array)
+function wp_parse_str_elementor_adapter($string, &$array)
 {
     parse_str($string, $array);
     if (get_magic_quotes_gpc()) {
         $array = stripslashes_deep($array);
     }
 
-    $array = apply_filters('wp_parse_str', $array);
+    $array = apply_filters_elementor_adapter('wp_parse_str', $array);
 }
 
-function wp_parse_args($args, $defaults = '')
+function wp_parse_args_elementor_adapter($args, $defaults = '')
 {
     if (is_object($args)) {
         $r = get_object_vars($args);
     } elseif (is_array($args)) {
         $r = &$args;
     } else {
-        wp_parse_str($args, $r);
+        wp_parse_str_elementor_adapter($args, $r);
     }
 
     if (is_array($defaults)) {
@@ -230,7 +230,7 @@ function wp_parse_args($args, $defaults = '')
     return $r;
 }
 
-function wp_remote_post($url, $args = array())
+function wp_remote_post_elementor_adapter($url, $args = array())
 {
     $client = \Drupal::httpClient([
         'timeout' => $args['timeout'],
@@ -238,7 +238,7 @@ function wp_remote_post($url, $args = array())
     return $client->post($url, ['form_params' => $args['body']]);
 }
 
-function wp_remote_get($url, $args = array())
+function wp_remote_get_elementor_adapter($url, $args = array())
 {
     $client = \Drupal::httpClient([
         'timeout' => $args['timeout'],
@@ -246,15 +246,15 @@ function wp_remote_get($url, $args = array())
     return $client->get($url, ['query' => $args['body']]);
 }
 
-function wp_remote_retrieve_body($response)
+function wp_remote_retrieve_body_elementor_adapter($response)
 {
     return $response->getBody()->getContents();
 }
 
-function wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
+function wp_get_attachment_image_elementor_adapter($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
 {
     $html = '';
-    $image = null; //wp_get_attachment_image_src($attachment_id, $size, $icon);
+    $image = null; //wp_get_attachment_image_src_elementor_adapter($attachment_id, $size, $icon);
     if ($image) {
         list($src, $width, $height) = $image;
         $hwstring = image_hwstring($width, $height);
@@ -262,21 +262,21 @@ function wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = fa
         if (is_array($size_class)) {
             $size_class = join('x', $size_class);
         }
-        $attachment = get_post($attachment_id);
+        $attachment = get_post_elementor_adapter($attachment_id);
         $default_attr = array(
             'src' => $src,
             'class' => "attachment-$size_class size-$size_class",
-            'alt' => trim(strip_tags(get_post_meta($attachment_id, '_wp_attachment_image_alt', true))),
+            'alt' => trim(strip_tags(get_post_meta_elementor_adapter($attachment_id, '_wp_attachment_image_alt', true))),
         );
 
-        $attr = wp_parse_args($attr, $default_attr);
+        $attr = wp_parse_args_elementor_adapter($attr, $default_attr);
 
         // Generate 'srcset' and 'sizes' if not already present.
         if (empty($attr['srcset'])) {
             $image_meta = wp_get_attachment_metadata($attachment_id);
 
             if (is_array($image_meta)) {
-                $size_array = array(absint($width), absint($height));
+                $size_array = array(absint_elementor_adapter($width), absint_elementor_adapter($height));
                 $srcset = wp_calculate_image_srcset($size_array, $src, $image_meta, $attachment_id);
                 $sizes = wp_calculate_image_sizes($size_array, $src, $image_meta, $attachment_id);
 
@@ -290,7 +290,7 @@ function wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = fa
             }
         }
 
-        $attr = apply_filters('wp_get_attachment_image_attributes', $attr, $attachment, $size);
+        $attr = apply_filters_elementor_adapter('wp_get_attachment_image_attributes', $attr, $attachment, $size);
         $attr = array_map('esc_attr', $attr);
         $html = rtrim("<img $hwstring");
         foreach ($attr as $name => $value) {
@@ -309,7 +309,7 @@ define('WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
 define('MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
 define('YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
 
-function human_time_diff($from, $to = '')
+function human_time_diff_elementor_adapter($from, $to = '')
 {
     if (empty($to)) {
         $to = time();
@@ -324,7 +324,7 @@ function human_time_diff($from, $to = '')
         }
 
         /* translators: Time difference between two dates, in minutes (min=minute). 1: Number of minutes */
-        $since = sprintf(_n('%s min', '%s mins', $mins), $mins);
+        $since = sprintf(_n_elementor_adapter('%s min', '%s mins', $mins), $mins);
     } elseif ($diff < DAY_IN_SECONDS && $diff >= HOUR_IN_SECONDS) {
         $hours = round($diff / HOUR_IN_SECONDS);
         if ($hours <= 1) {
@@ -332,7 +332,7 @@ function human_time_diff($from, $to = '')
         }
 
         /* translators: Time difference between two dates, in hours. 1: Number of hours */
-        $since = sprintf(_n('%s hour', '%s hours', $hours), $hours);
+        $since = sprintf(_n_elementor_adapter('%s hour', '%s hours', $hours), $hours);
     } elseif ($diff < WEEK_IN_SECONDS && $diff >= DAY_IN_SECONDS) {
         $days = round($diff / DAY_IN_SECONDS);
         if ($days <= 1) {
@@ -340,7 +340,7 @@ function human_time_diff($from, $to = '')
         }
 
         /* translators: Time difference between two dates, in days. 1: Number of days */
-        $since = sprintf(_n('%s day', '%s days', $days), $days);
+        $since = sprintf(_n_elementor_adapter('%s day', '%s days', $days), $days);
     } elseif ($diff < MONTH_IN_SECONDS && $diff >= WEEK_IN_SECONDS) {
         $weeks = round($diff / WEEK_IN_SECONDS);
         if ($weeks <= 1) {
@@ -348,7 +348,7 @@ function human_time_diff($from, $to = '')
         }
 
         /* translators: Time difference between two dates, in weeks. 1: Number of weeks */
-        $since = sprintf(_n('%s week', '%s weeks', $weeks), $weeks);
+        $since = sprintf(_n_elementor_adapter('%s week', '%s weeks', $weeks), $weeks);
     } elseif ($diff < YEAR_IN_SECONDS && $diff >= MONTH_IN_SECONDS) {
         $months = round($diff / MONTH_IN_SECONDS);
         if ($months <= 1) {
@@ -356,7 +356,7 @@ function human_time_diff($from, $to = '')
         }
 
         /* translators: Time difference between two dates, in months. 1: Number of months */
-        $since = sprintf(_n('%s month', '%s months', $months), $months);
+        $since = sprintf(_n_elementor_adapter('%s month', '%s months', $months), $months);
     } elseif ($diff >= YEAR_IN_SECONDS) {
         $years = round($diff / YEAR_IN_SECONDS);
         if ($years <= 1) {
@@ -364,120 +364,120 @@ function human_time_diff($from, $to = '')
         }
 
         /* translators: Time difference between two dates, in years. 1: Number of years */
-        $since = sprintf(_n('%s year', '%s years', $years), $years);
+        $since = sprintf(_n_elementor_adapter('%s year', '%s years', $years), $years);
     }
 
-    return apply_filters('human_time_diff', $since, $diff, $from, $to);
+    return apply_filters_elementor_adapter('human_time_diff', $since, $diff, $from, $to);
 }
 
-function wp_image_editor_supports()
+function wp_image_editor_supports_elementor_adapter()
 {}
-function wp_embed_defaults()
+function wp_embed_defaults_elementor_adapter()
 {}
-function update_post_meta()
+function update_post_meta_elementor_adapter()
 {}
-function delete_post_meta()
+function delete_post_meta_elementor_adapter()
 {}
-function wp_oembed_get()
+function wp_oembed_get_elementor_adapter()
 {}
 
-function get_post_meta()
+function get_post_meta_elementor_adapter()
 {
     return 'DocumentDrupal';
 }
 
-function get_edit_post_link()
+function get_edit_post_link_elementor_adapter()
 {}
-function current_theme_supports()
+function current_theme_supports_elementor_adapter()
 {}
-function get_post_statuses()
+function get_post_statuses_elementor_adapter()
 {}
-function wp_is_post_revision()
+function wp_is_post_revision_elementor_adapter()
 {}
-function get_post_type_object()
+function get_post_type_object_elementor_adapter()
 {}
-function get_intermediate_image_sizes()
+function get_intermediate_image_sizes_elementor_adapter()
 {}
-function is_rtl()
+function is_rtl_elementor_adapter()
 {}
-function wp_remote_retrieve_response_code()
+function wp_remote_retrieve_response_code_elementor_adapter()
 {
     return 200;
 }
-function is_wp_error()
+function is_wp_error_elementor_adapter()
 {return false;}
-function admin_url()
+function admin_url_elementor_adapter()
 {}
-function check_admin_referer()
+function check_admin_referer_elementor_adapter()
 {}
-function add_menu_page()
+function add_menu_page_elementor_adapter()
 {}
-function add_submenu_page()
+function add_submenu_page_elementor_adapter()
 {}
-function register_activation_hook()
+function register_activation_hook_elementor_adapter()
 {}
-function add_post_type_support()
+function add_post_type_support_elementor_adapter()
 {}
 
-function get_bloginfo()
+function get_bloginfo_elementor_adapter()
 {
     return "en-US";
 }
 
-function register_taxonomy()
+function register_taxonomy_elementor_adapter()
 {}
-function register_post_type()
+function register_post_type_elementor_adapter()
 {}
-function register_uninstall_hook()
+function register_uninstall_hook_elementor_adapter()
 {}
-function _doing_it_wrong()
+function _doing_it_wrong_elementor_adapter()
 {}
-function add_query_arg()
+function add_query_arg_elementor_adapter()
 {}
-function is_singular()
+function is_singular_elementor_adapter()
 {}
-function get_the_ID()
+function get_the_ID_elementor_adapter()
 {
     $uid = \Drupal::routeMatch()->getParameter('node');
 
     return $uid;
 }
-function post_type_supports()
+function post_type_supports_elementor_adapter()
 {}
-function get_post_type()
+function get_post_type_elementor_adapter()
 {}
-function delete_option()
+function delete_option_elementor_adapter()
 {}
-function get_the_title()
+function get_the_title_elementor_adapter()
 {}
-function wp_get_attachment_image_src()
+function wp_get_attachment_image_src_elementor_adapter()
 {
     return [];
 }
-function set_transient($transient, $value, $expiration = 0)
+function set_transient_elementor_adapter($transient, $value, $expiration = 0)
 {
 
     $expiration = (int) $expiration;
-    $value = apply_filters("pre_set_transient_{$transient}", $value, $expiration, $transient);
-    $expiration = apply_filters("expiration_of_transient_{$transient}", $expiration, $value, $transient);
+    $value = apply_filters_elementor_adapter("pre_set_transient_{$transient}", $value, $expiration, $transient);
+    $expiration = apply_filters_elementor_adapter("expiration_of_transient_{$transient}", $expiration, $value, $transient);
     $result = [];
     return $result;
 }
 
-function get_transient($transient)
+function get_transient_elementor_adapter($transient)
 {
 
-    $pre = apply_filters("pre_transient_{$transient}", false, $transient);
+    $pre = apply_filters_elementor_adapter("pre_transient_{$transient}", false, $transient);
     if (false !== $pre) {
         return $pre;
     }
 
     return false;
 
-    return apply_filters("transient_{$transient}", $value, $transient);
+    return apply_filters_elementor_adapter("transient_{$transient}", $value, $transient);
 }
 
-function remove_filter($tag, $function_to_remove, $priority = 10)
+function remove_filter_elementor_adapter($tag, $function_to_remove, $priority = 10)
 {
     global $enqueued_actions;
 
@@ -490,97 +490,97 @@ function remove_filter($tag, $function_to_remove, $priority = 10)
     return $r;
 }
 
-function remove_action($tag, $function_to_remove, $priority = 10)
+function remove_action_elementor_adapter($tag, $function_to_remove, $priority = 10)
 {
-    return remove_filter($tag, $function_to_remove, $priority);
+    return remove_filter_elementor_adapter($tag, $function_to_remove, $priority);
 }
 
-function get_post()
+function get_post_elementor_adapter()
 {
     return true;
 }
-function wp_is_post_autosave()
+function wp_is_post_autosave_elementor_adapter()
 {}
-function wp_get_post_parent_id()
+function wp_get_post_parent_id_elementor_adapter()
 {}
-function apply_filters_ref_array($tag, $args)
+function apply_filters_ref_array_elementor_adapter($tag, $args)
 {
     return $tag;
 }
-function apply_filters_deprecated($tag, $args, $version, $replacement = false, $message = null)
+function apply_filters_deprecated_elementor_adapter($tag, $args, $version, $replacement = false, $message = null)
 {
-    return apply_filters_ref_array($tag, $args);
+    return apply_filters_ref_array_elementor_adapter($tag, $args);
 }
 
-function apply_filters($tag, $value)
+function apply_filters_elementor_adapter($tag, $value)
 {
     $all_args = array();
     for ($a = 0, $num = func_num_args(); $a < $num; $a++) {
         $all_args[] = func_get_arg($a);
     }
 
-    return call_user_func_array('do_action', $all_args);
+    return call_user_func_array('do_action_elementor_adapter', $all_args);
 }
 
-function shortcode_unautop($value)
+function shortcode_unautop_elementor_adapter($value)
 {
     return $value;
 }
-function do_shortcode($value)
+function do_shortcode_elementor_adapter($value)
 {
     return $value;
 }
-function wptexturize($value)
+function wptexturize_elementor_adapter($value)
 {
     return $value;
 }
-function wp_json_encode($data)
+function wp_json_encode_elementor_adapter($data)
 {
     return json_encode($data);
 }
-function absint($maybeint)
+function absint_elementor_adapter($maybeint)
 {
     return abs(intval($maybeint));
 }
-function is_admin()
+function is_admin_elementor_adapter()
 {
     return true;
 }
-function __($text, $context)
+function ___elementor_adapter($text, $context)
 {
     return $text;
 }
-function _x($text, $context, $domain = 'default')
-{
-    return $text;
-}
-
-function _n($text)
+function _x_elementor_adapter($text, $context, $domain = 'default')
 {
     return $text;
 }
 
-function esc_url($value)
+function _n_elementor_adapter($text)
+{
+    return $text;
+}
+
+function esc_url_elementor_adapter($value)
 {
     return $value;
 }
-function esc_html($text)
+function esc_html_elementor_adapter($text)
 {
     return $text;
 }
-function esc_html__($text)
+function esc_html___elementor_adapter($text)
 {
     return $text;
 }
-function esc_attr($text)
+function esc_attr_elementor_adapter($text)
 {
     return $text;
 }
-function esc_attr__($text)
+function esc_attr___elementor_adapter($text)
 {
     return $text;
 }
-function esc_attr_e($text, $domain = 'default')
+function esc_attr_e_elementor_adapter($text, $domain = 'default')
 {
     echo $text;
 }

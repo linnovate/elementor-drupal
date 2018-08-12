@@ -75,7 +75,7 @@ class Ajax_Manager {
 	 * @access protected
 	 */
 	protected function send_success() {
-		wp_send_json_success( [
+		wp_send_json_success_elementor_adapter( [
 			'responses' => $this->response_data,
 		] );
 	}
@@ -91,7 +91,7 @@ class Ajax_Manager {
 	 * @param null $code
 	 */
 	protected function send_error( $code = null ) {
-		wp_send_json_error( [
+		wp_send_json_error_elementor_adapter( [
 			'responses' => $this->response_data,
 		], $code );
 	}
@@ -109,8 +109,8 @@ class Ajax_Manager {
 	 * @param callable $callback The callback function.
 	 */
 	public function register_ajax_action( $tag, $callback ) {
-		if ( ! did_action( 'elementor/ajax/register_actions' ) ) {
-			_doing_it_wrong( __METHOD__, esc_html( __( 'Use `elementor/ajax/register_actions` hook to register ajax action.', 'elementor' ) ), '2.0.0' );
+		if ( ! did_action_elementor_adapter( 'elementor/ajax/register_actions' ) ) {
+			_doing_it_wrong_elementor_adapter( __METHOD__, esc_html_elementor_adapter( ___elementor_adapter( 'Use `elementor/ajax/register_actions` hook to register ajax action.', 'elementor' ) ), '2.0.0' );
 		}
 
 		$this->ajax_actions[ $tag ] = compact( 'tag', 'callback' );
@@ -128,19 +128,19 @@ class Ajax_Manager {
 	 */
 	public function handle_ajax_request() {
 		if ( ! Plugin::$instance->editor->verify_request_nonce() ) {
-			$this->add_response_data( false, __( 'Token Expired.', 'elementor' ) )
+			$this->add_response_data( false, ___elementor_adapter( 'Token Expired.', 'elementor' ) )
 				->send_error( Exceptions::UNAUTHORIZED );
 		}
 
 		if ( empty( $_REQUEST['actions'] ) || empty( $_REQUEST['editor_post_id'] ) ) {
-			$this->add_response_data( false, __( 'Actions and Post ID are required.', 'elementor' ) )
+			$this->add_response_data( false, ___elementor_adapter( 'Actions and Post ID are required.', 'elementor' ) )
 				->send_error( Exceptions::BAD_REQUEST );
 		}
 
-		$editor_post_id = absint( $_REQUEST['editor_post_id'] );
+		$editor_post_id = absint_elementor_adapter( $_REQUEST['editor_post_id'] );
 
-		if ( ! get_post( $editor_post_id ) ) {
-			$this->add_response_data( false, __( 'Post not found.', 'elementor' ) )
+		if ( ! get_post_elementor_adapter( $editor_post_id ) ) {
+			$this->add_response_data( false, ___elementor_adapter( 'Post not found.', 'elementor' ) )
 				->send_error( Exceptions::NOT_FOUND );
 		}
 
@@ -157,7 +157,7 @@ class Ajax_Manager {
 		 *
 		 * @param Ajax_Manager $this An instance of ajax manager.
 		 */
-		do_action( 'elementor/ajax/register_actions', $this );
+		do_action_elementor_adapter( 'elementor/ajax/register_actions', $this );
 
 		$this->requests = json_decode( stripslashes( $_REQUEST['actions'] ), true );
 
@@ -165,7 +165,7 @@ class Ajax_Manager {
 			$this->current_action_id = $id;
 
 			if ( ! isset( $this->ajax_actions[ $action_data['action'] ] ) ) {
-				$this->add_response_data( false, __( 'Action not found.', 'elementor' ), Exceptions::BAD_REQUEST );
+				$this->add_response_data( false, ___elementor_adapter( 'Action not found.', 'elementor' ), Exceptions::BAD_REQUEST );
 
 				continue;
 			}
@@ -245,6 +245,6 @@ class Ajax_Manager {
 	 * @access public
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_elementor_ajax', [ $this, 'handle_ajax_request' ] );
+		add_action_elementor_adapter( 'wp_ajax_elementor_ajax', [ $this, 'handle_ajax_request' ] );
 	}
 }

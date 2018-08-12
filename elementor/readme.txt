@@ -377,7 +377,7 @@ No. Elementor supports WordPress 4.6 or greater, and is compatible with PHP 5.4 
 * Fix: Ensure the frontend scripts are enqueued once in the editor preview
 
 = 2.0.8 - 2018-04-23 =
-* Tweak: Added action hook for caching plugins when clearing CSS files `do_action( 'elementor/css-file/clear_cache' );` ([#4179](https://github.com/pojome/elementor/issues/4179))
+* Tweak: Added action hook for caching plugins when clearing CSS files `do_action_elementor_adapter( 'elementor/css-file/clear_cache' );` ([#4179](https://github.com/pojome/elementor/issues/4179))
 * Tweak: Added Page Templates support only for layout pages
 * Fix: Smooth scrolling not working ([#4168](https://github.com/pojome/elementor/issues/4168), [#4125](https://github.com/pojome/elementor/issues/4125))
 * Fix: Stretch section for archive pages
@@ -819,7 +819,7 @@ No. Elementor supports WordPress 4.6 or greater, and is compatible with PHP 5.4 
 = 1.5.4 - 2017-07-17 =
 * Tweak: Re-organized SCSS files for the editor panel
 * Tweak: Added example how to remove some styles from front-end ([#1992](https://github.com/pojome/elementor/issues/1992))
-* Tweak: Added `do_action( 'elementor/preview/enqueue_scripts' );` for loading scripts in the preview only
+* Tweak: Added `do_action_elementor_adapter( 'elementor/preview/enqueue_scripts' );` for loading scripts in the preview only
 * Tweak: Added `panel/widgets/{WIDGET_TYPE}/controls/wp_widget/loaded` JS action to handle WP widget controls ([#1886](https://github.com/pojome/elementor/issues/1886))
 * Tweak: Changed Image placeholder
 * Tweak: Return `checkbox` control as deprecated in v1.5 ([#2003](https://github.com/pojome/elementor/issues/2003))

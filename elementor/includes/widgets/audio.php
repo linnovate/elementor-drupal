@@ -50,7 +50,7 @@ class Widget_Audio extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'SoundCloud', 'elementor' );
+		return ___elementor_adapter( 'SoundCloud', 'elementor' );
 	}
 
 	/**
@@ -93,14 +93,14 @@ class Widget_Audio extends Widget_Base {
 		$this->start_controls_section(
 			'section_audio',
 			[
-				'label' => __( 'SoundCloud', 'elementor' ),
+				'label' => ___elementor_adapter( 'SoundCloud', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link', 'elementor' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
@@ -119,12 +119,12 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'visual',
 			[
-				'label' => __( 'Visual Player', 'elementor' ),
+				'label' => ___elementor_adapter( 'Visual Player', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'no',
 				'options' => [
-					'yes' => __( 'Yes', 'elementor' ),
-					'no' => __( 'No', 'elementor' ),
+					'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
+					'no' => ___elementor_adapter( 'No', 'elementor' ),
 				],
 			]
 		);
@@ -132,7 +132,7 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_options',
 			[
-				'label' => __( 'Additional Options', 'elementor' ),
+				'label' => ___elementor_adapter( 'Additional Options', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -141,7 +141,7 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_auto_play',
 			[
-				'label' => __( 'Autoplay', 'elementor' ),
+				'label' => ___elementor_adapter( 'Autoplay', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 			]
 		);
@@ -149,10 +149,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_buying',
 			[
-				'label' => __( 'Buy Button', 'elementor' ),
+				'label' => ___elementor_adapter( 'Buy Button', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -160,10 +160,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_liking',
 			[
-				'label' => __( 'Like Button', 'elementor' ),
+				'label' => ___elementor_adapter( 'Like Button', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -171,10 +171,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_download',
 			[
-				'label' => __( 'Download Button', 'elementor' ),
+				'label' => ___elementor_adapter( 'Download Button', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -182,10 +182,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_show_artwork',
 			[
-				'label' => __( 'Artwork', 'elementor' ),
+				'label' => ___elementor_adapter( 'Artwork', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 				'condition' => [
 					'visual' => 'no',
@@ -196,10 +196,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_sharing',
 			[
-				'label' => __( 'Share Button', 'elementor' ),
+				'label' => ___elementor_adapter( 'Share Button', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -207,10 +207,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_show_comments',
 			[
-				'label' => __( 'Comments', 'elementor' ),
+				'label' => ___elementor_adapter( 'Comments', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -218,10 +218,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_show_playcount',
 			[
-				'label' => __( 'Play Counts', 'elementor' ),
+				'label' => ___elementor_adapter( 'Play Counts', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -229,10 +229,10 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_show_user',
 			[
-				'label' => __( 'Username', 'elementor' ),
+				'label' => ___elementor_adapter( 'Username', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_off' => __( 'Hide', 'elementor' ),
-				'label_on' => __( 'Show', 'elementor' ),
+				'label_off' => ___elementor_adapter( 'Hide', 'elementor' ),
+				'label_on' => ___elementor_adapter( 'Show', 'elementor' ),
 				'default' => 'yes',
 			]
 		);
@@ -240,7 +240,7 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'sc_color',
 			[
-				'label' => __( 'Controls Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Controls Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 			]
 		);
@@ -248,7 +248,7 @@ class Widget_Audio extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'soundcloud',
 			]
@@ -275,9 +275,9 @@ class Widget_Audio extends Widget_Base {
 
 		$this->_current_instance = $settings;
 
-		add_filter( 'oembed_result', [ $this, 'filter_oembed_result' ], 50, 3 );
-		$video_html = wp_oembed_get( $settings['link']['url'], wp_embed_defaults() );
-		remove_filter( 'oembed_result', [ $this, 'filter_oembed_result' ], 50 );
+		add_filter_elementor_adapter( 'oembed_result', [ $this, 'filter_oembed_result' ], 50, 3 );
+		$video_html = wp_oembed_get_elementor_adapter( $settings['link']['url'], wp_embed_defaults_elementor_adapter() );
+		remove_filter_elementor_adapter( 'oembed_result', [ $this, 'filter_oembed_result' ], 50 );
 
 		if ( $video_html ) : ?>
 			<div class="elementor-soundcloud-wrapper">
@@ -322,7 +322,7 @@ class Widget_Audio extends Widget_Base {
 
 		preg_match( '/<iframe.*src=\"(.*)\".*><\/iframe>/isU', $html, $matches );
 
-		$url = esc_url( add_query_arg( $params, $matches[1] ) );
+		$url = esc_url_elementor_adapter( add_query_arg_elementor_adapter( $params, $matches[1] ) );
 
 		$visual = 'yes' === $this->_current_instance['visual'] ? 'true' : 'false';
 

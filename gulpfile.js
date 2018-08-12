@@ -100,11 +100,11 @@ const regExp = new RegExp(`[\\[\\(\\.\\,\\s]?(${replaceArray.join("|")})(?=\\()`
 
 gulp.task('replace', function() {
   gulp.src('elementor/**/*.*')
-    .pipe(replace(regExp, ' elementor_adapter_$1'))
+    .pipe(replace(regExp, '$&_elementor_adapter'))
     .pipe(gulp.dest('elementor/'));
 
   gulp.src('drupal_elementor/**/*.*')
-    .pipe(replace(regExp, ' elementor_adapter_$1'))
+    .pipe(replace(regExp, '$&_elementor_adapter'))
     .pipe(gulp.dest('drupal_elementor/'));
 });
 

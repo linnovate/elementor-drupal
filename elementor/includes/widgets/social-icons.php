@@ -39,7 +39,7 @@ class Widget_Social_Icons extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Social Icons', 'elementor' );
+		return ___elementor_adapter( 'Social Icons', 'elementor' );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->start_controls_section(
 			'section_social_icon',
 			[
-				'label' => __( 'Social Icons', 'elementor' ),
+				'label' => ___elementor_adapter( 'Social Icons', 'elementor' ),
 			]
 		);
 
@@ -91,7 +91,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$repeater->add_control(
 			'social',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'type' => Controls_Manager::ICON,
 				'label_block' => true,
 				'default' => 'fa fa-wordpress',
@@ -153,20 +153,20 @@ class Widget_Social_Icons extends Widget_Base {
 		$repeater->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor' ),
+				'label' => ___elementor_adapter( 'Link', 'elementor' ),
 				'type' => Controls_Manager::URL,
 				'label_block' => true,
 				'default' => [
 					'is_external' => 'true',
 				],
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
+				'placeholder' => ___elementor_adapter( 'https://your-link.com', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'social_icon_list',
 			[
-				'label' => __( 'Social Icons', 'elementor' ),
+				'label' => ___elementor_adapter( 'Social Icons', 'elementor' ),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
@@ -187,13 +187,13 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'shape',
 			[
-				'label' => __( 'Shape', 'elementor' ),
+				'label' => ___elementor_adapter( 'Shape', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'rounded',
 				'options' => [
-					'rounded' => __( 'Rounded', 'elementor' ),
-					'square' => __( 'Square', 'elementor' ),
-					'circle' => __( 'Circle', 'elementor' ),
+					'rounded' => ___elementor_adapter( 'Rounded', 'elementor' ),
+					'square' => ___elementor_adapter( 'Square', 'elementor' ),
+					'circle' => ___elementor_adapter( 'Circle', 'elementor' ),
 				],
 				'prefix_class' => 'elementor-shape-',
 			]
@@ -202,19 +202,19 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label' => __( 'Alignment', 'elementor' ),
+				'label' => ___elementor_adapter( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left'    => [
-						'title' => __( 'Left', 'elementor' ),
+						'title' => ___elementor_adapter( 'Left', 'elementor' ),
 						'icon' => 'fa fa-align-left',
 					],
 					'center' => [
-						'title' => __( 'Center', 'elementor' ),
+						'title' => ___elementor_adapter( 'Center', 'elementor' ),
 						'icon' => 'fa fa-align-center',
 					],
 					'right' => [
-						'title' => __( 'Right', 'elementor' ),
+						'title' => ___elementor_adapter( 'Right', 'elementor' ),
 						'icon' => 'fa fa-align-right',
 					],
 				],
@@ -228,7 +228,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => __( 'View', 'elementor' ),
+				'label' => ___elementor_adapter( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -239,7 +239,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->start_controls_section(
 			'section_social_style',
 			[
-				'label' => __( 'Icon', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -247,12 +247,12 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'icon_color',
 			[
-				'label' => __( 'Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Color', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
-					'default' => __( 'Official Color', 'elementor' ),
-					'custom' => __( 'Custom', 'elementor' ),
+					'default' => ___elementor_adapter( 'Official Color', 'elementor' ),
+					'custom' => ___elementor_adapter( 'Custom', 'elementor' ),
 				],
 			]
 		);
@@ -260,7 +260,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'icon_primary_color',
 			[
-				'label' => __( 'Primary Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Primary Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'condition' => [
 					'icon_color' => 'custom',
@@ -274,7 +274,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'icon_secondary_color',
 			[
-				'label' => __( 'Secondary Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Secondary Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'condition' => [
 					'icon_color' => 'custom',
@@ -288,7 +288,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_size',
 			[
-				'label' => __( 'Size', 'elementor' ),
+				'label' => ___elementor_adapter( 'Size', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -305,7 +305,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_padding',
 			[
-				'label' => __( 'Padding', 'elementor' ),
+				'label' => ___elementor_adapter( 'Padding', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-social-icon' => 'padding: {{SIZE}}{{UNIT}};',
@@ -328,12 +328,12 @@ class Widget_Social_Icons extends Widget_Base {
 			]
 		);
 
-		$icon_spacing = is_rtl() ? 'margin-left: {{SIZE}}{{UNIT}};' : 'margin-right: {{SIZE}}{{UNIT}};';
+		$icon_spacing = is_rtl_elementor_adapter() ? 'margin-left: {{SIZE}}{{UNIT}};' : 'margin-right: {{SIZE}}{{UNIT}};';
 
 		$this->add_responsive_control(
 			'icon_spacing',
 			[
-				'label' => __( 'Spacing', 'elementor' ),
+				'label' => ___elementor_adapter( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -359,7 +359,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'border_radius',
 			[
-				'label' => __( 'Border Radius', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
@@ -373,7 +373,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->start_controls_section(
 			'section_social_hover',
 			[
-				'label' => __( 'Icon Hover', 'elementor' ),
+				'label' => ___elementor_adapter( 'Icon Hover', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -381,7 +381,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'hover_primary_color',
 			[
-				'label' => __( 'Primary Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Primary Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'condition' => [
@@ -396,7 +396,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'hover_secondary_color',
 			[
-				'label' => __( 'Secondary Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Secondary Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'condition' => [
@@ -411,7 +411,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'hover_border_color',
 			[
-				'label' => __( 'Border Color', 'elementor' ),
+				'label' => ___elementor_adapter( 'Border Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'condition' => [
@@ -426,7 +426,7 @@ class Widget_Social_Icons extends Widget_Base {
 		$this->add_control(
 			'hover_animation',
 			[
-				'label' => __( 'Hover Animation', 'elementor' ),
+				'label' => ___elementor_adapter( 'Hover Animation', 'elementor' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
 			]
 		);

@@ -94,8 +94,8 @@ class Documents_Manager {
 	 */
 	public function __construct() {
 		// Note: The priority 11 is for allowing plugins to add their register callback on elementor init.
-		add_action( 'elementor/init', [ $this, 'register_default_types' ], 11 );
-		add_action( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
+		add_action_elementor_adapter( 'elementor/init', [ $this, 'register_default_types' ], 11 );
+		add_action_elementor_adapter( 'elementor/ajax/register_actions', [ $this, 'register_ajax_actions' ] );
 	}
 
 	/**
@@ -141,7 +141,7 @@ class Documents_Manager {
 		 *
 		 * @param Documents_Manager $this The document manager instance.
 		 */
-		do_action( 'elementor/documents/register', $this );
+		do_action_elementor_adapter( 'elementor/documents/register', $this );
 	}
 
 	/**
@@ -189,26 +189,26 @@ class Documents_Manager {
 	 * @return false|Document Document data or false if post ID was not entered.
 	 */
 	public function get( $post_id, $from_cache = true ) {
-		$post_id = absint( $post_id );
+		$post_id = absint_elementor_adapter( $post_id );
 
-		if ( ! $post_id || ! get_post( $post_id ) ) {
+		if ( ! $post_id || ! get_post_elementor_adapter( $post_id ) ) {
 			return false;
 		}
 
-		$post_id = apply_filters( 'elementor/documents/get/post_id', $post_id );
+		$post_id = apply_filters_elementor_adapter( 'elementor/documents/get/post_id', $post_id );
 
 		if ( ! $from_cache || ! isset( $this->documents[ $post_id ] ) ) {
 
-			if ( wp_is_post_autosave( $post_id ) ) {
-				$post_type = get_post_type( wp_get_post_parent_id( $post_id ) );
+			if ( wp_is_post_autosave_elementor_adapter( $post_id ) ) {
+				$post_type = get_post_type_elementor_adapter( wp_get_post_parent_id_elementor_adapter( $post_id ) );
 			} else {
-				$post_type = get_post_type( $post_id );
+				$post_type = get_post_type_elementor_adapter( $post_id );
 			}
 
 			if ( isset( $this->cpt[ $post_type ] ) ) {
 				$doc_type = $this->cpt[ $post_type ];
 			} else {
-				$doc_type = get_post_meta( $post_id, Document::TYPE_META_KEY, true );
+				$doc_type = get_post_meta_elementor_adapter( $post_id, Document::TYPE_META_KEY, true );
 			}
 
 			$doc_type_class = $this->get_document_type( $doc_type );
@@ -256,7 +256,7 @@ class Documents_Manager {
 	 */
 	public function get_doc_for_frontend( $post_id ) {
 		if ( is_preview() || Plugin::$instance->preview->is_preview_mode() ) {
-			$document = $this->get_doc_or_auto_save( $post_id, get_current_user_id() );
+			$document = $this->get_doc_or_auto_save( $post_id, get_current_user_id_elementor_adapter() );
 		} else {
 			$document = $this->get( $post_id );
 		}
@@ -314,11 +314,11 @@ class Documents_Manager {
 		}
 
 		if ( empty( $post_data['post_title'] ) ) {
-			$post_data['post_title'] = __( 'Elementor', 'elementor' );
+			$post_data['post_title'] = ___elementor_adapter( 'Elementor', 'elementor' );
 			if ( 'post' !== $type ) {
 				$post_data['post_title'] = sprintf(
 					/* translators: %s: Document title */
-					__( 'Elementor %s', 'elementor' ),
+					___elementor_adapter( 'Elementor %s', 'elementor' ),
 					call_user_func( [ $this->types[ $type ], 'get_title' ] )
 				);
 			}
@@ -376,7 +376,7 @@ class Documents_Manager {
 		$this->switch_to_document( $document );
 
 		// Set the post as global post.
-		Plugin::$instance->db->switch_to_post( $document->get_post()->ID );
+		Plugin::$instance->db->switch_to_post( $document->get_post_elementor_adapter()->ID );
 
 		$status = DB::STATUS_DRAFT;
 
@@ -387,7 +387,7 @@ class Documents_Manager {
 		if ( DB::STATUS_AUTOSAVE === $status ) {
 			// If the post is a draft - save the `autosave` to the original draft.
 			// Allow a revision only if the original post is already published.
-			if ( in_array( $document->get_post()->post_status, [ DB::STATUS_PUBLISH, DB::STATUS_PRIVATE ], true ) ) {
+			if ( in_array( $document->get_post_elementor_adapter()->post_status, [ DB::STATUS_PUBLISH, DB::STATUS_PRIVATE ], true ) ) {
 				$document = $document->get_autosave( 0, true );
 			}
 		}
@@ -406,7 +406,7 @@ class Documents_Manager {
 		$document->save( $data );
 
 		// Refresh after save.
-		$document = $this->get( $document->get_post()->ID, false );
+		$document = $this->get( $document->get_post_elementor_adapter()->ID, false );
 
 		$return_data = [
 			'config' => [
@@ -427,7 +427,7 @@ class Documents_Manager {
 		 * @param array    $return_data The returned data.
 		 * @param Document $document    The document instance.
 		 */
-		$return_data = apply_filters( 'elementor/documents/ajax_save/return_data', $return_data, $document );
+		$return_data = apply_filters_elementor_adapter( 'elementor/documents/ajax_save/return_data', $return_data, $document );
 
 		return $return_data;
 	}

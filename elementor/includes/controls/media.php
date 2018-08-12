@@ -90,14 +90,14 @@ class Control_Media extends Control_Base_Multiple {
 	 */
 	public function enqueue() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		wp_enqueue_media();
+		wp_enqueue_media_elementor_adapter();
 
-		wp_enqueue_style(
+		wp_enqueue_style_elementor_adapter(
 			'media',
-			admin_url( '/css/media' . $suffix . '.css' )
+			admin_url_elementor_adapter( '/css/media' . $suffix . '.css' )
 		);
 
-		wp_register_script(
+		wp_register_script_elementor_adapter(
 			'image-edit',
 			'/wp-admin/js/image-edit' . $suffix . '.js',
 			[
@@ -109,7 +109,7 @@ class Control_Media extends Control_Base_Multiple {
 			true
 		);
 
-		wp_enqueue_script( 'image-edit' );
+		wp_enqueue_script_elementor_adapter( 'image-edit' );
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Control_Media extends Control_Base_Multiple {
 							<video class="elementor-control-media-video" preload="metadata"></video>
 							<i class="fa fa-video-camera"></i>
 						<# } #>
-						<div class="elementor-control-media-delete"><?php echo __( 'Delete', 'elementor' ); ?></div>
+						<div class="elementor-control-media-delete"><?php echo ___elementor_adapter( 'Delete', 'elementor' ); ?></div>
 					</div>
 				</div>
 			</div>
@@ -190,7 +190,7 @@ class Control_Media extends Control_Base_Multiple {
 			return '';
 		}
 
-		return get_the_title( $attachment['id'] );
+		return get_the_title_elementor_adapter( $attachment['id'] );
 	}
 
 	/**
@@ -216,12 +216,12 @@ class Control_Media extends Control_Base_Multiple {
 			return '';
 		}
 
-		$attachment = get_post( $attachment_id );
+		$attachment = get_post_elementor_adapter( $attachment_id );
 		if ( ! $attachment ) {
 			return '';
 		}
 
-		$alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
+		$alt = get_post_meta_elementor_adapter( $attachment_id, '_wp_attachment_image_alt', true );
 		if ( ! $alt ) {
 			$alt = $attachment->post_excerpt;
 			if ( ! $alt ) {

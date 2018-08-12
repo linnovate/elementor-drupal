@@ -153,8 +153,8 @@ class Widget_WordPress extends Widget_Base {
 
 		ob_start();
 		echo '<div class="widget-inside media-widget-control"><div class="form wp-core-ui">';
-		echo '<input type="hidden" class="id_base" value="' . esc_attr( $instance->id_base ) . '" />';
-		echo '<input type="hidden" class="widget-id" value="widget-' . esc_attr( $this->get_id() ) . '" />';
+		echo '<input type="hidden" class="id_base" value="' . esc_attr_elementor_adapter( $instance->id_base ) . '" />';
+		echo '<input type="hidden" class="widget-id" value="widget-' . esc_attr_elementor_adapter( $this->get_id() ) . '" />';
 		echo '<div class="widget-content">';
 		$instance->form( $this->get_settings( 'wp' ) );
 		echo '</div></div></div>';
@@ -218,7 +218,7 @@ class Widget_WordPress extends Widget_Base {
 		$this->add_control(
 			'wp',
 			[
-				'label' => __( 'Form', 'elementor' ),
+				'label' => ___elementor_adapter( 'Form', 'elementor' ),
 				'type' => Controls_Manager::WP_WIDGET,
 				'widget' => $this->get_name(),
 				'id_base' => $this->get_widget_instance()->id_base,
@@ -253,7 +253,7 @@ class Widget_WordPress extends Widget_Base {
 		 * @param array            $default_widget_args Default widget arguments.
 		 * @param Widget_WordPress $this                The WordPress widget.
 		 */
-		$default_widget_args = apply_filters( 'elementor/widgets/wordpress/widget_args', $default_widget_args, $this ); // WPCS: spelling ok.
+		$default_widget_args = apply_filters_elementor_adapter( 'elementor/widgets/wordpress/widget_args', $default_widget_args, $this ); // WPCS: spelling ok.
 
 		$this->get_widget_instance()->widget( $default_widget_args, $this->get_settings( 'wp' ) );
 	}

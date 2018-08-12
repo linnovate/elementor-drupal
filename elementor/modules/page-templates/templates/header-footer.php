@@ -14,7 +14,7 @@ get_header();
  *
  * @since 2.0.0
  */
-do_action( 'elementor/page_templates/header-footer/before_content' );
+do_action_elementor_adapter( 'elementor/page_templates/header-footer/before_content' );
 
 \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 
@@ -25,6 +25,6 @@ do_action( 'elementor/page_templates/header-footer/before_content' );
  *
  * @since 2.0.0
  */
-do_action( 'elementor/page_templates/header-footer/after_content' );
+do_action_elementor_adapter( 'elementor/page_templates/header-footer/after_content' );
 
 get_footer();

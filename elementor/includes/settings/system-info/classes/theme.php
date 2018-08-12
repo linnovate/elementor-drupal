@@ -85,7 +85,7 @@ class Theme_Reporter extends Base_Reporter {
 	 */
 	protected function _get_theme() {
 		if ( is_null( $this->theme ) ) {
-			$this->theme = wp_get_theme();
+			$this->theme = wp_get_theme_elementor_adapter();
 		}
 		return $this->theme;
 	}
@@ -189,7 +189,7 @@ class Theme_Reporter extends Base_Reporter {
 		if ( ! $is_child_theme ) {
 			$result['recommendation'] = sprintf(
 				/* translators: %s: Codex URL */
-				_x( 'If you want to modify the source code of your theme, we recommend using a <a href="%s">child theme</a>.', 'System Info', 'elementor' ),
+				_x_elementor_adapter( 'If you want to modify the source code of your theme, we recommend using a <a href="%s">child theme</a>.', 'System Info', 'elementor' ),
 				'https://codex.wordpress.org/Child_Themes'
 			);
 		}
