@@ -99,11 +99,11 @@ var replaceArray = ["get_option",
 const regExp = new RegExp(`[\\[\\(\\.\\,\\s]?(${replaceArray.join("|")})(?=\\()`,"g");
 
 gulp.task('replace', function() {
-  return gulp.src('elementor/**/*.*')
+  gulp.src('elementor/**/*.*')
     .pipe(replace(regExp, ' elementor_adapter_$1'))
     .pipe(gulp.dest('elementor/'));
 
-  return gulp.src('drupal_elementor/**/*.*')
+  gulp.src('drupal_elementor/**/*.*')
     .pipe(replace(regExp, ' elementor_adapter_$1'))
     .pipe(gulp.dest('drupal_elementor/'));
 });
