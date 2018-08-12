@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var replace = require('gulp-replace');
 
 var paths = {
-  replaceFiles: ['**/*.*'],
+  replaceFiles: ['drupal_elementor/**/*.*', 'elementor/**/*.*'],
 };
 
 var replaceArray = ["get_option",
@@ -105,6 +105,6 @@ const regExp = new RegExp(`[\\[\\(\\.\\s]?(${replaceArray.join("|")})(?=\\()`,"g
 gulp.task('replace', function() {
   return gulp.src(paths.replaceFiles)
     .pipe(replace(regExp, ' elementor_adapter_$1'))
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest('/'));
 });
 
