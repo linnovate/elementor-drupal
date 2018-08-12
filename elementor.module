@@ -76,7 +76,7 @@ function elementor_preprocess_elementor_field(&$variables, $hook)
     $ElementorDrupal = ElementorDrupal::$instance;
     $frontend_data = $ElementorDrupal->frontend($uid);
 
-    $variables['base_path'] = base_path();
+    $variables['base_path'] = base_path() . drupal_get_path('module', 'elementor');
     $variables['elementor_tmp'] = $frontend_data;
     $variables['uid'] = $uid;
     $variables['#cache'] = ['max-age' => 0];

@@ -62,7 +62,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
         $html = $template->render([
             elementor_data => $editor_data,
-            base_path => base_path(),
+            base_path => base_path() . drupal_get_path('module', 'elementor'),
         ]);
 
         $response = new Response();

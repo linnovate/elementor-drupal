@@ -2,7 +2,7 @@
 ##### step 1 download
 1. download this project
 2. rename project-dir name from elementor-drupal to elementor
-3. add to the drupal modules folder - [drupal]/modules/elementor
+3. add to the drupal modules folder - [drupal]/[modules]/elementor
 
 ------------
 

@@ -63,7 +63,7 @@ class ElementorDrupal
             'version' => ELEMENTOR_VERSION,
             'ajaxurl' => base_path() . 'elementor/update',
             'home_url' => base_path(),
-            'assets_url' => base_path() . 'modules/elementor/elementor/assets/',
+            'assets_url' => base_path() . drupal_get_path('module', 'elementor') . '/elementor/assets/',
             "post_id" => $uid,
             'data' => $data['elements'],
             // 'settings' => $data['settings'],
