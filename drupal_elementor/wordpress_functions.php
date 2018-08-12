@@ -210,7 +210,7 @@ function wp_parse_str_elementor_adapter($string, &$array)
         $array = stripslashes_deep($array);
     }
 
-    $array = apply_filters_elementor_adapter('wp_parse_str', $array);
+    $array = apply_filters_elementor_adapter('wp_parse_str_elementor_adapter', $array);
 }
 
 function wp_parse_args_elementor_adapter($args, $defaults = '')
@@ -432,8 +432,99 @@ function register_uninstall_hook_elementor_adapter()
 {}
 function _doing_it_wrong_elementor_adapter()
 {}
+
+function urlencode_deep_elementor_adapter($value)
+{
+    return map_deep_elementor_adapter($value, 'urlencode');
+}
+
+function map_deep_elementor_adapter($value, $callback)
+{
+    if (is_array($value)) {
+        foreach ($value as $index => $item) {
+            $value[$index] = map_deep_elementor_adapter($item, $callback);
+        }
+    } elseif (is_object($value)) {
+        $object_vars = get_object_vars($value);
+        foreach ($object_vars as $property_name => $property_value) {
+            $value->$property_name = map_deep_elementor_adapter($property_value, $callback);
+        }
+    } else {
+        $value = call_user_func($callback, $value);
+    }
+
+    return $value;
+}
 function add_query_arg_elementor_adapter()
-{}
+{
+    $args = func_get_args();
+    if (is_array($args[0])) {
+        if (count($args) < 2 || false === $args[1]) {
+            $uri = $_SERVER['REQUEST_URI'];
+        } else {
+            $uri = $args[1];
+        }
+
+    } else {
+        if (count($args) < 3 || false === $args[2]) {
+            $uri = $_SERVER['REQUEST_URI'];
+        } else {
+            $uri = $args[2];
+        }
+
+    }
+
+    if ($frag = strstr($uri, '#')) {
+        $uri = substr($uri, 0, -strlen($frag));
+    } else {
+        $frag = '';
+    }
+
+    if (0 === stripos($uri, 'http://')) {
+        $protocol = 'http://';
+        $uri = substr($uri, 7);
+    } elseif (0 === stripos($uri, 'https://')) {
+        $protocol = 'https://';
+        $uri = substr($uri, 8);
+    } else {
+        $protocol = '';
+    }
+
+    if (strpos($uri, '?') !== false) {
+        list($base, $query) = explode('?', $uri, 2);
+        $base .= '?';
+    } elseif ($protocol || strpos($uri, '=') === false) {
+        $base = $uri . '?';
+        $query = '';
+    } else {
+        $base = '';
+        $query = $uri;
+    }
+
+    wp_parse_str_elementor_adapter($query, $qs);
+    $qs = urlencode_deep_elementor_adapter($qs); // this re-URL-encodes things that were already in the query string
+    if (is_array($args[0])) {
+        foreach ($args[0] as $k => $v) {
+            $qs[$k] = $v;
+        }
+    } else {
+        $qs[$args[0]] = $args[1];
+    }
+
+    foreach ($qs as $k => $v) {
+        if ($v === false) {
+            unset($qs[$k]);
+        }
+
+    }
+
+    $ret = http_build_query($qs);
+    $ret = trim($ret, '?');
+    $ret = preg_replace('#=(&|$)#', '$1', $ret);
+    $ret = $protocol . $base . $ret . $frag;
+    $ret = rtrim($ret, '?');
+    return $ret;
+}
 function is_singular_elementor_adapter()
 {}
 function get_the_ID_elementor_adapter()
