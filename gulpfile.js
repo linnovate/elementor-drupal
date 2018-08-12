@@ -1,10 +1,6 @@
 var gulp = require('gulp');
 var replace = require('gulp-replace');
 
-var paths = {
-  replaceFiles: ['drupal_elementor/**/*.*', 'elementor/**/*.*'],
-};
-
 var replaceArray = ["get_option",
 "add_filter",
 "add_action",
@@ -100,11 +96,15 @@ var replaceArray = ["get_option",
 ];
 
 
-const regExp = new RegExp(`[\\[\\(\\.\\s]?(${replaceArray.join("|")})(?=\\()`,"g");
+const regExp = new RegExp(`[\\[\\(\\.\\,\\s]?(${replaceArray.join("|")})(?=\\()`,"g");
 
 gulp.task('replace', function() {
-  return gulp.src(paths.replaceFiles)
+  return gulp.src('elementor/**/*.*')
     .pipe(replace(regExp, ' elementor_adapter_$1'))
-    .pipe(gulp.dest('/'));
+    .pipe(gulp.dest('elementor/'));
+
+  return gulp.src('drupal_elementor/**/*.*')
+    .pipe(replace(regExp, ' elementor_adapter_$1'))
+    .pipe(gulp.dest('drupal_elementor/'));
 });
 
