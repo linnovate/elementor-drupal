@@ -100,12 +100,9 @@ var replaceArray = ["get_option",
 const regExp = new RegExp(`[\\[\\(\\.\\,\\s]?(${replaceArray.join("|")})(?=\\()`,"g");
 
 gulp.task('replace', function() {
-  gulp.src('elementor/**/*.*')
+  gulp.src(['elementor/**/*.*', '!elementor/assets/**/*.*'])
     .pipe(replace(regExp, '$&_elementor_adapter'))
     .pipe(gulp.dest('elementor/'));
 
-  gulp.src('elementor_drupal/**/*.*')
-    .pipe(replace(regExp, '$&_elementor_adapter'))
-    .pipe(gulp.dest('elementor_drupal/'));
 });
 
