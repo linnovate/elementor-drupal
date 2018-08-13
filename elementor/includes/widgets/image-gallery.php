@@ -365,7 +365,7 @@ class Widget_Image_Gallery extends Widget_Base {
 			return;
 		}
 
-		$ids = wp_list_pluck( $settings['wp_gallery'], 'id' );
+		$ids = wp_list_pluck_elementor_adapter( $settings['wp_gallery'], 'id' );
 
 		$this->add_render_attribute( 'shortcode', 'ids', implode( ',', $ids ) );
 		$this->add_render_attribute( 'shortcode', 'size', $settings['thumbnail_size'] );

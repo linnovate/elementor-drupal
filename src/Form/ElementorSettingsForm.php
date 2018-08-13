@@ -10,7 +10,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Controller location for Live Weather Settings Form.
+ * Controller ElementorSettings for Elementor Settings Form.
  */
 class ElementorSettingsForm extends ConfigFormBase
 {
@@ -176,7 +176,7 @@ class ElementorSettingsForm extends ConfigFormBase
         }
 
         parent::submitForm($form, $form_state);
-        
+
         drupal_flush_all_caches();
     }
 

@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use \Drupal\file\Entity\File;
 
 class ElementorController extends ControllerBase implements ContainerInjectionInterface
@@ -80,7 +79,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
             $newFile = file_save_data($data, "public://" . $file->getClientOriginalName(), FILE_EXISTS_REPLACE);
             $files[] = [
                 url => $newFile->url(),
-                id => $newFile->id()
+                id => $newFile->id(),
             ];
         }
 
@@ -89,7 +88,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
     public function delete_upload(Request $request)
     {
-        $newFile =  file_delete($request->get('fid'));
+        $newFile = file_delete($request->get('fid'));
         return new JsonResponse();
     }
 }

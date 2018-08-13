@@ -16,6 +16,7 @@ function elementor_uninstall()
 
 function elementor_schema()
 {
+    // Data that Elementor editor gives
     $schema['elementor_data'] = array(
         'description' => 'Elementor data.',
         'fields' => array(
@@ -53,6 +54,7 @@ function elementor_schema()
         ),
     );
 
+    // Templates that Elementor editor save or load from the remote templates services 
     $schema['elementor_tmps'] = array(
         'description' => 'Elementor templates.',
         'fields' => array(

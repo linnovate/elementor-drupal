@@ -93,6 +93,7 @@ var replaceArray = ["get_option",
 "esc_attr",
 "esc_attr__",
 "esc_attr_e",
+"wp_list_pluck",
 ];
 
 
@@ -103,8 +104,8 @@ gulp.task('replace', function() {
     .pipe(replace(regExp, '$&_elementor_adapter'))
     .pipe(gulp.dest('elementor/'));
 
-  gulp.src('drupal_elementor/**/*.*')
+  gulp.src('elementor_drupal/**/*.*')
     .pipe(replace(regExp, '$&_elementor_adapter'))
-    .pipe(gulp.dest('drupal_elementor/'));
+    .pipe(gulp.dest('elementor_drupal/'));
 });
 

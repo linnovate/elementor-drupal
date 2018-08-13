@@ -1,9 +1,11 @@
-elementor.update:
-  path: 'elementor/update'
-  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::update' }
-  methods:  [POST]
+elementor.settings:
+  path: '/admin/config/services/elementor/settings'
+  defaults: 
+    _form: 'Drupal\elementor\Form\ElementorSettingsForm'
+    _title: 'Elementor Settings'
   requirements:
     _permission: 'administer content types'
+
 elementor.editor:
   path: '/node/{node}/elementor'
   defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::editor' }
@@ -11,28 +13,31 @@ elementor.editor:
   requirements:
     _permission: 'administer content types'
     _format: 'html'
+
+elementor.update:
+  path: 'elementor/update'
+  defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::update' }
+  methods:  [POST]
+  requirements:
+    _permission: 'administer content types'
+
 elementor.autosave:
   path: '/elementor/autosave'
   defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::autosave' }
   methods:  [POST]
   requirements:
     _permission: 'administer content types'
+
 elementor.upload:
   path: '/elementor/upload'
   defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::upload' }
   methods:  [POST]
   requirements:
     _permission: 'administer content types'
+
 elementor.delete_upload:
   path: '/elementor/delete_upload/{fid}'
   defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::delete_upload' }
   methods:  [DELETE]
-  requirements:
-    _permission: 'administer content types'
-elementor.settings:
-  path: '/admin/config/services/elementor/settings'
-  defaults: 
-    _form: 'Drupal\elementor\Form\ElementorSettingsForm'
-    _title: 'Elementor Settings'
   requirements:
     _permission: 'administer content types'
