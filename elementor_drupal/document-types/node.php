@@ -36,7 +36,7 @@ class DocumentDrupal extends Document
 
     public function get_exit_to_dashboard_url()
     {
-        return 'node/' . $this->get_id_int();
+        return '/node/' . $this->get_id_int();
     }
 
     public function is_editable_by_current_user()

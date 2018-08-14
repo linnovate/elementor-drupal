@@ -71,6 +71,14 @@ class ElementorDrupal
                 'data' => json_encode($data),
             ])
             ->execute();
+
+        $result_count = $connection->query("SELECT COUNT(uid) as num FROM elementor_data WHERE uid = " . $id)
+            ->fetch();
+            $count =  $result_count->num - 10;
+        if ($count > 0) {
+            $result = $connection->query("DELETE FROM elementor_data WHERE uid = " . $id . " LIMIT " . $count)
+                ->execute();
+        }
     }
 
     /**
