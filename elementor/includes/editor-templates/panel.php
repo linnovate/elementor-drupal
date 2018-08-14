@@ -10,7 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @var Editor $this
  */
-$document = Plugin::$instance->documents->get( 1 );
+$id = \Drupal::routeMatch()->getParameter('node');
+$document = Plugin::$instance->documents->get( $id );
 
 ?>
 <script type="text/template" id="tmpl-elementor-panel">
