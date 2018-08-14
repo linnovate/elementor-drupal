@@ -58,17 +58,19 @@ function do_action_elementor_adapter($tag, $args = [])
     for ($a = 1, $num = func_num_args(); $a < $num; $a++) {
         $all_args[] = func_get_arg($a);
     }
+    
+    if ($enqueued_actions[$tag]) {
+        foreach ($enqueued_actions[$tag] as $the_) {
+            $num_args = count($all_args);
 
-    foreach ($enqueued_actions[$tag] as $the_) {
-        $num_args = count($all_args);
-
-        if ($tag != "elementor/css-file/post/parse") {
-            if ($the_['accepted_args'] == 0) {
-                $value = call_user_func_array($the_['func'], array());
-            } elseif ($the_['accepted_args'] >= $num_args) {
-                $value = call_user_func_array($the_['func'], $all_args);
-            } else {
-                $value = call_user_func_array($the_['func'], array_slice($all_args, 0, (int) $the_['accepted_args']));
+            if ($tag != "elementor/css-file/post/parse") {
+                if ($the_['accepted_args'] == 0) {
+                    $value = call_user_func_array($the_['func'], array());
+                } elseif ($the_['accepted_args'] >= $num_args) {
+                    $value = call_user_func_array($the_['func'], $all_args);
+                } else {
+                    $value = call_user_func_array($the_['func'], array_slice($all_args, 0, (int) $the_['accepted_args']));
+                }
             }
         }
     }
@@ -557,7 +559,7 @@ function get_transient_elementor_adapter($transient)
     return apply_filters_elementor_adapter("transient_{$transient}", $value, $transient);
 }
 
-function remove_filter_elementor_adapter($tag, $function_to_remove, $priority = 10)
+function remove_filter_elementor_adapter($tag, $function_to_remove = null, $priority = 10)
 {
     global $enqueued_actions;
 
@@ -570,7 +572,7 @@ function remove_filter_elementor_adapter($tag, $function_to_remove, $priority = 
     return $r;
 }
 
-function remove_action_elementor_adapter($tag, $function_to_remove, $priority = 10)
+function remove_action_elementor_adapter($tag, $function_to_remove = null, $priority = 10)
 {
     return remove_filter_elementor_adapter($tag, $function_to_remove, $priority);
 }
