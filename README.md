@@ -13,8 +13,8 @@
 ------------
 
 ##### step 3 setup
-1. go to [drupal]/admin/structure/types/manage/article/display
-2. change  the format of body_field to "show elementor"
+1. Go to /admin/config/services/elementor/setting
+2. Choose content type to apply elementor
 3. save
 
 ![Set Elementor format](https://raw.githubusercontent.com/linnovate/elementor-drupal/master/readme-assets/set_format.png "Set Elementor format")
