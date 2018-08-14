@@ -66,7 +66,7 @@ class Drupal_Revisions_Manager extends Revisions_Manager
             ->fetchAll();
 
         $revisions = [];
-
+        
         foreach ($result as $revision) {
             $revisions[] = $revision->id;
         }

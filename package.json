@@ -4,6 +4,6 @@
     "gulp-replace": "^1.0.0"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gulp replace",
+    "build": "./node_modules/.bin/gulp replace"
   }
 }

@@ -11,6 +11,7 @@ use Drupal\elementor\DrupalPost_CSS;
 use Drupal\elementor\Drupal_Ajax_Manager;
 use Drupal\elementor\Drupal_Revisions_Manager;
 use Drupal\elementor\Drupal_TemplateLibrary_Manager;
+
 use Elementor\Editor;
 use Elementor\Plugin;
 use Elementor\Schemes_Manager;
@@ -143,7 +144,7 @@ class ElementorDrupal
         $data = $this->render_data($id);
         $items = $this->plugin->schemes_manager->get_registered_schemes_data();
         $enabled_schemes = Schemes_Manager::get_enabled_schemes();
-
+$ff= $this->plugin->controls_manager->get_controls_data();
         $config = [
             'version' => ELEMENTOR_VERSION,
             'ajaxurl' => base_path() . 'elementor/update',
@@ -317,6 +318,7 @@ class ElementorDrupal
 
         ob_start();
 
+        $url  = "/node/" . $id;   
         echo '<script>' . PHP_EOL;
         echo '/* <![CDATA[ */' . PHP_EOL;
 
@@ -325,8 +327,8 @@ class ElementorDrupal
         echo 'var ajaxurl = "/elementor/autosave";' . PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
         echo 'ElementorConfig.document.id = ' . $id . ';' . PHP_EOL;
         echo 'ElementorConfig.document.urls = {
-            preview: "/node/1",
-            exit_to_dashboard: "/node/1",
+            preview: "'. $url .'",
+            exit_to_dashboard: "' . $url . '",
         };' . PHP_EOL;
 
         echo 'ElementorConfig.settings.general.settings.elementor_default_generic_fonts =  "' . $elementor_settings->get('default_generic_fonts') . '";' . PHP_EOL;

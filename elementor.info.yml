@@ -2,8 +2,9 @@ name: Elementor
 type: module
 description: 'Implement the "Elementor" page builder into drupal.'
 
-dependencies:
+version: "8.x-1.0"
+core: "8.x"
+project: "elementor"
 
-version: '8.x-1.0'
-core: '8.x'
-project: 'elementor'
+libraries:
+  - elementor/global

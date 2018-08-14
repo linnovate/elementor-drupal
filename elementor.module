@@ -2,7 +2,17 @@
 
 require drupal_get_path('module', 'elementor') . '/elementor_drupal/elementor.php';
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\elementor\ElementorDrupal;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function elementor_page_attachments(array &$attachments)
+{
+    $attachments['#attached']['library'][] = 'elementor/global';
+}
 
 /**
  * Implements hook_theme().
@@ -41,7 +51,7 @@ function elementor_theme_suggestions_alter(array &$suggestions, array $variables
             $suggestions[] = 'elementor_field';
         } else if ($hook == 'node' && !$config['settings']['template']) {
             $suggestions[] = 'elementor_field';
-        } 
+        }
     }
 }
 
@@ -106,6 +116,38 @@ function elementor_menu_local_tasks_alter(&$data, $route_name)
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function elementor_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+
+    // Adding custom validation for the welcome page type field.
+    if ($form_id == 'node_article_edit_form' || $form_id == 'node_article_form') {
+        $form['edit_with_elementor'] = array(
+            '#type' => 'submit',
+            '#value' => t('Edit with Elementor'),
+            '#weight' => 0.1,
+            '#attributes' => [
+                'class' => ['eicon-elementor', 'edit-with-elementor'],
+            ],
+        );
+
+        $form['#submit'][] = 'elementor_edit_with_elementor_form_submit';
+
+    }
+}
+
+function elementor_edit_with_elementor_form_submit($form, &$form_state)
+{
+    global $base_url;
+    drupal_set_message('node is saved.');
+    $entity = $form_state->getFormObject()->getEntity();
+    $entity->save();
+
+    $form_state->setRedirect('elementor.editor', ['node' => $entity->id()]);
+}
+
+/**
  * Implements hook_library_info_build().
  */
 
@@ -114,7 +156,7 @@ function elementor_library_info_build()
     $path = drupal_get_path('module', 'elementor');
 
     $libraries = [];
-    $libraries['elementor/editor'] = [
+    $libraries['editor'] = [
         'js' => [
             // $path . '/elementor_drupal/assets/js/jquery/jquery.js' => [],
             $path . '/elementor_drupal/assets/js/jquery/jquery-migrate.min.js' => [],
@@ -200,7 +242,7 @@ function elementor_library_info_build()
         ],
     ];
 
-    $libraries['elementor/frontend'] = [
+    $libraries['frontend'] = [
         'js' => [
             // $path . '/elementor_drupal/assets/js/jquery/jquery.js' => [],
             $path . '/elementor_drupal/assets/js/jquery/jquery-migrate.min.js' => [],
