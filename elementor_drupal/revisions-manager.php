@@ -23,11 +23,11 @@ class Drupal_Revisions_Manager extends Revisions_Manager
         self::register_actions();
     }
 
-    public static function get_revisions($uid = 1, $query_args = [], $parse_result = true)
+    public static function get_revisions($id = 1, $query_args = [], $parse_result = true)
     {
 
         $connection = \Drupal::database();
-        $result = $connection->query("SELECT * FROM elementor_data WHERE uid = " . $uid)
+        $result = $connection->query("SELECT * FROM elementor_data WHERE uid = " . $id)
             ->fetchAll();
 
         $revisions = [];
@@ -58,11 +58,11 @@ class Drupal_Revisions_Manager extends Revisions_Manager
         return $revisions;
     }
 
-    public static function get_revisions_ids($uid = 1, $query_args = [], $parse_result = true)
+    public static function get_revisions_ids($id = 1, $query_args = [], $parse_result = true)
     {
 
         $connection = \Drupal::database();
-        $result = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $uid)
+        $result = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $id)
             ->fetchAll();
 
         $revisions = [];
@@ -96,15 +96,15 @@ class Drupal_Revisions_Manager extends Revisions_Manager
 
     public static function on_ajax_save_builder_data($return_data, $document)
     {
-        $post_id = $_POST['editor_post_id'];
+        $id = $_POST['editor_post_id'];
 
-        $latest_revisions = self::get_revisions($post_id);
+        $latest_revisions = self::get_revisions($id);
 
-        $all_revision_ids = self::get_revisions_ids();
+        $all_revision_ids = self::get_revisions_ids($id);
 
         // Send revisions data only if has revisions.
         if (!empty($latest_revisions)) {
-            $current_revision_id = $post_id;
+            $current_revision_id = $id;
 
             $return_data = array_replace_recursive($return_data, [
                 'config' => [
@@ -123,12 +123,12 @@ class Drupal_Revisions_Manager extends Revisions_Manager
 
     }
 
-    public static function editor_settings($settings, $post_id)
+    public static function editor_settings($settings, $id)
     {
         $settings = array_replace_recursive($settings, [
             'revisions' => self::get_revisions(),
             'revisions_enabled' => true,
-            'current_revision_id' => $post_id,
+            'current_revision_id' => $id,
             'i18n' => [
                 'edit_draft' => ___elementor_adapter('Edit Draft', 'elementor'),
                 'edit_published' => ___elementor_adapter('Edit Published', 'elementor'),

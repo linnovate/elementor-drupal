@@ -21,19 +21,42 @@ function elementor_theme($existing, $type, $theme, $path)
 }
 
 /**
- * Implements hook_theme_suggestions_HOOK().
+ * Implements hook_theme_suggestions_alter().
  */
-function elementor_theme_suggestions_node(array $variables)
+function elementor_theme_suggestions_alter(array &$suggestions, array $variables, $hook)
 {
-    $suggestions = [];
-    $node = $variables['elements']['#node'];
-    $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
-
-    if (in_array($node->getType(), $allow_content_types, true)) {
-        $suggestions[] = 'elementor_field';
+    if ($hook !== 'page' && $hook !== 'node') {
+        return;
     }
 
-    return $suggestions;
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
+
+    if ($node && in_array($node->getType(), $allow_content_types, true)) {
+        $config = ElementorDrupal::$instance->getData(2);
+
+        if ($hook == 'page' && $config['settings']['template'] == 'elementor_canvas') {
+            $suggestions[] = 'elementor_field';
+        } else if ($hook == 'page' && $config['settings']['template'] == 'elementor_header_footer') {
+            $suggestions[] = 'elementor_field';
+        } else if ($hook == 'node' && !$config['settings']['template']) {
+            $suggestions[] = 'elementor_field';
+        } 
+    }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+
+function elementor_preprocess_node(&$variables, $hook)
+{
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
+
+    if ($node && in_array($node->getType(), $allow_content_types, true)) {
+        $variables['#cache'] = ['max-age' => 0];
+    }
 }
 
 /**
@@ -42,13 +65,14 @@ function elementor_theme_suggestions_node(array $variables)
 
 function elementor_preprocess_elementor_field(&$variables, $hook)
 {
-    $uid = $variables['elements']['#node']->id();
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $id = $node->id();
     $ElementorDrupal = ElementorDrupal::$instance;
-    $frontend_data = $ElementorDrupal->frontend($uid);
+    $frontend_data = $ElementorDrupal->frontend($id);
 
     $variables['base_path'] = base_path() . drupal_get_path('module', 'elementor');
     $variables['elementor_tmp'] = $frontend_data;
-    $variables['uid'] = $uid;
+    $variables['uid'] = $id;
     $variables['#cache'] = ['max-age' => 0];
 }
 
@@ -92,55 +116,55 @@ function elementor_library_info_build()
     $libraries = [];
     $libraries['elementor/editor'] = [
         'js' => [
-            // $path . '/elementor_drupal/lib-assets/js/jquery/jquery.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/jquery-migrate.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/jquery.ui.touch-punch.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/core.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/widget.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/mouse.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/sortable.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/position.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/menu.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/autocomplete.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/resizable.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/draggable.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/slider.min.js' => [],
+            // $path . '/elementor_drupal/assets/js/jquery/jquery.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/jquery-migrate.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/jquery.ui.touch-punch.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/core.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/widget.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/mouse.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/sortable.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/position.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/menu.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/autocomplete.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/resizable.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/draggable.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/slider.min.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/image-edit.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/color-picker.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/iris.min.js' => [],
+            $path . '/elementor_drupal/assets/js/image-edit.js' => [],
+            $path . '/elementor_drupal/assets/js/color-picker.js' => [],
+            $path . '/elementor_drupal/assets/js/iris.min.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/editor.min.js' => [],
+            $path . '/elementor_drupal/assets/js/editor.min.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/underscore.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/backbone.min.js' => [],
+            $path . '/elementor_drupal/assets/js/underscore.min.js' => [],
+            $path . '/elementor_drupal/assets/js/backbone.min.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/shortcode.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/wp-backbone.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/utils.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/wp-util.js' => [],
+            $path . '/elementor_drupal/assets/js/shortcode.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-backbone.js' => [],
+            $path . '/elementor_drupal/assets/js/utils.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-util.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/media-models.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/plupload/moxie.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/plupload/plupload.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/plupload/wp-plupload.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/wp-embed.js' => [],
+            $path . '/elementor_drupal/assets/js/media-models.js' => [],
+            $path . '/elementor_drupal/assets/js/plupload/moxie.min.js' => [],
+            $path . '/elementor_drupal/assets/js/plupload/plupload.js' => [],
+            $path . '/elementor_drupal/assets/js/plupload/wp-plupload.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-embed.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/mce-view.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/imgareaselect/jquery.imgareaselect.js' => [],
+            $path . '/elementor_drupal/assets/js/mce-view.js' => [],
+            $path . '/elementor_drupal/assets/js/imgareaselect/jquery.imgareaselect.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/quicktags.js' => [],
+            $path . '/elementor_drupal/assets/js/quicktags.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/wplink.js' => [],
+            $path . '/elementor_drupal/assets/js/wplink.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/thickbox/thickbox.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/media-upload.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/heartbeat.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/wp-auth-check.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/imagesloaded.min.js' => [],
+            $path . '/elementor_drupal/assets/js/thickbox/thickbox.js' => [],
+            $path . '/elementor_drupal/assets/js/media-upload.js' => [],
+            $path . '/elementor_drupal/assets/js/heartbeat.min.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-auth-check.min.js' => [],
+            $path . '/elementor_drupal/assets/js/imagesloaded.min.js' => [],
 
-            $path . '/elementor_drupal/lib-assets/js/tinymce/tinymce.min.js?ver=4711-20180425' => [],
-            $path . '/elementor_drupal/lib-assets/js/tinymce/plugins/compat3x/plugin.min.js?ver=4711-20180425' => [],
+            $path . '/elementor_drupal/assets/js/tinymce/tinymce.min.js?ver=4711-20180425' => [],
+            $path . '/elementor_drupal/assets/js/tinymce/plugins/compat3x/plugin.min.js?ver=4711-20180425' => [],
 
             $path . '/elementor/assets/lib/backbone/backbone.marionette.min.js' => [],
             $path . '/elementor/assets/lib/backbone/backbone.radio.min.js' => [],
@@ -158,19 +182,19 @@ function elementor_library_info_build()
             $path . '/elementor/assets/lib/wp-color-picker/wp-color-picker-alpha.min.js' => [],
             $path . '/elementor/assets/js/editor.js' => [],
 
-            $path . '/drupal_media.js' => [],
+            $path . '/elementor_drupal/media.js' => [],
         ],
         'css' => [
             'base' => [
-                $path . '/elementor_drupal/lib-assets/css/color-picker.min.css' => [],
+                $path . '/elementor_drupal/assets/css/color-picker.min.css' => [],
                 $path . '/elementor/assets/lib/animate.css/animate.min.css' => [],
                 $path . '/elementor/assets/lib/e-select2/css/e-select2.min.css' => [],
                 $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css' => [],
                 $path . '/elementor/assets/lib/flatpickr/flatpickr.min.css' => [],
                 $path . '/elementor/assets/lib/font-awesome/css/font-awesome.min.css' => [],
-                $path . '/elementor_drupal/lib-assets/js/imgareaselect/imgareaselect.css' => [],
-                $path . '/elementor_drupal/lib-assets/css/dashicons.min.css?ver=4.9.6" type="text/css' => [],
-                $path . '/elementor_drupal/lib-assets/css/editor.min.css' => [],
+                $path . '/elementor_drupal/assets/js/imgareaselect/imgareaselect.css' => [],
+                $path . '/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6" type="text/css' => [],
+                $path . '/elementor_drupal/assets/css/editor.min.css' => [],
                 $path . '/elementor/assets/css/editor.css' => [],
             ],
         ],
@@ -178,9 +202,9 @@ function elementor_library_info_build()
 
     $libraries['elementor/frontend'] = [
         'js' => [
-            // $path . '/elementor_drupal/lib-assets/js/jquery/jquery.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/jquery-migrate.min.js' => [],
-            $path . '/elementor_drupal/lib-assets/js/jquery/ui/position.min.js' => [],
+            // $path . '/elementor_drupal/assets/js/jquery/jquery.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/jquery-migrate.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/position.min.js' => [],
 
             $path . '/elementor/assets/lib/slick/slick.min.js?ver=1.8.1' => [],
             $path . '/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js?ver=0.2.1' => [],

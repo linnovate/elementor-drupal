@@ -55,17 +55,17 @@ class ElementorDrupal
      * @since 1.0.0
      * @access private
      */
-    private function setData($uid, $data)
+    private function setData($id, $data)
     {
         $connection = \Drupal::database();
-        $item = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $uid)
+        $item = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $id)
             ->fetch();
 
         date_default_timezone_set("UTC");
 
         $connection->insert('elementor_data')
             ->fields([
-                'uid' => $uid,
+                'uid' => $id,
                 'author' => 'admin',
                 'timestamp' => time(),
                 'data' => json_encode($data),
@@ -77,12 +77,12 @@ class ElementorDrupal
      * Get data.
      *
      * @since 1.0.0
-     * @access private
+     * @access public
      */
-    private function getData($uid)
+    public function getData($id)
     {
         $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $uid . " ORDER BY ID DESC LIMIT 1")
+        $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $id . " ORDER BY ID DESC LIMIT 1")
             ->fetch();
         return json_decode($result->data, true);
     }
@@ -95,9 +95,9 @@ class ElementorDrupal
      * @since 1.0.0
      * @access private
      */
-    private function render_data($uid)
+    private function render_data($id)
     {
-        $elements_data = $this->getData($uid);
+        $elements_data = $this->getData($id);
 
         $data = [
             'elements' => isset($elements_data['elements']) ? $elements_data['elements'] : [],
@@ -130,11 +130,9 @@ class ElementorDrupal
      * @since 1.0.0
      * @access public
      */
-    public function editor()
+    public function editor($id)
     {
-        $uid = \Drupal::routeMatch()->getParameter('node');
-
-        $data = $this->render_data($uid);
+        $data = $this->render_data($id);
         $items = $this->plugin->schemes_manager->get_registered_schemes_data();
         $enabled_schemes = Schemes_Manager::get_enabled_schemes();
 
@@ -143,7 +141,7 @@ class ElementorDrupal
             'ajaxurl' => base_path() . 'elementor/update',
             'home_url' => base_path(),
             'assets_url' => base_path() . drupal_get_path('module', 'elementor') . '/elementor/assets/',
-            "post_id" => $uid,
+            "post_id" => $id,
             'data' => $data['elements'],
             'elements_categories' => $this->plugin->elements_manager->get_categories(),
             'controls' => $this->plugin->controls_manager->get_controls_data(),
@@ -295,7 +293,7 @@ class ElementorDrupal
 
         $localized_settings = [];
 
-        $localized_settings = apply_filters_elementor_adapter('elementor/editor/localize_settings', $localized_settings, $this->_post_id);
+        $localized_settings = apply_filters_elementor_adapter('elementor/editor/localize_settings', $localized_settings, $id);
 
         if (!empty($localized_settings)) {
             $config = array_replace_recursive($config, $localized_settings);
@@ -317,7 +315,7 @@ class ElementorDrupal
         echo 'var _ElementorConfig = ' . $config . ';' . PHP_EOL;
         echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
         echo 'var ajaxurl = "/elementor/autosave";' . PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
-        echo 'ElementorConfig.document.id = ' . $uid . ';' . PHP_EOL;
+        echo 'ElementorConfig.document.id = ' . $id . ';' . PHP_EOL;
         echo 'ElementorConfig.document.urls = {
             preview: "/node/1",
             exit_to_dashboard: "/node/1",
@@ -344,11 +342,11 @@ class ElementorDrupal
      * @since 1.0.0
      * @access public
      */
-    public function frontend($uid)
+    public function frontend($id)
     {
-        $elements_data = $this->getData($uid);
+        $elements_data = $this->getData($id);
 
-        $css_file = new DrupalPost_CSS($uid);
+        $css_file = new DrupalPost_CSS($id);
 
         ob_start();
 
@@ -380,7 +378,7 @@ class ElementorDrupal
      * @since 1.0.0
      * @access public
      */
-    public function preview($uid)
+    public function preview($id)
     {
         return [];
     }
