@@ -4,7 +4,6 @@ require drupal_get_path('module', 'elementor') . '/elementor_drupal/elementor.ph
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\elementor\ElementorDrupal;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Implements hook_page_attachments().
@@ -120,20 +119,22 @@ function elementor_menu_local_tasks_alter(&$data, $route_name)
  */
 function elementor_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+    $params = explode("_", $form_id);
+    if ($params[0] == 'node') {
+        $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
 
-    // Adding custom validation for the welcome page type field.
-    if ($form_id == 'node_article_edit_form' || $form_id == 'node_article_form') {
-        $form['edit_with_elementor'] = array(
-            '#type' => 'submit',
-            '#value' => t('Edit with Elementor'),
-            '#weight' => 0.1,
-            '#attributes' => [
-                'class' => ['eicon-elementor', 'edit-with-elementor'],
-            ],
-        );
+        if (in_array($params[1], $allow_content_types, true)) {
+            $form['edit_with_elementor'] = array(
+                '#type' => 'submit',
+                '#value' => t('Edit with Elementor'),
+                '#weight' => 0.1,
+                '#attributes' => [
+                    'class' => ['eicon-elementor', 'edit-with-elementor'],
+                ],
+            );
 
-        $form['#submit'][] = 'elementor_edit_with_elementor_form_submit';
-
+            $form['#submit'][] = 'elementor_edit_with_elementor_form_submit';
+        }
     }
 }
 
