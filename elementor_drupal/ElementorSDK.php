@@ -9,20 +9,30 @@ namespace Drupal\elementor;
 class ElementorSDK
 {
 
-    public function get_builder_data($uid)
+    /**
+     * get_data.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function get_data($uid)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $uid . " ORDER BY ID DESC LIMIT 1")
+        $result = $this->connection->query("SELECT data FROM elementor_data WHERE uid = " . $uid . " ORDER BY ID DESC LIMIT 1")
             ->fetch();
         return json_decode($result->data, true);
     }
 
-    public function set_builder_data($uid, $data)
+    /**
+     * set_data.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function set_data($uid, $data)
     {
-        $connection = \Drupal::database();
         date_default_timezone_set("UTC");
 
-        return $connection->insert('elementor_data')
+        $this->connection->insert('elementor_data')
             ->fields([
                 'uid' => $uid,
                 'author' => 'admin',
@@ -30,18 +40,37 @@ class ElementorSDK
                 'data' => json_encode($data),
             ])
             ->execute();
+
+        $result_count = $this->connection->query("SELECT COUNT(uid) as num FROM elementor_data WHERE uid = " . $uid)
+            ->fetch();
+        $count = $result_count->num - 10;
+        if ($count > 0) {
+            $result = $this->connection->query("DELETE FROM elementor_data WHERE uid = " . $uid . " LIMIT " . $count)
+                ->execute();
+        }
     }
 
-    public function delete_builder_data($id)
+    /**
+     * delete_data.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function delete_data($id)
     {
-        return $connection->query("DELETE FROM elementor_data WHERE id = " . $id)
+        return $this->connection->query("DELETE FROM elementor_data WHERE id = " . $id)
             ->execute();
     }
 
+    /**
+     * delete_data.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function get_revisions($uid)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT * FROM elementor_data WHERE uid = " . $uid)
+        $result = $this->connection->query("SELECT * FROM elementor_data WHERE uid = " . $uid)
             ->fetchAll();
 
         foreach ($result as $revision) {
@@ -50,10 +79,15 @@ class ElementorSDK
         return $result;
     }
 
+    /**
+     * get_revisions_ids.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function get_revisions_ids($uid)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $uid)
+        $result = $this->connection->query("SELECT id FROM elementor_data WHERE uid = " . $uid)
             ->fetchAll();
 
         $revisions = [];
@@ -64,50 +98,81 @@ class ElementorSDK
         return $revisions;
     }
 
+    /**
+     * get_revision_data.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function get_revision_data($id)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT * FROM elementor_data WHERE id = " . $id)
+        $result = $this->connection->query("SELECT * FROM elementor_data WHERE id = " . $id)
             ->fetch();
-
         return json_decode($result->data, true);
     }
 
+    /**
+     * set_revision.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function set_revision($uid, $data)
     {
-        return $this->set_builder_data($uid, $data);
+        return $this->set_data($uid, $data);
     }
 
+    /**
+     * delete_revision.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function delete_revision($id)
     {
-        $connection = \Drupal::database();
-        return $connection->query("DELETE FROM elementor_data WHERE id = " . $id)
+        return $this->connection->query("DELETE FROM elementor_data WHERE id = " . $id)
             ->execute();
     }
 
-    public function get_local_tmp_data($id)
+    /**
+     * get_local_tmps_ids.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function get_local_tmps_ids($type)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_tmps WHERE id = " . $id)
-            ->fetch();
-        return json_decode($result->data, true);
-    }
-
-    public function get_local_tmps($types)
-    {
-        $connection = \Drupal::database();
-        return $connection->query("SELECT id FROM elementor_tmps WHERE type = '" . $type. "'")
+        return $this->connection->query("SELECT id FROM elementor_tmps WHERE type = '" . $type . "'")
             ->fetchAll();
     }
 
-    public function set_local_tmp($type, $data)
+    /**
+     * get_local_tmp.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function get_local_tmp($id)
+    {
+        $result = $this->connection->query("SELECT * FROM elementor_tmps WHERE id = " . $id)
+            ->fetch();
+        $result->data = json_decode($result->data, true);
+        return $result;
+    }
+
+    /**
+     * save_local_tmp.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function save_local_tmp($type, $data)
     {
         $timestamp = time();
 
-        $connection = \Drupal::database();
-        return $connection->insert('elementor_tmps')
+        return $this->connection->insert('elementor_tmps')
             ->fields([
-                'type' => $type,
+                'type' => 'local',
                 'name' => !empty($data['title']) ? $data['title'] : ___elementor_adapter('(no title)', 'elementor'),
                 'author' => 'admin',
                 'timestamp' => $timestamp,
@@ -116,34 +181,119 @@ class ElementorSDK
             ->execute();
     }
 
+    /**
+     * delete_local_tmp.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function delete_local_tmp($id)
     {
-        $connection = \Drupal::database();
-        return $connection->query("DELETE FROM elementor_data WHERE id = " . $id)
+        return $this->connection->query("DELETE FROM elementor_data WHERE id = " . $id)
             ->execute();
     }
 
-    public function get_remote_tmp_data()
+    /**
+     * save_remote_tmps.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function save_remote_tmps($type, $data)
     {
+        // $timestamp = time();
 
+        // return $this->connection->insert('elementor_tmps')
+        //     ->fields([
+        //         'type' => $type,
+        //         'name' => !empty($data['title']) ? $data['title'] : ___elementor_adapter('(no title)', 'elementor'),
+        //         'author' => 'admin',
+        //         'timestamp' => $timestamp,
+        //         'data' => json_encode($data),
+        //     ])
+        //     ->execute();
     }
 
-    public function get_remote_tmps()
+    /**
+     * get_remote_tmps.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function get_remote_tmps($type = '')
     {
-
+        // $result = $this->connection->query("SELECT data FROM elementor_tmps WHERE type = '" . $type . "'")
+        //     ->fetchAll();
+        // return json_decode($result->data, true);
     }
 
-    public function update_remote_tmp()
+    /**
+     * get_remote_tmp.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function get_remote_tmp($id)
     {
-
+        $result = $this->connection->query("SELECT * FROM elementor_tmps WHERE id = " . $id)
+            ->fetch();
+        if ($result) {
+            $result->data = json_decode($result->data, true);
+        }
+        return $result;
     }
 
+    /**
+     * save_remote_tmp.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function save_remote_tmp($type, $data)
+    {
+        $timestamp = time();
+
+        return $this->connection->insert('elementor_tmps')
+            ->fields([
+                'type' => 'remote',
+                'name' => !empty($data['title']) ? $data['title'] : ___elementor_adapter('(no title)', 'elementor'),
+                'author' => 'admin',
+                'timestamp' => $timestamp,
+                'data' => json_encode($data),
+            ])
+            ->execute();
+    }
+
+    /**
+     * upload_files.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function upload_files()
     {
 
     }
+
+    /**
+     * delete_file.
+     *
+     * @since 1.0.0
+     * @access public
+     */
     public function delete_file()
     {
 
+    }
+
+    /**
+     * construct.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function __construct()
+    {
+        $this->connection = \Drupal::database();
     }
 }

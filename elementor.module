@@ -1,6 +1,6 @@
 <?php
 
-require drupal_get_path('module', 'elementor') . '/elementor_drupal/elementor.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/ElementorDrupal.php';
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\elementor\ElementorDrupal;
@@ -42,7 +42,7 @@ function elementor_theme_suggestions_alter(array &$suggestions, array $variables
     $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
 
     if ($node && in_array($node->getType(), $allow_content_types, true)) {
-        $config = ElementorDrupal::$instance->getData(2);
+        $config = ElementorDrupal::$instance->sdk->get_data($node->id());
 
         if ($hook == 'page' && $config['settings']['template'] == 'elementor_canvas') {
             $suggestions[] = 'elementor_field';
@@ -74,12 +74,13 @@ function elementor_preprocess_node(&$variables, $hook)
 
 function elementor_preprocess_elementor_field(&$variables, $hook)
 {
+    global $base_path;
     $node = \Drupal::routeMatch()->getParameter('node');
     $id = $node->id();
     $ElementorDrupal = ElementorDrupal::$instance;
     $frontend_data = $ElementorDrupal->frontend($id);
 
-    $variables['base_path'] = base_path() . drupal_get_path('module', 'elementor');
+    $variables['base_path'] = $base_path . drupal_get_path('module', 'elementor');
     $variables['elementor_tmp'] = $frontend_data;
     $variables['uid'] = $id;
     $variables['#cache'] = ['max-age' => 0];
@@ -91,6 +92,8 @@ function elementor_preprocess_elementor_field(&$variables, $hook)
 
 function elementor_menu_local_tasks_alter(&$data, $route_name)
 {
+    global $base_url;
+
     $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
     $node = \Drupal::routeMatch()->getParameter('node');
     if ($node) {
@@ -140,7 +143,6 @@ function elementor_form_alter(&$form, FormStateInterface $form_state, $form_id)
 
 function elementor_edit_with_elementor_form_submit($form, &$form_state)
 {
-    global $base_url;
     drupal_set_message('node is saved.');
     $entity = $form_state->getFormObject()->getEntity();
     $entity->save();

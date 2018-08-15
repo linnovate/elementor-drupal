@@ -257,9 +257,10 @@ function wp_get_attachment_image_elementor_adapter($attachment_id, $size = 'thum
 {
     $html = '';
     $image = \Drupal\file\Entity\File::load($attachment_id);
-    $src = \Drupal\image\Entity\ImageStyle::load('medium')->buildUrl($image->getFileUri());
 
     if ($image) {
+        $src = \Drupal\image\Entity\ImageStyle::load('medium')->buildUrl($image->getFileUri());
+
         $attr = array(
             'src' => $src,
             'class' => "attachment-$size size-$size",

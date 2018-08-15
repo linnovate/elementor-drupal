@@ -25,19 +25,13 @@ class Drupal_Revisions_Manager extends Revisions_Manager
 
     public static function get_revisions($id = 1, $query_args = [], $parse_result = true)
     {
-
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT * FROM elementor_data WHERE uid = " . $id)
-            ->fetchAll();
-
+        $result = ElementorDrupal::$instance->sdk->get_revisions($id);
         $revisions = [];
 
         foreach ($result as $revision) {
-            // date_default_timezone_set('UTC');
+            date_default_timezone_set('UTC');
             $date = date('M j @ H:i', $revision->timestamp);
             $human_time = human_time_diff_elementor_adapter($revision->timestamp);
-
-            $data = json_decode($revision->data, true);
 
             $type = 'revision';
 
@@ -60,37 +54,19 @@ class Drupal_Revisions_Manager extends Revisions_Manager
 
     public static function get_revisions_ids($id = 1, $query_args = [], $parse_result = true)
     {
-
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $id)
-            ->fetchAll();
-
-        $revisions = [];
-        
-        foreach ($result as $revision) {
-            $revisions[] = $revision->id;
-        }
-
+        $revisions = ElementorDrupal::$instance->sdk->get_revisions_ids($id);
         return $revisions;
     }
 
     public static function on_revision_data_request()
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT * FROM elementor_data WHERE id = " . $_POST['id'])
-            ->fetch();
-
-        $revision_data = json_decode($result->data, true);
-
+        $revision_data = ElementorDrupal::$instance->sdk->get_revision_data($_POST['id']);
         return wp_send_json_success_elementor_adapter($revision_data);
     }
 
     public static function on_delete_revision_request()
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("DELETE FROM elementor_data WHERE id = " . $_POST['id'])
-            ->execute();
-
+        $result = ElementorDrupal::$instance->sdk->delete_revision($_POST['id']);
         return wp_send_json_success_elementor_adapter();
     }
 

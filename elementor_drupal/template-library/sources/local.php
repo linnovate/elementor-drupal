@@ -442,11 +442,8 @@ foreach ($types as $value => $title) {
      */
     public function get_items($args = [])
     {
-
         $templates = [];
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT id FROM elementor_tmps WHERE type = '" . $this->get_id() . "'")
-            ->fetchAll();
+        $result = ElementorDrupal::$instance->sdk->get_local_tmps_ids($this->get_id());
 
         foreach ($result as $item) {
             $templates[] = $this->get_item($item->id);
@@ -464,24 +461,10 @@ foreach ($types as $value => $title) {
      * @access public
      *
      * @param array $template_data Local template data.
-     *
-     * @return \WP_Error|int The ID of the saved/updated template, `WP_Error` otherwise.
      */
     public function save_item($template_data)
     {
-
-        $timestamp = time();
-
-        $connection = \Drupal::database();
-        $template_id = $connection->insert('elementor_tmps')
-            ->fields([
-                'type' => $this->get_id(),
-                'name' => !empty($template_data['title']) ? $template_data['title'] : ___elementor_adapter('(no title)', 'elementor'),
-                'author' => 'admin',
-                'timestamp' => $timestamp,
-                'data' => json_encode($template_data['content']),
-            ])
-            ->execute();
+        $template_id = ElementorDrupal::$instance->sdk->save_local_tmp($this->get_id(), $template_data);
 
         do_action_elementor_adapter('elementor/template-library/after_save_template', $template_id, $template_data);
 
@@ -510,16 +493,6 @@ foreach ($types as $value => $title) {
 
         Plugin::$instance->db->save_editor($new_data['id'], $new_data['content']);
 
-        /**
-         * After template library update.
-         *
-         * Fires after Elementor template library was updated.
-         *
-         * @since 1.0.0
-         *
-         * @param int   $new_data_id The ID of the new template.
-         * @param array $new_data    The new template data.
-         */
         do_action_elementor_adapter('elementor/template-library/after_update_template', $new_data['id'], $new_data);
 
         return true;
@@ -539,10 +512,7 @@ foreach ($types as $value => $title) {
      */
     public function get_item($template_id)
     {
-
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT * FROM elementor_tmps WHERE id = " . $template_id)
-            ->fetch();
+        $result = ElementorDrupal::$instance->sdk->get_local_tmp($template_id);
 
         $data = [
             'template_id' => $template_id,
@@ -559,16 +529,6 @@ foreach ($types as $value => $title) {
             'url' => '', //  get_permalink( $post->ID ),
         ];
 
-        /**
-         * Get template library template.
-         *
-         * Filters the template data when retrieving a single template from the
-         * template library.
-         *
-         * @since 1.0.0
-         *
-         * @param array $data Template data.
-         */
         $data = apply_filters_elementor_adapter('elementor/template-library/get_template', $data);
 
         return $data;
@@ -588,13 +548,10 @@ foreach ($types as $value => $title) {
      */
     public function get_data(array $args)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_tmps WHERE id = " . $args['template_id'])
-            ->fetch();
-        $content = json_decode($result->data, true);
+        $result = ElementorDrupal::$instance->sdk->get_local_tmp($args['template_id']);
 
-        if (!empty($content)) {
-            $content = $this->replace_elements_ids($content);
+        if (!empty($result)) {
+            $content = $this->replace_elements_ids($result->data);
         }
 
         $data = [
@@ -617,16 +574,10 @@ foreach ($types as $value => $title) {
      * @access public
      *
      * @param int $template_id The template ID.
-     *
-     * @return \WP_Post|\WP_Error|false|null Post data on success, false or null
-     *                                       or 'WP_Error' on failure.
      */
     public function delete_template($template_id)
     {
-        $connection = \Drupal::database();
-        $result = $connection->query("DELETE FROM elementor_data WHERE id = " . $template_id)
-            ->execute();
-
+        $result = ElementorDrupal::$instance->sdk->delete_local_tmp($template_id);
         return wp_send_json_success_elementor_adapter();
     }
 
@@ -639,8 +590,6 @@ foreach ($types as $value => $title) {
      * @access public
      *
      * @param int $template_id The template ID.
-     *
-     * @return array|\WP_Error WordPress error if template export failed.
      */
     public function export_template($template_id)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Contains \Drupal\elementor\ElementorDrupal.
@@ -6,11 +7,46 @@
 
 namespace Drupal\elementor;
 
+
+define('DOING_AJAX', true);
+
+define('ABSPATH', false);
+define('ELEMENTOR_VERSION', '2.1.6');
+define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16');
+
+define('ELEMENTOR__FILE__', __FILE__);
+define('ELEMENTOR_PLUGIN_BASE', '');
+define('ELEMENTOR_PATH', drupal_get_path('module', 'elementor') . '/elementor/');
+if (defined('ELEMENTOR_TESTS') && ELEMENTOR_TESTS) {
+    define('ELEMENTOR_URL', 'file://' . ELEMENTOR_PATH);
+} else {
+    define('ELEMENTOR_URL', '');
+}
+define('ELEMENTOR_MODULES_PATH', '');
+define('ELEMENTOR_ASSETS_URL', '/' . ELEMENTOR_PATH . 'assets/');
+
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/wordpress-functions.php';
+
+require drupal_get_path('module', 'elementor') . '/elementor/includes/plugin.php';
+
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/template-library/classes/class-import-images.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/template-library/sources/remote.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/template-library/sources/local.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/template-library/manager.php';
+
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/revisions-manager.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/ajax-manager.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/document-types/node.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/post-css.php';
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/ElementorSDK.php';
+
+
 use Drupal\elementor\DocumentDrupal;
 use Drupal\elementor\DrupalPost_CSS;
 use Drupal\elementor\Drupal_Ajax_Manager;
 use Drupal\elementor\Drupal_Revisions_Manager;
 use Drupal\elementor\Drupal_TemplateLibrary_Manager;
+use Drupal\elementor\ElementorSDK;
 
 use Elementor\Editor;
 use Elementor\Plugin;
@@ -32,6 +68,19 @@ class ElementorDrupal
     public static $instance = null;
 
     /**
+     * Sdk.
+     *
+     * Holds the sdk instance.
+     *
+     * @since 1.0.0
+     * @access public
+     * @static
+     *
+     * @var sdk
+     */
+    public static $sdk = null;
+
+    /**
      * Instance.
      *
      * Ensures only one instance of the plugin class is loaded or can be loaded.
@@ -42,58 +91,13 @@ class ElementorDrupal
      *
      * @return Plugin An instance of the class.
      */
+    
     public static function instance()
     {
         if (is_null(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;
-    }
-
-    /**
-     * Save data.
-     *
-     * @since 1.0.0
-     * @access private
-     */
-    private function setData($id, $data)
-    {
-        $connection = \Drupal::database();
-        $item = $connection->query("SELECT id FROM elementor_data WHERE uid = " . $id)
-            ->fetch();
-
-        date_default_timezone_set("UTC");
-
-        $connection->insert('elementor_data')
-            ->fields([
-                'uid' => $id,
-                'author' => 'admin',
-                'timestamp' => time(),
-                'data' => json_encode($data),
-            ])
-            ->execute();
-
-        $result_count = $connection->query("SELECT COUNT(uid) as num FROM elementor_data WHERE uid = " . $id)
-            ->fetch();
-            $count =  $result_count->num - 10;
-        if ($count > 0) {
-            $result = $connection->query("DELETE FROM elementor_data WHERE uid = " . $id . " LIMIT " . $count)
-                ->execute();
-        }
-    }
-
-    /**
-     * Get data.
-     *
-     * @since 1.0.0
-     * @access public
-     */
-    public function getData($id)
-    {
-        $connection = \Drupal::database();
-        $result = $connection->query("SELECT data FROM elementor_data WHERE uid = " . $id . " ORDER BY ID DESC LIMIT 1")
-            ->fetch();
-        return json_decode($result->data, true);
     }
 
     /**
@@ -106,7 +110,7 @@ class ElementorDrupal
      */
     private function render_data($id)
     {
-        $elements_data = $this->getData($id);
+        $elements_data = $this->sdk->get_data($id);
 
         $data = [
             'elements' => isset($elements_data['elements']) ? $elements_data['elements'] : [],
@@ -141,10 +145,12 @@ class ElementorDrupal
      */
     public function editor($id)
     {
+        global $base_url;
+        
         $data = $this->render_data($id);
         $items = $this->plugin->schemes_manager->get_registered_schemes_data();
         $enabled_schemes = Schemes_Manager::get_enabled_schemes();
-$ff= $this->plugin->controls_manager->get_controls_data();
+
         $config = [
             'version' => ELEMENTOR_VERSION,
             'ajaxurl' => base_path() . 'elementor/update',
@@ -318,7 +324,7 @@ $ff= $this->plugin->controls_manager->get_controls_data();
 
         ob_start();
 
-        $url  = "/node/" . $id;   
+        $url  = $base_url . "/node/" . $id;   
         echo '<script>' . PHP_EOL;
         echo '/* <![CDATA[ */' . PHP_EOL;
 
@@ -354,7 +360,7 @@ $ff= $this->plugin->controls_manager->get_controls_data();
      */
     public function frontend($id)
     {
-        $elements_data = $this->getData($id);
+        $elements_data = $this->sdk->get_data($id);
 
         $css_file = new DrupalPost_CSS($id);
 
@@ -404,7 +410,7 @@ $ff= $this->plugin->controls_manager->get_controls_data();
         if ($_POST['action'] == 'elementor_ajax') {
             // Update/Save the data.
             $data = json_decode($_REQUEST['actions'], true);
-            $this->setData($_POST['editor_post_id'], $data['save_builder']['data']);
+            $this->sdk->set_data($_POST['editor_post_id'], $data['save_builder']['data']);
         }
         // Moves the request to the Elmentor .
         return do_ajax_elementor_adapter($_POST['action']);
@@ -431,6 +437,8 @@ $ff= $this->plugin->controls_manager->get_controls_data();
             'DocumentDrupal',
             DocumentDrupal::get_class_full_name()
         );
+
+        $this->sdk = new ElementorSDK;
     }
 }
 
