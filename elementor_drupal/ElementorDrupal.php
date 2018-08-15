@@ -16,14 +16,14 @@ define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16');
 
 define('ELEMENTOR__FILE__', __FILE__);
 define('ELEMENTOR_PLUGIN_BASE', '');
-define('ELEMENTOR_PATH', drupal_get_path('module', 'elementor') . '/elementor/');
+define('ELEMENTOR_PATH',  drupal_get_path('module', 'elementor') . '/elementor/');
 if (defined('ELEMENTOR_TESTS') && ELEMENTOR_TESTS) {
     define('ELEMENTOR_URL', 'file://' . ELEMENTOR_PATH);
 } else {
     define('ELEMENTOR_URL', '');
 }
 define('ELEMENTOR_MODULES_PATH', '');
-define('ELEMENTOR_ASSETS_URL', '/' . ELEMENTOR_PATH . 'assets/');
+define('ELEMENTOR_ASSETS_URL', '/' . ELEMENTOR_PATH . 'assets/'); // base_path() is null 
 
 require drupal_get_path('module', 'elementor') . '/elementor_drupal/wordpress-functions.php';
 
@@ -146,7 +146,7 @@ class ElementorDrupal
     public function editor($id)
     {
         global $base_url;
-        
+
         $data = $this->render_data($id);
         $items = $this->plugin->schemes_manager->get_registered_schemes_data();
         $enabled_schemes = Schemes_Manager::get_enabled_schemes();
@@ -330,6 +330,8 @@ class ElementorDrupal
 
         echo 'var _ElementorConfig = ' . $config . ';' . PHP_EOL;
         echo 'Object.assign(ElementorConfig, _ElementorConfig);' . PHP_EOL;
+
+        echo 'var base_url = "' . $base_url . '";' . PHP_EOL;
         echo 'var ajaxurl = "/elementor/autosave";' . PHP_EOL; //_ElementorConfig.ajaxurl;' . PHP_EOL;
         echo 'ElementorConfig.document.id = ' . $id . ';' . PHP_EOL;
         echo 'ElementorConfig.document.urls = {

@@ -31,7 +31,7 @@ var ControlMediaItemView = elementor.modules.controls.Media.extend({
     }
     );
 
-    fetch('/elementor/upload', {
+    fetch(base_url + '/elementor/upload', {
       method: 'POST',
       enctype: 'multipart/form-data',
       body: formData,
@@ -48,7 +48,7 @@ var ControlMediaItemView = elementor.modules.controls.Media.extend({
   deleteImage: function(event) {
     event.stopPropagation();
 
-    fetch('/elementor/delete_upload/' + this.getControlValue().id, {
+    fetch(base_url + '/elementor/delete_upload/' + this.getControlValue().id, {
       method: 'DELETE',
     }).then(res=>res.json()).then(data=>{
       this.setValue({
