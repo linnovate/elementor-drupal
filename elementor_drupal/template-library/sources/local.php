@@ -1254,10 +1254,12 @@ return $views;
             }
         } */
 
+        $result = ElementorPlugin::$instance->sdk->get_local_tmp($template_id);
+
         $export_data = [
             'version' => DB::DB_VERSION,
-            'title' => get_the_title_elementor_adapter($template_id),
-            'type' => self::get_template_type($template_id),
+            'title' => $result->name,
+            'type' => $result->type,
         ];
 
         $export_data += $template_data;
