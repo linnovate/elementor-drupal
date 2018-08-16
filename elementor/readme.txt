@@ -4,7 +4,7 @@ Tags: page builder, editor, landing page, drag-and-drop, elementor, visual edito
 Requires at least: 4.7
 Tested up to: 4.9
 Requires PHP: 5.4
-Stable tag: 2.1.6
+Stable tag: 2.1.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -216,11 +216,16 @@ No. Elementor supports WordPress 4.6 or greater, and is compatible with PHP 5.4 
 
 == Changelog ==
 
+= 2.1.7 - 2018-08-15 =
+* Fix: Avoid copying custom CSS ID when pasting style ([#5416](https://github.com/pojome/elementor/issues/5416))
+* Fix: Responsive CSS for minimal grid utility ([#5375](https://github.com/pojome/elementor/issues/5375))
+* Fix: Make Elementor Canvas compatible with iPhone X landscape orientation
+
 = 2.1.6 - 2018-07-31 =
 * Fix: Removed reference to source map file in Swiper minified file
-* Fix: Handle element style glitch in mobile view
+* Fix: Element handle style glitch in mobile view
 * Fix: Delete element with hotkey after text editing
-* Fix: Allow to determine whether to focus the search input on view rendered
+* Fix: Avoid auto focus on the widget panel search field after deleting an element
 
 = 2.1.5 - 2018-07-26 =
 * Tweak: Added `Ctrl/Cmd + Y` for redo action ([#5090](https://github.com/pojome/elementor/issues/5090))

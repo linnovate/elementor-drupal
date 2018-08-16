@@ -58,7 +58,7 @@ function do_action_elementor_adapter($tag, $args = [])
     for ($a = 1, $num = func_num_args(); $a < $num; $a++) {
         $all_args[] = func_get_arg($a);
     }
-    
+
     if ($enqueued_actions[$tag]) {
         foreach ($enqueued_actions[$tag] as $the_) {
             $num_args = count($all_args);
@@ -256,7 +256,7 @@ function wp_remote_retrieve_body_elementor_adapter($response)
 function wp_get_attachment_image_elementor_adapter($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
 {
     $html = '';
-    $src =  \Drupal\Elementor\ElementorPlugin::$instance->sdk->get_file($attachment_id, $style = 'medium');
+    $src = \Drupal\Elementor\ElementorPlugin::$instance->sdk->get_file($attachment_id, $style = 'medium');
 
     if ($src) {
 
@@ -375,6 +375,11 @@ function current_theme_supports_elementor_adapter()
 {}
 function get_post_statuses_elementor_adapter()
 {}
+function get_post_status_elementor_adapter()
+{}
+function post_type_exists_elementor_adapter()
+{
+}
 function wp_is_post_revision_elementor_adapter()
 {}
 function get_post_type_object_elementor_adapter()

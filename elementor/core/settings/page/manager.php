@@ -162,7 +162,7 @@ class Manager extends BaseManager {
 		wp_update_post( $post );
 
 		// Check updated status
-		if ( DB::STATUS_PUBLISH === get_post_status( $id ) ) {
+		if ( DB::STATUS_PUBLISH === get_post_status_elementor_adapter( $id ) ) {
 			$autosave = wp_get_post_autosave( $post->ID );
 			if ( $autosave ) {
 				wp_delete_post_revision( $autosave->ID );

@@ -11,7 +11,7 @@ namespace Drupal\elementor;
 define('DOING_AJAX', true);
 
 define('ABSPATH', false);
-define('ELEMENTOR_VERSION', '2.1.6');
+define('ELEMENTOR_VERSION', '2.1.7');
 define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16');
 
 define('ELEMENTOR__FILE__', __FILE__);
