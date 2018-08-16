@@ -57,29 +57,17 @@ class Import_Images {
 	 * @return false|array New image ID  or false.
 	 */
 	private function get_saved_image( $attachment ) {
-		global $wpdb;
-
 		if ( isset( $this->_replace_image_ids[ $attachment['id'] ] ) ) {
 			return $this->_replace_image_ids[ $attachment['id'] ];
 		}
 
-		$post_id = $wpdb->get_var(
-			$wpdb->prepare(
-				'SELECT `post_id` FROM `' . $wpdb->postmeta . '`
-					WHERE `meta_key` = \'_elementor_source_image_hash\'
-						AND `meta_value` = %s
-				;',
-				$this->get_hash_image( $attachment['url'] )
-			)
+		$new_attachment = \Drupal\Elementor\ElementorPlugin::$instance->sdk->upload_file(
+			$attachment['url'] ,
+			$this->get_hash_image( $attachment['url'])
 		);
 
-		if ( $post_id ) {
-			$new_attachment = [
-				'id' => $post_id,
-				'url' => wp_get_attachment_url( $post_id ),
-			];
+		if ( $new_attachment  ) {
 			$this->_replace_image_ids[ $attachment['id'] ] = $new_attachment;
-
 			return $new_attachment;
 		}
 
@@ -106,49 +94,6 @@ class Import_Images {
 		if ( $saved_image ) {
 			return $saved_image;
 		}
-
-		// Extract the file name and extension from the url.
-		$filename = basename( $attachment['url'] );
-
-		$file_content = wp_remote_retrieve_body_elementor_adapter( wp_safe_remote_get( $attachment['url'] ) );
-
-		if ( empty( $file_content ) ) {
-			return false;
-		}
-
-		$upload = wp_upload_bits(
-			$filename,
-			'',
-			$file_content
-		);
-
-		$post = [
-			'post_title' => $filename,
-			'guid' => $upload['url'],
-		];
-
-		$info = wp_check_filetype( $upload['file'] );
-		if ( $info ) {
-			$post['post_mime_type'] = $info['type'];
-		} else {
-			// For now just return the origin attachment
-			return $attachment;
-			// return new \WP_Error( 'attachment_processing_error', ___elementor_adapter( 'Invalid file type.', 'elementor' ) );
-		}
-
-		$post_id = wp_insert_attachment( $post, $upload['file'] );
-		wp_update_attachment_metadata(
-			$post_id,
-			wp_generate_attachment_metadata( $post_id, $upload['file'] )
-		);
-		update_post_meta_elementor_adapter( $post_id, '_elementor_source_image_hash', $this->get_hash_image( $attachment['url'] ) );
-
-		$new_attachment = [
-			'id' => $post_id,
-			'url' => $upload['url'],
-		];
-		$this->_replace_image_ids[ $attachment['id'] ] = $new_attachment;
-		return $new_attachment;
 	}
 
 	/**
@@ -161,10 +106,10 @@ class Import_Images {
 	 * @access public
 	 */
 	public function __construct() {
-		if ( ! function_exists( 'WP_Filesystem' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/file.php';
-		}
+		// if ( ! function_exists( 'WP_Filesystem' ) ) {
+		// 	require_once ABSPATH . 'wp-admin/includes/file.php';
+		// }
 
-		WP_Filesystem();
+	//	WP_Filesystem();
 	}
 }

@@ -6,6 +6,10 @@
 
 namespace Drupal\elementor;
 
+use Elementor\Controls_Stack;
+use Elementor\Plugin;
+use \Drupal\file\Entity\File;
+
 class ElementorSDK
 {
 
@@ -189,7 +193,7 @@ class ElementorSDK
      */
     public function delete_local_tmp($id)
     {
-        return $this->connection->query("DELETE FROM elementor_data WHERE id = " . $id)
+        return $this->connection->query("DELETE FROM elementor_tmps WHERE id = " . $id)
             ->execute();
     }
 
@@ -201,17 +205,9 @@ class ElementorSDK
      */
     public function save_remote_tmps($type, $data)
     {
-        // $timestamp = time();
-
-        // return $this->connection->insert('elementor_tmps')
-        //     ->fields([
-        //         'type' => $type,
-        //         'name' => !empty($data['title']) ? $data['title'] : ___elementor_adapter('(no title)', 'elementor'),
-        //         'author' => 'admin',
-        //         'timestamp' => $timestamp,
-        //         'data' => json_encode($data),
-        //     ])
-        //     ->execute();
+        return \Drupal::configFactory()->getEditable('elementor.tmps')
+            ->set($type, json_encode($data))
+            ->save();
     }
 
     /**
@@ -222,57 +218,40 @@ class ElementorSDK
      */
     public function get_remote_tmps($type = '')
     {
-        // $result = $this->connection->query("SELECT data FROM elementor_tmps WHERE type = '" . $type . "'")
-        //     ->fetchAll();
-        // return json_decode($result->data, true);
+        $data = \Drupal::config('elementor.tmps')->get($type);
+        return $data ? json_decode($data, true) : null;
     }
 
     /**
-     * get_remote_tmp.
+     * upload_file.
      *
      * @since 1.0.0
      * @access public
      */
-    public function get_remote_tmp($id)
+    public function upload_file($pathName, $originalName)
     {
-        $result = $this->connection->query("SELECT * FROM elementor_tmps WHERE id = " . $id)
-            ->fetch();
-        if ($result) {
-            $result->data = json_decode($result->data, true);
+        $data = file_get_contents($pathName);
+        $newFile = file_save_data($data, "public://" . $originalName, FILE_EXISTS_REPLACE);
+        $file = [
+            url => $newFile->url(),
+            id => $newFile->id(),
+        ];
+        return $file;
+    }
+
+    /**
+     * get_file.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function get_file($fid, $style)
+    {
+        $image = \Drupal\file\Entity\File::load($fid);
+        if ($image) {
+            $src = \Drupal\image\Entity\ImageStyle::load($style)->buildUrl($image->getFileUri());
         }
-        return $result;
-    }
-
-    /**
-     * save_remote_tmp.
-     *
-     * @since 1.0.0
-     * @access public
-     */
-    public function save_remote_tmp($type, $data)
-    {
-        $timestamp = time();
-
-        return $this->connection->insert('elementor_tmps')
-            ->fields([
-                'type' => 'remote',
-                'name' => !empty($data['title']) ? $data['title'] : ___elementor_adapter('(no title)', 'elementor'),
-                'author' => 'admin',
-                'timestamp' => $timestamp,
-                'data' => json_encode($data),
-            ])
-            ->execute();
-    }
-
-    /**
-     * upload_files.
-     *
-     * @since 1.0.0
-     * @access public
-     */
-    public function upload_files()
-    {
-
+        return $src;
     }
 
     /**
@@ -281,9 +260,9 @@ class ElementorSDK
      * @since 1.0.0
      * @access public
      */
-    public function delete_file()
+    public function delete_file($attachment_id)
     {
-
+        return file_delete($attachment_id);
     }
 
     /**

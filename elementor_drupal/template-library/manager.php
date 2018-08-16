@@ -3,25 +3,23 @@
 namespace Drupal\elementor;
 
 use Drupal\elementor\Import_Images;
-
 use Elementor\Api;
-use Elementor\TemplateLibrary\Manager  as TemplateLibraryManager ;
-use Elementor\Core\Settings\Manager as SettingsManager;
 use Elementor\Plugin;
+use Elementor\TemplateLibrary\Manager;
 use Elementor\Utils;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
+class Drupal_TemplateLibrary_Manager extends Manager
 {
 
     private $_import_images = null;
 
     public function __construct()
     {
-		$this->register_default_sources();
+        $this->register_default_sources();
         $this->init_ajax_calls();
     }
 
@@ -44,10 +42,15 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
         return $this->_import_images;
     }
 
-
     public function get_library_data(array $args)
     {
-        $library_data = Api::get_library_data(!empty($args['sync']));
+        if (empty($args['sync'])) {
+            $library_data = ElementorPlugin::$instance->sdk->get_remote_tmps('remote');
+        }
+        if (!$library_data) {
+            $library_data = Api::get_library_data(!empty($args['sync']));
+            ElementorPlugin::$instance->sdk->save_remote_tmps('remote', $library_data);
+        }
 
         return [
             'templates' => $this->get_templates(),
@@ -56,7 +59,6 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
             ],
         ];
     }
-
 
     public function save_template(array $args)
     {
@@ -79,15 +81,15 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
 
             $args['page_settings'] = []; //$page->get_data( 'settings' );
         }
-		
-		$template_id = $source->save_item( $args );
 
-		if ( is_wp_error_elementor_adapter( $template_id ) ) {
-			return $template_id;
-		}
+        $template_id = $source->save_item($args);
 
-		return $source->get_item( $template_id );
-	}
+        if (is_wp_error_elementor_adapter($template_id)) {
+            return $template_id;
+        }
+
+        return $source->get_item($template_id);
+    }
 
     public function update_template(array $template_data)
     {
@@ -164,15 +166,15 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
 
         if (!$source) {
             return new \WP_Error('template_error', 'Template source not found.');
-		}
-		
-		do_action_elementor_adapter( 'elementor/template-library/before_get_source_data', $args, $source );
+        }
 
-		$data = $source->get_data( $args );
+        do_action_elementor_adapter('elementor/template-library/before_get_source_data', $args, $source);
 
-		do_action_elementor_adapter( 'elementor/template-library/after_get_source_data', $args, $source );
+        $data = $source->get_data($args);
 
-		return $data;
+        do_action_elementor_adapter('elementor/template-library/after_get_source_data', $args, $source);
+
+        return $data;
     }
 
     /**
@@ -190,19 +192,19 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
      */
     public function delete_template(array $args)
     {
-		$validate_args = $this->ensure_args( [ 'source', 'template_id' ], $args );
+        $validate_args = $this->ensure_args(['source', 'template_id'], $args);
 
-		if ( is_wp_error_elementor_adapter( $validate_args ) ) {
-			return $validate_args;
-		}
+        if (is_wp_error_elementor_adapter($validate_args)) {
+            return $validate_args;
+        }
 
-		$source = $this->get_source( $args['source'] );
+        $source = $this->get_source($args['source']);
 
-		if ( ! $source ) {
-			return new \WP_Error( 'template_error', 'Template source not found.' );
-		}
+        if (!$source) {
+            return new \WP_Error('template_error', 'Template source not found.');
+        }
 
-		return $source->delete_template( $args['template_id'] );
+        return $source->delete_template($args['template_id']);
     }
 
     /**
@@ -275,7 +277,7 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
 
         $source = $this->get_source($args['source']);
 
-        return false;//$source->mark_as_favorite($args['template_id'], filter_var($args['favorite'], FILTER_VALIDATE_BOOLEAN));
+        return false; //$source->mark_as_favorite($args['template_id'], filter_var($args['favorite'], FILTER_VALIDATE_BOOLEAN));
     }
 
     /**
@@ -323,19 +325,20 @@ class Drupal_TemplateLibrary_Manager extends TemplateLibraryManager
         _default_wp_die_handler($error->get_error_message(), 'Elementor Library');
     }
 
-	private function register_default_sources() {
-		$sources = [
-			'local',
-			'remote',
-		];
+    private function register_default_sources()
+    {
+        $sources = [
+            'local',
+            'remote',
+        ];
 
-		foreach ( $sources as $source_filename ) {
-			$class_name = ucwords( $source_filename );
-			$class_name = str_replace( '-', '_', $class_name );
+        foreach ($sources as $source_filename) {
+            $class_name = ucwords($source_filename);
+            $class_name = str_replace('-', '_', $class_name);
 
-			$this->register_source( __NAMESPACE__ . '\Source_' . $class_name );
-		}
-	}
+            $this->register_source(__NAMESPACE__ . '\Source_' . $class_name);
+        }
+    }
 
     private function handle_ajax_request($ajax_request)
     {

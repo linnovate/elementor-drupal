@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use \Drupal\file\Entity\File;
+use Drupal\file\Entity\File;
 
 class ElementorController extends ControllerBase implements ContainerInjectionInterface
 {
@@ -74,16 +74,9 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     public function upload(Request $request)
     {
         $files = [];
-
         foreach ($request->files->all() as $key => $file) {
-            $data = file_get_contents($file->getPathName());
-            $newFile = file_save_data($data, "public://" . $file->getClientOriginalName(), FILE_EXISTS_REPLACE);
-            $files[] = [
-                url => $newFile->url(),
-                id => $newFile->id(),
-            ];
+            $files[] = $this->ElementorPlugin->sdk->upload_file($file->getPathName(), $file->getClientOriginalName());
         }
-
         return new JsonResponse($files);
     }
 

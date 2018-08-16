@@ -17,7 +17,7 @@ elementor.editor:
 elementor.update:
   path: 'elementor/update'
   defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::update' }
-  methods:  [POST]
+  methods:  [POST, GET]
   requirements:
     _permission: 'administer content types'
 

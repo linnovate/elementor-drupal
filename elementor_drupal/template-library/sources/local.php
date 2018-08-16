@@ -2,6 +2,7 @@
 
 namespace Drupal\elementor;
 
+use Drupal\elementor\ElementorPlugin;
 use Elementor\Core\Base\Document;
 use Elementor\Core\Settings\Manager as SettingsManager;
 use Elementor\Core\Settings\Page\Model;
@@ -525,7 +526,7 @@ foreach ($types as $value => $title) {
             'author' => $result->author, //$user->display_name,
             'hasPageSettings' => false,
             'tags' => [],
-            'export_link' => '', //  $this->get_export_link( $template_id ),
+            'export_link' => $this->get_export_link( $template_id ),
             'url' => '', //  get_permalink( $post->ID ),
         ];
 
@@ -906,10 +907,10 @@ foreach ($types as $value => $title) {
             [
                 'action' => 'elementor_export_template',
                 'source' => $this->get_id(),
-                '_nonce' => Plugin::$instance->editor->create_nonce(self::CPT),
+                // '_nonce' => Plugin::$instance->editor->create_nonce(self::CPT),
                 'template_id' => $template_id,
             ],
-            admin_url_elementor_adapter('admin-ajax.php')
+            base_path() . 'elementor/update'
         );
     }
 
@@ -1243,7 +1244,7 @@ return $views;
 
         $template_data['content'] = $this->process_export_import_content($template_data['content'], 'on_export');
 
-        if (get_post_meta_elementor_adapter($template_id, '_elementor_page_settings', true)) {
+        /* if (get_post_meta_elementor_adapter($template_id, '_elementor_page_settings', true)) {
             $page = SettingsManager::get_settings_managers('page')->get_model($template_id);
 
             $page_settings_data = $this->process_element_export_import_content($page, 'on_export');
@@ -1251,7 +1252,7 @@ return $views;
             if (!empty($page_settings_data['settings'])) {
                 $template_data['page_settings'] = $page_settings_data['settings'];
             }
-        }
+        } */
 
         $export_data = [
             'version' => DB::DB_VERSION,

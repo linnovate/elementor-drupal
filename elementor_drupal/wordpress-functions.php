@@ -256,10 +256,9 @@ function wp_remote_retrieve_body_elementor_adapter($response)
 function wp_get_attachment_image_elementor_adapter($attachment_id, $size = 'thumbnail', $icon = false, $attr = '')
 {
     $html = '';
-    $image = \Drupal\file\Entity\File::load($attachment_id);
+    $src =  \Drupal\Elementor\ElementorPlugin::$instance->sdk->get_file($attachment_id, $style = 'medium');
 
-    if ($image) {
-        $src = \Drupal\image\Entity\ImageStyle::load('medium')->buildUrl($image->getFileUri());
+    if ($src) {
 
         $attr = array(
             'src' => $src,

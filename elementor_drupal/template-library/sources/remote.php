@@ -5,6 +5,8 @@ use Elementor\Api;
 use Elementor\Plugin;
 use Elementor\TemplateLibrary\Source_Base;
 
+use Drupal\elementor\ElementorPlugin;
+
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
@@ -77,10 +79,10 @@ class Source_Remote extends Source_Base
      */
     public function get_items($args = [])
     {
-        // $library_data = ElementorPlugin::$instance->sdk->get_remote_tmps('remote');
+        $library_data = ElementorPlugin::$instance->sdk->get_remote_tmps('remote');
         if (!$library_data) {
             $library_data = Api::get_library_data();
-            // ElementorPlugin::$instance->sdk->save_remote_tmps('remote', $library_data);
+            ElementorPlugin::$instance->sdk->save_remote_tmps('remote', $library_data);
         }
 
         $templates = [];
@@ -204,7 +206,7 @@ class Source_Remote extends Source_Base
     {
         return false;
     }
-
+    
     /**
      * Get remote template data.
      *
@@ -220,18 +222,14 @@ class Source_Remote extends Source_Base
      */
     public function get_data(array $args, $context = 'display')
     {
-        // $data = ElementorPlugin::$instance->sdk->get_remote_tmp($args['template_id']);
-        if (!$data) {
-            $data = Api::get_template_content($args['template_id']);
-            //$data = ElementorPlugin::$instance->sdk->save_remote_tmp($args['template_id'],$data);
-        }
+        $data = Api::get_template_content($args['template_id']);
 
         if (is_wp_error_elementor_adapter($data)) {
             return $data;
         }
 
         $data['content'] = $this->replace_elements_ids($data['content']);
-        // $data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
+    	$data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
 
         $post_id = $_POST['editor_post_id'];
         $document = Plugin::$instance->documents->get($post_id);

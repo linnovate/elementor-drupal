@@ -412,10 +412,10 @@ class ElementorPlugin
         if ($_POST['action'] == 'elementor_ajax') {
             // Update/Save the data.
             $data = json_decode($_REQUEST['actions'], true);
-            $this->sdk->set_data($_POST['editor_post_id'], $data['save_builder']['data']);
+            $this->sdk->set_data($_REQUEST['editor_post_id'], $data['save_builder']['data']);
         }
         // Moves the request to the Elmentor .
-        return do_ajax_elementor_adapter($_POST['action']);
+        return do_ajax_elementor_adapter($_REQUEST['action']);
     }
 
     /**
