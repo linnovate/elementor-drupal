@@ -17,8 +17,7 @@
 2. Choose content type to apply elementor
 3. save
 
-![Set Elementor format](https://raw.githubusercontent.com/linnovate/elementor-drupal/master/readme-assets/set_format.png "Set Elementor format")
-------------
+
 ##### Open editor:
 click on the tab task "elementor" in the node
 
