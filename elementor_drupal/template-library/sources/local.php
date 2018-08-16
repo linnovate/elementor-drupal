@@ -443,7 +443,7 @@ foreach ($types as $value => $title) {
     public function get_items($args = [])
     {
         $templates = [];
-        $result = ElementorDrupal::$instance->sdk->get_local_tmps_ids($this->get_id());
+        $result = ElementorPlugin::$instance->sdk->get_local_tmps_ids($this->get_id());
 
         foreach ($result as $item) {
             $templates[] = $this->get_item($item->id);
@@ -464,7 +464,7 @@ foreach ($types as $value => $title) {
      */
     public function save_item($template_data)
     {
-        $template_id = ElementorDrupal::$instance->sdk->save_local_tmp($this->get_id(), $template_data);
+        $template_id = ElementorPlugin::$instance->sdk->save_local_tmp($this->get_id(), $template_data);
 
         do_action_elementor_adapter('elementor/template-library/after_save_template', $template_id, $template_data);
 
@@ -512,7 +512,7 @@ foreach ($types as $value => $title) {
      */
     public function get_item($template_id)
     {
-        $result = ElementorDrupal::$instance->sdk->get_local_tmp($template_id);
+        $result = ElementorPlugin::$instance->sdk->get_local_tmp($template_id);
 
         $data = [
             'template_id' => $template_id,
@@ -548,7 +548,7 @@ foreach ($types as $value => $title) {
      */
     public function get_data(array $args)
     {
-        $result = ElementorDrupal::$instance->sdk->get_local_tmp($args['template_id']);
+        $result = ElementorPlugin::$instance->sdk->get_local_tmp($args['template_id']);
 
         if (!empty($result)) {
             $content = $this->replace_elements_ids($result->data);
@@ -577,7 +577,7 @@ foreach ($types as $value => $title) {
      */
     public function delete_template($template_id)
     {
-        $result = ElementorDrupal::$instance->sdk->delete_local_tmp($template_id);
+        $result = ElementorPlugin::$instance->sdk->delete_local_tmp($template_id);
         return wp_send_json_success_elementor_adapter();
     }
 

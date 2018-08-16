@@ -10,7 +10,7 @@ use Drupal;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Template\TwigEnvironment;
-use Drupal\elementor\ElementorDrupal;
+use Drupal\elementor\ElementorPlugin;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
     public function __construct(TwigEnvironment $twig)
     {
-        $this->ElementorDrupal = ElementorDrupal::$instance;
+        $this->ElementorPlugin = ElementorPlugin::$instance;
         $this->twig = $twig;
     }
 
@@ -49,14 +49,14 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
 
     public function update(Request $request)
     {
-        $return_data = $this->ElementorDrupal->update($request);
+        $return_data = $this->ElementorPlugin->update($request);
         return new JsonResponse($return_data);
     }
 
     public function editor(Request $request)
     {
         $id = \Drupal::routeMatch()->getParameter('node');
-        $editor_data = $this->ElementorDrupal->editor($id);
+        $editor_data = $this->ElementorPlugin->editor($id);
 
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
 

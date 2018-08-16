@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\elementor\ElementorDrupal.
+ * Contains \Drupal\elementor\ElementorPlugin.
  */
 
 namespace Drupal\elementor;
@@ -52,7 +52,7 @@ use Elementor\Editor;
 use Elementor\Plugin;
 use Elementor\Schemes_Manager;
 
-class ElementorDrupal
+class ElementorPlugin
 {
     /**
      * Instance.
@@ -421,7 +421,7 @@ class ElementorDrupal
     /**
      * Plugin constructor.
      *
-     * Initializing ElementorDrupal integration.
+     * Initializing ElementorPlugin integration.
      *
      * @since 1.0.0
      * @access private
@@ -446,5 +446,5 @@ class ElementorDrupal
 
 if (!defined('ELEMENTOR_TESTS')) {
     // In tests we run the instance manually.
-    ElementorDrupal::instance();
+    ElementorPlugin::instance();
 }

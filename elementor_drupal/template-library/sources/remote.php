@@ -77,10 +77,10 @@ class Source_Remote extends Source_Base
      */
     public function get_items($args = [])
     {
-        // $library_data = ElementorDrupal::$instance->sdk->get_remote_tmps('remote');
+        // $library_data = ElementorPlugin::$instance->sdk->get_remote_tmps('remote');
         if (!$library_data) {
             $library_data = Api::get_library_data();
-            // ElementorDrupal::$instance->sdk->save_remote_tmps('remote', $library_data);
+            // ElementorPlugin::$instance->sdk->save_remote_tmps('remote', $library_data);
         }
 
         $templates = [];
@@ -220,10 +220,10 @@ class Source_Remote extends Source_Base
      */
     public function get_data(array $args, $context = 'display')
     {
-        // $data = ElementorDrupal::$instance->sdk->get_remote_tmp($args['template_id']);
+        // $data = ElementorPlugin::$instance->sdk->get_remote_tmp($args['template_id']);
         if (!$data) {
             $data = Api::get_template_content($args['template_id']);
-            //$data = ElementorDrupal::$instance->sdk->save_remote_tmp($args['template_id'],$data);
+            //$data = ElementorPlugin::$instance->sdk->save_remote_tmp($args['template_id'],$data);
         }
 
         if (is_wp_error_elementor_adapter($data)) {

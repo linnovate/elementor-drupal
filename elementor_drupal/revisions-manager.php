@@ -25,7 +25,7 @@ class Drupal_Revisions_Manager extends Revisions_Manager
 
     public static function get_revisions($id = 1, $query_args = [], $parse_result = true)
     {
-        $result = ElementorDrupal::$instance->sdk->get_revisions($id);
+        $result = ElementorPlugin::$instance->sdk->get_revisions($id);
         $revisions = [];
 
         foreach ($result as $revision) {
@@ -54,19 +54,19 @@ class Drupal_Revisions_Manager extends Revisions_Manager
 
     public static function get_revisions_ids($id = 1, $query_args = [], $parse_result = true)
     {
-        $revisions = ElementorDrupal::$instance->sdk->get_revisions_ids($id);
+        $revisions = ElementorPlugin::$instance->sdk->get_revisions_ids($id);
         return $revisions;
     }
 
     public static function on_revision_data_request()
     {
-        $revision_data = ElementorDrupal::$instance->sdk->get_revision_data($_POST['id']);
+        $revision_data = ElementorPlugin::$instance->sdk->get_revision_data($_POST['id']);
         return wp_send_json_success_elementor_adapter($revision_data);
     }
 
     public static function on_delete_revision_request()
     {
-        $result = ElementorDrupal::$instance->sdk->delete_revision($_POST['id']);
+        $result = ElementorPlugin::$instance->sdk->delete_revision($_POST['id']);
         return wp_send_json_success_elementor_adapter();
     }
 
