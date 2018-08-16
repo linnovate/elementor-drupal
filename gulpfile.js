@@ -1,7 +1,7 @@
-var gulp = require('gulp');
-var replace = require('gulp-replace');
+const gulp = require('gulp');
+const replace = require('gulp-replace');
 
-var replaceArray = ["get_option",
+const replaceArray = ["get_option",
 "add_filter",
 "add_action",
 "have_posts",
@@ -108,3 +108,4 @@ gulp.task('replace', function() {
 
 });
 
+// git apply elementor_drupal.patch

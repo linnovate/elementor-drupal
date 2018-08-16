@@ -590,7 +590,7 @@ class Utils {
 	 * @return bool True is templates are supported, False otherwise.
 	 */
 	public static function is_cpt_custom_templates_supported() {
-		//require_once ABSPATH . '/wp-admin/includes/theme.php';
+		require_once ABSPATH . '/wp-admin/includes/theme.php';
 
 		return method_exists( wp_get_theme_elementor_adapter(), 'get_post_templates' );
 	}
@@ -599,7 +599,7 @@ class Utils {
 		$length = array_search( $key, array_keys( $array ), true ) + 1;
 
 		return array_slice( $array, 0, $length, true ) +
-				$insert +
-				array_slice( $array, $length, null, true );
+			$insert +
+			array_slice( $array, $length, null, true );
 	}
 }

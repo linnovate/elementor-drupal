@@ -10,8 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @var Editor $this
  */
-$id = \Drupal::routeMatch()->getParameter('node');
-$document = Plugin::$instance->documents->get( $id );
+$document = Plugin::$instance->documents->get( $this->get_post_id() );
 
 ?>
 <script type="text/template" id="tmpl-elementor-panel">
@@ -28,7 +27,7 @@ $document = Plugin::$instance->documents->get( $id );
 	<div id="elementor-panel-page-menu-content"></div>
 	<div id="elementor-panel-page-menu-footer">
 		<a href="<?php echo esc_url_elementor_adapter( $document->get_exit_to_dashboard_url() ); ?>" id="elementor-panel-exit-to-dashboard" class="elementor-button elementor-button-default">
-			<i class="fa fa-drupal"></i>
+			<i class="fa fa-wordpress"></i>
 			<?php echo ___elementor_adapter( 'Exit To Dashboard', 'elementor' ); ?>
 		</a>
 	</div>
