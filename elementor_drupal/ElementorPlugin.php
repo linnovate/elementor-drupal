@@ -135,7 +135,7 @@ class ElementorPlugin
 
         return $data;
     }
-
+    
     /**
      * Editor.
      *
@@ -149,8 +149,8 @@ class ElementorPlugin
         global $base_url;
 
         $data = $this->render_data($id);
-        $items = $this->plugin->schemes_manager->get_registered_schemes_data();
-        $enabled_schemes = Schemes_Manager::get_enabled_schemes();
+
+        $widgets = $this->plugin->widgets_manager->get_widget_types_config(); 
 
         $config = [
             'version' => ELEMENTOR_VERSION,
@@ -162,7 +162,7 @@ class ElementorPlugin
             'elements_categories' => $this->plugin->elements_manager->get_categories(),
             'controls' => $this->plugin->controls_manager->get_controls_data(),
             'elements' => $this->plugin->elements_manager->get_element_types_config(),
-            'widgets' => $this->plugin->widgets_manager->get_widget_types_config(),
+            'widgets' =>$widgets,
             'schemes' => [
                 'items' => $this->plugin->schemes_manager->get_registered_schemes_data(),
                 'enabled_schemes' => Schemes_Manager::get_enabled_schemes(),
@@ -419,6 +419,15 @@ class ElementorPlugin
         return do_ajax_elementor_adapter($_REQUEST['action']);
     }
 
+    private function register_widget() {
+        $sdk_widgets = $this->sdk->init_widgets();
+       
+        foreach ( $sdk_widgets as $widget ) {
+            $this->plugin->widgets_manager->register_widget_type( $widget );
+            $widgets[ $widget->get_name() ] = $widget->get_config();
+        } 
+    }
+
     /**
      * Plugin constructor.
      *
@@ -442,6 +451,8 @@ class ElementorPlugin
         );
 
         $this->sdk = new ElementorSDK;
+
+        add_action_elementor_adapter('elementor/widgets/widgets_registered', $this->register_widget());
     }
 }
 

@@ -266,6 +266,34 @@ class ElementorSDK
     }
 
     /**
+     * init_widgets.
+     *
+     * @since 1.0.0
+     * @access public
+     */
+    public function init_widgets()
+    {
+		$build_widgets_filename = [
+            'drupal-block',
+			'drupal-token',
+		];
+
+		$this->_widget_types = [];
+
+		foreach ( $build_widgets_filename as $widget_filename ) {
+			include(drupal_get_path('module', 'elementor') . '/elementor_drupal/widgets/' . $widget_filename . '.php' );
+			$class_name = str_replace( '-', '_', $widget_filename );
+            $class_name = __NAMESPACE__ . '\Widget_' . ucwords($class_name, "_");
+            $this->_widget_types[] = new $class_name();
+        }
+        
+        return $this->_widget_types;
+
+
+        
+    }
+    
+    /**
      * construct.
      *
      * @since 1.0.0
