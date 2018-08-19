@@ -1,0 +1,6 @@
+global:
+  version: 1.x
+  css:
+    compbasonent:
+      elementor/assets/lib/eicons/css/elementor-icons.min.css: {}
+      assets/style.css: {}

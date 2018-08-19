@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Drupal Elementor</title>
+  </head>
+  <body>
+
+      <div id="elementor-editor-wrapper">
+          <div id="elementor-preview">
+              <div id="elementor-loading">
+                  <div class="elementor-loader-wrapper">
+                      <div class="elementor-loader">
+                          <div class="elementor-loader-box"></div>
+                          <div class="elementor-loader-box"></div>
+                          <div class="elementor-loader-box"></div>
+                          <div class="elementor-loader-box"></div>
+                      </div>
+                      <div class="elementor-loading-title"></div>
+                  </div>
+              </div>
+              <div id="elementor-preview-responsive-wrapper" class="elementor-device-desktop elementor-device-rotate-portrait">
+                  <div id="elementor-preview-loading">
+                      <i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
+                  </div>
+              </div>
+          </div>
+          <div id="elementor-panel" class="elementor-panel"></div>
+      </div>
+      
+    <script src="{{base_path}}/elementor_drupal/data.js"/></script>
+    
+    {{ elementor_data|raw }}
+
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var mceViewL10n = {
+            "shortcodes": [
+                "wp_caption",
+                "caption",
+                "gallery",
+                "playlist",
+                "audio",
+                "video",
+                "embed"
+            ]
+        };
+        var imageEditL10n = {
+            "error": "Could not load the preview image. Please reload the page and try again."
+        };
+        var quicktagsL10n = {
+            "closeAllOpenTags": "Close all open tags",
+            "closeTags": "close tags",
+            "enterURL": "Enter the URL",
+            "enterImageURL": "Enter the URL of the image",
+            "enterImageDescription": "Enter a description of the image",
+            "textdirection": "text direction",
+            "toggleTextdirection": "Toggle Editor Text Direction",
+            "dfw": "Distraction-free writing mode",
+            "strong": "Bold",
+            "strongClose": "Close bold tag",
+            "em": "Italic",
+            "emClose": "Close italic tag",
+            "link": "Insert link",
+            "blockquote": "Blockquote",
+            "blockquoteClose": "Close blockquote tag",
+            "del": "Deleted text (strikethrough)",
+            "delClose": "Close deleted text tag",
+            "ins": "Inserted text",
+            "insClose": "Close inserted text tag",
+            "image": "Insert image",
+            "ul": "Bulleted list",
+            "ulClose": "Close bulleted list tag",
+            "ol": "Numbered list",
+            "olClose": "Close numbered list tag",
+            "li": "List item",
+            "liClose": "Close list item tag",
+            "code": "Code",
+            "codeClose": "Close code tag",
+            "more": "Insert Read More tag"
+        };
+        var wpLinkL10n = {
+            "title": "Insert\/edit link",
+            "update": "Update",
+            "save": "Add Link",
+            "noTitle": "(no title)",
+            "noMatchesFound": "No results found.",
+            "linkSelected": "Link selected.",
+            "linkInserted": "Link inserted."
+        };
+        var uiAutocompleteL10n = {
+            "noResults": "No results found.",
+            "oneResult": "1 result found. Use up and down arrow keys to navigate.",
+            "manyResults": "%d results found. Use up and down arrow keys to navigate.",
+            "itemSelected": "Item selected."
+        };
+        var thickboxL10n = {
+            "next": "Next >",
+            "prev": "< Prev",
+            "image": "Image",
+            "of": "of",
+            "close": "Close",
+            "noiframes": "This feature requires inline frames. You have iframes disabled or your browser does not support them.",
+            "loadingAnimation": "{{base_path}}\/elementor_drupal\/assets\/js\/thickbox\/loadingAnimation.gif"
+        };
+        var heartbeatSettings = {
+            "nonce": "6d2a66a655",
+            "suspension": "disable",
+            "interval": "15"
+        };
+        var authcheckL10n = {
+            "beforeunload": "Your session has expired. You can log in again from this page or go to the login page.",
+            "interval": "180"
+        };
+        var wpColorPickerL10n = {
+            "clear": "Clear",
+            "clearAriaLabel": "Clear color",
+            "defaultString": "Default",
+            "defaultAriaLabel": "Select default color",
+            "pick": "Select Color",
+            "defaultLabel": "Color value"
+        };
+        /* ]]> */
+    </script>
+    <script type="text/javascript">
+        var mejsL10n = {
+            "language": "en",
+            "strings": {
+                "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https:\/\/get.adobe.com\/flashplayer\/",
+                "mejs.fullscreen-off": "Turn off Fullscreen",
+                "mejs.fullscreen-on": "Go Fullscreen",
+                "mejs.download-video": "Download Video",
+                "mejs.fullscreen": "Fullscreen",
+                "mejs.time-jump-forward": [
+                    "Jump forward 1 second", "Jump forward %1 seconds"
+                ],
+                "mejs.loop": "Toggle Loop",
+                "mejs.play": "Play",
+                "mejs.pause": "Pause",
+                "mejs.close": "Close",
+                "mejs.time-slider": "Time Slider",
+                "mejs.time-help-text": "Use Left\/Right Arrow keys to advance one second, Up\/Down arrows to advance ten seconds.",
+                "mejs.time-skip-back": [
+                    "Skip back 1 second", "Skip back %1 seconds"
+                ],
+                "mejs.captions-subtitles": "Captions\/Subtitles",
+                "mejs.captions-chapters": "Chapters",
+                "mejs.none": "None",
+                "mejs.mute-toggle": "Mute Toggle",
+                "mejs.volume-help-text": "Use Up\/Down Arrow keys to increase or decrease volume.",
+                "mejs.unmute": "Unmute",
+                "mejs.mute": "Mute",
+                "mejs.volume-slider": "Volume Slider",
+                "mejs.video-player": "Video Player",
+                "mejs.audio-player": "Audio Player",
+                "mejs.ad-skip": "Skip ad",
+                "mejs.ad-skip-info": [
+                    "Skip in 1 second", "Skip in %1 seconds"
+                ],
+                "mejs.source-chooser": "Source Chooser",
+                "mejs.stop": "Stop",
+                "mejs.speed-rate": "Speed Rate",
+                "mejs.live-broadcast": "Live Broadcast",
+                "mejs.afrikaans": "Afrikaans",
+                "mejs.albanian": "Albanian",
+                "mejs.arabic": "Arabic",
+                "mejs.belarusian": "Belarusian",
+                "mejs.bulgarian": "Bulgarian",
+                "mejs.catalan": "Catalan",
+                "mejs.chinese": "Chinese",
+                "mejs.chinese-simplified": "Chinese (Simplified)",
+                "mejs.chinese-traditional": "Chinese (Traditional)",
+                "mejs.croatian": "Croatian",
+                "mejs.czech": "Czech",
+                "mejs.danish": "Danish",
+                "mejs.dutch": "Dutch",
+                "mejs.english": "English",
+                "mejs.estonian": "Estonian",
+                "mejs.filipino": "Filipino",
+                "mejs.finnish": "Finnish",
+                "mejs.french": "French",
+                "mejs.galician": "Galician",
+                "mejs.german": "German",
+                "mejs.greek": "Greek",
+                "mejs.haitian-creole": "Haitian Creole",
+                "mejs.hebrew": "Hebrew",
+                "mejs.hindi": "Hindi",
+                "mejs.hungarian": "Hungarian",
+                "mejs.icelandic": "Icelandic",
+                "mejs.indonesian": "Indonesian",
+                "mejs.irish": "Irish",
+                "mejs.italian": "Italian",
+                "mejs.japanese": "Japanese",
+                "mejs.korean": "Korean",
+                "mejs.latvian": "Latvian",
+                "mejs.lithuanian": "Lithuanian",
+                "mejs.macedonian": "Macedonian",
+                "mejs.malay": "Malay",
+                "mejs.maltese": "Maltese",
+                "mejs.norwegian": "Norwegian",
+                "mejs.persian": "Persian",
+                "mejs.polish": "Polish",
+                "mejs.portuguese": "Portuguese",
+                "mejs.romanian": "Romanian",
+                "mejs.russian": "Russian",
+                "mejs.serbian": "Serbian",
+                "mejs.slovak": "Slovak",
+                "mejs.slovenian": "Slovenian",
+                "mejs.spanish": "Spanish",
+                "mejs.swahili": "Swahili",
+                "mejs.swedish": "Swedish",
+                "mejs.tagalog": "Tagalog",
+                "mejs.thai": "Thai",
+                "mejs.turkish": "Turkish",
+                "mejs.ukrainian": "Ukrainian",
+                "mejs.vietnamese": "Vietnamese",
+                "mejs.welsh": "Welsh",
+                "mejs.yiddish": "Yiddish"
+            }
+        };
+    </script>
+
+    <script type="text/javascript">
+       var  tinyMCEPreInit = {
+            baseURL: "{{base_path}}/elementor_drupal/assets/js/tinymce",
+            suffix: ".min",
+            dragDropUpload: true,
+            mceInit: {
+                'elementorwpeditor': {
+                    theme: "modern",
+                    skin: "lightgray",
+                    language: "en",
+                    formats: {
+                        alignleft: [
+                            {
+                                selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+                                styles: {
+                                    textAlign: "left"
+                                }
+                            }, {
+                                selector: "img,table,dl.wp-caption",
+                                classes: "alignleft"
+                            }
+                        ],
+                        aligncenter: [
+                            {
+                                selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+                                styles: {
+                                    textAlign: "center"
+                                }
+                            }, {
+                                selector: "img,table,dl.wp-caption",
+                                classes: "aligncenter"
+                            }
+                        ],
+                        alignright: [
+                            {
+                                selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li",
+                                styles: {
+                                    textAlign: "right"
+                                }
+                            }, {
+                                selector: "img,table,dl.wp-caption",
+                                classes: "alignright"
+                            }
+                        ],
+                        strikethrough: {
+                            inline: "del"
+                        }
+                    },
+                    relative_urls: false,
+                    remove_script_host: false,
+                    convert_urls: false,
+                    browser_spellcheck: true,
+                    fix_list_elements: true,
+                    entities: "38,amp,60,lt,62,gt",
+                    entity_encoding: "raw",
+                    keep_styles: false,
+                    cache_suffix: "wp-mce-4711-20180425",
+                    resize: "vertical",
+                    menubar: false,
+                    branding: false,
+                    preview_styles: "font-family font-size font-weight font-style text-decoration text-transform",
+                    end_container_on_empty_block: true,
+                    wpeditimage_html5_captions: true,
+                    wp_lang_attr: "en-US",
+                    wp_keep_scroll_position: false,
+                    wp_shortcut_labels: {
+                        "Heading 1": "access1",
+                        "Heading 2": "access2",
+                        "Heading 3": "access3",
+                        "Heading 4": "access4",
+                        "Heading 5": "access5",
+                        "Heading 6": "access6",
+                        "Paragraph": "access7",
+                        "Blockquote": "accessQ",
+                        "Underline": "metaU",
+                        "Strikethrough": "accessD",
+                        "Bold": "metaB",
+                        "Italic": "metaI",
+                        "Code": "accessX",
+                        "Align center": "accessC",
+                        "Align right": "accessR",
+                        "Align left": "accessL",
+                        "Justify": "accessJ",
+                        "Cut": "metaX",
+                        "Copy": "metaC",
+                        "Paste": "metaV",
+                        "Select all": "metaA",
+                        "Undo": "metaZ",
+                        "Redo": "metaY",
+                        "Bullet list": "accessU",
+                        "Numbered list": "accessO",
+                        "Insert\/edit image": "accessM",
+                        "Remove link": "accessS",
+                        "Toolbar Toggle": "accessZ",
+                        "Insert Read More tag": "accessT",
+                        "Insert Page Break tag": "accessP",
+                        "Distraction-free writing mode": "accessW",
+                        "Keyboard Shortcuts": "accessH"
+                    },
+                    content_css: "http://localhost/wordpress/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6,http://localhost/wordpress/elementor_drupal/assets/js/tinymce/skins/wordpress/wp-content.css?ver=4.9.6,https://fonts.googleapis.com/css?family=Libre+Franklin%3A300%2C300i%2C400%2C400i%2C600%2C600i%2C800%2C800i&subset=latin%2Clatin-ext,http://localhost/wordpress/wp-content/themes/twentyseventeen/assets/css/editor-style.css",
+                    plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+                    selector: "#elementorwpeditor",
+                    wpautop: true,
+                    indent: false,
+                    toolbar1: "formatselect,bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link,wp_more,spellchecker,fullscreen,wp_adv",
+                    toolbar2: "strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help",
+                    toolbar3: "",
+                    toolbar4: "",
+                    tabfocus_elements: ":prev,:next",
+                    body_class: "elementorwpeditor post-type-post post-status-publish post-format-standard page-template-default locale-en-us"
+                }
+            },
+            qtInit: {
+                'elementorwpeditor': {
+                    id: "elementorwpeditor",
+                    buttons: "strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"
+                }
+            },
+            ref: {
+                plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
+                theme: "modern",
+                language: "en"
+            },
+            load_ext: function (url, lang) {
+                var sl = tinymce.ScriptLoader;
+                sl.markDone(url + '/langs/' + lang + '.js');
+                sl.markDone(url + '/langs/' + lang + '_dlg.js');
+            }
+        };
+    </script>
+
+    <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/css/color-picker.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/lib/animate.css/animate.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/lib/e-select2/css/e-select2.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/lib/eicons/css/elementor-icons.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/lib/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/js/imgareaselect/imgareaselect.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6" type="text/css">
+    <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/css/editor.min.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/css/editor.css">
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/jquery.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/jquery-migrate.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/jquery.ui.touch-punch.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/core.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/widget.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/mouse.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/sortable.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/position.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/menu.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/autocomplete.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/resizable.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/draggable.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/jquery/ui/slider.min.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/image-edit.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/color-picker.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/iris.min.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/editor.min.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/underscore.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/backbone.min.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/shortcode.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/wp-backbone.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/utils.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/wp-util.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/media-models.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/plupload/moxie.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/plupload/plupload.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/plupload/wp-plupload.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/wp-embed.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/mce-view.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/imgareaselect/jquery.imgareaselect.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/quicktags.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/wplink.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/thickbox/thickbox.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/media-upload.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/heartbeat.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/wp-auth-check.min.js"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/imagesloaded.min.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/assets/js/tinymce/tinymce.min.js?ver=4711-20180425"></script>
+    <script src="{{base_path}}/elementor_drupal/assets/js/tinymce/plugins/compat3x/plugin.min.js?ver=4711-20180425"></script>
+
+    <script src="{{base_path}}/elementor/assets/lib/backbone/backbone.marionette.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/backbone/backbone.radio.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/dialog/dialog.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/e-select2/js/e-select2.full.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/flatpickr/flatpickr.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/inline-editor/js/inline-editor.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/nprogress/nprogress.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/perfect-scrollbar/perfect-scrollbar.jquery.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/slick/slick.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/swiper/swiper.jquery.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/tipsy/tipsy.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/lib/wp-color-picker/wp-color-picker-alpha.min.js"></script>
+    <script src="{{base_path}}/elementor/assets/js/editor.js"></script>
+
+    <script src="{{base_path}}/elementor_drupal/media.js"/></script>
+    
+  </body>
+</html>

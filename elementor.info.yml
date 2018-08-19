@@ -1,0 +1,10 @@
+name: Elementor
+type: module
+description: 'Implement the "Elementor" page builder into drupal.'
+
+version: "8.x-1.0"
+core: "8.x"
+project: "elementor"
+
+libraries:
+  - elementor/global

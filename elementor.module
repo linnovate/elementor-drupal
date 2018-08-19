@@ -1,0 +1,276 @@
+<?php
+
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/ElementorPlugin.php';
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\elementor\ElementorPlugin;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function elementor_page_attachments(array &$attachments)
+{
+    $attachments['#attached']['library'][] = 'elementor/global';
+}
+
+/**
+ * Implements hook_theme().
+ */
+
+function elementor_theme($existing, $type, $theme, $path)
+{
+    return array(
+        'elementor_field' => array(
+            'variables' => array('elementor_data' => null, 'elementor_tmp' => null, 'base_path' => base_path()),
+        ),
+        'elementor_editor' => array(
+            'variables' => array('elementor_data' => null),
+        ),
+    );
+}
+
+/**
+ * Implements hook_theme_suggestions_alter().
+ */
+function elementor_theme_suggestions_alter(array &$suggestions, array $variables, $hook)
+{
+    if ($hook !== 'page' && $hook !== 'node') {
+        return;
+    }
+
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
+
+    if ($node && in_array($node->getType(), $allow_content_types, true)) {
+        $config = ElementorPlugin::$instance->sdk->get_data($node->id());
+
+        if ($hook == 'page' && $config['settings']['template'] == 'elementor_canvas') {
+            $suggestions[] = 'elementor_field';
+        } else if ($hook == 'page' && $config['settings']['template'] == 'elementor_header_footer') {
+            $suggestions[] = 'elementor_field';
+        } else if ($hook == 'node' && !$config['settings']['template']) {
+            $suggestions[] = 'elementor_field';
+        }
+    }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+
+function elementor_preprocess_node(&$variables, $hook)
+{
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
+
+    if ($node && in_array($node->getType(), $allow_content_types, true)) {
+        $variables['#cache'] = ['max-age' => 0];
+    }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+
+function elementor_preprocess_elementor_field(&$variables, $hook)
+{
+    global $base_path;
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $id = $node->id();
+    $ElementorPlugin = ElementorPlugin::$instance;
+    $frontend_data = $ElementorPlugin->frontend($id);
+
+    $variables['base_path'] = $base_path . drupal_get_path('module', 'elementor');
+    $variables['elementor_tmp'] = $frontend_data;
+    $variables['uid'] = $id;
+    $variables['#cache'] = ['max-age' => 0];
+}
+
+/**
+ * Implements hook__menu_local_tasks_alter().
+ */
+
+function elementor_menu_local_tasks_alter(&$data, $route_name)
+{
+    global $base_url;
+
+    $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node) {
+        $nid = $node->id();
+    } else {
+        $nid = 1;
+    }
+    if ($route_name == 'entity.node.canonical' && in_array($node->getType(), $allow_content_types, true)) {
+        $data['tabs'][0]['entity.node.canonical'] = [
+            '#theme' => 'menu_local_task',
+            '#link' => [
+                'title' => t('Elementor'),
+                'url' => \Drupal\Core\Url::fromRoute('elementor.editor', ['node' => $nid]),
+                'localized_options' => [
+                    'attributes' => [
+                        'title' => t('Edit with Elementor'),
+                    ],
+                ],
+            ],
+        ];
+    }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function elementor_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+    $params = explode("_", $form_id);
+    if ($params[0] == 'node') {
+        $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
+
+        if (in_array($params[1], $allow_content_types, true)) {
+            $form['edit_with_elementor'] = array(
+                '#type' => 'submit',
+                '#value' => t('Edit with Elementor'),
+                '#weight' => 0.1,
+                '#attributes' => [
+                    'class' => ['eicon-elementor', 'edit-with-elementor'],
+                ],
+            );
+
+            $form['#submit'][] = 'elementor_edit_with_elementor_form_submit';
+        }
+    }
+}
+
+function elementor_edit_with_elementor_form_submit($form, &$form_state)
+{
+    drupal_set_message('node is saved.');
+    $entity = $form_state->getFormObject()->getEntity();
+    $entity->save();
+
+    $form_state->setRedirect('elementor.editor', ['node' => $entity->id()]);
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+
+function elementor_library_info_build()
+{
+    $path = drupal_get_path('module', 'elementor');
+
+    $libraries = [];
+    $libraries['editor'] = [
+        'js' => [
+            // $path . '/elementor_drupal/assets/js/jquery/jquery.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/jquery-migrate.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/jquery.ui.touch-punch.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/core.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/widget.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/mouse.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/sortable.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/position.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/menu.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/autocomplete.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/resizable.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/draggable.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/slider.min.js' => [],
+
+            $path . '/elementor_drupal/assets/js/image-edit.js' => [],
+            $path . '/elementor_drupal/assets/js/color-picker.js' => [],
+            $path . '/elementor_drupal/assets/js/iris.min.js' => [],
+
+            $path . '/elementor_drupal/assets/js/editor.min.js' => [],
+
+            $path . '/elementor_drupal/assets/js/underscore.min.js' => [],
+            $path . '/elementor_drupal/assets/js/backbone.min.js' => [],
+
+            $path . '/elementor_drupal/assets/js/shortcode.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-backbone.js' => [],
+            $path . '/elementor_drupal/assets/js/utils.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-util.js' => [],
+
+            $path . '/elementor_drupal/assets/js/media-models.js' => [],
+            $path . '/elementor_drupal/assets/js/plupload/moxie.min.js' => [],
+            $path . '/elementor_drupal/assets/js/plupload/plupload.js' => [],
+            $path . '/elementor_drupal/assets/js/plupload/wp-plupload.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-embed.js' => [],
+
+            $path . '/elementor_drupal/assets/js/mce-view.js' => [],
+            $path . '/elementor_drupal/assets/js/imgareaselect/jquery.imgareaselect.js' => [],
+
+            $path . '/elementor_drupal/assets/js/quicktags.js' => [],
+
+            $path . '/elementor_drupal/assets/js/wplink.js' => [],
+
+            $path . '/elementor_drupal/assets/js/thickbox/thickbox.js' => [],
+            $path . '/elementor_drupal/assets/js/media-upload.js' => [],
+            $path . '/elementor_drupal/assets/js/heartbeat.min.js' => [],
+            $path . '/elementor_drupal/assets/js/wp-auth-check.min.js' => [],
+            $path . '/elementor_drupal/assets/js/imagesloaded.min.js' => [],
+
+            $path . '/elementor_drupal/assets/js/tinymce/tinymce.min.js?ver=4711-20180425' => [],
+            $path . '/elementor_drupal/assets/js/tinymce/plugins/compat3x/plugin.min.js?ver=4711-20180425' => [],
+
+            $path . '/elementor/assets/lib/backbone/backbone.marionette.min.js' => [],
+            $path . '/elementor/assets/lib/backbone/backbone.radio.min.js' => [],
+            $path . '/elementor/assets/lib/dialog/dialog.min.js' => [],
+            $path . '/elementor/assets/lib/e-select2/js/e-select2.full.min.js' => [],
+            $path . '/elementor/assets/lib/flatpickr/flatpickr.min.js' => [],
+            $path . '/elementor/assets/lib/inline-editor/js/inline-editor.min.js' => [],
+            $path . '/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js' => [],
+            $path . '/elementor/assets/lib/nprogress/nprogress.min.js' => [],
+            $path . '/elementor/assets/lib/perfect-scrollbar/perfect-scrollbar.jquery.min.js' => [],
+            $path . '/elementor/assets/lib/slick/slick.min.js' => [],
+            $path . '/elementor/assets/lib/swiper/swiper.jquery.min.js' => [],
+            $path . '/elementor/assets/lib/tipsy/tipsy.min.js' => [],
+            $path . '/elementor/assets/lib/waypoints/waypoints.min.js' => [],
+            $path . '/elementor/assets/lib/wp-color-picker/wp-color-picker-alpha.min.js' => [],
+            $path . '/elementor/assets/js/editor.js' => [],
+
+            $path . '/elementor_drupal/media.js' => [],
+        ],
+        'css' => [
+            'base' => [
+                $path . '/elementor_drupal/assets/css/color-picker.min.css' => [],
+                $path . '/elementor/assets/lib/animate.css/animate.min.css' => [],
+                $path . '/elementor/assets/lib/e-select2/css/e-select2.min.css' => [],
+                $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css' => [],
+                $path . '/elementor/assets/lib/flatpickr/flatpickr.min.css' => [],
+                $path . '/elementor/assets/lib/font-awesome/css/font-awesome.min.css' => [],
+                $path . '/elementor_drupal/assets/js/imgareaselect/imgareaselect.css' => [],
+                $path . '/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6" type="text/css' => [],
+                $path . '/elementor_drupal/assets/css/editor.min.css' => [],
+                $path . '/elementor/assets/css/editor.css' => [],
+            ],
+        ],
+    ];
+
+    $libraries['frontend'] = [
+        'js' => [
+            // $path . '/elementor_drupal/assets/js/jquery/jquery.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/jquery-migrate.min.js' => [],
+            $path . '/elementor_drupal/assets/js/jquery/ui/position.min.js' => [],
+
+            $path . '/elementor/assets/lib/slick/slick.min.js?ver=1.8.1' => [],
+            $path . '/elementor/assets/lib/jquery-numerator/jquery-numerator.min.js?ver=0.2.1' => [],
+            $path . '/elementor/assets/lib/inline-editor/js/inline-editor.min.js?ver=4.9.6' => [],
+            $path . '/elementor/assets/lib/dialog/dialog.min.js?ver=4.3.2' => [],
+            $path . '/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2' => [],
+            $path . '/elementor/assets/lib/swiper/swiper.jquery.min.js?ver=3.4.2' => [],
+            $path . '/elementor/assets/js/frontend.min.js?ver=2.0.16' => [],
+        ],
+        'css' => [
+            'base' => [
+                $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=3.3.0' => [],
+                $path . '/elementor/assets/lib/font-awesome/css/font-awesome.min.css?ver=4.7.0' => [],
+                $path . '/elementor/assets/lib/e-select2/css/e-select2.min.css?ver=4.0.6-rc.1' => [],
+                $path . '/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=3.3.0' => [],
+                $path . '/elementor/assets/lib/animations/animations.min.css?ver=2.0.16' => [],
+                $path . '/elementor/assets/css/editor-preview.min.css?ver=2.0.16' => [],
+                $path . '/elementor/assets/css/frontend.min.css?ver=2.0.16' => [],
+            ],
+        ],
+    ];
+
+    return $libraries;
+}

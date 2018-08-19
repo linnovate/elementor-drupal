@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-replace": "^1.0.0"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/gulp replace"
+  }
+}

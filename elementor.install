@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * Implementation of hook_uninstall().
+ */
+
+function elementor_uninstall()
+{
+    // Use schema API to delete database table.
+    drupal_uninstall_schema('elementor');
+}
+
+/**
+ * Implements hook_schema().
+ */
+
+function elementor_schema()
+{
+    // Data that Elementor editor gives
+    $schema['elementor_data'] = array(
+        'description' => 'Elementor data.',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'description' => "The ID of the Elementor data.",
+            ),
+            'uid' => array(
+                'type' => 'int',
+                'not null' => true,
+                'default' => 0,
+                'description' => "The ID of the target entity.",
+            ),
+            'data' => array(
+                'type' => 'blob',
+                'not null' => true,
+                'description' => 'The json of the Elementor editor get.',
+            ),
+            'author' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The author of the target entity.",
+            ),
+            'timestamp' => array(
+                'type' => 'int',
+                'not null' => true,
+                'default' => 0,
+                'description' => "The timestamp of edited data.",
+            ),
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'uid' => array('uid'),
+        ),
+    );
+
+    // Templates that Elementor editor save or load from the remote templates services 
+    $schema['elementor_tmps'] = array(
+        'description' => 'Elementor templates.',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'not null' => true,
+                'description' => "The ID of the Elementor template.",
+            ),
+            'type' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The type of the template.",
+            ),
+            'name' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The name of the template.",
+            ),
+            'author' => array(
+                'type' => 'text',
+                'not null' => true,
+                'description' => "The author of the target entity.",
+            ),
+            'data' => array(
+                'type' => 'blob',
+                'not null' => true,
+                'description' => 'The json of the Elementor editor get.',
+            ),
+            'timestamp' => array(
+                'type' => 'int',
+                'not null' => true,
+                'default' => 0,
+                'description' => "The timestamp of edited data.",
+            ),
+        ),
+        'primary key' => array('id'),
+        'indexes' => array(
+            'type' => array('type'),
+        ),
+    );
+
+    return $schema;
+}
