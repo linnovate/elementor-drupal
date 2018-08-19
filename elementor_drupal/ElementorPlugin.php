@@ -25,6 +25,7 @@ if (defined('ELEMENTOR_TESTS') && ELEMENTOR_TESTS) {
 define('ELEMENTOR_MODULES_PATH', '');
 define('ELEMENTOR_ASSETS_URL', '/' . ELEMENTOR_PATH . 'assets/'); // base_path() is null 
 
+require drupal_get_path('module', 'elementor') . '/elementor_drupal/do-actions-functions.php';
 require drupal_get_path('module', 'elementor') . '/elementor_drupal/wordpress-functions.php';
 
 require drupal_get_path('module', 'elementor') . '/elementor/includes/plugin.php';

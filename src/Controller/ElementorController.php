@@ -11,11 +11,11 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Template\TwigEnvironment;
 use Drupal\elementor\ElementorPlugin;
+use Drupal\file\Entity\File;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Drupal\file\Entity\File;
 
 class ElementorController extends ControllerBase implements ContainerInjectionInterface
 {
@@ -24,11 +24,9 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
      * @var Drupal\Core\Template\TwigEnvironment
      */
     protected $twig;
-    protected $ElementorDrupa;
 
     public function __construct(TwigEnvironment $twig)
     {
-        $this->ElementorPlugin = ElementorPlugin::$instance;
         $this->twig = $twig;
     }
 
@@ -43,20 +41,19 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     {
         // $return_data = do_action($_POST['action']);
         // return new JsonResponse($return_data);
-
         return new Response('', Response::HTTP_NOT_FOUND);
     }
 
     public function update(Request $request)
     {
-        $return_data = $this->ElementorPlugin->update($request);
+        $return_data = ElementorPlugin::$instance->update($request);
         return new JsonResponse($return_data);
     }
 
     public function editor(Request $request)
     {
         $id = \Drupal::routeMatch()->getParameter('node');
-        $editor_data = $this->ElementorPlugin->editor($id);
+        $editor_data = ElementorPlugin::$instance->editor($id);
 
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
 
@@ -75,14 +72,14 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
     {
         $files = [];
         foreach ($request->files->all() as $key => $file) {
-            $files[] = $this->ElementorPlugin->sdk->upload_file($file->getPathName(), $file->getClientOriginalName());
+            $files[] = ElementorPlugin::$instance->sdk->upload_file($file->getPathName(), $file->getClientOriginalName());
         }
         return new JsonResponse($files);
     }
 
     public function delete_upload(Request $request)
     {
-        $newFile = file_delete($request->get('fid'));
+        $newFile = ElementorPlugin::$instance->sdk->delete_file($request->get('fid'));
         return new JsonResponse();
     }
 }
