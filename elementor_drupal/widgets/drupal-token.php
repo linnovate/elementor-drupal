@@ -100,7 +100,7 @@ class Widget_Drupal_Token extends Widget_Base {
 	 * @return bool Whether the reload preview is required.
 	 */
 	public function is_reload_preview_required() {
-		return false;
+		return true;
 	}
 
 	/**

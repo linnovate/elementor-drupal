@@ -456,7 +456,7 @@ class ElementorPlugin
     }
 }
 
-if (!defined('ELEMENTOR_TESTS')) {
-    // In tests we run the instance manually.
-    ElementorPlugin::instance();
-}
+// if (!defined('ELEMENTOR_TESTS')) {
+//     // In tests we run the instance manually.
+//     ElementorPlugin::instance();
+// }
