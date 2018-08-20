@@ -1,4 +1,4 @@
-/*! elementor - v2.1.7 - 15-08-2018 */
+/*! elementor - v2.1.8 - 19-08-2018 */
 .dialog-widget-content {
   background-color: #fff;
   position: absolute;
@@ -622,7 +622,8 @@ ul.elementor-icon-list-items.elementor-inline-items {
     word-break: break-word; }
 
 .elementor-grid .elementor-grid-item {
-  word-break: break-word; }
+  word-break: break-word;
+  min-width: 0; }
 
 .elementor-grid-0 .elementor-grid {
   display: -webkit-box;
