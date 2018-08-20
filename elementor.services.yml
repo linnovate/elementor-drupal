@@ -1,0 +1,5 @@
+services:
+    elementor_event_subscriber:
+        class: Drupal\elementor\EventSubscriber\EelementorSubscriber
+        tags:
+            - {name: event_subscriber}

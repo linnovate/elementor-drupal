@@ -1,4 +1,4 @@
-/*! elementor - v2.1.7 - 15-08-2018 */
+/*! elementor - v2.1.8 - 19-08-2018 */
 @charset "UTF-8";
 .elementor-panel-box {
   margin-top: 10px;
@@ -197,7 +197,8 @@
     bottom: 0;
     left: 0;
     background-color: #d5dadf; }
-  .elementor-control.elementor-control-separator-after + .elementor-control-type-tabs {
+  .elementor-control.elementor-control-separator-after + .elementor-control-type-tabs,
+  .elementor-control.elementor-control-separator-after + .elementor-control-separator-default {
     padding-top: 15px; }
   .elementor-control.elementor-control-deprecated {
     color: #b01b1b; }

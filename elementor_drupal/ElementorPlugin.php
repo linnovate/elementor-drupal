@@ -11,7 +11,7 @@ namespace Drupal\elementor;
 define('DOING_AJAX', true);
 
 define('ABSPATH', false);
-define('ELEMENTOR_VERSION', '2.1.7');
+define('ELEMENTOR_VERSION', '2.1.8');
 define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16');
 
 define('ELEMENTOR__FILE__', __FILE__);
@@ -456,7 +456,7 @@ class ElementorPlugin
     }
 }
 
-if (!defined('ELEMENTOR_TESTS')) {
-    // In tests we run the instance manually.
-    ElementorPlugin::instance();
-}
+// if (!defined('ELEMENTOR_TESTS')) {
+//     // In tests we run the instance manually.
+//     ElementorPlugin::instance();
+// }

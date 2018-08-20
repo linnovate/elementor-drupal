@@ -13,7 +13,9 @@ elementor.editor:
   requirements:
     _permission: 'administer content types'
     _format: 'html'
-
+  options:
+    no_cache: 'FALSE'
+    
 elementor.update:
   path: 'elementor/update'
   defaults: { _controller: '\Drupal\elementor\Controller\ElementorController::update' }

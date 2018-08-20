@@ -549,7 +549,8 @@ ul.elementor-icon-list-items.elementor-inline-items {
     word-break: break-word; }
 
 .elementor-grid .elementor-grid-item {
-  word-break: break-word; }
+  word-break: break-word;
+  min-width: 0; }
 
 .elementor-grid-0 .elementor-grid {
   display: flex;

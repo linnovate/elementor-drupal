@@ -1,9 +1,9 @@
 // When update elementor core, run this:
 // -------------------
 //   gulp replace
-//   git apply elementor_drupal.patchconst gulp = require('gulp');
+//   git apply elementor_drupal.patch
 
-
+const gulp = require('gulp');
 const replace = require('gulp-replace');
 
 const replaceArray = ["get_option",
