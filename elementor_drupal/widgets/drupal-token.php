@@ -100,7 +100,7 @@ class Widget_Drupal_Token extends Widget_Base {
 	 * @return bool Whether the reload preview is required.
 	 */
 	public function is_reload_preview_required() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -119,6 +119,19 @@ class Widget_Drupal_Token extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'token',
+			[
+				'label' => ___elementor_adapter( 'Enter your token', 'elementor' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => '[site:name]',
+				'default' => '',
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -131,12 +144,11 @@ class Widget_Drupal_Token extends Widget_Base {
 	 * @access protected
 	 */
 	protected function render() {
-		$token = $this->get_settings_for_display( 'token' );
+		$token_data = $this->get_settings_for_display( 'token' );
+		
+		$token = \Drupal::service('token');
 
-		$token = do_token_elementor_adapter( token_unautop_elementor_adapter( $token ) );
-		?>
-		<div class="elementor-token"><?php echo $token; ?></div>
-		<?php
+		echo $token->replace($token_data);
 	}
 
 	/**

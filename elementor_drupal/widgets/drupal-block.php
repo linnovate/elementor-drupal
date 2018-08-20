@@ -132,7 +132,7 @@ class Widget_Drupal_Block extends Widget_Base
         foreach ($blockManager->getDefinitions() as $block_id => $block) {
             $options[$block_id] = str_replace(':', '->', $block_id);
         }
-
+        
         $this->add_control(
             'block_id',
             [
@@ -159,22 +159,13 @@ class Widget_Drupal_Block extends Widget_Base
         $block_id = $this->get_settings_for_display('block_id');
 
         $block_manager = \Drupal::service('plugin.manager.block');
-        // You can hard code configuration or you load from settings.
         $config = [];
         $plugin_block = $block_manager->createInstance($block_id, $config);
-        // Some blocks might implement access check.
-        $access_result = $plugin_block->access(\Drupal::currentUser());
-        // Return empty render array if user doesn't have access.
-        // $access_result can be boolean or an AccessResult class
-        if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
-          // You might need to add some cache tags/contexts.
-          return [];
-        }
-         $render= $plugin_block->build();
-        // In some cases, you need to add the cache tags/context depending on
-        // the block implemention. As it's possible to add the cache tags and
-        // contexts in the render method and in ::getCacheTags and 
-        // ::getCacheContexts methods.
+        // $access_result = $plugin_block->access(\Drupal::currentUser());
+        // if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+        //   return [];
+        // }
+        $render= $plugin_block->build();
         $renderer = \Drupal::service('renderer');
         $html = $renderer->render($render);
         echo  $html ?$html->__toString() : $block_id;
@@ -202,8 +193,5 @@ class Widget_Drupal_Block extends Widget_Base
      * @since 1.0.0
      * @access protected
      */
-    protected function _content_template()
-    {
-      //  $this->render();
-    }
+    protected function _content_template()   {  }
 }
