@@ -544,3 +544,8 @@ function is_admin_elementor_adapter()
 {
     return true;
 }
+
+function wp_create_nonce_elementor_adapter()
+{
+    return '';
+}

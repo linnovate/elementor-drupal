@@ -70,7 +70,7 @@ class Heartbeat {
 			$post_type = get_post_type_elementor_adapter( $data['elementor_post_lock']['post_ID'] );
 			$response['elementor-refresh-nonces'] = [
 				'elementorNonce' => Plugin::$instance->editor->create_nonce( $post_type ),
-				'heartbeatNonce' => wp_create_nonce( 'heartbeat-nonce' ),
+				'heartbeatNonce' => wp_create_nonce_elementor_adapter( 'heartbeat-nonce' ),
 			];
 		}
 

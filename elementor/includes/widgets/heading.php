@@ -123,7 +123,6 @@ class Widget_Heading extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => ___elementor_adapter( 'https://your-link.com', 'elementor' ),
 				'default' => [
 					'url' => '',
 				],

@@ -22,10 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 </script>
 
 <script type="text/template" id="tmpl-elementor-panel-history-no-items">
-	<i class="elementor-panel-nerd-box-icon eicon-nerd"></i>
-	<div class="elementor-panel-nerd-box-title"><?php echo ___elementor_adapter( 'No History Yet', 'elementor' ); ?></div>
-	<div class="elementor-panel-nerd-box-message"><?php echo ___elementor_adapter( 'Once you start working, you\'ll be able to redo / undo any action you make in the editor.', 'elementor' ); ?></div>
-	<div class="elementor-panel-nerd-box-message"><?php echo ___elementor_adapter( 'Switch to Revisions tab for older versions', 'elementor' ); ?></div>
+	<i class="elementor-nerd-box-icon eicon-nerd"></i>
+	<div class="elementor-nerd-box-title"><?php echo ___elementor_adapter( 'No History Yet', 'elementor' ); ?></div>
+	<div class="elementor-nerd-box-message"><?php echo ___elementor_adapter( 'Once you start working, you\'ll be able to redo / undo any action you make in the editor.', 'elementor' ); ?></div>
+	<div class="elementor-nerd-box-message"><?php echo ___elementor_adapter( 'Switch to Revisions tab for older versions', 'elementor' ); ?></div>
 </script>
 
 <script type="text/template" id="tmpl-elementor-panel-history-item">

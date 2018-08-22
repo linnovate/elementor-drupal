@@ -111,12 +111,12 @@ class Widget_Text_Editor extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => ___elementor_adapter( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+				'default' => ___elementor_adapter( 'Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
-			'drop_cap',[
+			'drop_cap', [
 				'label' => ___elementor_adapter( 'Drop Cap', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_off' => ___elementor_adapter( 'Off', 'elementor' ),
@@ -317,7 +317,7 @@ class Widget_Text_Editor extends Widget_Base {
 		);
 
 		$this->add_control(
-			'drop_cap_border_width',[
+			'drop_cap_border_width', [
 				'label' => ___elementor_adapter( 'Border Width', 'elementor' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'selectors' => [

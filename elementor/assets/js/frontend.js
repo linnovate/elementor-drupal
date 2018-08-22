@@ -1,4 +1,4 @@
-/*! elementor - v2.1.8 - 19-08-2018 */
+/*! elementor - v2.1.8 - 21-08-2018 */
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var ElementsHandler;
 
@@ -1348,7 +1348,6 @@ VideoModule = HandlerModule.extend( {
 	handleVideo: function() {
 		if ( ! this.getElementSettings( 'lightbox' ) ) {
 			this.elements.$imageOverlay.remove();
-
 			this.playVideo();
 		}
 	},
@@ -1361,7 +1360,11 @@ VideoModule = HandlerModule.extend( {
 		}
 
 		var $videoIframe = this.elements.$videoIframe,
-			newSourceUrl = $videoIframe[0].src.replace( '&autoplay=0', '' );
+			lazyLoad = $videoIframe.data( 'lazy-load' );
+		if ( lazyLoad ) {
+			$videoIframe.attr( 'src', lazyLoad );
+		}
+		var newSourceUrl = $videoIframe[0].src.replace( '&autoplay=0', '' );
 
 		$videoIframe[0].src = newSourceUrl + '&autoplay=1';
 	},

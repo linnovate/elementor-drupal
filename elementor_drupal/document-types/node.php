@@ -36,7 +36,7 @@ class DocumentDrupal extends Document
 
     public function get_exit_to_dashboard_url()
     {
-        return base_path() . 'node/' . $this->get_id_int();
+        return base_path() . 'node/' . $this->get_id();
     }
 
     public function is_editable_by_current_user()
@@ -46,18 +46,18 @@ class DocumentDrupal extends Document
 
     public function save($data)
     {
-
+       return  ElementorPlugin::$instance->sdk->set_data($this->get_id(), $data);
     }
 
     public function get_post_elementor_adapter()
     {
-            $post->ID = $this->get_id_int();
+            $post->ID = $this->get_id();
         return $post;
     }
 
     public function get_last_edited()
     {
-        // $this->get_id_int()
+        // $this->get_id()
 		// $date = date_i18n( _x_elementor_adapter( 'M j, H:i', 'revision date format', 'elementor' ), strtotime( $post->post_modified ) );
 		// $display_name = '';
         

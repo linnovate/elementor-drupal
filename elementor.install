@@ -55,7 +55,7 @@ function elementor_schema()
     );
 
     // Templates that Elementor editor save or load from the remote templates services 
-    $schema['elementor_tmps'] = array(
+    $schema['elementor_template'] = array(
         'description' => 'Elementor templates.',
         'fields' => array(
             'id' => array(

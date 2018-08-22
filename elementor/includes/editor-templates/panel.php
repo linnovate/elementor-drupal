@@ -59,11 +59,19 @@ $document = Plugin::$instance->documents->get( $id );
 </script>
 
 <script type="text/template" id="tmpl-elementor-panel-footer-content">
-	<div id="elementor-panel-footer-settings" class="elementor-panel-footer-tool elementor-leave-open tooltip-target" data-tooltip="<?php esc_attr_e_elementor_adapter( 'Settings', 'elementor' ); ?>">
+	<div id="elementor-panel-footer-settings" class="elementor-panel-footer-tool elementor-toggle-state elementor-leave-open tooltip-target" data-tooltip="<?php esc_attr_e_elementor_adapter( 'Settings', 'elementor' ); ?>">
 		<i class="fa fa-cog" aria-hidden="true"></i>
 		<span class="elementor-screen-only"><?php printf( esc_html___elementor_adapter( '%s Settings', 'elementor' ), $document::get_title() ); ?></span>
 	</div>
-	<div id="elementor-panel-footer-responsive" class="elementor-panel-footer-tool">
+	<div id="elementor-panel-footer-navigator" class="elementor-panel-footer-tool tooltip-target" data-tooltip="<?php esc_attr_e_elementor_adapter( 'Navigator', 'elementor' ); ?>">
+		<i class="eicon-navigator" aria-hidden="true"></i>
+		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Navigator', 'elementor' ); ?></span>
+	</div>
+	<div id="elementor-panel-footer-history" class="elementor-panel-footer-tool elementor-leave-open tooltip-target elementor-toggle-state" data-tooltip="<?php esc_attr_e_elementor_adapter( 'History', 'elementor' ); ?>">
+		<i class="fa fa-history" aria-hidden="true"></i>
+		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'History', 'elementor' ); ?></span>
+	</div>
+	<div id="elementor-panel-footer-responsive" class="elementor-panel-footer-tool elementor-toggle-state">
 		<i class="eicon-device-desktop tooltip-target" aria-hidden="true" data-tooltip="<?php esc_attr_e_elementor_adapter( 'Responsive Mode', 'elementor' ); ?>"></i>
 		<span class="elementor-screen-only">
 			<?php echo ___elementor_adapter( 'Responsive Mode', 'elementor' ); ?>
@@ -89,10 +97,6 @@ $document = Plugin::$instance->documents->get( $id );
 			</div>
 		</div>
 	</div>
-	<div id="elementor-panel-footer-history" class="elementor-panel-footer-tool elementor-leave-open tooltip-target" data-tooltip="<?php esc_attr_e_elementor_adapter( 'History', 'elementor' ); ?>">
-		<i class="fa fa-history" aria-hidden="true"></i>
-		<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'History', 'elementor' ); ?></span>
-	</div>
 	<div id="elementor-panel-saver-button-preview" class="elementor-panel-footer-tool tooltip-target" data-tooltip="<?php esc_attr_e_elementor_adapter( 'Preview Changes', 'elementor' ); ?>">
 		<span id="elementor-panel-saver-button-preview-label">
 			<i class="fa fa-eye" aria-hidden="true"></i>
@@ -109,7 +113,7 @@ $document = Plugin::$instance->documents->get( $id );
 			</span>
 		</button>
 	</div>
-	<div id="elementor-panel-saver-save-options" class="elementor-panel-footer-tool" >
+	<div id="elementor-panel-saver-save-options" class="elementor-panel-footer-tool elementor-toggle-state">
 		<button id="elementor-panel-saver-button-save-options" class="elementor-button elementor-button-success tooltip-target elementor-saver-disabled" data-tooltip="<?php esc_attr_e_elementor_adapter( 'Save Options', 'elementor' ); ?>">
 			<i class="fa fa-caret-up" aria-hidden="true"></i>
 			<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Save Options', 'elementor' ); ?></span>
@@ -169,9 +173,9 @@ $document = Plugin::$instance->documents->get( $id );
 </script>
 
 <script type="text/template" id="tmpl-elementor-panel-schemes-disabled">
-	<i class="elementor-panel-nerd-box-icon eicon-nerd" aria-hidden="true"></i>
-	<div class="elementor-panel-nerd-box-title">{{{ '<?php echo ___elementor_adapter( '%s are disabled', 'elementor' ); ?>'.replace( '%s', disabledTitle ) }}}</div>
-	<div class="elementor-panel-nerd-box-message"><?php printf( ___elementor_adapter( 'You can enable it from the <a href="%s" target="_blank">Elementor settings page</a>.', 'elementor' ), Settings::get_url() ); ?></div>
+	<i class="elementor-nerd-box-icon eicon-nerd" aria-hidden="true"></i>
+	<div class="elementor-nerd-box-title">{{{ '<?php echo ___elementor_adapter( '%s are disabled', 'elementor' ); ?>'.replace( '%s', disabledTitle ) }}}</div>
+	<div class="elementor-nerd-box-message"><?php printf( ___elementor_adapter( 'You can enable it from the <a href="%s" target="_blank">Elementor settings page</a>.', 'elementor' ), Settings::get_url() ); ?></div>
 </script>
 
 <script type="text/template" id="tmpl-elementor-panel-scheme-color-item">
@@ -198,7 +202,7 @@ $document = Plugin::$instance->documents->get( $id );
 		$scheme_fields = array_intersect_key( $typography_fields, array_flip( $scheme_fields_keys ) );
 
 		foreach ( $scheme_fields as $option_name => $option ) :
-		?>
+			?>
 			<div class="elementor-panel-scheme-typography-item">
 				<div class="elementor-panel-scheme-item-title elementor-control-title"><?php echo $option['label']; ?></div>
 				<div class="elementor-panel-scheme-typography-item-value">
@@ -252,9 +256,9 @@ $document = Plugin::$instance->documents->get( $id );
 </script>
 
 <script type="text/template" id="tmpl-elementor-control-dynamic-cover">
-    <div class="elementor-dynamic-cover__settings">
-        <i class="fa fa-{{ hasSettings ? 'wrench' : 'database' }}"></i>
-    </div>
+	<div class="elementor-dynamic-cover__settings">
+		<i class="fa fa-{{ hasSettings ? 'wrench' : 'database' }}"></i>
+	</div>
 	<div class="elementor-dynamic-cover__title" title="{{{ title + ' ' + content }}}">{{{ title + ' ' + content }}}</div>
 	<# if ( isRemovable ) { #>
 		<div class="elementor-dynamic-cover__remove">
