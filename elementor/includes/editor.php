@@ -3,6 +3,7 @@ namespace Elementor;
 
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Core\Settings\Manager as SettingsManager;
+use Elementor\TemplateLibrary\Source_Local;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -451,7 +452,7 @@ class Editor {
 			[
 				'jquery-ui-position',
 			],
-			'4.4.1',
+			'4.5.0',
 			true
 		);
 
@@ -573,7 +574,7 @@ class Editor {
 				'settings' => ___elementor_adapter( 'Settings', 'elementor' ),
 
 				// Elements.
-				'inner_section' => ___elementor_adapter( 'Columns', 'elementor' ),
+				'inner_section' => ___elementor_adapter( 'Inner Section', 'elementor' ),
 
 				// Control Order.
 				'asc' => ___elementor_adapter( 'Ascending order', 'elementor' ),
@@ -987,7 +988,19 @@ class Editor {
 	public function __construct() {
 		add_action_elementor_adapter( 'admin_action_elementor', [ $this, 'init' ] );
 		add_action_elementor_adapter( 'template_redirect', [ $this, 'redirect_to_new_url' ] );
+
+		// Handle autocomplete feature for URL control.
+		add_filter_elementor_adapter( 'wp_link_query_args', [ $this, 'filter_wp_link_query_args' ] );
 		add_filter_elementor_adapter( 'wp_link_query', [ $this, 'filter_wp_link_query' ] );
+	}
+
+	public function filter_wp_link_query_args( $query ) {
+		$library_cpt_key = array_search( Source_Local::CPT, $query['post_type'], true );
+		if ( false !== $library_cpt_key ) {
+			unset( $query['post_type'][ $library_cpt_key ] );
+		}
+
+		return $query;
 	}
 
 	public function filter_wp_link_query( $results ) {

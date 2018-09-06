@@ -290,6 +290,15 @@ class Element_Section extends Element_Base {
 		);
 
 		$this->add_control(
+			'_title',
+			[
+				'label' => ___elementor_adapter( 'Title', 'elementor' ),
+				'type' => Controls_Manager::HIDDEN,
+				'render_type' => 'none',
+			]
+		);
+
+		$this->add_control(
 			'stretch_section',
 			[
 				'label' => ___elementor_adapter( 'Stretch Section', 'elementor' ),
@@ -394,6 +403,7 @@ class Element_Section extends Element_Base {
 				'size_units' => [ 'px', 'vh' ],
 				'selectors' => [
 					'{{WRAPPER}} > .elementor-container' => 'min-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} > .elementor-container:after' => 'content: ""; min-height: inherit;', // Hack for IE11
 				],
 				'condition' => [
 					'height' => [ 'min-height' ],

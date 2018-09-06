@@ -1,4 +1,4 @@
-/*! elementor - v2.1.8 - 21-08-2018 */
+/*! elementor - v2.2.1 - 03-09-2018 */
 .dialog-widget-content {
   background-color: #fff;
   position: absolute;
@@ -311,6 +311,10 @@
   font-family: eicons;
   top: 3px;
   font-size: 18px; }
+
+#wpadminbar #wp-admin-bar-elementor_inspector > .ab-item::before {
+  content: "\f348";
+  top: 2px; }
 
 .elementor:after {
   position: absolute;
@@ -2441,7 +2445,10 @@ body.elementor-page .elementor-widget-menu-anchor {
       width: 60px;
       height: 60px;
       -webkit-border-radius: 50%;
-              border-radius: 50%; }
+              border-radius: 50%;
+      -o-object-fit: cover;
+         object-fit: cover;
+      max-width: none; }
     .elementor-testimonial-wrapper .elementor-testimonial-meta.elementor-testimonial-image-position-aside .elementor-testimonial-image {
       padding-right: 15px; }
     .elementor-testimonial-wrapper .elementor-testimonial-meta.elementor-testimonial-image-position-aside .elementor-testimonial-details {
@@ -3409,14 +3416,14 @@ button.swiper-pagination-bullet {
   padding: 0; }
 
 @media (max-width: 767px) {
-  .elementor:not(.elementor-edit-area-active) .elementor-hidden-phone {
+  .elementor .elementor-hidden-phone {
     display: none; } }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .elementor:not(.elementor-edit-area-active) .elementor-hidden-tablet {
+  .elementor .elementor-hidden-tablet {
     display: none; } }
 
 @media (min-width: 1025px) {
-  .elementor:not(.elementor-edit-area-active) .elementor-hidden-desktop {
+  .elementor .elementor-hidden-desktop {
     display: none; } }
 /*# sourceMappingURL=frontend.css.map */

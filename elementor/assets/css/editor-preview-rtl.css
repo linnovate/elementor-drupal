@@ -1,4 +1,4 @@
-/*! elementor - v2.1.8 - 21-08-2018 */
+/*! elementor - v2.2.1 - 03-09-2018 */
 @charset "UTF-8";
 .elementor-panel-box {
   margin-top: 10px;
@@ -384,7 +384,7 @@
   width: 30%;
   float: left; }
   .elementor-slider-input input {
-    width: 50px;
+    max-width: 80%;
     float: left;
     padding: 5px 5px; }
 
@@ -1625,7 +1625,8 @@
   width: 260px;
   background-color: #e6e9ec;
   -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-          box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); }
+          box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1; }
   .elementor-tag-settings-popup:before {
     content: '';
     position: absolute;
@@ -1900,12 +1901,6 @@ html.elementor-html {
 
 .elementor-section-filled .elementor-row.elementor-draggable-over {
   border: 1px solid #f00; }
-
-@media (max-width: 1024px) {
-  .elementor-inner-section > .elementor-element-overlay .elementor-editor-element-settings {
-    overflow: hidden; }
-  .elementor-inner-section > .elementor-element-overlay .elementor-editor-element-setting:not(.elementor-editor-element-edit) {
-    display: none; } }
 
 .elementor-column > .elementor-element-overlay {
   right: 0;
@@ -2197,11 +2192,11 @@ html.elementor-html {
   display: none; }
 
 .elementor-add-section {
-  background-color: rgba(255, 255, 255, 0.5);
-  max-width: 1140px;
+  max-width: 1160px;
   position: relative; }
   .elementor-add-section:not(.elementor-dragging-on-child) .elementor-add-section-inner {
-    border: 2px dashed #d5dadf; }
+    border: 2px dashed #d5dadf;
+    background-color: rgba(255, 255, 255, 0.5); }
   .elementor-add-section.elementor-dragging-on-child .elementor-add-section-inner {
     border: 3px dashed #71d7f7; }
   .elementor-add-section[data-view="choose-action"] .elementor-select-preset {
@@ -2356,4 +2351,9 @@ html.elementor-html {
 .elementor-editor-preview .elementor-element-empty,
 .elementor-editor-preview .elementor-widget-empty {
   display: none; }
+
+.elementor.elementor-edit-area-active .elementor-hidden-desktop,
+.elementor.elementor-edit-area-active .elementor-hidden-tablet,
+.elementor.elementor-edit-area-active .elementor-hidden-phone {
+  display: block; }
 /*# sourceMappingURL=editor-preview-rtl.css.map */

@@ -1,4 +1,4 @@
-/*! elementor - v2.1.8 - 21-08-2018 */
+/*! elementor - v2.2.1 - 03-09-2018 */
 .elementor-screen-only,
 .screen-reader-text,
 .screen-reader-text span,
@@ -399,11 +399,14 @@
 #elementor-switch-mode {
   margin: 15px 0; }
 
+#elementor-switch-mode-button,
 #elementor-editor-button {
   outline: none;
   cursor: pointer; }
-  #elementor-editor-button .eicon-elementor {
-    margin-left: 5px; }
+  #elementor-switch-mode-button i,
+  #elementor-editor-button i {
+    margin-left: 3px;
+    font-size: 19px; }
 
 body.elementor-editor-active .elementor-switch-mode-off {
   display: none; }
@@ -423,9 +426,6 @@ body.elementor-editor-active #elementor-switch-mode-button {
     -webkit-transform: translateY(1px);
         -ms-transform: translateY(1px);
             transform: translateY(1px); }
-
-body.elementor-editor-active #elementor-editor {
-  display: table; }
 
 body.elementor-editor-active #postdivrich {
   display: none !important; }
@@ -470,28 +470,48 @@ body .gutenberg #elementor-switch-mode {
   padding: 15px 40px; }
 
 #elementor-editor {
-  background-color: #F7F7F7;
-  border: 1px solid #DDD;
   height: 300px;
   width: 100%;
   -webkit-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease; }
-  #elementor-editor:hover {
-    background-color: #ffffff; }
+  #elementor-editor .elementor-loader-wrapper {
+    position: absolute;
+    width: 300px;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
   #elementor-editor .elementor-loader {
-    -webkit-border-radius: 5px;
-            border-radius: 5px;
-    margin: auto;
-    padding: 30px;
-    height: 140px;
-    width: 140px; }
+    -webkit-border-radius: 7px;
+            border-radius: 7px;
+    padding: 40px;
+    height: 150px;
+    width: 150px;
+    background-color: rgba(255, 255, 255, 0.9);
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-box-shadow: 2px 2px 20px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 2px 2px 20px 4px rgba(0, 0, 0, 0.02); }
   #elementor-editor .elementor-loader-boxes {
-    height: 80px;
-    width: 80px;
+    height: 100%;
+    width: 100%;
     position: relative; }
   #elementor-editor .elementor-loader-box {
     position: absolute;
+    background-color: #e6e9ec;
     -webkit-animation: load 1.8s linear infinite;
             animation: load 1.8s linear infinite; }
     #elementor-editor .elementor-loader-box:nth-of-type(1) {
@@ -532,42 +552,38 @@ body .gutenberg #elementor-switch-mode {
   100% {
     opacity: .3; } }
   #elementor-editor .elementor-loading-title {
-    color: #495157;
+    color: #a4afb7;
     text-align: center;
     text-transform: uppercase;
     margin-top: 30px;
     letter-spacing: 7px;
     font-size: 10px;
-    -webkit-animation: load-title 1.5s linear infinite;
-            animation: load-title 1.5s linear infinite; }
-
-@-webkit-keyframes load-title {
-  0% {
-    opacity: 1; }
-  50% {
-    opacity: .6; }
-  100% {
-    opacity: 1; } }
-
-@keyframes load-title {
-  0% {
-    opacity: 1; }
-  50% {
-    opacity: .6; }
-  100% {
-    opacity: 1; } }
-  #elementor-editor .elementor-loader {
-    height: 80px;
-    width: 80px;
-    background-color: #f1f3f5; }
-  #elementor-editor .elementor-loader-box {
-    background-color: #a4afb7; }
+    width: 100%; }
 
 #elementor-go-to-edit-page-link {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  text-decoration: none; }
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid #DDD;
+  background-color: #F7F7F7;
+  text-decoration: none;
+  position: relative;
+  font-family: Sans-serif; }
+  #elementor-go-to-edit-page-link:hover {
+    background-color: #ffffff; }
+  #elementor-go-to-edit-page-link:focus {
+    -webkit-box-shadow: none;
+            box-shadow: none; }
   #elementor-go-to-edit-page-link.elementor-animate #elementor-editor-button {
     display: none; }
   #elementor-go-to-edit-page-link:not(.elementor-animate) .elementor-loader-wrapper {
@@ -694,7 +710,7 @@ body .gutenberg #elementor-switch-mode {
 /*= Elementor Message
 ---------------------------------------*/
 .notice.elementor-message {
-  border-right-color: #D30C5C !important;
+  border: none;
   padding: 20px; }
   .notice.elementor-message .elementor-message-inner {
     display: table;
@@ -705,8 +721,7 @@ body .gutenberg #elementor-switch-mode {
       display: table-cell;
       vertical-align: middle; }
   .notice.elementor-message .elementor-message-icon {
-    color: #D30C5C;
-    font-size: 40px;
+    font-size: 20px;
     width: 40px; }
   .notice.elementor-message .elementor-message-content {
     padding: 0 20px; }
@@ -737,6 +752,10 @@ body .gutenberg #elementor-switch-mode {
         -webkit-transform: translateY(1px);
             -ms-transform: translateY(1px);
                 transform: translateY(1px); }
+  .notice.elementor-message .elementor-message-actions {
+    margin-top: 10px; }
+    .notice.elementor-message .elementor-message-actions .button.button-primary {
+      margin-left: 5px; }
 
 @media (min-width: 1200px) {
   .elementor-message-action {
@@ -1038,6 +1057,9 @@ body .gutenberg #elementor-switch-mode {
 .post-type-elementor_library #elementor-template-library-tabs-wrapper {
   padding-top: 2em;
   margin-bottom: 2em; }
+
+#elementor-new-template-modal .dialog-message {
+  max-height: 70vh; }
 
 #elementor-new-template-dialog-content {
   display: -webkit-box;

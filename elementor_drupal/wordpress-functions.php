@@ -315,7 +315,10 @@ function get_intermediate_image_sizes_elementor_adapter()
 }
 
 function is_rtl_elementor_adapter()
-{}
+{
+    $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
+    return $dir == 'rtl';
+}
 function wp_remote_retrieve_response_code_elementor_adapter()
 {
     return 200;

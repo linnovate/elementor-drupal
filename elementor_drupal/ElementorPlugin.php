@@ -11,7 +11,7 @@ namespace Drupal\elementor;
 define('DOING_AJAX', true);
 
 define('ABSPATH', false);
-define('ELEMENTOR_VERSION', '2.2.0-beta1');
+define('ELEMENTOR_VERSION', '2.2.1');
 define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.1.8');
 
 define('ELEMENTOR__FILE__', __FILE__);
@@ -146,8 +146,8 @@ class ElementorPlugin
      */
     public function editor($id)
     {
-        global $base_url;
-
+        global $base_url, $language;
+        $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
         $data = $this->render_data($id);
 
         $widgets = $this->plugin->widgets_manager->get_widget_types_config(); 
@@ -158,6 +158,7 @@ class ElementorPlugin
             'home_url' => base_path(),
             'assets_url' => base_path() . drupal_get_path('module', 'elementor') . '/elementor/assets/',
             "post_id" => $id,
+            "is_rtl" => $dir == 'rtl',
             'data' => $data['elements'],
             'elements_categories' => $this->plugin->elements_manager->get_categories(),
             'controls' => $this->plugin->controls_manager->get_controls_data(),

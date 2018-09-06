@@ -229,7 +229,7 @@ class Settings extends Settings_Page {
 	public function elementor_custom_fonts() {
 		?>
 		<div class="wrap">
-			<div class="elementor-blank_stateז">
+			<div class="elementor-blank_state">
 				<i class="eicon-nerd-chuckle"></i>
 				<h2><?php echo ___elementor_adapter( 'Add Your Custom Fonts', 'elementor' ); ?></h2>
 				<p><?php echo ___elementor_adapter( 'Custom Fonts allows you to add your self-hosted fonts and use them on your Elementor projects to create a unique brand language.', 'elementor' ); ?></p>

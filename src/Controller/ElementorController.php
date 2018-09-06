@@ -58,6 +58,7 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
         $template = $this->twig->loadTemplate(drupal_get_path('module', 'elementor') . '/templates/elementor-editor.html.twig');
 
         $html = $template->render([
+            is_rtl => \Drupal::languageManager()->getCurrentLanguage()->getDirection(),
             elementor_data => $editor_data,
             base_path => base_path() . drupal_get_path('module', 'elementor'),
         ]);
