@@ -24,11 +24,12 @@ function do_action_elementor_adapter($tag, $args = [])
     global $enqueued_actions;
 
     $all_args = array();
+    $value = NULL;
     for ($a = 1, $num = func_num_args(); $a < $num; $a++) {
         $all_args[] = func_get_arg($a);
     }
 
-    if ($enqueued_actions[$tag]) {
+    if (array_key_exists($tag, $enqueued_actions)) {
         foreach ($enqueued_actions[$tag] as $the_) {
             $num_args = count($all_args);
 
@@ -44,7 +45,7 @@ function do_action_elementor_adapter($tag, $args = [])
         }
     }
 
-    return $value ? $value : $all_args[0];
+    return $value ? $value : array_key_exists('0', $all_args) ? $all_args[0] : [];
 }
 
 function do_ajax_elementor_adapter($tag, $args = [])
