@@ -19,3 +19,11 @@ input.edit-with-elementor:focus,input.edit-with-elementor:hover {
     border-color: #006799;
     color: #fff;
 }
+
+div#elementor-panel-saver-button-preview {
+    display: none;
+}
+
+div#elementor-panel-saver-menu-save-draft {
+    display: none;
+}
