@@ -82,7 +82,8 @@ function elementor_preprocess_elementor_field(&$variables, $hook)
     $ElementorPlugin = ElementorPlugin::$instance;
     $frontend_data = $ElementorPlugin->frontend($id);
 
-    $variables['is_rtl'] = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
+    $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
+    $variables['is_rtl'] = $dir == 'rtl';
     $variables['base_path'] = $base_path . drupal_get_path('module', 'elementor');
     $variables['elementor_tmp'] = $frontend_data;
     $variables['uid'] = $id;
