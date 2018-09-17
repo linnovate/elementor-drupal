@@ -8,3 +8,4 @@ project: "elementor"
 
 libraries:
   - elementor/global
+configure: elementor.settings
