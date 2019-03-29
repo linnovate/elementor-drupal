@@ -101,6 +101,7 @@ const replaceArray = ["get_option",
 "esc_attr__",
 "esc_attr_e",
 "wp_list_pluck",
+"wp_create_nonce",
 ];
 
 

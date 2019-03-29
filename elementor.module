@@ -19,14 +19,16 @@ function elementor_page_attachments(array &$attachments)
 
 function elementor_theme($existing, $type, $theme, $path)
 {
-    return array(
-        'elementor_field' => array(
-            'variables' => array('elementor_data' => null, 'elementor_tmp' => null, 'base_path' => base_path()),
-        ),
-        'elementor_editor' => array(
-            'variables' => array('elementor_data' => null),
-        ),
-    );
+    return [
+        'elementor_field' => [
+            'variables' => [
+                'is_rtl' => null,
+                'elementor_data' => null,
+                'elementor_tmp' => null,
+                'base_path' => base_path()
+            ],
+        ],
+    ];
 }
 
 /**
@@ -80,6 +82,8 @@ function elementor_preprocess_elementor_field(&$variables, $hook)
     $ElementorPlugin = ElementorPlugin::$instance;
     $frontend_data = $ElementorPlugin->frontend($id);
 
+    $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
+    $variables['is_rtl'] = $dir == 'rtl';
     $variables['base_path'] = $base_path . drupal_get_path('module', 'elementor');
     $variables['elementor_tmp'] = $frontend_data;
     $variables['uid'] = $id;

@@ -315,7 +315,10 @@ function get_intermediate_image_sizes_elementor_adapter()
 }
 
 function is_rtl_elementor_adapter()
-{}
+{
+    $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
+    return $dir == 'rtl';
+}
 function wp_remote_retrieve_response_code_elementor_adapter()
 {
     return 200;
@@ -543,4 +546,9 @@ function absint_elementor_adapter($maybeint)
 function is_admin_elementor_adapter()
 {
     return true;
+}
+
+function wp_create_nonce_elementor_adapter()
+{
+    return '';
 }

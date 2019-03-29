@@ -79,10 +79,10 @@ class Source_Remote extends Source_Base
      */
     public function get_items($args = [])
     {
-        $library_data = ElementorPlugin::$instance->sdk->get_remote_tmps('remote');
+        $library_data = ElementorPlugin::$instance->sdk->get_remote_templates('remote');
         if (!$library_data) {
             $library_data = Api::get_library_data();
-            ElementorPlugin::$instance->sdk->save_remote_tmps('remote', $library_data);
+            ElementorPlugin::$instance->sdk->save_remote_templates('remote', $library_data);
         }
 
         $templates = [];

@@ -1,35 +1,39 @@
 <!DOCTYPE html>
-<html>
-  <head>
-      <meta charset="utf-8">
-      <title>Drupal Elementor</title>
-  </head>
-  <body>
+<html dir="{{is_rtl ? 'rtl' : 'ltr'}}">
+    <head>
+        <meta charset="utf-8">
+        <title>Drupal Elementor</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body class="{{is_rtl ? 'rtl' : ''}}">
 
-      <div id="elementor-editor-wrapper">
-          <div id="elementor-preview">
-              <div id="elementor-loading">
-                  <div class="elementor-loader-wrapper">
-                      <div class="elementor-loader">
-                          <div class="elementor-loader-box"></div>
-                          <div class="elementor-loader-box"></div>
-                          <div class="elementor-loader-box"></div>
-                          <div class="elementor-loader-box"></div>
-                      </div>
-                      <div class="elementor-loading-title"></div>
-                  </div>
-              </div>
-              <div id="elementor-preview-responsive-wrapper" class="elementor-device-desktop elementor-device-rotate-portrait">
-                  <div id="elementor-preview-loading">
-                      <i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
-                  </div>
-              </div>
-          </div>
-          <div id="elementor-panel" class="elementor-panel"></div>
-      </div>
-      
-    <script src="{{base_path}}/elementor_drupal/data.js"/></script>
-    
+        <div id="elementor-editor-wrapper">
+            <div id="elementor-panel" class="elementor-panel"></div>
+            <div id="elementor-preview">
+                <div id="elementor-loading">
+                    <div class="elementor-loader-wrapper">
+                        <div class="elementor-loader">
+                            <div class="elementor-loader-boxes">
+                                <div class="elementor-loader-box"></div>
+                                <div class="elementor-loader-box"></div>
+                                <div class="elementor-loader-box"></div>
+                                <div class="elementor-loader-box"></div>
+                            </div>
+                        </div>
+                        <div class="elementor-loading-title">Loading</div>
+                    </div>
+                </div>
+                <div id="elementor-preview-responsive-wrapper" class="elementor-device-desktop elementor-device-rotate-portrait">
+                    <div id="elementor-preview-loading">
+                        <i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="elementor-navigator"></div>
+        </div>
+
+        <script src="{{base_path}}/elementor_drupal/data.js"/></script>
+
     {{ elementor_data|raw }}
 
     <script type="text/javascript">
@@ -221,7 +225,7 @@
     </script>
 
     <script type="text/javascript">
-       var  tinyMCEPreInit = {
+        var tinyMCEPreInit = {
             baseURL: "{{base_path}}/elementor_drupal/assets/js/tinymce",
             suffix: ".min",
             dragDropUpload: true,
@@ -319,7 +323,7 @@
                         "Distraction-free writing mode": "accessW",
                         "Keyboard Shortcuts": "accessH"
                     },
-                    content_css: "http://localhost/wordpress/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6,http://localhost/wordpress/elementor_drupal/assets/js/tinymce/skins/wordpress/wp-content.css?ver=4.9.6,https://fonts.googleapis.com/css?family=Libre+Franklin%3A300%2C300i%2C400%2C400i%2C600%2C600i%2C800%2C800i&subset=latin%2Clatin-ext,http://localhost/wordpress/wp-content/themes/twentyseventeen/assets/css/editor-style.css",
+                    content_css: "{{base_path}}/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6,{{base_path}}/elementor_drupal/assets/js/tinymce/skins/wordpress/wp-content.css?ver=4.9.6,https://fonts.googleapis.com/css?family=Libre+Franklin%3A300%2C300i%2C400%2C400i%2C600%2C600i%2C800%2C800i&subset=latin%2Clatin-ext,http://localhost/wordpress/wp-content/themes/twentyseventeen/assets/css/editor-style.css",
                     plugins: "charmap,colorpicker,hr,lists,media,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wpdialogs,wptextpattern,wpview",
                     selector: "#elementorwpeditor",
                     wpautop: true,
@@ -360,7 +364,7 @@
     <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/js/imgareaselect/imgareaselect.css">
     <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/css/dashicons.min.css?ver=4.9.6" type="text/css">
     <link rel="stylesheet" href="{{base_path}}/elementor_drupal/assets/css/editor.min.css">
-    <link rel="stylesheet" href="{{base_path}}/elementor/assets/css/editor.css">
+    <link rel="stylesheet" href="{{base_path}}/elementor/assets/css/editor{{is_rtl ? '-rtl' : ''}}.css">
 
     <script src="{{base_path}}/elementor_drupal/assets/js/jquery/jquery.js"></script>
     <script src="{{base_path}}/elementor_drupal/assets/js/jquery/jquery-migrate.min.js"></script>
@@ -412,6 +416,7 @@
     <script src="{{base_path}}/elementor_drupal/assets/js/tinymce/tinymce.min.js?ver=4711-20180425"></script>
     <script src="{{base_path}}/elementor_drupal/assets/js/tinymce/plugins/compat3x/plugin.min.js?ver=4711-20180425"></script>
 
+    <script src="{{base_path}}/elementor/assets/lib/jquery-hover-intent/jquery-hover-intent.min.js"></script>
     <script src="{{base_path}}/elementor/assets/lib/backbone/backbone.marionette.min.js"></script>
     <script src="{{base_path}}/elementor/assets/lib/backbone/backbone.radio.min.js"></script>
     <script src="{{base_path}}/elementor/assets/lib/dialog/dialog.min.js"></script>
@@ -429,6 +434,6 @@
     <script src="{{base_path}}/elementor/assets/js/editor.js"></script>
 
     <script src="{{base_path}}/elementor_drupal/media.js"/></script>
-    
-  </body>
+
+</body>
 </html>

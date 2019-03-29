@@ -95,6 +95,11 @@ module.exports = Marionette.Behavior.extend( {
 			} );
 		}
 
+		// Fix for case the iframe has been reloaded and the old `elementor-inner` is not exist.
+		if ( toView.$el.hasClass( 'elementor-inner' ) && toView.$el[0].ownerDocument !== elementor.$previewContents[0] ) {
+			toView = elementor.getPreviewView();
+		}
+
 		toView.addChildModel( models, { at: position, silent: 0 } );
 	},
 
@@ -108,8 +113,10 @@ module.exports = Marionette.Behavior.extend( {
 			didAction = false,
 			behavior;
 
-		// Find the new behavior and work with him
-		if ( history.behavior.view.model ) {
+		var BaseElementView = require( 'elementor-elements/views/base' );
+
+		// Find the new behavior and work with him.
+		if ( history.behavior.view instanceof BaseElementView ) {
 			var modelID = history.behavior.view.model.get( 'id' ),
 				view = elementor.history.history.findView( modelID );
 			if ( view ) {

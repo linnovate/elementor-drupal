@@ -120,6 +120,15 @@ class Settings extends Settings_Page {
 		add_submenu_page_elementor_adapter(
 			self::PAGE_ID,
 			'',
+			___elementor_adapter( 'Getting Started', 'elementor' ),
+			'manage_options',
+			'elementor-getting-started',
+			[ $this, 'elementor_getting_started' ]
+		);
+
+		add_submenu_page_elementor_adapter(
+			self::PAGE_ID,
+			'',
 			___elementor_adapter( 'Knowledge Base', 'elementor' ),
 			'manage_options',
 			'go_knowledge_base_site',
@@ -151,6 +160,62 @@ class Settings extends Settings_Page {
 			wp_redirect_elementor_adapter( 'https://go.elementor.com/docs-admin-menu/' );
 			die;
 		}
+	}
+
+	/**
+	 * Display settings page.
+	 *
+	 * Output the content for the getting started page.
+	 *
+	 * @since 2.2.0
+	 * @access public
+	 */
+	public function elementor_getting_started() {
+		if ( User::is_current_user_can_edit_post_type( 'page' ) ) {
+			$create_new_label = ___elementor_adapter( 'Create Your First Page', 'elementor' );
+			$create_new_cpt = 'page';
+		} elseif ( User::is_current_user_can_edit_post_type( 'post' ) ) {
+			$create_new_label = ___elementor_adapter( 'Create Your First Post', 'elementor' );
+			$create_new_cpt = 'post';
+		}
+
+		?>
+		<div class="wrap">
+			<div class="e-getting-started">
+				<div class="e-getting-started__box postbox">
+					<div class="e-getting-started__header">
+						<div class="e-getting-started__title">
+							<div class="e-logo-wrapper"><i class="eicon-elementor"></i></div>
+
+							<?php echo ___elementor_adapter( 'Getting Started', 'elementor' ); ?>
+						</div>
+						<a class="e-getting-started__skip" href="<?php echo esc_url_elementor_adapter( admin_url_elementor_adapter() ); ?>">
+							<i class="eicon-close" aria-hidden="true" title="<?php esc_attr_e_elementor_adapter( 'Skip', 'elementor' ); ?>"></i>
+							<span class="elementor-screen-only"><?php echo ___elementor_adapter( 'Skip', 'elementor' ); ?></span>
+						</a>
+					</div>
+					<div class="e-getting-started__content">
+						<div class="e-getting-started__content--narrow">
+							<h2><?php echo ___elementor_adapter( 'Welcome to Elementor', 'elementor' ); ?></h2>
+							<p><?php echo ___elementor_adapter( 'We recommend you watch this 2 minute getting started video, and then try the editor yourself by dragging and dropping elements to create your first page.', 'elementor' ); ?></p>
+						</div>
+
+						<div class="e-getting-started__video">
+							<iframe width="620" height="350" src="https://www.youtube-nocookie.com/embed/-TPpwuB6dnI?rel=0&amp;controls=1&amp;showinfo=0&amp;modestbranding=1" frameborder="0" allowfullscreen></iframe>
+						</div>
+
+						<div class="e-getting-started__actions e-getting-started__content--narrow">
+							<?php if ( ! empty( $create_new_cpt ) ) : ?>
+							<a href="<?php echo esc_url_elementor_adapter( Utils::get_create_new_post_url( $create_new_cpt ) ); ?>" class="button button-primary button-hero"><?php echo esc_html_elementor_adapter( $create_new_label ); ?></a>
+							<?php endif; ?>
+
+							<a href="https://go.elementor.com/getting-started/" target="_blank" class="button button-secondary button-hero"><?php echo ___elementor_adapter( 'Read the Full Article', 'elementor' ); ?></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.wrap -->
+		<?php
 	}
 
 	/**
@@ -189,6 +254,8 @@ class Settings extends Settings_Page {
 
 		// Save general settings in one list for a future usage
 		$this->handle_general_settings_update();
+
+		$this->maybe_remove_all_admin_notices();
 	}
 
 	/**
@@ -375,7 +442,8 @@ class Settings extends Settings_Page {
 										'class' => 'medium-text',
 									],
 									'sub_desc' => 'px',
-									'desc' => ___elementor_adapter( 'Sets the breakpoint between desktop and tablet devices. Below this breakpoint tablet layout will appear (Default: ' . $default_breakpoints['lg'] . ').', 'elementor' ),
+									/* translators: %d: Breakpoint value */
+									'desc' => sprintf( ___elementor_adapter( 'Sets the breakpoint between desktop and tablet devices. Below this breakpoint tablet layout will appear (Default: %dpx).', 'elementor' ), $default_breakpoints['lg'] ),
 								],
 							],
 							'viewport_md' => [
@@ -389,7 +457,8 @@ class Settings extends Settings_Page {
 										'class' => 'medium-text',
 									],
 									'sub_desc' => 'px',
-									'desc' => ___elementor_adapter( 'Sets the breakpoint between tablet and mobile devices. Below this breakpoint mobile layout will appear (Default: ' . $default_breakpoints['md'] . ').', 'elementor' ),
+									/* translators: %d: Breakpoint value */
+									'desc' => sprintf( ___elementor_adapter( 'Sets the breakpoint between tablet and mobile devices. Below this breakpoint mobile layout will appear (Default: %dpx).', 'elementor' ), $default_breakpoints['md'] ),
 								],
 							],
 							'global_image_lightbox' => [
@@ -443,6 +512,18 @@ class Settings extends Settings_Page {
 									'desc' => ___elementor_adapter( 'For troubleshooting server configuration conflicts.', 'elementor' ),
 								],
 							],
+							'edit_buttons' => [
+								'label' => ___elementor_adapter( 'Editing Handles', 'elementor' ),
+								'field_args' => [
+									'type' => 'select',
+									'std' => '',
+									'options' => [
+										'' => ___elementor_adapter( 'Hide', 'elementor' ),
+										'on' => ___elementor_adapter( 'Show', 'elementor' ),
+									],
+									'desc' => ___elementor_adapter( 'Show editing handles when hovering over the element edit button', 'elementor' ),
+								],
+							],
 						],
 					],
 				],
@@ -494,6 +575,21 @@ class Settings extends Settings_Page {
 
 			update_option_elementor_adapter( General_Settings_Manager::META_KEY, $saved_general_settings );
 		}
+	}
+
+	private function maybe_remove_all_admin_notices() {
+		$elementor_pages = [
+			'elementor-getting-started',
+			'elementor-role-manager',
+			'elementor_custom_fonts',
+			'elementor-license',
+		];
+
+		if ( empty( $_GET['page'] ) || ! in_array( $_GET['page'], $elementor_pages, true ) ) {
+			return;
+		}
+
+		remove_all_actions( 'admin_notices' );
 	}
 
 	/**
