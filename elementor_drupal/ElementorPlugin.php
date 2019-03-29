@@ -68,18 +68,18 @@ class ElementorPlugin
      */
     public static $instance = null;
 
-    /**
-     * Sdk.
-     *
-     * Holds the sdk instance.
-     *
-     * @since 1.0.0
-     * @access public
-     * @static
-     *
-     * @var sdk
-     */
-    public static $sdk = null;
+  /**
+   *
+   * Sdk.
+   *
+   * Holds the sdk instance.
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @var \Drupal\elementor\ElementorSDK|null
+   */
+    public $sdk = null;
 
     /**
      * Instance.

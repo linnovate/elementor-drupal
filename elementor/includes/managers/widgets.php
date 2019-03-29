@@ -139,25 +139,27 @@ class Widgets_Manager {
 		 * @param array $black_list A black list of widgets. Default is an empty array.
 		 */
 		$black_list = apply_filters_elementor_adapter( 'elementor/widgets/black_list', $black_list );
+      if ( $wp_widget_factory != NULL ) {
 
-		foreach ( $wp_widget_factory->widgets as $widget_class => $widget_obj ) {
+      foreach ( $wp_widget_factory->widgets as $widget_class => $widget_obj ) {
 
-			if ( in_array( $widget_class, $black_list ) ) {
-				continue;
-			}
+        if ( in_array( $widget_class, $black_list ) ) {
+          continue;
+        }
 
-			if ( $widget_obj instanceof \Pojo_Widget_Base && ! in_array( $widget_class, $pojo_allowed_widgets ) ) {
-				continue;
-			}
+        if ( $widget_obj instanceof \Pojo_Widget_Base && ! in_array( $widget_class, $pojo_allowed_widgets ) ) {
+          continue;
+        }
 
-			$elementor_widget_class = __NAMESPACE__ . '\Widget_WordPress';
+        $elementor_widget_class = __NAMESPACE__ . '\Widget_WordPress';
 
-			$this->register_widget_type(
-				new $elementor_widget_class( [], [
-					'widget_name' => $widget_class,
-				] )
-			);
-		}
+        $this->register_widget_type(
+          new $elementor_widget_class( [], [
+            'widget_name' => $widget_class,
+          ] )
+        );
+      }
+    }
 	}
 
 	/**

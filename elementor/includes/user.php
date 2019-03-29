@@ -103,7 +103,8 @@ class User {
 		$user = wp_get_current_user_elementor_adapter();
 		$exclude_roles = get_option_elementor_adapter( 'elementor_exclude_user_roles', [] );
 
-		$compare_roles = array_intersect( $user->roles, $exclude_roles );
+		$compare_roles = (isset($user) && isset($exclude_roles))
+      ? array_intersect( $user->roles, $exclude_roles ) : '';
 		if ( ! empty( $compare_roles ) ) {
 			return false;
 		}

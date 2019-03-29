@@ -43,14 +43,17 @@ function elementor_theme_suggestions_alter(array &$suggestions, array $variables
     $node = \Drupal::routeMatch()->getParameter('node');
     $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
 
-    if ($node && in_array($node->getType(), $allow_content_types, true)) {
+    if (($allow_content_types != NULL) && $node && in_array($node->getType(), $allow_content_types, true)) {
         $config = ElementorPlugin::$instance->sdk->get_data($node->id());
 
-        if ($hook == 'page' && $config['settings']['template'] == 'elementor_canvas') {
+        if ($hook == 'page' && array_key_exists('template', $config['settings'])
+            && $config['settings']['template'] == 'elementor_canvas') {
             $suggestions[] = 'elementor_field';
-        } else if ($hook == 'page' && $config['settings']['template'] == 'elementor_header_footer') {
+        } else if ($hook == 'page' && array_key_exists('template', $config['settings'])
+           && $config['settings']['template'] == 'elementor_header_footer') {
             $suggestions[] = 'elementor_field';
-        } else if ($hook == 'node' && !$config['settings']['template']) {
+        } else if ($hook == 'node'
+           && (array_key_exists('template', $config['settings']) == NULL)) {
             $suggestions[] = 'elementor_field';
         }
     }
@@ -65,7 +68,8 @@ function elementor_preprocess_node(&$variables, $hook)
     $node = \Drupal::routeMatch()->getParameter('node');
     $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
 
-    if ($node && in_array($node->getType(), $allow_content_types, true)) {
+    if (($allow_content_types != NULL) && $node
+        && in_array($node->getType(), $allow_content_types, true)) {
         $variables['#cache'] = ['max-age' => 0];
     }
 }
@@ -105,7 +109,8 @@ function elementor_menu_local_tasks_alter(&$data, $route_name)
     } else {
         $nid = 1;
     }
-    if ($route_name == 'entity.node.canonical' && in_array($node->getType(), $allow_content_types, true)) {
+    if (($allow_content_types != NULL) && $route_name == 'entity.node.canonical'
+        && in_array($node->getType(), $allow_content_types, true)) {
         $data['tabs'][0]['entity.node.canonical'] = [
             '#theme' => 'menu_local_task',
             '#link' => [
@@ -130,7 +135,7 @@ function elementor_form_alter(&$form, FormStateInterface $form_state, $form_id)
     if ($params[0] == 'node') {
         $allow_content_types = \Drupal::config('elementor.settings')->get('node_types');
 
-        if (in_array($params[1], $allow_content_types, true)) {
+        if (($allow_content_types != NULL) && in_array($params[1], $allow_content_types, true)) {
             $form['edit_with_elementor'] = array(
                 '#type' => 'submit',
                 '#value' => t('Edit with Elementor'),

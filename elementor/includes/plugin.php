@@ -546,9 +546,11 @@ class Plugin {
 	private function add_cpt_support() {
 		$cpt_support = get_option_elementor_adapter( 'elementor_cpt_support', [ 'page', 'post' ] );
 
-		foreach ( $cpt_support as $cpt_slug ) {
-			add_post_type_support_elementor_adapter( $cpt_slug, 'elementor' );
-		}
+		if (isset($cpt_support) && is_array($cpt_support)) {
+      foreach ( $cpt_support as $cpt_slug ) {
+        add_post_type_support_elementor_adapter( $cpt_slug, 'elementor' );
+      }
+    }
 	}
 
 	/**
