@@ -67,7 +67,7 @@ class User {
 			return false;
 		}
 
-		if ( ! self::is_current_user_can_edit_post_type( $post->post_type ) ) {
+		if ( ! self::is_current_user_can_edit_post_type( property_exists('post_type', $post) ? $post->post_type : NULL ) ) {
 			return false;
 		}
 

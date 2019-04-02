@@ -447,7 +447,9 @@ abstract class Document extends Controls_Stack {
 	 * @return bool Whether the post was built with Elementor.
 	 */
 	public function is_built_with_elementor() {
-		return ! ! get_post_meta_elementor_adapter( $this->post->ID, '_elementor_edit_mode', true );
+        $id = property_exists('ID', $this->post) ? $this->post->ID : $this->post;
+
+        return ! ! get_post_meta_elementor_adapter( $id, '_elementor_edit_mode', true );
 	}
 
 	/**
@@ -527,7 +529,9 @@ abstract class Document extends Controls_Stack {
 	 * @return array
 	 */
 	public function get_json_meta( $key ) {
-		$meta = get_post_meta_elementor_adapter( $this->post->ID, $key, true );
+        $id = property_exists('ID', $this->post) ? $this->post->ID : $this->post;
+
+        $meta = get_post_meta_elementor_adapter( $id, $key, true );
 
 		if ( is_string( $meta ) && ! empty( $meta ) ) {
 			$meta = json_decode( $meta, true );
@@ -888,7 +892,8 @@ abstract class Document extends Controls_Stack {
 				$data['settings'] = [];
 			}
 
-			$saved_settings = get_post_meta_elementor_adapter( $this->post->ID, '_elementor_page_settings', true );
+			$id = property_exists('ID', $this->post) ? $this->post->ID : $this->post;
+			$saved_settings = get_post_meta_elementor_adapter( $id, '_elementor_page_settings', true );
 			if ( ! empty( $saved_settings ) && is_array( $saved_settings ) ) {
 				$data['settings'] += $saved_settings;
 			}

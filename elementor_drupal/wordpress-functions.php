@@ -17,7 +17,7 @@ $wpdb = [];
 function get_option_elementor_adapter($option, $default = false)
 {
     global $wpdb;
-    return $wpdb[$option];
+    return (is_array($wpdb) && array_key_exists($option, $wpdb)) ? $wpdb[$option] : NULL;
 }
 
 function have_posts_elementor_adapter()

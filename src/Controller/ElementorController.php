@@ -60,9 +60,9 @@ class ElementorController extends ControllerBase implements ContainerInjectionIn
         $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
 
         $html = $template->render([
-            is_rtl => $dir == 'rtl',
-            elementor_data => $editor_data,
-            base_path => base_path() . drupal_get_path('module', 'elementor'),
+            'is_rtl' => $dir == 'rtl',
+            'elementor_data' => $editor_data,
+            'base_path' => base_path() . drupal_get_path('module', 'elementor'),
         ]);
 
         $response = new Response();

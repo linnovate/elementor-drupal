@@ -51,7 +51,8 @@ class DocumentDrupal extends Document
 
     public function get_post_elementor_adapter()
     {
-            $post->ID = $this->get_id();
+        $post = isset($post) ? $post : (object) ['ID' => ''];
+        $post->ID = $this->get_id();
         return $post;
     }
 

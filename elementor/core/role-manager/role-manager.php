@@ -175,12 +175,13 @@ class Role_Manager extends Settings_Page {
 	 */
 	public function get_user_restrictions_array() {
 		$user  = wp_get_current_user_elementor_adapter();
-		$user_roles = $user->roles;
 		$options = $this->get_user_restrictions();
 		$restrictions = [];
 		if ( empty( $options ) ) {
 			return $restrictions;
 		}
+
+        $user_roles = $user->roles;
 
 		foreach ( $user_roles as $role ) {
 			if ( ! isset( $options[ $role ] ) ) {
