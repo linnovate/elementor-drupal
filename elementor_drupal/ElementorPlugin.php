@@ -11,8 +11,8 @@ namespace Drupal\elementor;
 define('DOING_AJAX', true);
 
 define('ABSPATH', false);
-define('ELEMENTOR_VERSION', '2.1.8');
-define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.0.16');
+define('ELEMENTOR_VERSION', '2.2.1');
+define('ELEMENTOR_PREVIOUS_STABLE_VERSION', '2.1.8');
 
 define('ELEMENTOR__FILE__', __FILE__);
 define('ELEMENTOR_PLUGIN_BASE', '');
@@ -68,18 +68,18 @@ class ElementorPlugin
      */
     public static $instance = null;
 
-    /**
-     * Sdk.
-     *
-     * Holds the sdk instance.
-     *
-     * @since 1.0.0
-     * @access public
-     * @static
-     *
-     * @var sdk
-     */
-    public static $sdk = null;
+  /**
+   *
+   * Sdk.
+   *
+   * Holds the sdk instance.
+   *
+   * @since 1.0.0
+   * @access public
+   *
+   * @var \Drupal\elementor\ElementorSDK|null
+   */
+    public $sdk = null;
 
     /**
      * Instance.
@@ -146,8 +146,8 @@ class ElementorPlugin
      */
     public function editor($id)
     {
-        global $base_url;
-
+        global $base_url, $language;
+        $dir = \Drupal::languageManager()->getCurrentLanguage()->getDirection();
         $data = $this->render_data($id);
 
         $widgets = $this->plugin->widgets_manager->get_widget_types_config(); 
@@ -158,6 +158,7 @@ class ElementorPlugin
             'home_url' => base_path(),
             'assets_url' => base_path() . drupal_get_path('module', 'elementor') . '/elementor/assets/',
             "post_id" => $id,
+            "is_rtl" => $dir == 'rtl',
             'data' => $data['elements'],
             'elements_categories' => $this->plugin->elements_manager->get_categories(),
             'controls' => $this->plugin->controls_manager->get_controls_data(),
@@ -170,141 +171,143 @@ class ElementorPlugin
             'default_schemes' => $this->plugin->schemes_manager->get_schemes_defaults(),
             'system_schemes' => $this->plugin->schemes_manager->get_system_schemes(),
             'i18n' => [
-                'elementor' => ___elementor_adapter('Elementor', 'elementor'),
-                'delete' => ___elementor_adapter('Delete', 'elementor'),
-                'cancel' => ___elementor_adapter('Cancel', 'elementor'),
-                'edit_element' => ___elementor_adapter('Edit %s', 'elementor'),
+				'elementor' => ___elementor_adapter( 'Elementor', 'elementor' ),
+				'delete' => ___elementor_adapter( 'Delete', 'elementor' ),
+				'cancel' => ___elementor_adapter( 'Cancel', 'elementor' ),
+				/* translators: %s: Element name. */
+				'edit_element' => ___elementor_adapter( 'Edit %s', 'elementor' ),
 
-                // Menu.
-                'about_elementor' => ___elementor_adapter('About Elementor', 'elementor'),
-                'color_picker' => ___elementor_adapter('Color Picker', 'elementor'),
-                'elementor_settings' => ___elementor_adapter('Dashboard Settings', 'elementor'),
-                'global_colors' => ___elementor_adapter('Default Colors', 'elementor'),
-                'global_fonts' => ___elementor_adapter('Default Fonts', 'elementor'),
-                'global_style' => ___elementor_adapter('Style', 'elementor'),
-                'settings' => ___elementor_adapter('Settings', 'elementor'),
+				// Menu.
+				'about_elementor' => ___elementor_adapter( 'About Elementor', 'elementor' ),
+				'color_picker' => ___elementor_adapter( 'Color Picker', 'elementor' ),
+				'elementor_settings' => ___elementor_adapter( 'Dashboard Settings', 'elementor' ),
+				'global_colors' => ___elementor_adapter( 'Default Colors', 'elementor' ),
+				'global_fonts' => ___elementor_adapter( 'Default Fonts', 'elementor' ),
+				'global_style' => ___elementor_adapter( 'Style', 'elementor' ),
+				'settings' => ___elementor_adapter( 'Settings', 'elementor' ),
 
-                // Elements.
-                'inner_section' => ___elementor_adapter('Columns', 'elementor'),
+				// Elements.
+				'inner_section' => ___elementor_adapter( 'Columns', 'elementor' ),
 
-                // Control Order.
-                'asc' => ___elementor_adapter('Ascending order', 'elementor'),
-                'desc' => ___elementor_adapter('Descending order', 'elementor'),
+				// Control Order.
+				'asc' => ___elementor_adapter( 'Ascending order', 'elementor' ),
+				'desc' => ___elementor_adapter( 'Descending order', 'elementor' ),
 
-                // Clear Page.
-                'clear_page' => ___elementor_adapter('Delete All Content', 'elementor'),
-                'dialog_confirm_clear_page' => ___elementor_adapter('Attention: We are going to DELETE ALL CONTENT from this page. Are you sure you want to do that?', 'elementor'),
+				// Clear Page.
+				'clear_page' => ___elementor_adapter( 'Delete All Content', 'elementor' ),
+				'dialog_confirm_clear_page' => ___elementor_adapter( 'Attention: We are going to DELETE ALL CONTENT from this page. Are you sure you want to do that?', 'elementor' ),
 
-                // Panel Preview Mode.
-                'back_to_editor' => ___elementor_adapter('Show Panel', 'elementor'),
-                'preview' => ___elementor_adapter('Hide Panel', 'elementor'),
+				// Panel Preview Mode.
+				'back_to_editor' => ___elementor_adapter( 'Show Panel', 'elementor' ),
+				'preview' => ___elementor_adapter( 'Hide Panel', 'elementor' ),
 
-                // Inline Editing.
-                'type_here' => ___elementor_adapter('Type Here', 'elementor'),
+				// Inline Editing.
+				'type_here' => ___elementor_adapter( 'Type Here', 'elementor' ),
 
-                // Library.
-                'an_error_occurred' => ___elementor_adapter('An error occurred', 'elementor'),
-                'category' => ___elementor_adapter('Category', 'elementor'),
-                'delete_template' => ___elementor_adapter('Delete Template', 'elementor'),
-                'delete_template_confirm' => ___elementor_adapter('Are you sure you want to delete this template?', 'elementor'),
-                'import_template_dialog_header' => ___elementor_adapter('Import Document Settings', 'elementor'),
-                'import_template_dialog_message' => ___elementor_adapter('Do you want to also import the document settings of the template?', 'elementor'),
-                'import_template_dialog_message_attention' => ___elementor_adapter('Attention: Importing may override previous settings.', 'elementor'),
-                'library' => ___elementor_adapter('Library', 'elementor'),
-                'no' => ___elementor_adapter('No', 'elementor'),
-                'page' => ___elementor_adapter('Page', 'elementor'),
-                /* translators: %s: Template type. */
-                'save_your_template' => ___elementor_adapter('Save Your %s to Library', 'elementor'),
-                'save_your_template_description' => ___elementor_adapter('Your designs will be available for export and reuse on any page or website', 'elementor'),
-                'section' => ___elementor_adapter('Section', 'elementor'),
-                'templates_empty_message' => ___elementor_adapter('This is where your templates should be. Design it. Save it. Reuse it.', 'elementor'),
-                'templates_empty_title' => ___elementor_adapter('Haven’t Saved Templates Yet?', 'elementor'),
-                'templates_no_favorites_message' => ___elementor_adapter('You can mark any pre-designed template as a favorite.', 'elementor'),
-                'templates_no_favorites_title' => ___elementor_adapter('No Favorite Templates', 'elementor'),
-                'templates_no_results_message' => ___elementor_adapter('Please make sure your search is spelled correctly or try a different words.', 'elementor'),
-                'templates_no_results_title' => ___elementor_adapter('No Results Found', 'elementor'),
-                'templates_request_error' => ___elementor_adapter('The following error(s) occurred while processing the request:', 'elementor'),
-                'yes' => ___elementor_adapter('Yes', 'elementor'),
+				// Library.
+				'an_error_occurred' => ___elementor_adapter( 'An error occurred', 'elementor' ),
+				'category' => ___elementor_adapter( 'Category', 'elementor' ),
+				'delete_template' => ___elementor_adapter( 'Delete Template', 'elementor' ),
+				'delete_template_confirm' => ___elementor_adapter( 'Are you sure you want to delete this template?', 'elementor' ),
+				'import_template_dialog_header' => ___elementor_adapter( 'Import Document Settings', 'elementor' ),
+				'import_template_dialog_message' => ___elementor_adapter( 'Do you want to also import the document settings of the template?', 'elementor' ),
+				'import_template_dialog_message_attention' => ___elementor_adapter( 'Attention: Importing may override previous settings.', 'elementor' ),
+				'library' => ___elementor_adapter( 'Library', 'elementor' ),
+				'no' => ___elementor_adapter( 'No', 'elementor' ),
+				'page' => ___elementor_adapter( 'Page', 'elementor' ),
+				/* translators: %s: Template type. */
+				'save_your_template' => ___elementor_adapter( 'Save Your %s to Library', 'elementor' ),
+				'save_your_template_description' => ___elementor_adapter( 'Your designs will be available for export and reuse on any page or website', 'elementor' ),
+				'section' => ___elementor_adapter( 'Section', 'elementor' ),
+				'templates_empty_message' => ___elementor_adapter( 'This is where your templates should be. Design it. Save it. Reuse it.', 'elementor' ),
+				'templates_empty_title' => ___elementor_adapter( 'Haven’t Saved Templates Yet?', 'elementor' ),
+				'templates_no_favorites_message' => ___elementor_adapter( 'You can mark any pre-designed template as a favorite.', 'elementor' ),
+				'templates_no_favorites_title' => ___elementor_adapter( 'No Favorite Templates', 'elementor' ),
+				'templates_no_results_message' => ___elementor_adapter( 'Please make sure your search is spelled correctly or try a different words.', 'elementor' ),
+				'templates_no_results_title' => ___elementor_adapter( 'No Results Found', 'elementor' ),
+				'templates_request_error' => ___elementor_adapter( 'The following error(s) occurred while processing the request:', 'elementor' ),
+				'yes' => ___elementor_adapter( 'Yes', 'elementor' ),
 
-                // Incompatible Device.
-                'device_incompatible_header' => ___elementor_adapter('Your browser isn\'t compatible', 'elementor'),
-                'device_incompatible_message' => ___elementor_adapter('Your browser isn\'t compatible with all of Elementor\'s editing features. We recommend you switch to another browser like Chrome or Firefox.', 'elementor'),
-                'proceed_anyway' => ___elementor_adapter('Proceed Anyway', 'elementor'),
+				// Incompatible Device.
+				'device_incompatible_header' => ___elementor_adapter( 'Your browser isn\'t compatible', 'elementor' ),
+				'device_incompatible_message' => ___elementor_adapter( 'Your browser isn\'t compatible with all of Elementor\'s editing features. We recommend you switch to another browser like Chrome or Firefox.', 'elementor' ),
+				'proceed_anyway' => ___elementor_adapter( 'Proceed Anyway', 'elementor' ),
 
-                // Preview not loaded.
-                'learn_more' => ___elementor_adapter('Learn More', 'elementor'),
-                'preview_el_not_found_header' => ___elementor_adapter('Sorry, the content area was not found in your page.', 'elementor'),
-                'preview_el_not_found_message' => ___elementor_adapter('You must call \'the_content\' function in the current template, in order for Elementor to work on this page.', 'elementor'),
-                'preview_not_loading_header' => ___elementor_adapter('The preview could not be loaded', 'elementor'),
-                'preview_not_loading_message' => ___elementor_adapter('We\'re sorry, but something went wrong. Click on \'Learn more\' and follow each of the steps to quickly solve it.', 'elementor'),
+				// Preview not loaded.
+				'learn_more' => ___elementor_adapter( 'Learn More', 'elementor' ),
+				'preview_el_not_found_header' => ___elementor_adapter( 'Sorry, the content area was not found in your page.', 'elementor' ),
+				'preview_el_not_found_message' => ___elementor_adapter( 'You must call \'the_content\' function in the current template, in order for Elementor to work on this page.', 'elementor' ),
+				'preview_not_loading_header' => ___elementor_adapter( 'The preview could not be loaded', 'elementor' ),
+				'preview_not_loading_message' => ___elementor_adapter( 'We\'re sorry, but something went wrong. Click on \'Learn more\' and follow each of the steps to quickly solve it.', 'elementor' ),
 
-                // Gallery.
-                'delete_gallery' => ___elementor_adapter('Reset Gallery', 'elementor'),
-                'dialog_confirm_gallery_delete' => ___elementor_adapter('Are you sure you want to reset this gallery?', 'elementor'),
-                /* translators: %s: The number of images. */
-                'gallery_images_selected' => ___elementor_adapter('%s Images Selected', 'elementor'),
-                'gallery_no_images_selected' => ___elementor_adapter('No Images Selected', 'elementor'),
-                'insert_media' => ___elementor_adapter('Insert Media', 'elementor'),
+				// Gallery.
+				'delete_gallery' => ___elementor_adapter( 'Reset Gallery', 'elementor' ),
+				'dialog_confirm_gallery_delete' => ___elementor_adapter( 'Are you sure you want to reset this gallery?', 'elementor' ),
+				/* translators: %s: The number of images. */
+				'gallery_images_selected' => ___elementor_adapter( '%s Images Selected', 'elementor' ),
+				'gallery_no_images_selected' => ___elementor_adapter( 'No Images Selected', 'elementor' ),
+				'insert_media' => ___elementor_adapter( 'Insert Media', 'elementor' ),
 
-                // Take Over.
-                /* translators: %s: User name. */
-                'dialog_user_taken_over' => ___elementor_adapter('%s has taken over and is currently editing. Do you want to take over this page editing?', 'elementor'),
-                'go_back' => ___elementor_adapter('Go Back', 'elementor'),
-                'take_over' => ___elementor_adapter('Take Over', 'elementor'),
+				// Take Over.
+				/* translators: %s: User name. */
+				'dialog_user_taken_over' => ___elementor_adapter( '%s has taken over and is currently editing. Do you want to take over this page editing?', 'elementor' ),
+				'go_back' => ___elementor_adapter( 'Go Back', 'elementor' ),
+				'take_over' => ___elementor_adapter( 'Take Over', 'elementor' ),
 
-                // Revisions.
-                /* translators: %s: Element type. */
-                'delete_element' => ___elementor_adapter('Delete %s', 'elementor'),
-                /* translators: %s: Template type. */
-                'dialog_confirm_delete' => ___elementor_adapter('Are you sure you want to remove this %s?', 'elementor'),
+				// Revisions.
+				/* translators: %s: Element type. */
+				'delete_element' => ___elementor_adapter( 'Delete %s', 'elementor' ),
+				/* translators: %s: Template type. */
+				'dialog_confirm_delete' => ___elementor_adapter( 'Are you sure you want to remove this %s?', 'elementor' ),
 
-                // Saver.
-                'before_unload_alert' => ___elementor_adapter('Please note: All unsaved changes will be lost.', 'elementor'),
-                'published' => ___elementor_adapter('Published', 'elementor'),
-                'publish' => ___elementor_adapter('Publish', 'elementor'),
-                'save' => ___elementor_adapter('Save', 'elementor'),
-                'saved' => ___elementor_adapter('Saved', 'elementor'),
-                'update' => ___elementor_adapter('Update', 'elementor'),
-                'submit' => ___elementor_adapter('Submit', 'elementor'),
-                'working_on_draft_notification' => ___elementor_adapter('This is just a draft. Play around and when you\'re done - click update.', 'elementor'),
-                'keep_editing' => ___elementor_adapter('Keep Editing', 'elementor'),
-                'have_a_look' => ___elementor_adapter('Have a look', 'elementor'),
-                'view_all_revisions' => ___elementor_adapter('View All Revisions', 'elementor'),
-                'dismiss' => ___elementor_adapter('Dismiss', 'elementor'),
-                'saving_disabled' => ___elementor_adapter('Saving has been disabled until you’re reconnected.', 'elementor'),
+				// Saver.
+				'before_unload_alert' => ___elementor_adapter( 'Please note: All unsaved changes will be lost.', 'elementor' ),
+				'published' => ___elementor_adapter( 'Published', 'elementor' ),
+				'publish' => ___elementor_adapter( 'Publish', 'elementor' ),
+				'save' => ___elementor_adapter( 'Save', 'elementor' ),
+				'saved' => ___elementor_adapter( 'Saved', 'elementor' ),
+				'update' => ___elementor_adapter( 'Update', 'elementor' ),
+				'submit' => ___elementor_adapter( 'Submit', 'elementor' ),
+				'working_on_draft_notification' => ___elementor_adapter( 'This is just a draft. Play around and when you\'re done - click update.', 'elementor' ),
+				'keep_editing' => ___elementor_adapter( 'Keep Editing', 'elementor' ),
+				'have_a_look' => ___elementor_adapter( 'Have a look', 'elementor' ),
+				'view_all_revisions' => ___elementor_adapter( 'View All Revisions', 'elementor' ),
+				'dismiss' => ___elementor_adapter( 'Dismiss', 'elementor' ),
+				'saving_disabled' => ___elementor_adapter( 'Saving has been disabled until you’re reconnected.', 'elementor' ),
 
-                // Ajax
-                'server_error' => ___elementor_adapter('Server Error', 'elementor'),
-                'server_connection_lost' => ___elementor_adapter('Connection Lost', 'elementor'),
-                'unknown_error' => ___elementor_adapter('Unknown Error', 'elementor'),
+				// Ajax
+				'server_error' => ___elementor_adapter( 'Server Error', 'elementor' ),
+				'server_connection_lost' => ___elementor_adapter( 'Connection Lost', 'elementor' ),
+				'unknown_error' => ___elementor_adapter( 'Unknown Error', 'elementor' ),
 
-                // Context Menu
-                'duplicate' => ___elementor_adapter('Duplicate', 'elementor'),
-                'copy' => ___elementor_adapter('Copy', 'elementor'),
-                'paste' => ___elementor_adapter('Paste', 'elementor'),
-                'copy_style' => ___elementor_adapter('Copy Style', 'elementor'),
-                'paste_style' => ___elementor_adapter('Paste Style', 'elementor'),
-                'reset_style' => ___elementor_adapter('Reset Style', 'elementor'),
-                'save_as_global' => ___elementor_adapter('Save as a Global', 'elementor'),
-                'save_as_block' => ___elementor_adapter('Save as Template', 'elementor'),
-                'new_column' => ___elementor_adapter('Add New Column', 'elementor'),
-                'copy_all_content' => ___elementor_adapter('Copy All Content', 'elementor'),
-                'delete_all_content' => ___elementor_adapter('Delete All Content', 'elementor'),
+				// Context Menu
+				'duplicate' => ___elementor_adapter( 'Duplicate', 'elementor' ),
+				'copy' => ___elementor_adapter( 'Copy', 'elementor' ),
+				'paste' => ___elementor_adapter( 'Paste', 'elementor' ),
+				'copy_style' => ___elementor_adapter( 'Copy Style', 'elementor' ),
+				'paste_style' => ___elementor_adapter( 'Paste Style', 'elementor' ),
+				'reset_style' => ___elementor_adapter( 'Reset Style', 'elementor' ),
+				'save_as_global' => ___elementor_adapter( 'Save as a Global', 'elementor' ),
+				'save_as_block' => ___elementor_adapter( 'Save as Template', 'elementor' ),
+				'new_column' => ___elementor_adapter( 'Add New Column', 'elementor' ),
+				'copy_all_content' => ___elementor_adapter( 'Copy All Content', 'elementor' ),
+				'delete_all_content' => ___elementor_adapter( 'Delete All Content', 'elementor' ),
+				'navigator' => ___elementor_adapter( 'Navigator', 'elementor' ),
 
-                // Right Click Introduction
-                'meet_right_click_header' => ___elementor_adapter('Meet Right Click', 'elementor'),
-                'meet_right_click_message' => ___elementor_adapter('Now you can access all editing actions using right click.', 'elementor'),
-                'got_it' => ___elementor_adapter('Got It', 'elementor'),
+				// Right Click Introduction
+				'meet_right_click_header' => ___elementor_adapter( 'Meet Right Click', 'elementor' ),
+				'meet_right_click_message' => ___elementor_adapter( 'Now you can access all editing actions using right click.', 'elementor' ),
+				'got_it' => ___elementor_adapter( 'Got It', 'elementor' ),
 
-                // TODO: Remove.
-                'autosave' => ___elementor_adapter('Autosave', 'elementor'),
-                'elementor_docs' => ___elementor_adapter('Documentation', 'elementor'),
-                'reload_page' => ___elementor_adapter('Reload Page', 'elementor'),
-                'session_expired_header' => ___elementor_adapter('Timeout', 'elementor'),
-                'session_expired_message' => ___elementor_adapter('Your session has expired. Please reload the page to continue editing.', 'elementor'),
-                'soon' => ___elementor_adapter('Soon', 'elementor'),
-                'unknown_value' => ___elementor_adapter('Unknown Value', 'elementor'),
-            ],
+				// TODO: Remove.
+				'autosave' => ___elementor_adapter( 'Autosave', 'elementor' ),
+				'elementor_docs' => ___elementor_adapter( 'Documentation', 'elementor' ),
+				'reload_page' => ___elementor_adapter( 'Reload Page', 'elementor' ),
+				'session_expired_header' => ___elementor_adapter( 'Timeout', 'elementor' ),
+				'session_expired_message' => ___elementor_adapter( 'Your session has expired. Please reload the page to continue editing.', 'elementor' ),
+				'soon' => ___elementor_adapter( 'Soon', 'elementor' ),
+				'unknown_value' => ___elementor_adapter( 'Unknown Value', 'elementor' ),
+			],
         ];
 
         $localized_settings = [];
@@ -410,11 +413,6 @@ class ElementorPlugin
      */
     public function update($request)
     {
-        if ($_POST['action'] == 'elementor_ajax') {
-            // Update/Save the data.
-            $data = json_decode($_REQUEST['actions'], true);
-            $this->sdk->set_data($_REQUEST['editor_post_id'], $data['save_builder']['data']);
-        }
         // Moves the request to the Elmentor .
         return do_ajax_elementor_adapter($_REQUEST['action']);
     }

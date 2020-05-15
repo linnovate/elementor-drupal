@@ -94,7 +94,7 @@ class Widget_Accordion extends Widget_Base {
 			[
 				'label' => ___elementor_adapter( 'Title & Content', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => ___elementor_adapter( 'Accordion Title' , 'elementor' ),
+				'default' => ___elementor_adapter( 'Accordion Title', 'elementor' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -121,11 +121,11 @@ class Widget_Accordion extends Widget_Base {
 				'default' => [
 					[
 						'tab_title' => ___elementor_adapter( 'Accordion #1', 'elementor' ),
-						'tab_content' => ___elementor_adapter( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 					[
 						'tab_title' => ___elementor_adapter( 'Accordion #2', 'elementor' ),
-						'tab_content' => ___elementor_adapter( 'I am item content. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+						'tab_content' => ___elementor_adapter( 'Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
 					],
 				],
 				'title_field' => '{{{ tab_title }}}',

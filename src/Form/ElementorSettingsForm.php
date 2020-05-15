@@ -176,8 +176,9 @@ class ElementorSettingsForm extends ConfigFormBase
         }
 
         parent::submitForm($form, $form_state);
-
-        drupal_flush_all_caches();
+        if ( function_exists('drupal_flush_all_caches')) { 
+            drupal_flush_all_caches();
+        }
     }
 
 }

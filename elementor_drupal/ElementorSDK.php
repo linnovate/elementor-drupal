@@ -139,42 +139,42 @@ class ElementorSDK
     }
 
     /**
-     * get_local_tmps_ids.
+     * get_local_templates_ids.
      *
      * @since 1.0.0
      * @access public
      */
-    public function get_local_tmps_ids($type)
+    public function get_local_templates_ids($type)
     {
-        return $this->connection->query("SELECT id FROM elementor_tmps WHERE type = '" . $type . "'")
+        return $this->connection->query("SELECT id FROM elementor_template WHERE type = '" . $type . "'")
             ->fetchAll();
     }
 
     /**
-     * get_local_tmp.
+     * get_local_template.
      *
      * @since 1.0.0
      * @access public
      */
-    public function get_local_tmp($id)
+    public function get_local_template($id)
     {
-        $result = $this->connection->query("SELECT * FROM elementor_tmps WHERE id = " . $id)
+        $result = $this->connection->query("SELECT * FROM elementor_template WHERE id = " . $id)
             ->fetch();
         $result->data = json_decode($result->data, true);
         return $result;
     }
 
     /**
-     * save_local_tmp.
+     * save_local_template.
      *
      * @since 1.0.0
      * @access public
      */
-    public function save_local_tmp($type, $data)
+    public function save_local_template($type, $data)
     {
         $timestamp = time();
 
-        return $this->connection->insert('elementor_tmps')
+        return $this->connection->insert('elementor_template')
             ->fields([
                 'type' => 'local',
                 'name' => !empty($data['title']) ? $data['title'] : ___elementor_adapter('(no title)', 'elementor'),
@@ -186,37 +186,37 @@ class ElementorSDK
     }
 
     /**
-     * delete_local_tmp.
+     * delete_local_template.
      *
      * @since 1.0.0
      * @access public
      */
-    public function delete_local_tmp($id)
+    public function delete_local_template($id)
     {
-        return $this->connection->query("DELETE FROM elementor_tmps WHERE id = " . $id)
+        return $this->connection->query("DELETE FROM elementor_template WHERE id = " . $id)
             ->execute();
     }
 
     /**
-     * save_remote_tmps.
+     * save_remote_template.
      *
      * @since 1.0.0
      * @access public
      */
-    public function save_remote_tmps($type, $data)
+    public function save_remote_templates($type, $data)
     {
-        return \Drupal::configFactory()->getEditable('elementor.tmps')
+        return \Drupal::configFactory()->getEditable('elementor.template')
             ->set($type, json_encode($data))
             ->save();
     }
 
     /**
-     * get_remote_tmps.
+     * get_remote_templates.
      *
      * @since 1.0.0
      * @access public
      */
-    public function get_remote_tmps($type = '')
+    public function get_remote_templates($type = '')
     {
         $data = \Drupal::config('elementor.tmps')->get($type);
         return $data ? json_decode($data, true) : null;

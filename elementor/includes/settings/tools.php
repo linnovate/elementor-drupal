@@ -160,7 +160,7 @@ class Tools extends Settings_Page {
 								'label' => ___elementor_adapter( 'Regenerate CSS', 'elementor' ),
 								'field_args' => [
 									'type' => 'raw_html',
-									'html' => sprintf( '<button data-nonce="%s" class="button elementor-button-spinner" id="elementor-clear-cache-button">%s</button>', wp_create_nonce( 'elementor_clear_cache' ), ___elementor_adapter( 'Regenerate Files', 'elementor' ) ),
+									'html' => sprintf( '<button data-nonce="%s" class="button elementor-button-spinner" id="elementor-clear-cache-button">%s</button>', wp_create_nonce_elementor_adapter( 'elementor_clear_cache' ), ___elementor_adapter( 'Regenerate Files', 'elementor' ) ),
 									'desc' => ___elementor_adapter( 'Styles set in Elementor are saved in CSS files in the uploads folder. Recreate those files, according to the most recent settings.', 'elementor' ),
 								],
 							],
@@ -168,7 +168,7 @@ class Tools extends Settings_Page {
 								'label' => ___elementor_adapter( 'Sync Library', 'elementor' ),
 								'field_args' => [
 									'type' => 'raw_html',
-									'html' => sprintf( '<button data-nonce="%s" class="button elementor-button-spinner" id="elementor-library-sync-button">%s</button>', wp_create_nonce( 'elementor_reset_library' ), ___elementor_adapter( 'Sync Library', 'elementor' ) ),
+									'html' => sprintf( '<button data-nonce="%s" class="button elementor-button-spinner" id="elementor-library-sync-button">%s</button>', wp_create_nonce_elementor_adapter( 'elementor_reset_library' ), ___elementor_adapter( 'Sync Library', 'elementor' ) ),
 									'desc' => ___elementor_adapter( 'Elementor Library automatically updates on a daily basis. You can also manually update it by clicking on the sync button.', 'elementor' ),
 								],
 							],
@@ -195,7 +195,7 @@ class Tools extends Settings_Page {
 								'label' => ___elementor_adapter( 'Update Site Address (URL)', 'elementor' ),
 								'field_args' => [
 									'type' => 'raw_html',
-									'html' => sprintf( '<input type="text" name="from" placeholder="http://old-url.com" class="medium-text"><input type="text" name="to" placeholder="http://new-url.com" class="medium-text"><button data-nonce="%s" class="button elementor-button-spinner" id="elementor-replace-url-button">%s</button>', wp_create_nonce( 'elementor_replace_url' ), ___elementor_adapter( 'Replace URL', 'elementor' ) ),
+									'html' => sprintf( '<input type="text" name="from" placeholder="http://old-url.com" class="medium-text"><input type="text" name="to" placeholder="http://new-url.com" class="medium-text"><button data-nonce="%s" class="button elementor-button-spinner" id="elementor-replace-url-button">%s</button>', wp_create_nonce_elementor_adapter( 'elementor_replace_url' ), ___elementor_adapter( 'Replace URL', 'elementor' ) ),
 									'desc' => ___elementor_adapter( 'Enter your old and new URLs for your WordPress installation, to update all Elementor data (Relevant for domain transfers or move to \'HTTPS\').', 'elementor' ),
 								],
 							],

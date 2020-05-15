@@ -45,11 +45,11 @@ class Drupal_TemplateLibrary_Manager extends Manager
     public function get_library_data(array $args)
     {
         if (empty($args['sync'])) {
-            $library_data = ElementorPlugin::$instance->sdk->get_remote_tmps('remote');
+            $library_data = ElementorPlugin::$instance->sdk->get_remote_templates('remote');
         }
         if (!$library_data) {
             $library_data = Api::get_library_data(!empty($args['sync']));
-            ElementorPlugin::$instance->sdk->save_remote_tmps('remote', $library_data);
+            ElementorPlugin::$instance->sdk->save_remote_templates('remote', $library_data);
         }
 
         return [

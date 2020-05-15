@@ -495,10 +495,11 @@ class Plugin {
 		$this->elements_manager = new Elements_Manager();
 		$this->widgets_manager = new Widgets_Manager();
 		$this->skins_manager = new Skins_Manager();
+		$this->files_manager = new Files_Manager();
 		/*
 		 * @TODO: Remove deprecated alias
 		 */
-		$this->files_manager = $this->posts_css_manager = new Files_Manager();
+		$this->posts_css_manager = $this->files_manager;
 		$this->settings = new Settings();
 		$this->editor = new Editor();
 		$this->preview = new Preview();
@@ -519,7 +520,7 @@ class Plugin {
 			$this->heartbeat = new Heartbeat();
 			$this->wordpress_widgets_manager = new WordPress_Widgets_Manager();
 			$this->system_info = new System_Info\Main();
-			$this->admin = new Admin();
+			$this->admin = new Core\Admin\Admin();
 			$this->tools = new Tools();
 			$this->beta_testers = new Beta_Testers();
 
@@ -545,9 +546,11 @@ class Plugin {
 	private function add_cpt_support() {
 		$cpt_support = get_option_elementor_adapter( 'elementor_cpt_support', [ 'page', 'post' ] );
 
-		foreach ( $cpt_support as $cpt_slug ) {
-			add_post_type_support_elementor_adapter( $cpt_slug, 'elementor' );
-		}
+		if (isset($cpt_support) && is_array($cpt_support)) {
+      foreach ( $cpt_support as $cpt_slug ) {
+        add_post_type_support_elementor_adapter( $cpt_slug, 'elementor' );
+      }
+    }
 	}
 
 	/**

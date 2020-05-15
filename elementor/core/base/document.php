@@ -68,7 +68,7 @@ abstract class Document extends Controls_Stack {
 	}
 
 	public static function get_editor_panel_config() {
-		return  [
+		return [
 			'elements_categories' => static::get_editor_panel_categories(),
 			'messages' => [
 				/* translators: %s: the document title. */
@@ -203,7 +203,7 @@ abstract class Document extends Controls_Stack {
 		$url = get_preview_post_link(
 			$main_post_id,
 			[
-				'preview_nonce' => wp_create_nonce( 'post_preview_' . $main_post_id ),
+				'preview_nonce' => wp_create_nonce_elementor_adapter( 'post_preview_' . $main_post_id ),
 			]
 		);
 
@@ -447,7 +447,9 @@ abstract class Document extends Controls_Stack {
 	 * @return bool Whether the post was built with Elementor.
 	 */
 	public function is_built_with_elementor() {
-		return ! ! get_post_meta_elementor_adapter( $this->post->ID, '_elementor_edit_mode', true );
+        $id = property_exists('ID', $this->post) ? $this->post->ID : $this->post;
+
+        return ! ! get_post_meta_elementor_adapter( $id, '_elementor_edit_mode', true );
 	}
 
 	/**
@@ -498,7 +500,7 @@ abstract class Document extends Controls_Stack {
 			$url = set_url_scheme( add_query_arg_elementor_adapter( [
 				'elementor-preview' => $this->get_main_id(),
 				'ver' => time(),
-			] , $this->get_permalink() ) );
+			], $this->get_permalink() ) );
 
 			remove_filter_elementor_adapter( 'pre_option_permalink_structure', '__return_empty_string' );
 
@@ -527,7 +529,9 @@ abstract class Document extends Controls_Stack {
 	 * @return array
 	 */
 	public function get_json_meta( $key ) {
-		$meta = get_post_meta_elementor_adapter( $this->post->ID, $key, true );
+        $id = property_exists('ID', $this->post) ? $this->post->ID : $this->post;
+
+        $meta = get_post_meta_elementor_adapter( $id, $key, true );
 
 		if ( is_string( $meta ) && ! empty( $meta ) ) {
 			$meta = json_decode( $meta, true );
@@ -620,7 +624,7 @@ abstract class Document extends Controls_Stack {
 		<div class="<?php echo esc_attr_elementor_adapter( $this->get_container_classes() ); ?>">
 			<div class="elementor-inner">
 				<div class="elementor-section-wrap">
-					<?php $this->print_elements( $elements_data ) ?>
+					<?php $this->print_elements( $elements_data ); ?>
 				</div>
 			</div>
 		</div>
@@ -848,7 +852,7 @@ abstract class Document extends Controls_Stack {
 		}
 
 		$date = date_i18n( _x_elementor_adapter( 'M j, H:i', 'revision date format', 'elementor' ), strtotime( $post->post_modified ) );
-		$display_name = get_the_author_meta( 'display_name' , $post->post_author );
+		$display_name = get_the_author_meta( 'display_name', $post->post_author );
 
 		if ( $autosave_post || 'revision' === $post->post_type ) {
 			/* translators: 1: Saving date, 2: Author display name */
@@ -888,7 +892,8 @@ abstract class Document extends Controls_Stack {
 				$data['settings'] = [];
 			}
 
-			$saved_settings = get_post_meta_elementor_adapter( $this->post->ID, '_elementor_page_settings', true );
+			$id = property_exists('ID', $this->post) ? $this->post->ID : $this->post;
+			$saved_settings = get_post_meta_elementor_adapter( $id, '_elementor_page_settings', true );
 			if ( ! empty( $saved_settings ) && is_array( $saved_settings ) ) {
 				$data['settings'] += $saved_settings;
 			}

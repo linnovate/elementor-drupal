@@ -1621,7 +1621,7 @@ var ElementorConfig = {
     }
   },
   "wp_editor": "<div id=\"wp-elementorwpeditor-wrap\" class=\"wp-core-ui wp-editor-wrap tmce-active\"><div id=\"wp-elementorwpeditor-editor-tools\" class=\"wp-editor-tools hide-if-no-js\"><div id=\"wp-elementorwpeditor-media-buttons\" class=\"wp-media-buttons\"><button type=\"button\" id=\"insert-media-button\" class=\"button insert-media add_media\" data-editor=\"elementorwpeditor\"><span class=\"wp-media-buttons-icon\"></span> Add Media</button></div>\n<div class=\"wp-editor-tabs\"><button type=\"button\" id=\"elementorwpeditor-tmce\" class=\"wp-switch-editor switch-tmce\" data-wp-editor-id=\"elementorwpeditor\">Visual</button>\n<button type=\"button\" id=\"elementorwpeditor-html\" class=\"wp-switch-editor switch-html\" data-wp-editor-id=\"elementorwpeditor\">Text</button>\n</div>\n</div>\n<div id=\"wp-elementorwpeditor-editor-container\" class=\"wp-editor-container\"><div id=\"qt_elementorwpeditor_toolbar\" class=\"quicktags-toolbar\"></div><textarea class=\"elementor-wp-editor wp-editor-area\" style=\"height: 250px\" autocomplete=\"off\" cols=\"40\" name=\"elementorwpeditor\" id=\"elementorwpeditor\">%%EDITORCONTENT%%</textarea></div>\n</div>\n\n",
-  "settings_page_link": "http://localhost/wordpress/wp-admin/admin.php?page=elementor",
+  "settings_page_link": "",
   "elementor_site": "https://go.elementor.com/about-elementor/",
   "docs_elementor_site": "https://go.elementor.com/docs/",
   "help_the_content_url": "https://go.elementor.com/the-content-missing/",

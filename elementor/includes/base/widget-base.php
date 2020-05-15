@@ -297,12 +297,31 @@ abstract class Widget_Base extends Element_Base {
 	 * @return array Default edit tools.
 	 */
 	protected static function get_default_edit_tools() {
-		return [
+		$widget_label = ___elementor_adapter( 'Widget', 'elementor' );
+
+		$edit_tools = [
 			'edit' => [
 				'title' => ___elementor_adapter( 'Edit', 'elementor' ),
 				'icon' => 'edit',
 			],
 		];
+
+		if ( self::is_edit_buttons_enabled() ) {
+			$edit_tools += [
+				'duplicate' => [
+					/* translators: %s: Widget label */
+					'title' => sprintf( ___elementor_adapter( 'Duplicate %s', 'elementor' ), $widget_label ),
+					'icon' => 'clone',
+				],
+				'remove' => [
+					/* translators: %s: Widget label */
+					'title' => sprintf( ___elementor_adapter( 'Remove %s', 'elementor' ), $widget_label ),
+					'icon' => 'close',
+				],
+			];
+		}
+
+		return $edit_tools;
 	}
 
 	/**
@@ -391,7 +410,7 @@ abstract class Widget_Base extends Element_Base {
 		$content = do_shortcode_elementor_adapter( $content );
 		$content = wptexturize_elementor_adapter( $content );
 
-		if ( $GLOBALS['wp_embed'] instanceof \WP_Embed ) {
+		if ( array_key_exists('wp_embed', $GLOBALS) && $GLOBALS['wp_embed'] instanceof \WP_Embed ) {
 			$content = $GLOBALS['wp_embed']->autoembed( $content );
 		}
 
